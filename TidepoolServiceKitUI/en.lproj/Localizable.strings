@@ -1,0 +1,14 @@
+/* The title of the Tidepool API secret */
+"API Secret" = "API Secret";
+
+/* Button title to delete a service */
+"Delete Service" = "Delete Service";
+
+/* The placeholder text for the Tidepool site URL */
+"https://mysite.azurewebsites.net" = "https://mysite.azurewebsites.net";
+
+/* The default placeholder for required text */
+"Required" = "Required";
+
+/* The title of the Tidepool site URL */
+"Site URL" = "Site URL";
