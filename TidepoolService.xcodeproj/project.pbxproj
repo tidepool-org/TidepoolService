@@ -12,6 +12,12 @@
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F7235A909A005CA320 /* UIColor.swift */; };
+		A9876562235D6DCD00272B53 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9876561235D6DCD00272B53 /* Bundle.swift */; };
+		A9BC7CE0235C10F000D59DB7 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC7CDE235C10F000D59DB7 /* HKUnit.swift */; };
+		A9BC7CE1235C10F000D59DB7 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC7CDF235C10F000D59DB7 /* TimeInterval.swift */; };
+		A9BC7CEE235C112100D59DB7 /* TidepoolServiceLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC7CE5235C111F00D59DB7 /* TidepoolServiceLogging.swift */; };
+		A9BC7CF1235C112100D59DB7 /* TidepoolRemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC7CE8235C112000D59DB7 /* TidepoolRemoteData.swift */; };
+		A9BC7CF4235C13CD00D59DB7 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A9DAAD0F22E7987800E76C9F /* TidepoolServiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; };
@@ -80,8 +86,13 @@
 		A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceKitPlugin.swift; sourceTree = "<group>"; };
 		A94AE4F4235A8BAC005CA320 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
 		A94AE4F7235A909A005CA320 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		A9876561235D6DCD00272B53 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A99222FA235A879600C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A99222FB235A87B100C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A9BC7CDE235C10F000D59DB7 /* HKUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
+		A9BC7CDF235C10F000D59DB7 /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		A9BC7CE5235C111F00D59DB7 /* TidepoolServiceLogging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TidepoolServiceLogging.swift; sourceTree = "<group>"; };
+		A9BC7CE8235C112000D59DB7 /* TidepoolRemoteData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TidepoolRemoteData.swift; sourceTree = "<group>"; };
 		A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKit.h; sourceTree = "<group>"; };
 		A9DAAD0222E7987800E76C9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -198,6 +209,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A9BC7CDD235C109500D59DB7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A9876561235D6DCD00272B53 /* Bundle.swift */,
+				A9BC7CDE235C10F000D59DB7 /* HKUnit.swift */,
+				A9BC7CDF235C10F000D59DB7 /* TimeInterval.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A9DAACD522E7978800E76C9F = {
 			isa = PBXGroup;
 			children = (
@@ -238,7 +259,10 @@
 			children = (
 				A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */,
 				A9DAAD0222E7987800E76C9F /* Info.plist */,
+				A9BC7CE8235C112000D59DB7 /* TidepoolRemoteData.swift */,
 				A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */,
+				A9BC7CE5235C111F00D59DB7 /* TidepoolServiceLogging.swift */,
+				A9BC7CDD235C109500D59DB7 /* Extensions */,
 				A9DAAD4122E7DF9B00E76C9F /* Localizable.strings */,
 			);
 			path = TidepoolServiceKit;
@@ -527,6 +551,8 @@
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKitUI.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
 			);
 			name = "Copy Frameworks with Carthage";
 			outputFileListPaths = (
@@ -596,7 +622,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
+				A9876562235D6DCD00272B53 /* Bundle.swift in Sources */,
+				A9BC7CEE235C112100D59DB7 /* TidepoolServiceLogging.swift in Sources */,
+				A9BC7CF4235C13CD00D59DB7 /* OSLog.swift in Sources */,
+				A9BC7CE1235C10F000D59DB7 /* TimeInterval.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
+				A9BC7CE0235C10F000D59DB7 /* HKUnit.swift in Sources */,
+				A9BC7CF1235C112100D59DB7 /* TidepoolRemoteData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

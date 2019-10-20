@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tidepool Project. All rights reserved.
 //
 
+import LoopKit
 import LoopKitUI
 import TidepoolServiceKit
 
@@ -26,7 +27,10 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.className)
         tableView.register(TextButtonTableViewCell.self, forCellReuseIdentifier: TextButtonTableViewCell.className)
+
+        title = service.localizedTitle
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
@@ -57,7 +61,12 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
     // MARK: - Data Source
 
     private enum Section: Int, CaseIterable {
+        case details
         case deleteService
+    }
+
+    private enum Details: Int, CaseIterable {
+        case email
     }
 
     // MARK: - UITableViewDataSource
@@ -68,6 +77,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Section(rawValue: section)! {
+        case .details:
+            return Details.allCases.count
         case .deleteService:
             return 1
         }
@@ -75,6 +86,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section)! {
+        case .details:
+            return nil
         case .deleteService:
             return " " // Use an empty string for more dramatic spacing
         }
@@ -82,6 +95,14 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section)! {
+        case .details:
+            switch Details(rawValue: indexPath.row)! {
+            case .email:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath) as! SettingsTableViewCell
+                cell.textLabel?.text = LocalizedString("Email", comment: "The title text for the email")
+                cell.detailTextLabel?.text = service.user?.userEmail
+                return cell
+            }
         case .deleteService:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
             cell.textLabel?.text = LocalizedString("Delete Service", comment: "Button title to delete a service")
@@ -93,8 +114,19 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
 
     // MARK: - UITableViewDelegate
 
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        switch Section(rawValue: indexPath.section)! {
+        case .details:
+            return false
+        case .deleteService:
+            return true
+        }
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Section(rawValue: indexPath.section)! {
+        case .details:
+            break
         case .deleteService:
             confirmDeletion {
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -103,6 +135,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
     }
 
 }
+
+extension SettingsTableViewCell: IdentifiableClass {}
 
 extension TextButtonTableViewCell: IdentifiableClass {}
 
