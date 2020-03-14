@@ -6,12 +6,28 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		A9BF371524180BE6008D7F34 /* Cartfile */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = A9BF371824180BE6008D7F34 /* Build configuration list for PBXAggregateTarget "Cartfile" */;
+			buildPhases = (
+				A9BF371924180C02008D7F34 /* Carthage Bootstrap */,
+			);
+			dependencies = (
+			);
+			name = Cartfile;
+			productName = Cartfile;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F7235A909A005CA320 /* UIColor.swift */; };
+		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
+		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A9DAAD0F22E7987800E76C9F /* TidepoolServiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; };
@@ -49,6 +65,13 @@
 			remoteGlobalIDString = A9DAAD1A22E7988900E76C9F;
 			remoteInfo = TidepoolServiceKitUI;
 		};
+		A9BF371A24180D88008D7F34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9DAACD622E7978800E76C9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9BF371524180BE6008D7F34;
+			remoteInfo = Cartfile;
+		};
 		A9DAAD0922E7987800E76C9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9DAACD622E7978800E76C9F /* Project object */;
@@ -82,6 +105,8 @@
 		A94AE4F7235A909A005CA320 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A99222FA235A879600C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A99222FB235A87B100C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKit.h; sourceTree = "<group>"; };
 		A9DAAD0222E7987800E76C9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9DAAD5B22E7E6BE00E76C9F /* LoopKit.framework in Frameworks */,
+				A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +181,7 @@
 			files = (
 				A9DAAD6122E7E7B200E76C9F /* LoopKit.framework in Frameworks */,
 				A9DAAD6322E7E7B200E76C9F /* LoopKitUI.framework in Frameworks */,
+				A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */,
 				A9DAAD6422E7E7B700E76C9F /* TidepoolServiceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +306,8 @@
 		A9DAAD5922E7E6BE00E76C9F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */,
+				A9BF371C2418195C008D7F34 /* TidepoolKit.framework */,
 				A9DAAD6722E7E81E00E76C9F /* LoopKit.framework */,
 				A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */,
 				A9DAAD6022E7E7B200E76C9F /* LoopKit.framework */,
@@ -352,6 +381,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A9BF371B24180D88008D7F34 /* PBXTargetDependency */,
 			);
 			name = TidepoolServiceKit;
 			productName = TidepoolServiceKit;
@@ -429,6 +459,9 @@
 						CreatedOnToolsVersion = 11.1;
 						LastSwiftMigration = 1110;
 					};
+					A9BF371524180BE6008D7F34 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					A9DAACFE22E7987800E76C9F = {
 						CreatedOnToolsVersion = 10.3;
 						LastSwiftMigration = 1030;
@@ -472,6 +505,7 @@
 				A9DAAD1A22E7988900E76C9F /* TidepoolServiceKitUI */,
 				A9DAAD2222E7988900E76C9F /* TidepoolServiceKitUITests */,
 				A94AE4E3235A89B5005CA320 /* TidepoolServiceKitPlugin */,
+				A9BF371524180BE6008D7F34 /* Cartfile */,
 			);
 		};
 /* End PBXProject section */
@@ -525,6 +559,8 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKitUI.framework",
 			);
@@ -536,6 +572,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${SRCROOT}/Scripts/copy-frameworks.sh\n";
+		};
+		A9BF371924180C02008D7F34 /* Carthage Bootstrap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Carthage Bootstrap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Bootstrapping Carthage dependencies...\"\nunset LLVM_TARGET_TRIPLE_SUFFIX\ntime /usr/local/bin/carthage bootstrap --project-directory \"${SRCROOT}\" --platform ios --cache-builds\n";
 		};
 		A9DAAD5F22E7E75C00E76C9F /* Copy Frameworks with Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -641,6 +695,11 @@
 			target = A9DAAD1A22E7988900E76C9F /* TidepoolServiceKitUI */;
 			targetProxy = A94AE4EE235A8B19005CA320 /* PBXContainerItemProxy */;
 		};
+		A9BF371B24180D88008D7F34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9BF371524180BE6008D7F34 /* Cartfile */;
+			targetProxy = A9BF371A24180D88008D7F34 /* PBXContainerItemProxy */;
+		};
 		A9DAAD0A22E7987800E76C9F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9DAACFE22E7987800E76C9F /* TidepoolServiceKit */;
@@ -745,6 +804,20 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = loopplugin;
+			};
+			name = Release;
+		};
+		A9BF371624180BE6008D7F34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A9BF371724180BE6008D7F34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1148,6 +1221,15 @@
 			buildConfigurations = (
 				A94AE4EA235A89B5005CA320 /* Debug */,
 				A94AE4EB235A89B5005CA320 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9BF371824180BE6008D7F34 /* Build configuration list for PBXAggregateTarget "Cartfile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9BF371624180BE6008D7F34 /* Debug */,
+				A9BF371724180BE6008D7F34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
