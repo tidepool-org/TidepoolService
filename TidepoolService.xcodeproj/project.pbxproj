@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
@@ -96,6 +97,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
 		A94AE4E4235A89B5005CA320 /* TidepoolServiceKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKitPlugin.h; sourceTree = "<group>"; };
@@ -199,6 +201,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A913B37B24200C86000805C4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A913B37C24200C97000805C4 /* Bundle.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A94AE4E5235A89B5005CA320 /* TidepoolServiceKitPlugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +276,7 @@
 				A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */,
 				A9DAAD0222E7987800E76C9F /* Info.plist */,
 				A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */,
+				A913B37B24200C86000805C4 /* Extensions */,
 				A9DAAD4122E7DF9B00E76C9F /* Localizable.strings */,
 			);
 			path = TidepoolServiceKit;
@@ -650,6 +661,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
+				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
