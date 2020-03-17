@@ -1,0 +1,11 @@
+framework module TidepoolKitUI {
+  umbrella header "TidepoolKitUI.h"
+
+  export *
+  module * { export * }
+}
+
+module TidepoolKitUI.Swift {
+    header "TidepoolKitUI-Swift.h"
+    requires objc
+}

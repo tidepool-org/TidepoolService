@@ -7,9 +7,11 @@
 //
 
 import LoopKitUI
+import TidepoolKit
+import TidepoolKitUI
 import TidepoolServiceKit
 
-final class TidepoolServiceSetupViewController: UIViewController {
+final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDelegate {
 
     private let service: TidepoolService
 
@@ -28,22 +30,29 @@ final class TidepoolServiceSetupViewController: UIViewController {
 
         title = service.localizedTitle
 
-        view.backgroundColor = .white
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+
+        var loginSignupViewController = service.tapi.loginSignupViewController()
+        loginSignupViewController.delegate = self
+        loginSignupViewController.view.frame = CGRect(origin: CGPoint(), size: view.frame.size)
+
+        addChild(loginSignupViewController)
+        view.addSubview(loginSignupViewController.view)
+
+        loginSignupViewController.didMove(toParent: self)
     }
 
     @objc private func cancel() {
         notifyComplete()
     }
 
-    @objc private func done() {
-        service.completeCreate()
+    func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession) -> Error? {
+        service.completeCreate(withSession: session)
         if let serviceViewController = navigationController as? ServiceViewController {
             serviceViewController.notifyServiceCreated(service)
         }
         notifyComplete()
+        return nil
     }
 
     private func notifyComplete() {
@@ -51,5 +60,4 @@ final class TidepoolServiceSetupViewController: UIViewController {
             serviceViewController.notifyComplete()
         }
     }
-
 }
