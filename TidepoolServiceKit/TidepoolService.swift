@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tidepool Project. All rights reserved.
 //
 
+import os.log
 import LoopKit
 import TidepoolKit
 
@@ -44,6 +45,8 @@ public final class TidepoolService: Service {
             completeUpdate()
         }
     }
+
+    private let log = OSLog(category: "TidepoolService")
 
     public init() {
         self.id = UUID().uuidString
@@ -99,6 +102,9 @@ public final class TidepoolService: Service {
                 self.error = error
             case .success(let dataSets):
                 if !dataSets.isEmpty {
+                    if dataSets.count > 1 {
+                        self.log.default("Found multiple matching data sets; expected zero or one")
+                    }
                     self.dataSetId = dataSets.first?.uploadId
                 } else {
                     self.createDataSet()

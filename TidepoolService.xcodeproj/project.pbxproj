@@ -27,6 +27,8 @@
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F7235A909A005CA320 /* UIColor.swift */; };
+		A97651752421AA10002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
+		A97651762421AA11002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
@@ -662,6 +664,7 @@
 			files = (
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
+				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -679,6 +682,7 @@
 			files = (
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
 				A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */,
+				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
