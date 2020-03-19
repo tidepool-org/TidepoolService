@@ -103,7 +103,7 @@ public final class TidepoolService: Service {
             case .success(let dataSets):
                 if !dataSets.isEmpty {
                     if dataSets.count > 1 {
-                        self.log.default("Found multiple matching data sets; expected zero or one")
+                        self.log.error("Found multiple matching data sets; expected zero or one")
                     }
                     self.dataSetId = dataSets.first?.uploadId
                 } else {
