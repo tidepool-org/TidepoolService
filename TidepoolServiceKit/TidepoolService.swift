@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tidepool Project. All rights reserved.
 //
 
+import os.log
 import LoopKit
 import TidepoolKit
 
@@ -32,9 +33,20 @@ public final class TidepoolService: Service {
 
     private var session: TSession? {
         didSet {
+            if session == nil {
+                self.dataSetId = nil
+            }
             saveSession()
         }
     }
+
+    private var dataSetId: String? {
+        didSet {
+            completeUpdate()
+        }
+    }
+
+    private let log = OSLog(category: "TidepoolService")
 
     public init() {
         self.id = UUID().uuidString
@@ -45,17 +57,23 @@ public final class TidepoolService: Service {
             return nil
         }
         self.id = id
+        self.dataSetId = rawState["dataSetId"] as? String
         restoreSession()
     }
 
     public var rawState: RawStateValue {
         var rawValue: RawStateValue = [:]
         rawValue["id"] = id
+        rawValue["dataSetId"] = dataSetId
         return rawValue
     }
 
     public func completeCreate(withSession session: TSession) {
         self.session = session
+
+        DispatchQueue.global(qos: .background).async {
+            self.getDataSet()
+        }
     }
 
     public func completeUpdate() {
@@ -63,7 +81,53 @@ public final class TidepoolService: Service {
     }
 
     public func completeDelete() {
+        guard let session = session else {
+            return
+        }
+
         self.session = nil
+
+        DispatchQueue.global(qos: .background).async {
+            self.tapi.logout(session: session) { _ in }
+        }
+    }
+
+    private func getDataSet() {
+        guard let session = session, let clientName = Bundle.main.bundleIdentifier else {
+            return
+        }
+        tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName), session: session) { result in
+            switch result {
+            case .failure(let error):
+                self.error = error
+            case .success(let dataSets):
+                if !dataSets.isEmpty {
+                    if dataSets.count > 1 {
+                        self.log.error("Found multiple matching data sets; expected zero or one")
+                    }
+                    self.dataSetId = dataSets.first?.uploadId
+                } else {
+                    self.createDataSet()
+                }
+            }
+        }
+    }
+
+    private func createDataSet() {
+        guard let session = session, let clientName = Bundle.main.bundleIdentifier, let clientVersion = Bundle.main.semanticVersion else {
+            return
+        }
+        let dataSet = TDataSet(dataSetType: .continuous,
+                               client: TDataSet.Client(name: clientName, version: clientVersion),
+                               deduplicator: TDataSet.Deduplicator(name: .dataSetDeleteOrigin))
+        tapi.createDataSet(dataSet, session: session) { result in
+            switch result {
+            case .failure(let error):
+                self.error = error
+            case .success(let dataSet):
+                self.dataSetId = dataSet.uploadId
+            }
+        }
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
