@@ -185,6 +185,10 @@ extension TidepoolService: RemoteDataService {
 
     public var settingsDataLimit: Int? { return 1000 }
 
+    public func uploadSettingsData(_ stored: [StoredSettings], completion: @escaping (Result<Bool, Error>) -> Void) {
+        createData(stored.compactMap { $0.datum }, completion: completion)
+    }
+
     private func createData(_ data: [TDatum], completion: @escaping (Result<Bool, Error>) -> Void) {
         if let error = error {
             completion(.failure(error))
