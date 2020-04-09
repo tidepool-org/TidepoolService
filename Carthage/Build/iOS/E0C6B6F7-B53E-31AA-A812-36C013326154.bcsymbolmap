@@ -317,4 +317,4 @@ loginSignupViewController
 api.set
 TidepoolKitUI/Internal/LoginSignupViewController.swift
 Apple clang version 11.0.0 (clang-1100.0.33.17)
-/Users/deke/Library/Caches/org.carthage.CarthageKit/DerivedData/11.3.1_11C504/TidepoolKit/7bc029aac8ef4cf2dce6218316ef0f2bdc98d44f/Build/Intermediates.noindex/ArchiveIntermediates/Shared/IntermediateBuildFilesPath/TidepoolKit.build/Release-iphoneos/TidepoolKitUI.build/DerivedSources/TidepoolKitUI_vers.c
+/Users/deke/Library/Caches/org.carthage.CarthageKit/DerivedData/11.3.1_11C505/TidepoolKit/cdc20131b12e22a000a23e0b16b423fb86bd56d2/Build/Intermediates.noindex/ArchiveIntermediates/Shared/IntermediateBuildFilesPath/TidepoolKit.build/Release-iphoneos/TidepoolKitUI.build/DerivedSources/TidepoolKitUI_vers.c

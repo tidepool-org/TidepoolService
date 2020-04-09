@@ -1,14 +1,14 @@
 {
-  "commitish" : "7bc029aac8ef4cf2dce6218316ef0f2bdc98d44f",
+  "commitish" : "cdc20131b12e22a000a23e0b16b423fb86bd56d2",
   "iOS" : [
     {
       "name" : "TidepoolKitUI",
-      "hash" : "8078c9011dd0f5b7056a2b742f2d8f48042990f4d83ac48fdc10e8f322170685",
+      "hash" : "a6dfa4fac7c423b55272b654030cca91e3463c65935a61a2151d0c3eca17127a",
       "swiftToolchainVersion" : "5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)"
     },
     {
       "name" : "TidepoolKit",
-      "hash" : "dcb151823f0f4e0a21ec725a080eaa91c875ebdbff483f8fc78d20aefc8021dd",
+      "hash" : "f4e088ded87caef100e52f6b7cf71a43130cd43394efe388e51cff78fffda870",
       "swiftToolchainVersion" : "5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)"
     }
   ]
