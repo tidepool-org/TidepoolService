@@ -153,16 +153,75 @@ extension TidepoolService: RemoteDataService {
 
     public var carbDataLimit: Int? { return 1000 }
 
+    public func uploadCarbData(deleted: [DeletedCarbEntry], stored: [StoredCarbEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
+        createData(stored.compactMap { $0.datum }) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let storedUploaded):
+                self.deleteData(withSelectors: deleted.compactMap { $0.selector }) { result in
+                    switch result {
+                    case .failure(let error):
+                        completion(.failure(error))
+                    case .success(let deletedUploaded):
+                        completion(.success(storedUploaded || deletedUploaded))
+                    }
+                }
+            }
+        }
+    }
+
     public var doseDataLimit: Int? { return 1000 }
 
     public var dosingDecisionDataLimit: Int? { return 1000 }
 
     public var glucoseDataLimit: Int? { return 1000 }
 
+    public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
+        createData(stored.compactMap { $0.datum }, completion: completion)
+    }
+
     public var pumpEventDataLimit: Int? { return 1000 }
 
     public var settingsDataLimit: Int? { return 1000 }
 
+    private func createData(_ data: [TDatum], completion: @escaping (Result<Bool, Error>) -> Void) {
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
+        guard let session = session, let dataSetId = dataSetId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+
+        tapi.createData(data, dataSetId: dataSetId, session: session) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(!data.isEmpty))
+        }
+    }
+
+    private func deleteData(withSelectors selectors: [TDatum.Selector], completion: @escaping (Result<Bool, Error>) -> Void) {
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
+        guard let session = session, let dataSetId = dataSetId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+
+        tapi.deleteData(withSelectors: selectors, dataSetId: dataSetId, session: session) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(!selectors.isEmpty))
+        }
+    }
 }
 
 extension KeychainManager: SessionStorage {

@@ -28,14 +28,20 @@
 		A9151367244E2A9E00116932 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
+		A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA2243563CD00E02268 /* TOrigin.swift */; };
+		A9309CA52435986300E02268 /* DeletedCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA42435986300E02268 /* DeletedCarbEntry.swift */; };
+		A9309CA72435987000E02268 /* StoredCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA62435987000E02268 /* StoredCarbEntry.swift */; };
+		A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F7235A909A005CA320 /* UIColor.swift */; };
 		A97651752421AA10002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A97651762421AA11002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
+		A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97A60FA243818C900AD69A5 /* TDatum.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
+		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A9DAAD0F22E7987800E76C9F /* TidepoolServiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; };
@@ -106,16 +112,22 @@
 /* Begin PBXFileReference section */
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
+		A9309CA2243563CD00E02268 /* TOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOrigin.swift; sourceTree = "<group>"; };
+		A9309CA42435986300E02268 /* DeletedCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedCarbEntry.swift; sourceTree = "<group>"; };
+		A9309CA62435987000E02268 /* StoredCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredCarbEntry.swift; sourceTree = "<group>"; };
+		A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSample.swift; sourceTree = "<group>"; };
 		A94AE4E4235A89B5005CA320 /* TidepoolServiceKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKitPlugin.h; sourceTree = "<group>"; };
 		A94AE4E7235A89B5005CA320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceKitPlugin.swift; sourceTree = "<group>"; };
 		A94AE4F4235A8BAC005CA320 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
 		A94AE4F7235A909A005CA320 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		A97A60FA243818C900AD69A5 /* TDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDatum.swift; sourceTree = "<group>"; };
 		A99222FA235A879600C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A99222FB235A87B100C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKit.h; sourceTree = "<group>"; };
 		A9DAAD0222E7987800E76C9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -217,6 +229,12 @@
 			isa = PBXGroup;
 			children = (
 				A913B37C24200C97000805C4 /* Bundle.swift */,
+				A9309CA42435986300E02268 /* DeletedCarbEntry.swift */,
+				A9D1107B242289720091C620 /* HKUnit.swift */,
+				A9309CA62435987000E02268 /* StoredCarbEntry.swift */,
+				A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */,
+				A97A60FA243818C900AD69A5 /* TDatum.swift */,
+				A9309CA2243563CD00E02268 /* TOrigin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -672,8 +690,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9309CA52435986300E02268 /* DeletedCarbEntry.swift in Sources */,
+				A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */,
+				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
+				A9309CA72435987000E02268 /* StoredCarbEntry.swift in Sources */,
+				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
+				A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
 			);
