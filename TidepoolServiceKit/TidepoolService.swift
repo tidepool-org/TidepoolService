@@ -175,6 +175,10 @@ extension TidepoolService: RemoteDataService {
 
     public var dosingDecisionDataLimit: Int? { return 1000 }
 
+    public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (Result<Bool, Error>) -> Void) {
+        createData(stored.compactMap { $0.datum }, completion: completion)
+    }
+
     public var glucoseDataLimit: Int? { return 1000 }
 
     public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {

@@ -36,6 +36,7 @@
 		A9309CAB24365FEE00E02268 /* SingleQuantitySchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAA24365FEE00E02268 /* SingleQuantitySchedule.swift */; };
 		A9309CAD2436606E00E02268 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAC2436606E00E02268 /* Double.swift */; };
 		A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */; };
+		A9309CB12436C6EF00E02268 /* StoredDosingDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CB02436C6EF00E02268 /* StoredDosingDecision.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
@@ -125,6 +126,7 @@
 		A9309CAA24365FEE00E02268 /* SingleQuantitySchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuantitySchedule.swift; sourceTree = "<group>"; };
 		A9309CAC2436606E00E02268 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSample.swift; sourceTree = "<group>"; };
+		A9309CB02436C6EF00E02268 /* StoredDosingDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredDosingDecision.swift; sourceTree = "<group>"; };
 		A94AE4E4235A89B5005CA320 /* TidepoolServiceKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKitPlugin.h; sourceTree = "<group>"; };
 		A94AE4E7235A89B5005CA320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				A9D1107B242289720091C620 /* HKUnit.swift */,
 				A9309CAA24365FEE00E02268 /* SingleQuantitySchedule.swift */,
 				A9309CA62435987000E02268 /* StoredCarbEntry.swift */,
+				A9309CB02436C6EF00E02268 /* StoredDosingDecision.swift */,
 				A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */,
 				A9309CA024355FB600E02268 /* StoredSettings.swift */,
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
@@ -716,6 +719,7 @@
 				A9309CAB24365FEE00E02268 /* SingleQuantitySchedule.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
 				A9309CA924365FD500E02268 /* GlucoseRangeSchedule.swift in Sources */,
+				A9309CB12436C6EF00E02268 /* StoredDosingDecision.swift in Sources */,
 				A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
 				A9309CA124355FB600E02268 /* StoredSettings.swift in Sources */,
