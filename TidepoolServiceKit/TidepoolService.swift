@@ -173,6 +173,10 @@ extension TidepoolService: RemoteDataService {
 
     public var doseDataLimit: Int? { return 1000 }
 
+    // public func uploadDoseData(_ stored: [DoseEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
+    //     createData(stored.compactMap { $0.datum }, completion: completion)
+    // }
+
     public var dosingDecisionDataLimit: Int? { return 1000 }
 
     public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -186,6 +190,10 @@ extension TidepoolService: RemoteDataService {
     }
 
     public var pumpEventDataLimit: Int? { return 1000 }
+
+    // public func uploadPumpEventData(_ stored: [PersistedPumpEvent], completion: @escaping (Result<Bool, Error>) -> Void) {
+    //     createData(stored.compactMap { $0.datum }, completion: completion)
+    // }
 
     public var settingsDataLimit: Int? { return 1000 }
 
