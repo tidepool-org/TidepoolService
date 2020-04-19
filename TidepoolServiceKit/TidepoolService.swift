@@ -149,6 +149,22 @@ public final class TidepoolService: Service {
     }
 }
 
+extension TidepoolService: RemoteDataService {
+
+    public var carbDataLimit: Int? { return 1000 }
+
+    public var doseDataLimit: Int? { return 1000 }
+
+    public var dosingDecisionDataLimit: Int? { return 1000 }
+
+    public var glucoseDataLimit: Int? { return 1000 }
+
+    public var pumpEventDataLimit: Int? { return 1000 }
+
+    public var settingsDataLimit: Int? { return 1000 }
+
+}
+
 extension KeychainManager: SessionStorage {
     public func setSession(_ session: TSession?, for service: String) throws {
         try replaceGenericPassword(nil, forService: service)
