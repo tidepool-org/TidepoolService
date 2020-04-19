@@ -613,12 +613,14 @@
 			);
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/LoopKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
 			);
 			name = "Copy Frameworks with Carthage";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LoopKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TidepoolKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -634,6 +636,8 @@
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/LoopKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/LoopKitUI.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
 			);
 			name = "Copy Frameworks with Carthage";
 			outputFileListPaths = (
@@ -641,6 +645,8 @@
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LoopKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LoopKitUI.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TidepoolKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TidepoolKitUI.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
