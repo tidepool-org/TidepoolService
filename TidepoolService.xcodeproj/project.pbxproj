@@ -22,6 +22,11 @@
 
 /* Begin PBXBuildFile section */
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
+		A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
+		A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
+		A9151366244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
+		A9151367244E2A9E00116932 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
+		A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
@@ -175,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9DAAD5D22E7E73000E76C9F /* LoopKit.framework in Frameworks */,
+				A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */,
 				A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,6 +191,7 @@
 			files = (
 				A9DAAD6122E7E7B200E76C9F /* LoopKit.framework in Frameworks */,
 				A9DAAD6322E7E7B200E76C9F /* LoopKitUI.framework in Frameworks */,
+				A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */,
 				A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */,
 				A9DAAD6422E7E7B700E76C9F /* TidepoolServiceKit.framework in Frameworks */,
 			);
@@ -196,6 +203,9 @@
 			files = (
 				A9DAAD6822E7E81E00E76C9F /* LoopKit.framework in Frameworks */,
 				A9DAAD6A22E7E81E00E76C9F /* LoopKitUI.framework in Frameworks */,
+				A9151366244E2A9E00116932 /* TidepoolKit.framework in Frameworks */,
+				A9151367244E2A9E00116932 /* TidepoolKitUI.framework in Frameworks */,
+				A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */,
 				A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,8 +629,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LoopKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TidepoolKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -643,10 +651,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LoopKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LoopKitUI.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TidepoolKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TidepoolKitUI.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

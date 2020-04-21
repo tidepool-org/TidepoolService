@@ -10,6 +10,10 @@ import os.log
 import LoopKit
 import TidepoolKit
 
+public enum TidepoolServiceError: Error {
+    case configuration
+}
+
 public protocol SessionStorage {
     func setSession(_ session: TSession?, for service: String) throws
     func getSession(for service: String) throws -> TSession?
@@ -36,7 +40,11 @@ public final class TidepoolService: Service {
             if session == nil {
                 self.dataSetId = nil
             }
-            saveSession()
+            do {
+                try sessionStorage?.setSession(session, for: sessionService)
+            } catch let error {
+                self.error = error
+            }
         }
     }
 
@@ -56,9 +64,13 @@ public final class TidepoolService: Service {
         guard let id = rawState["id"] as? String else {
             return nil
         }
-        self.id = id
-        self.dataSetId = rawState["dataSetId"] as? String
-        restoreSession()
+        do {
+            self.id = id
+            self.dataSetId = rawState["dataSetId"] as? String
+            self.session = try sessionStorage?.getSession(for: sessionService)
+        } catch let error {
+            self.error = error
+        }
     }
 
     public var rawState: RawStateValue {
@@ -68,11 +80,11 @@ public final class TidepoolService: Service {
         return rawValue
     }
 
-    public func completeCreate(withSession session: TSession) {
+    public func completeCreate(withSession session: TSession, completion: @escaping (Error?) -> Void) {
         self.session = session
 
         DispatchQueue.global(qos: .background).async {
-            self.getDataSet()
+            self.getDataSet(completion: completion)
         }
     }
 
@@ -92,29 +104,32 @@ public final class TidepoolService: Service {
         }
     }
 
-    private func getDataSet() {
+    private func getDataSet(completion: @escaping (Error?) -> Void) {
         guard let session = session, let clientName = Bundle.main.bundleIdentifier else {
+            completion(TidepoolServiceError.configuration)
             return
         }
         tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName), session: session) { result in
             switch result {
             case .failure(let error):
-                self.error = error
+                completion(error)
             case .success(let dataSets):
                 if !dataSets.isEmpty {
                     if dataSets.count > 1 {
                         self.log.error("Found multiple matching data sets; expected zero or one")
                     }
                     self.dataSetId = dataSets.first?.uploadId
+                    completion(nil)
                 } else {
-                    self.createDataSet()
+                    self.createDataSet(completion: completion)
                 }
             }
         }
     }
 
-    private func createDataSet() {
+    private func createDataSet(completion: @escaping (Error?) -> Void) {
         guard let session = session, let clientName = Bundle.main.bundleIdentifier, let clientVersion = Bundle.main.semanticVersion else {
+            completion(TidepoolServiceError.configuration)
             return
         }
         let dataSet = TDataSet(dataSetType: .continuous,
@@ -123,30 +138,15 @@ public final class TidepoolService: Service {
         tapi.createDataSet(dataSet, session: session) { result in
             switch result {
             case .failure(let error):
-                self.error = error
+                completion(error)
             case .success(let dataSet):
                 self.dataSetId = dataSet.uploadId
+                completion(nil)
             }
         }
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
-
-    private func saveSession() {
-        do {
-            try sessionStorage?.setSession(session, for: sessionService)
-        } catch let error {
-            self.error = error
-        }
-    }
-
-    private func restoreSession() {
-        do {
-            self.session = try sessionStorage?.getSession(for: sessionService)
-        } catch let error {
-            self.error = error
-        }
-    }
 }
 
 extension TidepoolService: RemoteDataService {
