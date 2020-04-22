@@ -167,24 +167,16 @@ extension TidepoolService: RemoteDataService {
 
 extension KeychainManager: SessionStorage {
     public func setSession(_ session: TSession?, for service: String) throws {
-        try replaceGenericPassword(nil, forService: service)
+        try deleteGenericPassword(forService: service)
         guard let session = session else {
             return
         }
         let sessionData = try JSONEncoder.tidepool.encode(session)
-        guard let sessionString = String(data: sessionData, encoding: .utf8) else {
-            throw SessionStorageError()
-        }
-        try replaceGenericPassword(sessionString, forService: service)
+        try replaceGenericPassword(sessionData, forService: service)
     }
 
     public func getSession(for service: String) throws -> TSession? {
-        let sessionString = try getGenericPasswordForService(service)
-        guard let sessionData = sessionString.data(using: .utf8) else {
-            throw SessionStorageError()
-        }
+        let sessionData = try getGenericPasswordForServiceAsData(service)
         return try JSONDecoder.tidepool.decode(TSession.self, from: sessionData)
     }
-
-    public struct SessionStorageError: Error {}
 }
