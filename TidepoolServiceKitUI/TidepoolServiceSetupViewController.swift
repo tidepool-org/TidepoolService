@@ -46,13 +46,20 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
         notifyComplete()
     }
 
-    func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession) -> Error? {
-        service.completeCreate(withSession: session)
-        if let serviceViewController = navigationController as? ServiceViewController {
-            serviceViewController.notifyServiceCreated(service)
+    func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {
+        service.completeCreate(withSession: session) { error in
+            guard error == nil else {
+                completion(error)
+                return
+            }
+            DispatchQueue.main.async {
+                if let serviceViewController = self.navigationController as? ServiceViewController {
+                    serviceViewController.notifyServiceCreated(self.service)
+                }
+                self.notifyComplete()
+                completion(nil)
+            }
         }
-        notifyComplete()
-        return nil
     }
 
     private func notifyComplete() {
