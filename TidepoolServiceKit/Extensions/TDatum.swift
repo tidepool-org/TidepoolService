@@ -17,9 +17,6 @@ extension TDatum {
 
 extension TDatum: CustomDebugStringConvertible {
     public var debugDescription: String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
-        encoder.dateEncodingStrategy = .tidepool
         guard let data = try? encoder.encode(self) else {
             return "error: failure to encode datum as data"
         }
@@ -29,3 +26,10 @@ extension TDatum: CustomDebugStringConvertible {
         return string
     }
 }
+
+fileprivate let encoder: JSONEncoder = {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+    encoder.dateEncodingStrategy = .tidepool
+    return encoder
+}()
