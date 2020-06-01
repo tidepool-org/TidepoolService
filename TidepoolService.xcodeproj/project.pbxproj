@@ -630,7 +630,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Bootstrapping Carthage dependencies...\"\nunset LLVM_TARGET_TRIPLE_SUFFIX\ntime /usr/local/bin/carthage bootstrap --project-directory \"${SRCROOT}\" --platform ios --cache-builds\n";
+			shellScript = "echo \"Bootstrapping Carthage dependencies...\"\nunset LLVM_TARGET_TRIPLE_SUFFIX\ntime /usr/local/bin/carthage bootstrap --project-directory \"${SRCROOT}\" --platform ios --cache-builds --verbose\n";
 		};
 		A9DAAD5F22E7E75C00E76C9F /* Copy Frameworks with Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
