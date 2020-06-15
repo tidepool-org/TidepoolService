@@ -13,6 +13,8 @@ extension StoredGlucoseSample {
     var datum: TDatum {
         if isDisplayOnly {
             return TCalibrationDeviceEventDatum(time: datumTime, value: datumValue, units: datumUnits).adorn(withOrigin: datumOrigin)
+        } else if wasUserEntered {
+            return TSMBGDatum(time: datumTime, value: datumValue, units: datumUnits, subType: .manual).adorn(withOrigin: datumOrigin)
         } else {
             return TCBGDatum(time: datumTime, value: datumValue, units: datumUnits).adorn(withOrigin: datumOrigin)
         }
