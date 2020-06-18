@@ -62,6 +62,7 @@
 		A9DAAD6A22E7E81E00E76C9F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */; };
 		A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */; };
 		A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */; };
+		E9692174249BF2A100D9BE3B /* Prescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692173249BF2A100D9BE3B /* Prescription.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,7 @@
 		A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
 		A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		E9692173249BF2A100D9BE3B /* Prescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */,
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
 				A9309CA2243563CD00E02268 /* TOrigin.swift */,
+				E9692173249BF2A100D9BE3B /* Prescription.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				A9309CA52435986300E02268 /* DeletedCarbEntry.swift in Sources */,
 				A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */,
 				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
+				E9692174249BF2A100D9BE3B /* Prescription.swift in Sources */,
 				A9309CA72435987000E02268 /* StoredCarbEntry.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
