@@ -7,6 +7,7 @@
 //
 
 import LoopKitUI
+import SwiftUI
 import TidepoolKit
 import TidepoolKitUI
 import TidepoolServiceKit
@@ -59,6 +60,13 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
                 self.notifyComplete()
                 completion(nil)
             }
+        }
+    }
+    
+    private func onboardIfNeeded() {
+        if service.onboardingNeeded {
+            let setupViewController = PrescriptionReviewUICoordinator()
+            self.present(setupViewController, animated: true, completion: nil)
         }
     }
 
