@@ -32,8 +32,11 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
     }
 
     @objc private func done() {
+        // ANNA TODO: revert
+        let setupViewController = PrescriptionReviewUICoordinator()
+        self.present(setupViewController, animated: true, completion: nil)
         service.completeUpdate()
-        notifyComplete()
+        //notifyComplete()
     }
 
     private func confirmDeletion(completion: (() -> Void)? = nil) {

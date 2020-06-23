@@ -1,26 +1,16 @@
 //
-//  PrescriptionCodeEntryView.swift
+//  PrescriptionDeviceView.swift
 //  TidepoolServiceKitUI
 //
-//  Created by Anna Quinlan on 6/18/20.
-//  Copyright © 2020 Tidepool Project. All rights reserved.
+//  Created by Anna Quinlan on 6/22/20.
+//  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 import LoopKitUI
 
-struct CodeEntry: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-        .keyboardType(.numberPad)
-        .font(.body)
-        .multilineTextAlignment(.leading)
-        .padding()
-    }
-}
-
-struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
-    
+struct PrescriptionDeviceView: View {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
 
@@ -31,51 +21,46 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     var body: some View {
         NavigationView {
             VStack {
-                VStack(alignment: .leading, spacing: 25) {
-                    self.itemsNeededDescription
-                    self.itemsNeededList
+                VStack(alignment: .leading, spacing: 20) {
+                    self.prescribedDeviceInfo
                 }
                 .padding()
                 VStack(alignment: .leading, spacing: 10) {
-                    self.codeEntryRequest
-                    self.prescriptionCodeInput
+                    self.itemsNeededList
+                    //self.prescribedDevices
                 }
                 .padding()
                 VStack(alignment: .leading, spacing: 15) {
-                    self.submitCodeButton
-                    self.requestPrescriptionButton
+                    self.approveDevicesButton
+                    self.editDevicesButton
                 }
                 .padding()
             }
             .listStyle(GroupedListStyle())
             .navigationBarBackButtonHidden(false)
-            .navigationBarHidden(false)
+            .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
             .navigationBarItems(trailing: cancelButton)
-            .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
-            .environment(\.horizontalSizeClass, horizontalOverride)
         }
-        
-        
     }
     
     private var cancelButton: some View {
         Button(action: {
             self.viewModel.didCancel?()
         }) {
-            Text(LocalizedString("Cancel", comment: "Button text to exit the prescription code entry screen"))
+            Text(LocalizedString("Cancel", comment: "Button text to exit the device review screen"))
             .foregroundColor(purple)
         }
     }
     
-    private var itemsNeededDescription: some View {
+    private var prescribedDeviceInfo: some View {
         VStack (alignment: .leading, spacing: 10) {
-            Text(LocalizedString("What you'll need", comment: "Title for section describing items needed to review settings"))
-            .font(.headline)
-            Text(LocalizedString("For the next section, you'll want to have the following:", comment: "Subheader for items-needed section"))
-            .foregroundColor(blueGray)
+            Text(LocalizedString("Since your provider included your recommended settings with your prescription, you'll have the chance to review and accept each of these settings now.", comment: "Text describing purpose of settings walk-through"))
+            //.fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+            Text(LocalizedString("Your prescription contains recommended settings for the following devices:", comment: "Title for devices prescribed section"))
+            
             .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
         }
-        
+        .foregroundColor(blueGray)
     }
     
     private var itemsNeededList: some View {
@@ -97,39 +82,23 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         }
         
     }
-    
-    private var prescriptionCodeInput: some View {
-        TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
-        .textFieldStyle(CodeEntry())
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-            .stroke(lightGray, lineWidth: 1)
-        )
-    }
 
-    private var submitCodeButton: some View {
+    private var approveDevicesButton: some View {
         Button(action: {
             self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode)
         }) {
-            Text(LocalizedString("Submit activation code", comment: "Button title for submitting the prescription activation code to Tidepool"))
+            Text(LocalizedString("Next: review your settings", comment: "Button title for approving devices"))
                 .actionButtonStyle(.tidepoolPrimary)
         }
     }
         
-    private var requestPrescriptionButton: some View {
+    private var editDevicesButton: some View {
         Button(action: {
             // TODO: contact prescriber window
             print("TODO")
         }) {
-            Text(LocalizedString("Request activation code", comment:"Button title for requesting a prescription activation code from the prescriber"))
+            Text(LocalizedString("Edit devices", comment:"Button title for editing the prescribed devices"))
                 .actionButtonStyle(.tidepoolSecondary)
         }
     }
 }
-
-struct PrescriptionCodeEntryView_Previews: PreviewProvider {
-    static var previews: some View {
-        PrescriptionCodeEntryView(viewModel: PrescriptionCodeEntryViewModel())
-    }
-}
-

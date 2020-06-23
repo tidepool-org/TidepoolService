@@ -72,7 +72,9 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
 
     private func notifyComplete() {
         if let serviceViewController = navigationController as? ServiceViewController {
-            serviceViewController.notifyComplete()
+            onboardIfNeeded()
+            // ANNA TODO: revert, this will make the screen be dismissed
+            //serviceViewController.notifyComplete()
         }
     }
 }

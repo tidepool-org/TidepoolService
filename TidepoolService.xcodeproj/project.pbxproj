@@ -63,6 +63,7 @@
 		A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */; };
 		A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */; };
 		E93BA05E24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05D24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift */; };
+		E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */; };
 		E9692172249BC73600D9BE3B /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */; };
 		E9692174249BF2A100D9BE3B /* Prescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692173249BF2A100D9BE3B /* Prescription.swift */; };
 		E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692175249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift */; };
@@ -174,6 +175,7 @@
 		A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
 		A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		E93BA05D24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryViewModel.swift; sourceTree = "<group>"; };
+		E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrescriptionManager.swift; sourceTree = "<group>"; };
 		E9692173249BF2A100D9BE3B /* Prescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription.swift; sourceTree = "<group>"; };
 		E9692175249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */,
+				E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -767,6 +770,7 @@
 				A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */,
 				E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
+				E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */,
 				E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
