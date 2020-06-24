@@ -24,7 +24,7 @@ enum PrescriptionReviewScreen {
     }
 }
 
-class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying {
+class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     var completionDelegate: CompletionDelegate?
     
@@ -41,6 +41,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate = self
         self.navigationBar.prefersLargeTitles = true // ensure nav bar text is displayed correctly
     }
     
@@ -71,6 +72,16 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         }
     }
     
+    public func navigationController(_ navigationController: UINavigationController,
+                                     willShow viewController: UIViewController,
+                                     animated: Bool) {
+        // Pop the current screen from the stack if we're navigating back
+        if viewControllers.count < screenStack.count {
+            // Navigation back
+            let _ = screenStack.popLast()
+        }
+    }
+    
     private func determineFirstScreen() -> PrescriptionReviewScreen {
         return .enterCode
     }
@@ -97,5 +108,14 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         screenStack.append(screen)
         let viewController = viewControllerForScreen(screen)
         self.pushViewController(viewController, animated: true)
+    }
+}
+
+// ANNA TODO: remove this once done testing
+extension TidepoolServiceSettingsViewController: CompletionDelegate {
+    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
+        if let vc = object as? UIViewController, presentedViewController === vc {
+            dismiss(animated: true, completion: nil)
+        }
     }
 }

@@ -20,7 +20,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     
     var body: some View {
         // Option 1
-        List {
+        VStack {
             VStack(alignment: .leading, spacing: 25) {
                 self.prescribedDeviceInfo
                 self.devicesList
@@ -30,6 +30,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             VStack(alignment: .leading, spacing: 15) {
                 self.approveDevicesButton
                 self.editDevicesButton
+                Spacer()
             }
             .padding()
         }

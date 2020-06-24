@@ -63,9 +63,10 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
         }
     }
     
+    let setupViewController = PrescriptionReviewUICoordinator()
     private func onboardIfNeeded() {
         if service.onboardingNeeded {
-            let setupViewController = PrescriptionReviewUICoordinator()
+            setupViewController.completionDelegate = self
             self.present(setupViewController, animated: true, completion: nil)
         }
     }
@@ -75,6 +76,15 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
             onboardIfNeeded()
             // ANNA TODO: revert, this will make the screen be dismissed
             //serviceViewController.notifyComplete()
+        }
+    }
+}
+
+// ANNA TODO: remove once done with testing
+extension TidepoolServiceSetupViewController: CompletionDelegate {
+    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
+        if let vc = object as? UIViewController, presentedViewController === vc {
+            dismiss(animated: true, completion: nil)
         }
     }
 }

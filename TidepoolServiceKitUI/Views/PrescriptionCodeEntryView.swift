@@ -41,6 +41,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 self.requestPrescriptionButton
             }
             .padding()
+            Spacer()
         }
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)

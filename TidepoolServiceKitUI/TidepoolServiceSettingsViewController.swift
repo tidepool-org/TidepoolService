@@ -31,11 +31,13 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
 
+    let setupViewController = PrescriptionReviewUICoordinator()
     @objc private func done() {
         // ANNA TODO: revert
-        let setupViewController = PrescriptionReviewUICoordinator()
+        setupViewController.completionDelegate = self
         self.present(setupViewController, animated: true, completion: nil)
         service.completeUpdate()
+        // ANNA TODO: revert once testing is done
         //notifyComplete()
     }
 
