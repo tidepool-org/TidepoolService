@@ -35,11 +35,12 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 itemsNeededList
                 codeEntryRequest
             }
-            .padding()
+            .padding(.vertical)
             submitCodeButton
             requestPrescriptionButton
             Spacer()
         }
+        .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
         .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))

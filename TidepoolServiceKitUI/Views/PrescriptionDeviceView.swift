@@ -26,11 +26,12 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 devicesList
                 disclaimer
             }
-            .padding()
+            .padding(.vertical)
             approveDevicesButton
             editDevicesButton
             Spacer()
         }
+        .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
         .onAppear() {
