@@ -14,9 +14,8 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
 
-    let blueGray = Color(#colorLiteral(red: 0.4156862745, green: 0.4705882353, blue: 0.5529411765, alpha: 1))
-    let lightGray = Color(#colorLiteral(red: 0.7019607843, green: 0.6980392157, blue: 0.6980392157, alpha: 1))
-    let purple = Color(#colorLiteral(red: 0.3647058824, green: 0.4745098039, blue: 1, alpha: 1))
+    let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+    let purple = Color("tidepool indigo", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     
     var body: some View {
         List {
@@ -111,6 +110,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 VStack (alignment: .leading, spacing: 10) {
                     Text(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings", comment: "Text describing that Tidepool Loop doesn't automatically change settings"))
                     .italic()
+                    .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                     .padding(.vertical)
                     Text(LocalizedString("Work with your healthcare provider to find the right settings for you", comment: "Text describing determining settings with your doctor"))
                     .italic()

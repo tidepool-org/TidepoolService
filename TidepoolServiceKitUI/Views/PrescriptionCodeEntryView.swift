@@ -24,9 +24,8 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
 
-    let blueGray = Color(#colorLiteral(red: 0.4156862745, green: 0.4705882353, blue: 0.5529411765, alpha: 1))
-    let lightGray = Color(#colorLiteral(red: 0.7019607843, green: 0.6980392157, blue: 0.6980392157, alpha: 1))
-    let purple = Color(#colorLiteral(red: 0.3647058824, green: 0.4745098039, blue: 1, alpha: 1))
+    let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+    let purple = Color("tidepool indigo", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     
     var body: some View {
         List {
@@ -101,7 +100,8 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         .textFieldStyle(CodeEntry())
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-            .stroke(lightGray, lineWidth: 1)
+            .stroke(Color.gray, lineWidth: 1)
+            
         )
     }
 
