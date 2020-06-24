@@ -40,6 +40,8 @@ public struct Prescription {
     public let maximumBolus: Double
     public let suspendThreshold: GlucoseThreshold
     public let insulinModel: InsulinModel
+    public let preMealTargetRange: DoubleRange
+    public let workoutTargetRange: DoubleRange
 
     public init(datePrescribed: Date,
                 providerName: String,
@@ -53,7 +55,9 @@ public struct Prescription {
                 maximumBasalRatePerHour: Double,
                 maximumBolus: Double,
                 suspendThreshold: GlucoseThreshold,
-                insulinModel: InsulinModel) {
+                insulinModel: InsulinModel,
+                preMealTargetRange: DoubleRange,
+                workoutTargetRange: DoubleRange) {
         self.datePrescribed = datePrescribed
         self.providerName = providerName
         self.cgm = cgmType
@@ -67,6 +71,8 @@ public struct Prescription {
         self.maximumBolus = maximumBolus
         self.suspendThreshold = suspendThreshold
         self.insulinModel = insulinModel
+        self.preMealTargetRange = preMealTargetRange
+        self.workoutTargetRange = workoutTargetRange
     }
     
     public struct InsulinModel: Codable, Equatable {
@@ -108,7 +114,9 @@ extension Prescription: Codable {
                   maximumBasalRatePerHour: try container.decode(Double.self, forKey: .maximumBasalRatePerHour),
                   maximumBolus: try container.decode(Double.self, forKey: .maximumBolus),
                   suspendThreshold: try container.decode(GlucoseThreshold.self, forKey: .suspendThreshold),
-                  insulinModel: try container.decode(InsulinModel.self, forKey: .insulinModel))
+                  insulinModel: try container.decode(InsulinModel.self, forKey: .insulinModel),
+                  preMealTargetRange: try container.decode(DoubleRange.self, forKey: .preMealTargetRange),
+                  workoutTargetRange: try container.decode(DoubleRange.self, forKey: .workoutTargetRange))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -126,6 +134,8 @@ extension Prescription: Codable {
         try container.encode(maximumBolus, forKey: .maximumBolus)
         try container.encode(suspendThreshold, forKey: .suspendThreshold)
         try container.encode(insulinModel, forKey: .insulinModel)
+        try container.encode(preMealTargetRange, forKey: .preMealTargetRange)
+        try container.encode(workoutTargetRange, forKey: .workoutTargetRange)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -142,6 +152,7 @@ extension Prescription: Codable {
         case maximumBolus
         case suspendThreshold
         case insulinModel
-        
+        case preMealTargetRange
+        case workoutTargetRange
     }
 }
