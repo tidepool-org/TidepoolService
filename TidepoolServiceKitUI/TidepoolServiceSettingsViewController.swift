@@ -133,3 +133,12 @@ fileprivate extension UIAlertController {
     }
 
 }
+
+extension TidepoolServiceSettingsViewController: CompletionDelegate {
+    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
+        if let vc = object as? UIViewController, presentedViewController === vc {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+}
+

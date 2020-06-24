@@ -110,12 +110,3 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         self.pushViewController(viewController, animated: true)
     }
 }
-
-// ANNA TODO: remove this once done testing
-extension TidepoolServiceSettingsViewController: CompletionDelegate {
-    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
-        if let vc = object as? UIViewController, presentedViewController === vc {
-            dismiss(animated: true, completion: nil)
-        }
-    }
-}

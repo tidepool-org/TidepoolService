@@ -80,7 +80,6 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
     }
 }
 
-// ANNA TODO: remove once done with testing
 extension TidepoolServiceSetupViewController: CompletionDelegate {
     func completionNotifyingDidComplete(_ object: CompletionNotifying) {
         if let vc = object as? UIViewController, presentedViewController === vc {

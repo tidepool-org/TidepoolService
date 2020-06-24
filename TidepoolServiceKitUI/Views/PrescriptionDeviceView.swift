@@ -51,7 +51,6 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 Text(LocalizedString("Your prescription contains recommended settings for the following devices:", comment: "Title for devices prescribed section"))
                 .foregroundColor(blueGray)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
-                // TODO: support multiple devices
                 pumpStack
                 cgmStack
             }
@@ -75,10 +74,12 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     
     private var dashIcon: some View {
         Image("dash", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+        .renderingMode(.template)
         .resizable()
         .aspectRatio(contentMode: ContentMode.fit)
         .frame(height: 50)
-        .padding(5) // ANNA TODO: figure out better way to align
+        .padding(5) // align with Dexcom
+        .foregroundColor(purple)
     }
     
     private var cgmStack: some View {
@@ -133,7 +134,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         
     private var editDevicesButton: some View {
         Button(action: {
-            // TODO: contact prescriber window
+            // TODO: open window to edit the devices
             print("TODO")
         }) {
             Text(LocalizedString("Edit devices", comment:"Button title for editing the prescribed devices"))

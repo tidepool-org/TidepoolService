@@ -116,7 +116,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         
     private var requestPrescriptionButton: some View {
         Button(action: {
-            // TODO: contact prescriber window
+            // TODO: open contact prescriber window
             print("TODO")
         }) {
             Text(LocalizedString("Request activation code", comment:"Button title for requesting a prescription activation code from the prescriber"))
