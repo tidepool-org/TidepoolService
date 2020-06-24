@@ -29,8 +29,7 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
     
     func loadPrescriptionFromCode(prescriptionCode: String) {
         // TODO: validate prescription code and check if it works; if not, raise invalidCode error
-        
-        #if targetEnvironment(simulator)
+
         MockPrescriptionManager().getPrescriptionData { result in
             switch result {
             case .failure:
@@ -40,9 +39,7 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
                 self.entryNavigation(success: true)
             }
         }
-        #else
         // TODO: call function to properly query the backend
         // TODO: if prescription couldn't be retrieved from backend, raise unableToRetreivePrescription error
-        #endif
     }
 }

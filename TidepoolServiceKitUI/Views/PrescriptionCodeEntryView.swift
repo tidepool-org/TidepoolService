@@ -12,7 +12,7 @@ import LoopKitUI
 struct CodeEntry: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
-        .keyboardType(.numberPad)
+        .keyboardType(.default)
         .font(.body)
         .multilineTextAlignment(.leading)
         .padding()
