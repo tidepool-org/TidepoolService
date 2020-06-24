@@ -20,22 +20,22 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     
     var body: some View {
         // Option 1
-        VStack {
+        List {
             VStack(alignment: .leading, spacing: 25) {
-                self.prescribedDeviceInfo
-                self.devicesList
-                self.disclaimer
+                prescribedDeviceInfo
+                devicesList
+                disclaimer
             }
             .padding()
-            VStack(alignment: .leading, spacing: 15) {
-                self.approveDevicesButton
-                self.editDevicesButton
-                Spacer()
-            }
-            .padding()
+            approveDevicesButton
+            editDevicesButton
+            Spacer()
         }
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
+        .onAppear() {
+            UITableView.appearance().separatorStyle = .none
+        }
         
         // Option 2
         /*GuidePage(content: {

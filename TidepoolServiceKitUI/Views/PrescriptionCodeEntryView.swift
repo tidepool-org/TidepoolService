@@ -30,22 +30,22 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     var body: some View {
         /// option 1
-        VStack {
+        List {
             VStack(alignment: .leading, spacing: 25) {
-                self.itemsNeededList
-                self.codeEntryRequest
+                itemsNeededList
+                codeEntryRequest
             }
             .padding()
-            VStack(alignment: .leading, spacing: 15) {
-                self.submitCodeButton
-                self.requestPrescriptionButton
-            }
-            .padding()
+            submitCodeButton
+            requestPrescriptionButton
             Spacer()
         }
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
         .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
+        .onAppear() {
+            UITableView.appearance().separatorStyle = .none
+        }
         
         /// option 2
         
