@@ -19,7 +19,6 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     let purple = Color(#colorLiteral(red: 0.3647058824, green: 0.4745098039, blue: 1, alpha: 1))
     
     var body: some View {
-        // Option 1
         List {
             VStack(alignment: .leading, spacing: 25) {
                 prescribedDeviceInfo
@@ -35,26 +34,8 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
         .onAppear() {
-            UITableView.appearance().separatorStyle = .none
+            UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
-        
-        // Option 2
-        /*GuidePage(content: {
-                self.prescribedDeviceInfo
-                .padding(.vertical)
-                self.devicesList
-                .padding(.vertical)
-                self.disclaimer
-                .padding(.vertical)
-            }) {
-                VStack(alignment: .leading, spacing: 15) {
-                    self.approveDevicesButton
-                    self.editDevicesButton
-                }
-                .padding()
-            }
-            .environment(\.horizontalSizeClass, horizontalOverride)
-            .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))*/
     }
     
     private var prescribedDeviceInfo: some View {

@@ -29,7 +29,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     let purple = Color(#colorLiteral(red: 0.3647058824, green: 0.4745098039, blue: 1, alpha: 1))
     
     var body: some View {
-        /// option 1
         List {
             VStack(alignment: .leading, spacing: 25) {
                 itemsNeededList
@@ -45,29 +44,8 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         .navigationBarItems(trailing: cancelButton)
         .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
         .onAppear() {
-            UITableView.appearance().separatorStyle = .none
+            UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
-        
-        /// option 2
-        
-        /*GuidePage(content: {
-            self.itemsNeededList
-            .padding(.vertical)
-            self.codeEntryRequest
-            .padding(.vertical)
-            
-        }) {
-            VStack(alignment: .leading, spacing: 15) {
-                self.submitCodeButton
-                self.requestPrescriptionButton
-            }
-            .padding()
-        }
-        .environment(\.horizontalSizeClass, horizontalOverride)
-        .navigationBarItems(trailing: cancelButton)
-        .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")), displayMode: .large)
-        */
-         
     }
 
     private var cancelButton: some View {
