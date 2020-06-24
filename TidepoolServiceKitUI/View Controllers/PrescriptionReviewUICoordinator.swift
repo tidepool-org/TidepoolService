@@ -39,6 +39,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationBar.prefersLargeTitles = true // ensure nav bar text is displayed correctly
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -53,7 +58,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: viewModel)
-            return UIHostingController(rootView: view)
+            return DismissibleHostingController(rootView: view)
         case .reviewDevices:
             viewModel.didCancel = { [weak self] in
                 self?.setupCanceled()
@@ -62,7 +67,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.stepFinished()
             }
             let view = PrescriptionDeviceView(viewModel: viewModel)
-            return UIHostingController(rootView: view)
+            return DismissibleHostingController(rootView: view)
         }
     }
     

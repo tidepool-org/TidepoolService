@@ -29,35 +29,45 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     let purple = Color(#colorLiteral(red: 0.3647058824, green: 0.4745098039, blue: 1, alpha: 1))
     
     var body: some View {
-        NavigationView {
-            VStack {
-                VStack(alignment: .leading, spacing: 25) {
-                    self.itemsNeededDescription
-                    self.itemsNeededList
-                }
-                .padding()
-                VStack(alignment: .leading, spacing: 10) {
-                    self.codeEntryRequest
-                    self.prescriptionCodeInput
-                }
-                .padding()
-                VStack(alignment: .leading, spacing: 15) {
-                    self.submitCodeButton
-                    self.requestPrescriptionButton
-                }
-                .padding()
+        /// option 1
+        VStack {
+            VStack(alignment: .leading, spacing: 25) {
+                self.itemsNeededList
+                self.codeEntryRequest
             }
-            .listStyle(GroupedListStyle())
-            .navigationBarBackButtonHidden(false)
-            .navigationBarHidden(false)
-            .navigationBarItems(trailing: cancelButton)
-            .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
-            .environment(\.horizontalSizeClass, horizontalOverride)
+            .padding()
+            VStack(alignment: .leading, spacing: 15) {
+                self.submitCodeButton
+                self.requestPrescriptionButton
+            }
+            .padding()
         }
+        .environment(\.horizontalSizeClass, horizontalOverride)
+        .navigationBarItems(trailing: cancelButton)
+        .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
         
+        /// option 2
         
+        /*GuidePage(content: {
+            self.itemsNeededList
+            .padding(.vertical)
+            self.codeEntryRequest
+            .padding(.vertical)
+            
+        }) {
+            VStack(alignment: .leading, spacing: 15) {
+                self.submitCodeButton
+                self.requestPrescriptionButton
+            }
+            .padding()
+        }
+        .environment(\.horizontalSizeClass, horizontalOverride)
+        .navigationBarItems(trailing: cancelButton)
+        .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")), displayMode: .large)
+        */
+         
     }
-    
+
     private var cancelButton: some View {
         Button(action: {
             self.viewModel.didCancel?()
@@ -79,26 +89,34 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var itemsNeededList: some View {
-        InstructionList(instructions: [
-            LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
-            LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
-            ],
-            stepsColor: blueGray
-        )
-        .foregroundColor(blueGray)
+        Section {
+            VStack (alignment: .leading, spacing: 10) {
+                itemsNeededDescription
+                InstructionList(instructions: [
+                    LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
+                    LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
+                    ],
+                    stepsColor: blueGray
+                )
+                .foregroundColor(blueGray)
+            }
+        }
     }
 
     private var codeEntryRequest: some View {
-        VStack (alignment: .leading, spacing: 15) {
-            Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
-            .font(.headline)
-            Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
-            .foregroundColor(blueGray)
+        Section {
+            VStack (alignment: .leading, spacing: 10) {
+                Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
+                .font(.headline)
+                Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
+                .foregroundColor(blueGray)
+                prescriptionCodeInputField
+            }
         }
         
     }
     
-    private var prescriptionCodeInput: some View {
+    private var prescriptionCodeInputField: some View {
         TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
         .textFieldStyle(CodeEntry())
         .overlay(

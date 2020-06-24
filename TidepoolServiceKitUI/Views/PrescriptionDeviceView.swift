@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import LoopKitUI
 
-struct PrescriptionDeviceView: View {
+struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
 
@@ -19,75 +19,131 @@ struct PrescriptionDeviceView: View {
     let purple = Color(#colorLiteral(red: 0.3647058824, green: 0.4745098039, blue: 1, alpha: 1))
     
     var body: some View {
-        NavigationView {
-            VStack {
-                VStack(alignment: .leading, spacing: 20) {
-                    self.prescribedDeviceInfo
-                }
-                .padding()
-                VStack(alignment: .leading, spacing: 10) {
-                    self.itemsNeededList
-                    //self.prescribedDevices
-                }
-                .padding()
+        // Option 1
+        List {
+            VStack(alignment: .leading, spacing: 25) {
+                self.prescribedDeviceInfo
+                self.devicesList
+                self.disclaimer
+            }
+            .padding()
+            VStack(alignment: .leading, spacing: 15) {
+                self.approveDevicesButton
+                self.editDevicesButton
+            }
+            .padding()
+        }
+        .environment(\.horizontalSizeClass, horizontalOverride)
+        .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
+        
+        // Option 2
+        /*GuidePage(content: {
+                self.prescribedDeviceInfo
+                .padding(.vertical)
+                self.devicesList
+                .padding(.vertical)
+                self.disclaimer
+                .padding(.vertical)
+            }) {
                 VStack(alignment: .leading, spacing: 15) {
                     self.approveDevicesButton
                     self.editDevicesButton
                 }
                 .padding()
             }
-            .listStyle(GroupedListStyle())
-            .navigationBarBackButtonHidden(false)
-            .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
-            .navigationBarItems(trailing: cancelButton)
-        }
-    }
-    
-    private var cancelButton: some View {
-        Button(action: {
-            self.viewModel.didCancel?()
-        }) {
-            Text(LocalizedString("Cancel", comment: "Button text to exit the device review screen"))
-            .foregroundColor(purple)
-        }
+            .environment(\.horizontalSizeClass, horizontalOverride)
+            .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))*/
     }
     
     private var prescribedDeviceInfo: some View {
-        VStack (alignment: .leading, spacing: 10) {
+        Section {
             Text(LocalizedString("Since your provider included your recommended settings with your prescription, you'll have the chance to review and accept each of these settings now.", comment: "Text describing purpose of settings walk-through"))
-            //.fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
-            Text(LocalizedString("Your prescription contains recommended settings for the following devices:", comment: "Title for devices prescribed section"))
-            
-            .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+            .foregroundColor(blueGray)
+            .fixedSize(horizontal: false, vertical: true)
         }
-        .foregroundColor(blueGray)
     }
     
-    private var itemsNeededList: some View {
-        InstructionList(instructions: [
-            LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
-            LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
-            ],
-            stepsColor: blueGray
-        )
-        .foregroundColor(blueGray)
+    private var devicesList: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 20) {
+                Text(LocalizedString("Your prescription contains recommended settings for the following devices:", comment: "Title for devices prescribed section"))
+                .foregroundColor(blueGray)
+                .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+                // TODO: support multiple devices
+                pumpStack
+                cgmStack
+            }
+        }
     }
-
-    private var codeEntryRequest: some View {
-        VStack (alignment: .leading, spacing: 15) {
-            Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
-            .font(.headline)
-            Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
-            .foregroundColor(blueGray)
+    
+    private var pumpStack: some View {
+        HStack {
+            dashIcon
+            .padding(.horizontal)
+            VStack (alignment: .leading) {
+                Text(LocalizedString("Omnipod 5", comment: "Text describing insulin pump name"))
+                Text(LocalizedString("Insulin Pump", comment: "Insulin pump label"))
+                .font(.footnote)
+                .foregroundColor(blueGray)
+            }
+            Spacer()
+            
+        }
+    }
+    
+    private var dashIcon: some View {
+        Image("dash", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+        .resizable()
+        .aspectRatio(contentMode: ContentMode.fit)
+        .frame(height: 50)
+        .padding(5) // ANNA TODO: figure out better way to align
+    }
+    
+    private var cgmStack: some View {
+        HStack {
+            dexcomIcon
+            .padding(.horizontal)
+            VStack (alignment: .leading) {
+                Text(LocalizedString("Dexcom G6", comment: "Text describing CGM name"))
+                Text(LocalizedString("Continuous Glucose Monitor", comment: "CGM label"))
+                .font(.footnote)
+                .foregroundColor(blueGray)
+            }
+            Spacer()
+        }
+    }
+    
+    private var dexcomIcon: some View {
+        Image("dexcom", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+        .resizable()
+        .aspectRatio(contentMode: ContentMode.fit)
+        .frame(height: 25)
+    }
+    
+    private var disclaimer: some View {
+        Section {
+            VStack (alignment: .leading) {
+                Text(LocalizedString("Note", comment: "Title for disclaimer section"))
+                .font(.headline)
+                VStack (alignment: .leading, spacing: 10) {
+                    Text(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings", comment: "Text describing that Tidepool Loop doesn't automatically change settings"))
+                    .italic()
+                    .padding(.vertical)
+                    Text(LocalizedString("Work with your healthcare provider to find the right settings for you", comment: "Text describing determining settings with your doctor"))
+                    .italic()
+                }
+                .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+                .foregroundColor(blueGray)
+            }
         }
         
     }
 
     private var approveDevicesButton: some View {
         Button(action: {
-            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode)
+            self.viewModel.didFinishStep()
         }) {
-            Text(LocalizedString("Next: review your settings", comment: "Button title for approving devices"))
+            Text(LocalizedString("Next: Review Settings", comment: "Button title for approving devices"))
                 .actionButtonStyle(.tidepoolPrimary)
         }
     }
