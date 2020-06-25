@@ -50,10 +50,8 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
     
     let setupViewController = PrescriptionReviewUICoordinator()
     @objc private func startFlow() {
-        if service.onboardingNeeded {
-            setupViewController.completionDelegate = self
-            self.present(setupViewController, animated: true, completion: nil)
-        }
+        setupViewController.completionDelegate = self
+        self.present(setupViewController, animated: true, completion: nil)
     }
 
     func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {

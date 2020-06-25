@@ -31,8 +31,6 @@ public final class TidepoolService: Service {
     public lazy var sessionStorage: SessionStorage? = KeychainManager()
 
     public let tapi = TAPI()
-    
-    public let onboardingNeeded: Bool
 
     public private (set) var error: Error?
 
@@ -61,7 +59,6 @@ public final class TidepoolService: Service {
 
     public init() {
         self.id = UUID().uuidString
-        self.onboardingNeeded = true
     }
 
     public init?(rawState: RawStateValue) {
@@ -71,7 +68,6 @@ public final class TidepoolService: Service {
         do {
             self.id = id
             self.dataSetId = rawState["dataSetId"] as? String
-            self.onboardingNeeded = rawState["onboardingNeeded"] as? Bool ?? false
             self.session = try sessionStorage?.getSession(for: sessionService)
         } catch let error {
             self.error = error
@@ -82,7 +78,6 @@ public final class TidepoolService: Service {
         var rawValue: RawStateValue = [:]
         rawValue["id"] = id
         rawValue["dataSetId"] = dataSetId
-        rawValue["onboardingNeeded"] = onboardingNeeded
         return rawValue
     }
 
