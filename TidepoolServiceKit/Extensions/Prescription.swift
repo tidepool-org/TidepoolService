@@ -17,7 +17,6 @@ public enum CGMType: String, Codable {
 
 public enum PumpType: String, Codable {
     case dash
-    case coastal
 }
 
 public enum TrainingType: String, Codable {

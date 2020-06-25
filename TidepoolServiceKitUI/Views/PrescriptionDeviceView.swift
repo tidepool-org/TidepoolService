@@ -58,6 +58,15 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     }
     
     private var pumpStack: some View {
+        switch self.viewModel.prescription?.pump {
+        case .dash:
+            return dashStack
+        case .none:
+            return dashStack // TODO: ask design about a default 'empty' pump card
+        }
+    }
+    
+    private var dashStack: some View {
         HStack {
             dashIcon
             .padding(.horizontal)
@@ -83,6 +92,15 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     }
     
     private var cgmStack: some View {
+        switch self.viewModel.prescription?.cgm {
+        case .g6:
+            return dexcomStack
+        case .none:
+            return dexcomStack // TODO: ask design about a default 'empty' cgm card
+        }
+    }
+    
+    private var dexcomStack: some View {
         HStack {
             dexcomIcon
             .padding(.horizontal)
