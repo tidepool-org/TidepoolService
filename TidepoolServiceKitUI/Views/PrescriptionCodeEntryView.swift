@@ -9,17 +9,6 @@
 import SwiftUI
 import LoopKitUI
 
-//struct CodeEntry: TextFieldStyle {
-//    func _body(configuration: TextField<Self._Label>) -> some View {
-//        configuration
-//        .keyboardType(.default)
-//        .disableAutocorrection(true)
-//        .font(.body)
-//        .multilineTextAlignment(.leading)
-//        .padding()
-//    }
-//}
-
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     @State private var prescriptionCode: String = ""
