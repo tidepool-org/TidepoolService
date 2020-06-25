@@ -110,8 +110,16 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode)
         }) {
             Text(LocalizedString("Submit activation code", comment: "Button title for submitting the prescription activation code to Tidepool"))
-                .actionButtonStyle(.tidepoolPrimary)
+                .actionButtonStyle(submitButtonStyle(enabled: prescriptionCode.count == self.viewModel.prescriptionCodeLength))
+                .disabled(prescriptionCode.count != viewModel.prescriptionCodeLength)
         }
+    }
+    
+    private func submitButtonStyle(enabled: Bool) -> ActionButton.ButtonType {
+        if enabled {
+            return .tidepoolPrimary
+        }
+        return .primary
     }
         
     private var requestPrescriptionButton: some View {

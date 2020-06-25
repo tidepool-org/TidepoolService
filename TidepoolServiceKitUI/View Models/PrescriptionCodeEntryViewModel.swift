@@ -14,6 +14,7 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
     var didCancel: (() -> Void)?
     
     var prescription: Prescription?
+    let prescriptionCodeLength = 4
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler
@@ -27,9 +28,17 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
         }
     }
     
+    func validateCode(prescriptionCode: String) -> Bool {
+        return prescriptionCode.count == prescriptionCodeLength
+    }
+    
     func loadPrescriptionFromCode(prescriptionCode: String) {
-        // TODO: validate prescription code and check if it works; if not, raise invalidCode error
+        guard validateCode(prescriptionCode: prescriptionCode) else {
+            // TODO: handle error
+            return
+        }
 
+        // TODO: call function to properly query the backend; if prescription couldn't be retrieved, raise unableToRetreivePrescription error
         MockPrescriptionManager().getPrescriptionData { result in
             switch result {
             case .failure:
@@ -39,7 +48,5 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
                 self.entryNavigation(success: true)
             }
         }
-        // TODO: call function to properly query the backend
-        // TODO: if prescription couldn't be retrieved from backend, raise unableToRetreivePrescription error
     }
 }
