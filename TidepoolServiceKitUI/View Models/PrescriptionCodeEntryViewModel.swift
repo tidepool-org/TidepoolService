@@ -3,7 +3,7 @@
 //  TidepoolServiceKitUI
 //
 //  Created by Anna Quinlan on 6/22/20.
-//  Copyright © 2020 LoopKit Authors. All rights reserved.
+//  Copyright © 2020 Tidepool Project. All rights reserved.
 //
 
 import Foundation
