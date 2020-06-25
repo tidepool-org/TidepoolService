@@ -9,16 +9,16 @@
 import SwiftUI
 import LoopKitUI
 
-struct CodeEntry: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-        .keyboardType(.default)
-        .disableAutocorrection(true)
-        .font(.body)
-        .multilineTextAlignment(.leading)
-        .padding()
-    }
-}
+//struct CodeEntry: TextFieldStyle {
+//    func _body(configuration: TextField<Self._Label>) -> some View {
+//        configuration
+//        .keyboardType(.default)
+//        .disableAutocorrection(true)
+//        .font(.body)
+//        .multilineTextAlignment(.leading)
+//        .padding()
+//    }
+//}
 
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
@@ -99,7 +99,11 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     private var prescriptionCodeInputField: some View {
         TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
-        .textFieldStyle(CodeEntry())
+        .keyboardType(.default)
+        .disableAutocorrection(true)
+        .font(.body)
+        .multilineTextAlignment(.leading)
+        .padding()
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
