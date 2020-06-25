@@ -13,6 +13,7 @@ struct CodeEntry: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
         .keyboardType(.default)
+        .disableAutocorrection(true)
         .font(.body)
         .multilineTextAlignment(.leading)
         .padding()
@@ -38,6 +39,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             requestPrescriptionButton
             Spacer()
         }
+        .adaptiveKeyboardPadding() // To ensure the keyboard doesn't obstruct the TextField
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
