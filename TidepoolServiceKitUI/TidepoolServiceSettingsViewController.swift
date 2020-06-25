@@ -31,14 +31,9 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
 
-    let setupViewController = PrescriptionReviewUICoordinator()
     @objc private func done() {
-        // ANNA TODO: revert
-        setupViewController.completionDelegate = self
-        self.present(setupViewController, animated: true, completion: nil)
         service.completeUpdate()
-        // ANNA TODO: revert once testing is done
-        //notifyComplete()
+        notifyComplete()
     }
 
     private func confirmDeletion(completion: (() -> Void)? = nil) {
@@ -133,12 +128,3 @@ fileprivate extension UIAlertController {
     }
 
 }
-
-extension TidepoolServiceSettingsViewController: CompletionDelegate {
-    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
-        if let vc = object as? UIViewController, presentedViewController === vc {
-            dismiss(animated: true, completion: nil)
-        }
-    }
-}
-

@@ -32,6 +32,7 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
         title = service.localizedTitle
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(startFlow))
 
         var loginSignupViewController = service.tapi.loginSignupViewController()
         loginSignupViewController.delegate = self
@@ -45,6 +46,14 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
 
     @objc private func cancel() {
         notifyComplete()
+    }
+    
+    let setupViewController = PrescriptionReviewUICoordinator()
+    @objc private func startFlow() {
+        if service.onboardingNeeded {
+            setupViewController.completionDelegate = self
+            self.present(setupViewController, animated: true, completion: nil)
+        }
     }
 
     func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {
@@ -62,20 +71,10 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
             }
         }
     }
-    
-    let setupViewController = PrescriptionReviewUICoordinator()
-    private func onboardIfNeeded() {
-        if service.onboardingNeeded {
-            setupViewController.completionDelegate = self
-            self.present(setupViewController, animated: true, completion: nil)
-        }
-    }
 
     private func notifyComplete() {
         if let serviceViewController = navigationController as? ServiceViewController {
-            onboardIfNeeded()
-            // ANNA TODO: revert, this will make the screen be dismissed
-            //serviceViewController.notifyComplete()
+            serviceViewController.notifyComplete()
         }
     }
 }
