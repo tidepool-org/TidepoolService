@@ -59,7 +59,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: viewModel)
-            return UIHostingController(rootView: view)
+            return DismissibleHostingController(rootView: view)
         case .reviewDevices:
             viewModel.didCancel = { [weak self] in
                 self?.setupCanceled()

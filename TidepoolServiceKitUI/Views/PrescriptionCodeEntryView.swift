@@ -107,7 +107,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
-            
+
         )
     }
 
