@@ -10,12 +10,21 @@ import SwiftUI
 import LoopKitUI
 import TidepoolServiceKit
 
+struct WidthPreferenceKey: PreferenceKey {
+    static var defaultValue: [CGFloat] = []
+    static func reduce(value: inout [CGFloat], nextValue: () -> [CGFloat]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+
 struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
     var prescription: MockPrescription
 
     let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+    
+    @State private var width: CGFloat? = nil
     
     var body: some View {
         List {
@@ -35,6 +44,11 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         .onAppear() {
             UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
+        .onPreferenceChange(WidthPreferenceKey.self) { widths in
+            if let width = widths.max() {
+                self.width = width
+            }
+        }
     }
     
     private var prescribedDeviceInfo: some View {
@@ -52,7 +66,9 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 .foregroundColor(blueGray)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 pumpStack
+                .frame(width: width, alignment: .leading)
                 cgmStack
+                .frame(width: width, alignment: .leading)
             }
         }
     }
@@ -75,7 +91,6 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 .foregroundColor(blueGray)
             }
             Spacer()
-            
         }
     }
     
@@ -134,7 +149,6 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 .foregroundColor(blueGray)
             }
         }
-        
     }
 
     private var approveDevicesButton: some View {
@@ -151,7 +165,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             // TODO: open window to edit the devices
             print("TODO")
         }) {
-            Text(LocalizedString("Edit devices", comment:"Button title for editing the prescribed devices"))
+            Text(LocalizedString("Edit devices", comment: "Button title for editing the prescribed devices"))
                 .actionButtonStyle(.secondary)
         }
     }

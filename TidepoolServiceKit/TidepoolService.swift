@@ -148,14 +148,10 @@ public final class TidepoolService: Service {
     }
     
     public func getPrescriptionData(completion: @escaping (Result<MockPrescription, Error>) -> Void) {
-        #if targetEnvironment(simulator)
         MockPrescriptionManager().getPrescriptionData { result in
             completion(result)
         }
-        #else
         // TODO: add in proper query to backend
-        completion(.failure(TidepoolServiceError.noPrescriptionDataAvailable))
-        #endif
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }

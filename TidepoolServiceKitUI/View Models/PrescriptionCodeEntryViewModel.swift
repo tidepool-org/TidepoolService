@@ -1,5 +1,5 @@
 //
-//  PrescriptionCodeEntryModel.swift
+//  PrescriptionCodeEntryViewModel.swift
 //  TidepoolServiceKitUI
 //
 //  Created by Anna Quinlan on 6/22/20.
@@ -24,16 +24,16 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
         if success {
             didFinishStep()
         } else {
-           // Handle error
+           // TODO: handle error
         }
     }
     
-    func validateCode(prescriptionCode: String) -> Bool {
+    func validatePrescriptionCode(prescriptionCode: String) -> Bool {
         return prescriptionCode.count == prescriptionCodeLength
     }
     
     func loadPrescriptionFromCode(prescriptionCode: String) {
-        guard validateCode(prescriptionCode: prescriptionCode) else {
+        guard validatePrescriptionCode(prescriptionCode: prescriptionCode) else {
             // TODO: handle error
             return
         }

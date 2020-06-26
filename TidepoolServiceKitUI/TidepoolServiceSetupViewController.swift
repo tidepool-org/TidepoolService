@@ -48,8 +48,9 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
         notifyComplete()
     }
     
-    let setupViewController = PrescriptionReviewUICoordinator()
+    
     @objc private func startFlow() {
+        let setupViewController = PrescriptionReviewUICoordinator()
         setupViewController.completionDelegate = self
         self.present(setupViewController, animated: true, completion: nil)
     }

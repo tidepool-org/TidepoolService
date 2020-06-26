@@ -26,7 +26,7 @@ enum PrescriptionReviewScreen {
 
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
-    var completionDelegate: CompletionDelegate?
+    weak var completionDelegate: CompletionDelegate?
     
     let viewModel = PrescriptionCodeEntryViewModel()
     

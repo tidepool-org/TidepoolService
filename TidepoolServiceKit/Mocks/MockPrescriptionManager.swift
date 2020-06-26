@@ -19,10 +19,15 @@ public class MockPrescriptionManager {
             let timeZone = TimeZone(identifier: "America/Los_Angeles")!
             let glucoseTargetRangeSchedule =  GlucoseRangeSchedule(
                 rangeSchedule: DailyQuantitySchedule(unit: .milligramsPerDeciliter,
-                    dailyItems: [RepeatingScheduleValue(startTime: .hours(0), value: DoubleRange(minValue: 100.0, maxValue: 110.0)), RepeatingScheduleValue(startTime: .hours(8), value: DoubleRange(minValue: 95.0, maxValue: 105.0)), RepeatingScheduleValue(startTime: .hours(14), value: DoubleRange(minValue: 95.0, maxValue: 105.0)), RepeatingScheduleValue(startTime: .hours(16), value: DoubleRange(minValue: 100.0, maxValue: 110.0)), RepeatingScheduleValue(startTime: .hours(18), value: DoubleRange(minValue: 90.0, maxValue: 100.0)), RepeatingScheduleValue(startTime: .hours(21), value: DoubleRange(minValue: 110.0, maxValue: 120.0))],
+                    dailyItems: [RepeatingScheduleValue(startTime: .hours(0), value: DoubleRange(minValue: 100.0, maxValue: 110.0)),
+                                 RepeatingScheduleValue(startTime: .hours(8), value: DoubleRange(minValue: 95.0, maxValue: 105.0)),
+                                 RepeatingScheduleValue(startTime: .hours(14), value: DoubleRange(minValue: 95.0, maxValue: 105.0)),
+                                 RepeatingScheduleValue(startTime: .hours(16), value: DoubleRange(minValue: 100.0, maxValue: 110.0)),
+                                 RepeatingScheduleValue(startTime: .hours(18), value: DoubleRange(minValue: 90.0, maxValue: 100.0)),
+                                 RepeatingScheduleValue(startTime: .hours(21), value: DoubleRange(minValue: 110.0, maxValue: 120.0))],
                     timeZone: timeZone)!,
                 override: GlucoseRangeSchedule.Override(value: DoubleRange(minValue: 80.0, maxValue: 90.0),
-                                                        start: Date().addingTimeInterval(-.minutes(30)),
+                                                        start: Date().addingTimeInterval(.minutes(-30)),
                                                         end: Date().addingTimeInterval(.minutes(30)))
             )
             let basalRateSchedule = BasalRateSchedule(
@@ -55,16 +60,14 @@ public class MockPrescriptionManager {
                              RepeatingScheduleValue(startTime: .hours(16), value: 12.0),
                              RepeatingScheduleValue(startTime: .hours(18), value: 8.0),
                              RepeatingScheduleValue(startTime: .hours(21), value: 10.0)],
-                timeZone: timeZone)!
-            
-            
+                timeZone: timeZone)!            
             
             self.prescription = MockPrescription(
                 datePrescribed: Date(),
                 providerName: "Sally Seastar",
                 cgmType: CGMType.g6,
                 pumpType: PumpType.dash,
-                bloodGlucoseUnit: .milligramsPerDeciliter,
+                bloodGlucoseUnit: .mgdl,
                 basalRateSchedule: basalRateSchedule,
                 glucoseTargetRangeSchedule: glucoseTargetRangeSchedule,
                 carbRatioSchedule: carbRatioSchedule,
