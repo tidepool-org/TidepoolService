@@ -66,10 +66,11 @@
 		E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 		E9692172249BC73600D9BE3B /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */; };
-		E9692174249BF2A100D9BE3B /* Prescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692173249BF2A100D9BE3B /* Prescription.swift */; };
+		E9692174249BF2A100D9BE3B /* MockPrescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692173249BF2A100D9BE3B /* MockPrescription.swift */; };
 		E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692175249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift */; };
 		E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */; };
 		E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */; };
+		E991F1BB24A654CC0059281B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1BA24A654CC0059281B /* TimeInterval.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,10 +181,11 @@
 		E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrescriptionManager.swift; sourceTree = "<group>"; };
-		E9692173249BF2A100D9BE3B /* Prescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription.swift; sourceTree = "<group>"; };
+		E9692173249BF2A100D9BE3B /* MockPrescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrescription.swift; sourceTree = "<group>"; };
 		E9692175249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
 		E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
 		E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveKeyboardPadding.swift; sourceTree = "<group>"; };
+		E991F1BA24A654CC0059281B /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,7 +253,7 @@
 				A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */,
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
 				A9309CA2243563CD00E02268 /* TOrigin.swift */,
-				E9692173249BF2A100D9BE3B /* Prescription.swift */,
+				E991F1BA24A654CC0059281B /* TimeInterval.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -392,6 +394,7 @@
 		E9692170249BC69B00D9BE3B /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				E9692173249BF2A100D9BE3B /* MockPrescription.swift */,
 				E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */,
 			);
 			path = Mocks;
@@ -750,11 +753,12 @@
 				A9309CA52435986300E02268 /* DeletedCarbEntry.swift in Sources */,
 				A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */,
 				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
-				E9692174249BF2A100D9BE3B /* Prescription.swift in Sources */,
+				E9692174249BF2A100D9BE3B /* MockPrescription.swift in Sources */,
 				A9309CA72435987000E02268 /* StoredCarbEntry.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
+				E991F1BB24A654CC0059281B /* TimeInterval.swift in Sources */,
 				A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */,
 				E9692172249BC73600D9BE3B /* MockPrescriptionManager.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,

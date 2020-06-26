@@ -64,7 +64,12 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             viewModel.didFinishStep = { [weak self] in
                 self?.stepFinished()
             }
-            let view = PrescriptionDeviceView(viewModel: viewModel)
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
+            }
+            let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
         }
     }

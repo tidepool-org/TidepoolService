@@ -6,16 +6,16 @@
 //  Copyright © 2020 Tidepool Project. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 import LoopKitUI
+import TidepoolServiceKit
 
 struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
+    var prescription: MockPrescription
 
     let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
-    let purple = Color("tidepool indigo", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     
     var body: some View {
         List {
@@ -58,11 +58,9 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     }
     
     private var pumpStack: some View {
-        switch self.viewModel.prescription?.pump {
+        switch prescription.pump {
         case .dash:
             return dashStack
-        case .none:
-            return dashStack // TODO: ask design about a default 'empty' pump card
         }
     }
     
@@ -88,15 +86,13 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         .aspectRatio(contentMode: ContentMode.fit)
         .frame(height: 50)
         .padding(5) // align with Dexcom
-        .foregroundColor(purple)
+        .foregroundColor(.accentColor)
     }
     
     private var cgmStack: some View {
-        switch self.viewModel.prescription?.cgm {
+        switch prescription.cgm {
         case .g6:
             return dexcomStack
-        case .none:
-            return dexcomStack // TODO: ask design about a default 'empty' cgm card
         }
     }
     
@@ -146,7 +142,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             self.viewModel.didFinishStep()
         }) {
             Text(LocalizedString("Next: Review Settings", comment: "Button title for approving devices"))
-                .actionButtonStyle(.tidepoolPrimary)
+                .actionButtonStyle(.primary)
         }
     }
         
@@ -156,7 +152,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             print("TODO")
         }) {
             Text(LocalizedString("Edit devices", comment:"Button title for editing the prescribed devices"))
-                .actionButtonStyle(.tidepoolSecondary)
+                .actionButtonStyle(.secondary)
         }
     }
 }

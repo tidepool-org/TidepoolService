@@ -13,7 +13,7 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
     var didFinishStep: (() -> Void)
     var didCancel: (() -> Void)?
     
-    var prescription: Prescription?
+    var prescription: MockPrescription?
     let prescriptionCodeLength = 4
     
     init(finishedStepHandler: @escaping () -> Void = { }) {

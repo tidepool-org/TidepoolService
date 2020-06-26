@@ -9,21 +9,10 @@
 import Foundation
 import LoopKit
 
-
-extension TimeInterval {
-    static func minutes(_ minutes: Double) -> TimeInterval {
-        return TimeInterval(minutes * 60 /* seconds in minute */)
-    }
-
-    static func hours(_ hours: Double) -> TimeInterval {
-        return TimeInterval(hours * 60 /* minutes in hr */ * 60 /* seconds in minute */)
-    }
-}
-
 public class MockPrescriptionManager {
-    private var prescription: Prescription
+    private var prescription: MockPrescription
     
-    public init(prescription: Prescription? = nil) {
+    public init(prescription: MockPrescription? = nil) {
         if let prescription = prescription {
             self.prescription = prescription
         } else {
@@ -70,7 +59,7 @@ public class MockPrescriptionManager {
             
             
             
-            self.prescription = Prescription(
+            self.prescription = MockPrescription(
                 datePrescribed: Date(),
                 providerName: "Sally Seastar",
                 cgmType: CGMType.g6,
@@ -83,13 +72,13 @@ public class MockPrescriptionManager {
                 maximumBasalRatePerHour: 3.0,
                 maximumBolus: 5.0,
                 suspendThreshold: GlucoseThreshold(unit: .milligramsPerDeciliter, value: 70),
-                insulinModel: Prescription.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3)),
+                insulinModel: MockPrescription.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3)),
                 preMealTargetRange: DoubleRange(minValue: 80.0, maxValue: 90.0),
                 workoutTargetRange: DoubleRange(minValue: 80.0, maxValue: 90.0))
         }
     }
     
-    public func getPrescriptionData(completion: @escaping (Result<Prescription, Error>) -> Void) {
+    public func getPrescriptionData(completion: @escaping (Result<MockPrescription, Error>) -> Void) {
         completion(.success(self.prescription))
     }
 }

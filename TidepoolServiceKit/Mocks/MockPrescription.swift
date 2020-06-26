@@ -25,7 +25,7 @@ public enum TrainingType: String, Codable {
 
 }
 
-public struct Prescription {
+public struct MockPrescription {
     public let datePrescribed: Date // Date prescription was prescribed
     public let providerName: String // Name of clinician prescribing
     public let cgm: CGMType // CGM type (manufacturer & model)
@@ -94,7 +94,7 @@ public struct Prescription {
     }
 }
 
-extension Prescription: Codable {
+extension MockPrescription: Codable {
    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var bloodGlucoseUnit: HKUnit?

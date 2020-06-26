@@ -147,7 +147,7 @@ public final class TidepoolService: Service {
         }
     }
     
-    public func getPrescriptionData(completion: @escaping (Result<Prescription, Error>) -> Void) {
+    public func getPrescriptionData(completion: @escaping (Result<MockPrescription, Error>) -> Void) {
         #if targetEnvironment(simulator)
         MockPrescriptionManager().getPrescriptionData { result in
             completion(result)

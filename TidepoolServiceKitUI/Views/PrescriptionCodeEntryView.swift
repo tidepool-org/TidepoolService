@@ -15,7 +15,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
 
     let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
-    let purple = Color("tidepool indigo", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     
     var body: some View {
         List {
@@ -43,7 +42,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             self.viewModel.didCancel?()
         }) {
             Text(LocalizedString("Cancel", comment: "Button text to exit the prescription code entry screen"))
-            .foregroundColor(purple)
+            .foregroundColor(.accentColor)
         }
     }
     
@@ -112,9 +111,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     private func submitButtonStyle(enabled: Bool) -> ActionButton.ButtonType {
         if enabled {
-            return .tidepoolPrimary
+            return .primary
         }
-        return .primary
+        return .deactivated
     }
         
     private var requestPrescriptionButton: some View {
@@ -123,7 +122,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             print("TODO")
         }) {
             Text(LocalizedString("Request activation code", comment:"Button title for requesting a prescription activation code from the prescriber"))
-                .actionButtonStyle(.tidepoolSecondary)
+                .actionButtonStyle(.secondary)
         }
     }
 }
