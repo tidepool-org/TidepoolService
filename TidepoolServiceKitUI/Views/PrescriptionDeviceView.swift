@@ -10,21 +10,13 @@ import SwiftUI
 import LoopKitUI
 import TidepoolServiceKit
 
-struct WidthPreferenceKey: PreferenceKey {
-    static var defaultValue: [CGFloat] = []
-    static func reduce(value: inout [CGFloat], nextValue: () -> [CGFloat]) {
-        value.append(contentsOf: nextValue())
-    }
-}
-
 struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
     var prescription: MockPrescription
 
     let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
-    
-    @State private var width: CGFloat? = nil
+    static let imageWidth: CGFloat = 48
     
     var body: some View {
         List {
@@ -44,11 +36,6 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         .onAppear() {
             UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
-        .onPreferenceChange(WidthPreferenceKey.self) { widths in
-            if let width = widths.max() {
-                self.width = width
-            }
-        }
     }
     
     private var prescribedDeviceInfo: some View {
@@ -66,9 +53,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 .foregroundColor(blueGray)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 pumpStack
-                .frame(width: width, alignment: .leading)
                 cgmStack
-                .frame(width: width, alignment: .leading)
             }
         }
     }
@@ -99,8 +84,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         .renderingMode(.template)
         .resizable()
         .aspectRatio(contentMode: ContentMode.fit)
-        .frame(height: 50)
-        .padding(5) // align with Dexcom
+        .frame(width: Self.imageWidth, height: 50)
         .foregroundColor(.accentColor)
     }
     
@@ -129,7 +113,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         Image("dexcom", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
         .resizable()
         .aspectRatio(contentMode: ContentMode.fit)
-        .frame(height: 25)
+        .frame(width: Self.imageWidth)
     }
     
     private var disclaimer: some View {
