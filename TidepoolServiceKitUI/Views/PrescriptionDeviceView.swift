@@ -52,6 +52,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 Text(LocalizedString("Your prescription contains recommended settings for the following devices:", comment: "Title for devices prescribed section"))
                 .foregroundColor(blueGray)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+                // TODO: get images and descriptions from pump manager
                 pumpStack
                 cgmStack
             }
