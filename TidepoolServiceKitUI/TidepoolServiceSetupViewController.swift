@@ -7,6 +7,7 @@
 //
 
 import LoopKitUI
+import SwiftUI
 import TidepoolKit
 import TidepoolKitUI
 import TidepoolServiceKit
@@ -31,6 +32,7 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
         title = service.localizedTitle
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(startFlow))
 
         var loginSignupViewController = service.tapi.loginSignupViewController()
         loginSignupViewController.delegate = self
@@ -44,6 +46,13 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
 
     @objc private func cancel() {
         notifyComplete()
+    }
+    
+    
+    @objc private func startFlow() {
+        let setupViewController = PrescriptionReviewUICoordinator()
+        setupViewController.completionDelegate = self
+        self.present(setupViewController, animated: true, completion: nil)
     }
 
     func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {
@@ -65,6 +74,14 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
     private func notifyComplete() {
         if let serviceViewController = navigationController as? ServiceViewController {
             serviceViewController.notifyComplete()
+        }
+    }
+}
+
+extension TidepoolServiceSetupViewController: CompletionDelegate {
+    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
+        if let vc = object as? UIViewController, presentedViewController === vc {
+            dismiss(animated: true, completion: nil)
         }
     }
 }

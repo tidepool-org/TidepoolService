@@ -12,6 +12,7 @@ import TidepoolKit
 
 public enum TidepoolServiceError: Error {
     case configuration
+    case noPrescriptionDataAvailable
 }
 
 public protocol SessionStorage {
@@ -144,6 +145,13 @@ public final class TidepoolService: Service {
                 completion(nil)
             }
         }
+    }
+    
+    public func getPrescriptionData(completion: @escaping (Result<MockPrescription, Error>) -> Void) {
+        MockPrescriptionManager().getPrescriptionData { result in
+            completion(result)
+        }
+        // TODO: add in proper query to backend
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
