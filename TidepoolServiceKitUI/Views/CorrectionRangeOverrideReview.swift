@@ -1,18 +1,17 @@
 //
-//  CorrectionRangeReviewView.swift
+//  CorrectionRangeOverrideReviewView.swift
 //  TidepoolServiceKitUI
 //
-//  Created by Anna Quinlan on 6/29/20.
+//  Created by Anna Quinlan on 7/1/20.
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
+
 import SwiftUI
-import LoopKitUI
-import LoopKit
-import HealthKit
 import TidepoolServiceKit
+import LoopKit
+import LoopKitUI
 
-
-struct CorrectionRangeReviewView: View {
+struct CorrectionRangeOverrideReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     @State var userHasEdited: Bool = false
     let prescription: MockPrescription
@@ -26,14 +25,20 @@ struct CorrectionRangeReviewView: View {
     }
     
     var body: some View {
-        CorrectionRangeScheduleEditor(
+        CorrectionRangeOverridesEditor(
             buttonText: buttonText,
-            schedule: prescription.glucoseTargetRangeSchedule,
-            unit: viewModel.prescription?.bloodGlucoseUnit.hkUnit ?? .milligramsPerDeciliter,
-            minValue: viewModel.prescription?.suspendThreshold.quantity,
-            onSave: { newSchedule in
-                self.viewModel.saveCorrectionRange(range: newSchedule)
+            value: CorrectionRangeOverrides(
+                preMeal: prescription.preMealTargetRange,
+                workout: prescription.workoutTargetRange,
+                unit: prescription.bloodGlucoseUnit.hkUnit
+            ),
+            unit: prescription.bloodGlucoseUnit.hkUnit,
+            minValue: prescription.suspendThreshold.quantity,
+            onSave: { overrides in
+                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.prescription.bloodGlucoseUnit.hkUnit)
+                self.viewModel.didFinishStep()
             },
+            sensitivityOverridesEnabled: true,
             mode: .flow,
             userHasEdited: $userHasEdited
         )
