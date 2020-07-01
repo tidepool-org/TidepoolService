@@ -92,6 +92,10 @@ public final class TidepoolService: Service {
     public func completeUpdate() {
         serviceDelegate?.serviceDidUpdateState(self)
     }
+    
+    public func saveSettings(settings: LoopSettings) {
+        serviceDelegate?.serviceHasNewTherapySettings(settings)
+    }
 
     public func completeDelete() {
         guard let session = session else {
