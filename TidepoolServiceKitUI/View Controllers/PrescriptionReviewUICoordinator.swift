@@ -14,6 +14,7 @@ import LoopKit
 enum PrescriptionReviewScreen {
     case enterCode
     case reviewDevices
+    case correctionRangeInfo
     case correctionRangeEditor
     
     func next() -> PrescriptionReviewScreen? {
@@ -21,6 +22,8 @@ enum PrescriptionReviewScreen {
         case .enterCode:
             return .reviewDevices
         case .reviewDevices:
+            return .correctionRangeInfo
+        case .correctionRangeInfo:
             return .correctionRangeEditor
         case .correctionRangeEditor:
             return nil
@@ -74,6 +77,13 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 return DismissibleHostingController(rootView: view)
             }
             let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
+            return DismissibleHostingController(rootView: view)
+        case .correctionRangeInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CorrectionRangeInformationView(exitPage: exiting)
+            
             return DismissibleHostingController(rootView: view)
         case .correctionRangeEditor:
             guard let prescription = viewModel.prescription else {

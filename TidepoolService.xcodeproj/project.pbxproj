@@ -71,7 +71,6 @@
 		E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */; };
 		E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */; };
 		E991F1BB24A654CC0059281B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1BA24A654CC0059281B /* TimeInterval.swift */; };
-		E991F1C124AAA9BC0059281B /* CorrectionRangeLearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1C024AAA9BC0059281B /* CorrectionRangeLearnView.swift */; };
 		E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */; };
 /* End PBXBuildFile section */
 
@@ -188,7 +187,6 @@
 		E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
 		E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveKeyboardPadding.swift; sourceTree = "<group>"; };
 		E991F1BA24A654CC0059281B /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		E991F1C024AAA9BC0059281B /* CorrectionRangeLearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeLearnView.swift; sourceTree = "<group>"; };
 		E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeReviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -418,7 +416,6 @@
 				E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */,
 				E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */,
 				E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */,
-				E991F1C024AAA9BC0059281B /* CorrectionRangeLearnView.swift */,
 				E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */,
 			);
 			path = Views;
@@ -786,7 +783,6 @@
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
 				A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */,
 				E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */,
-				E991F1C124AAA9BC0059281B /* CorrectionRangeLearnView.swift in Sources */,
 				E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */,
