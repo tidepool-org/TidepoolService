@@ -11,8 +11,7 @@ import LoopKitUI
 import TidepoolServiceKit
 
 struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
-    @State private var prescriptionCode: String = ""
-    @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
+    @ObservedObject var viewModel: PrescriptionReviewViewModel
     var prescription: MockPrescription
 
     let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))

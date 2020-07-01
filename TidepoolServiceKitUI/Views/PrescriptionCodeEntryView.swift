@@ -8,11 +8,12 @@
 
 import SwiftUI
 import LoopKitUI
+import LoopKit
 
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     @State private var prescriptionCode: String = ""
-    @ObservedObject var viewModel: PrescriptionCodeEntryViewModel
+    @ObservedObject var viewModel: PrescriptionReviewViewModel
 
     let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     
@@ -126,7 +127,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
 
 struct PrescriptionCodeEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        PrescriptionCodeEntryView(viewModel: PrescriptionCodeEntryViewModel())
+        PrescriptionCodeEntryView(viewModel: PrescriptionReviewViewModel(settings: LoopSettings()))
     }
 }
 

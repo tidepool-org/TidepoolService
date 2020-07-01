@@ -62,7 +62,7 @@
 		A9DAAD6A22E7E81E00E76C9F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */; };
 		A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */; };
 		A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */; };
-		E93BA05E24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05D24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift */; };
+		E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */; };
 		E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 		E9692172249BC73600D9BE3B /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */; };
@@ -71,6 +71,8 @@
 		E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */; };
 		E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */; };
 		E991F1BB24A654CC0059281B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1BA24A654CC0059281B /* TimeInterval.swift */; };
+		E991F1C124AAA9BC0059281B /* CorrectionRangeLearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1C024AAA9BC0059281B /* CorrectionRangeLearnView.swift */; };
+		E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,7 +179,7 @@
 		A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
 		A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
-		E93BA05D24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryViewModel.swift; sourceTree = "<group>"; };
+		E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
 		E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9692171249BC73600D9BE3B /* MockPrescriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrescriptionManager.swift; sourceTree = "<group>"; };
@@ -186,6 +188,8 @@
 		E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
 		E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveKeyboardPadding.swift; sourceTree = "<group>"; };
 		E991F1BA24A654CC0059281B /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		E991F1C024AAA9BC0059281B /* CorrectionRangeLearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeLearnView.swift; sourceTree = "<group>"; };
+		E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeReviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,7 +390,7 @@
 		E93BA05C24A126E000C5D7E6 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				E93BA05D24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift */,
+				E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -414,6 +418,8 @@
 				E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */,
 				E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */,
 				E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */,
+				E991F1C024AAA9BC0059281B /* CorrectionRangeLearnView.swift */,
+				E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -780,6 +786,7 @@
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
 				A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */,
 				E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */,
+				E991F1C124AAA9BC0059281B /* CorrectionRangeLearnView.swift in Sources */,
 				E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */,
@@ -787,7 +794,8 @@
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
-				E93BA05E24A14CBA00C5D7E6 /* PrescriptionCodeEntryViewModel.swift in Sources */,
+				E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */,
+				E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */,
 				A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */,
 				A9DAAD3B22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift in Sources */,
 			);

@@ -29,7 +29,7 @@ public enum BGUnit: String, Codable {
     case mgdl
     case mmol
     
-    var hkUnit: HKUnit {
+    public var hkUnit: HKUnit {
         switch self {
         case .mgdl:
             return .milligramsPerDeciliter

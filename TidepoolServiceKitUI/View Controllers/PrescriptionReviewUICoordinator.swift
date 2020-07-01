@@ -9,16 +9,20 @@
 import Foundation
 import SwiftUI
 import LoopKitUI
+import LoopKit
 
 enum PrescriptionReviewScreen {
     case enterCode
     case reviewDevices
+    case correctionRangeEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
         case .enterCode:
             return .reviewDevices
         case .reviewDevices:
+            return .correctionRangeEditor
+        case .correctionRangeEditor:
             return nil
         }
     }
@@ -27,13 +31,13 @@ enum PrescriptionReviewScreen {
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
-    
-    let viewModel = PrescriptionCodeEntryViewModel()
+
+    let viewModel = PrescriptionReviewViewModel(settings: LoopSettings())
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
     }
-    
+
     // TODO: create delegate so we can add settings to LoopDataManager
     init() {
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
@@ -71,6 +75,15 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
+        case .correctionRangeEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
+            }
+            
+            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
+            return DismissibleHostingController(rootView: view)
         }
     }
     
@@ -94,6 +107,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         setViewControllers([viewController], animated: false)
     }
     
+    // TODO: have separate flow for cancelling
     private func setupCanceled() {
         completionDelegate?.completionNotifyingDidComplete(self)
     }
@@ -102,6 +116,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
+            // ANNA TODO: save settings object
             completionDelegate?.completionNotifyingDidComplete(self)
         }
     }
