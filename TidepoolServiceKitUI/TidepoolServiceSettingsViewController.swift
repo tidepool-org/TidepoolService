@@ -8,8 +8,8 @@
 
 import LoopKitUI
 import TidepoolServiceKit
-
-final class TidepoolServiceSettingsViewController: UITableViewController {
+                                                                        /* Added to support prescription flow */
+final class TidepoolServiceSettingsViewController: UITableViewController, CompletionDelegate {
 
     private let service: TidepoolService
 
@@ -27,7 +27,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(TextButtonTableViewCell.self, forCellReuseIdentifier: TextButtonTableViewCell.className)
-
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(startFlow))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
 
@@ -46,6 +47,22 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
         })
 
         present(alert, animated: true, completion: completion)
+    }
+    
+    @objc private func startFlow() {
+        let setupViewController = PrescriptionReviewUICoordinator()
+        setupViewController.completionDelegate = self
+        setupViewController.settingDelegate = { [weak service] (settings) in
+            service?.saveSettings(settings: settings)
+        }
+        self.present(setupViewController, animated: true, completion: nil)
+    }
+    
+    /* Added to support prescription flow */
+    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
+        if let vc = object as? UIViewController, presentedViewController === vc {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     private func notifyComplete() {
