@@ -20,6 +20,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     var body: some View {
         List {
             VStack(alignment: .leading, spacing: 25) {
+                inBodyTitle
                 prescribedDeviceInfo
                 devicesList
                 disclaimer
@@ -31,10 +32,16 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         }
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
-        .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
+        .navigationBarTitle(Text(""), displayMode: .inline)
         .onAppear() {
             UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
+    }
+    
+    private var inBodyTitle: Text {
+         Text(LocalizedString("Review your settings", comment: "Navigation view title"))
+        .bold()
+        .font(.largeTitle)
     }
     
     private var prescribedDeviceInfo: some View {
