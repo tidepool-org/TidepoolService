@@ -33,6 +33,7 @@ struct CorrectionRangeReviewView: View {
             minValue: viewModel.prescription?.suspendThreshold.quantity,
             onSave: { newSchedule in
                 self.viewModel.saveCorrectionRange(range: newSchedule)
+                self.viewModel.didFinishStep()
             },
             mode: .flow,
             userHasEdited: $userHasEdited
