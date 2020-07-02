@@ -16,6 +16,7 @@ enum PrescriptionReviewScreen {
     case reviewDevices
     case correctionRangeInfo
     case correctionRangeEditor
+    case correctionRangeOverrideInfo
     case correctionRangeOverrideEditor
     
     func next() -> PrescriptionReviewScreen? {
@@ -27,6 +28,8 @@ enum PrescriptionReviewScreen {
         case .correctionRangeInfo:
             return .correctionRangeEditor
         case .correctionRangeEditor:
+            return .correctionRangeOverrideInfo
+        case .correctionRangeOverrideInfo:
             return .correctionRangeOverrideEditor
         case .correctionRangeOverrideEditor:
             return nil
@@ -96,6 +99,13 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             
             let view = CorrectionRangeReview(model: viewModel, prescription: prescription)
+            return DismissibleHostingController(rootView: view)
+        case .correctionRangeOverrideInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CorrectionRangeOverrideInformationView(exitPage: exiting)
+            
             return DismissibleHostingController(rootView: view)
         case .correctionRangeOverrideEditor:
             guard let prescription = viewModel.prescription else {
