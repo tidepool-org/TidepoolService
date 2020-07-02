@@ -40,6 +40,7 @@ enum PrescriptionReviewScreen {
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
+    var settingDelegate: ((LoopSettings) -> Void)?
 
     let viewModel = PrescriptionReviewViewModel(settings: LoopSettings())
     
@@ -148,7 +149,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
-            // ANNA TODO: save settings object
+            if let settingDelegate = settingDelegate {
+                settingDelegate(viewModel.settings)
+            }
             completionDelegate?.completionNotifyingDidComplete(self)
         }
     }
