@@ -48,7 +48,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return screenStack.last!
     }
 
-    // TODO: create delegate so we can add settings to LoopDataManager
     init() {
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
     }
@@ -80,8 +79,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+                return restartFlow()
             }
             let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
@@ -95,8 +93,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .correctionRangeEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+                return restartFlow()
             }
             
             let view = CorrectionRangeReview(model: viewModel, prescription: prescription)
@@ -118,6 +115,12 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
         }
+    }
+    
+    private func restartFlow() -> UIViewController {
+        screenStack = [.enterCode]
+        let view = PrescriptionCodeEntryView(viewModel: viewModel)
+        return DismissibleHostingController(rootView: view)
     }
     
     public func navigationController(_ navigationController: UINavigationController,
