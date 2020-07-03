@@ -21,6 +21,7 @@ enum PrescriptionReviewScreen {
     case suspendThresholdInfo
     case suspendThresholdEditor
     case basalRatesInfo
+    case basalRatesEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -41,6 +42,8 @@ enum PrescriptionReviewScreen {
         case .suspendThresholdEditor:
             return .basalRatesInfo
         case .basalRatesInfo:
+            return .basalRatesEditor
+        case .basalRatesEditor:
             return nil
         }
     }
@@ -132,8 +135,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .suspendThresholdEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+                return restartFlow()
             }
             
             let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
@@ -144,6 +146,14 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = BasalRatesInformationView(exitPage: exiting)
             
+            return DismissibleHostingController(rootView: view)
+        case .basalRatesEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                return restartFlow()
+            }
+            
+            let view = BasalRatesReview(model: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
         }
     }
