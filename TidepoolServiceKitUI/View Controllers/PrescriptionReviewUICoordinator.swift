@@ -19,6 +19,7 @@ enum PrescriptionReviewScreen {
     case correctionRangeOverrideInfo
     case correctionRangeOverrideEditor
     case suspendThresholdInfo
+    case suspendThresholdEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -35,6 +36,8 @@ enum PrescriptionReviewScreen {
         case .correctionRangeOverrideEditor:
             return .suspendThresholdInfo
         case .suspendThresholdInfo:
+            return .suspendThresholdEditor
+        case .suspendThresholdEditor:
             return nil
         }
     }
@@ -111,8 +114,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .correctionRangeOverrideEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+                return restartFlow()
             }
             
             let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
@@ -123,6 +125,15 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = SuspendThresholdInformationView(exitPage: exiting)
             
+            return DismissibleHostingController(rootView: view)
+        case .suspendThresholdEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
+            }
+            
+            let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
         }
     }

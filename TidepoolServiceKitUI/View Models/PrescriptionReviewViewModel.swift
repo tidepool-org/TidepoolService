@@ -65,4 +65,8 @@ class PrescriptionReviewViewModel: ObservableObject {
         settings.preMealTargetRange = overrides.preMeal?.doubleRange(for: unit)
         settings.legacyWorkoutTargetRange = overrides.workout?.doubleRange(for: unit)
     }
+    
+    func saveSuspendThreshold(value: GlucoseThreshold) {
+        settings.suspendThreshold = value
+    }
 }
