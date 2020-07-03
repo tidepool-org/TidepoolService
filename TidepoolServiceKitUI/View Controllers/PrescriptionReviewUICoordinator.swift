@@ -20,6 +20,7 @@ enum PrescriptionReviewScreen {
     case correctionRangeOverrideEditor
     case suspendThresholdInfo
     case suspendThresholdEditor
+    case basalRatesInfo
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -38,6 +39,8 @@ enum PrescriptionReviewScreen {
         case .suspendThresholdInfo:
             return .suspendThresholdEditor
         case .suspendThresholdEditor:
+            return .basalRatesInfo
+        case .basalRatesInfo:
             return nil
         }
     }
@@ -134,6 +137,13 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             
             let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
+            return DismissibleHostingController(rootView: view)
+        case .basalRatesInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = BasalRatesInformationView(exitPage: exiting)
+            
             return DismissibleHostingController(rootView: view)
         }
     }
