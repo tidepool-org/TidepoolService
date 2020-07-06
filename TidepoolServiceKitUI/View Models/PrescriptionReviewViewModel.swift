@@ -69,4 +69,9 @@ class PrescriptionReviewViewModel: ObservableObject {
     func saveSuspendThreshold(value: GlucoseThreshold) {
         settings.suspendThreshold = value
     }
+    
+    func saveDeliveryLimits(limits: DeliveryLimits) {
+        settings.maximumBasalRatePerHour = limits.maximumBasalRate?.doubleValue(for: HKUnit.internationalUnit().unitDivided(by: .hour()))
+        settings.maximumBolus = limits.maximumBolus?.doubleValue(for: .internationalUnit())
+    }
 }
