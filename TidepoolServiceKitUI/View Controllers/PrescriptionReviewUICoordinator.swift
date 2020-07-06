@@ -34,9 +34,9 @@ enum PrescriptionReviewScreen {
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
-    var settingDelegate: ((LoopSettings) -> Void)?
+    var settingDelegate: ((TherapySettings) -> Void)?
 
-    let viewModel = PrescriptionReviewViewModel(settings: LoopSettings())
+    let viewModel = PrescriptionReviewViewModel(settings: TherapySettings())
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!

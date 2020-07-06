@@ -93,7 +93,7 @@ public final class TidepoolService: Service {
         serviceDelegate?.serviceDidUpdateState(self)
     }
     
-    public func saveSettings(settings: LoopSettings) {
+    public func saveSettings(settings: TherapySettings) {
         serviceDelegate?.serviceHasNewTherapySettings(settings)
     }
 

@@ -17,10 +17,10 @@ class PrescriptionReviewViewModel: ObservableObject {
     var prescription: MockPrescription?
     let prescriptionCodeLength = 4
     
-    var settings: LoopSettings
+    var settings: TherapySettings
     
     init(finishedStepHandler: @escaping () -> Void = { },
-         settings: LoopSettings) {
+         settings: TherapySettings) {
         self.didFinishStep = finishedStepHandler
         self.settings = settings
     }
