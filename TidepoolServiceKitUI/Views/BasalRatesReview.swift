@@ -34,8 +34,8 @@ struct BasalRatesReview: View {
             syncSchedule: { result, error  in
                 // Since pump isn't set up, this syncing shouldn't do anything
             },
-            onSave: { newSchedule in
-                // ANNA TODO: think about how to best save the schedule
+            onSave: { newRates in
+                self.viewModel.saveBasalRates(basalRates: newRates)
                 self.viewModel.didFinishStep()
             },
             mode: .flow

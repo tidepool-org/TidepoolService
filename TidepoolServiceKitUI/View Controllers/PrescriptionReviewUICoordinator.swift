@@ -144,7 +144,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = BasalRatesInformationView(exitPage: exiting)
+            let view = BasalRatesInformationView(onExit: exiting)
             
             return DismissibleHostingController(rootView: view)
         case .basalRatesEditor:
