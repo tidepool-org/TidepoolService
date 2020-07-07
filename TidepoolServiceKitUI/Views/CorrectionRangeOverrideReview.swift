@@ -26,7 +26,6 @@ struct CorrectionRangeOverrideReview: View {
     
     var body: some View {
         CorrectionRangeOverridesEditor(
-            buttonText: buttonText,
             value: CorrectionRangeOverrides(
                 preMeal: prescription.preMealTargetRange,
                 workout: prescription.workoutTargetRange,
@@ -42,9 +41,5 @@ struct CorrectionRangeOverrideReview: View {
             mode: .flow,
             userHasEdited: $userHasEdited
         )
-    }
-    
-    private var buttonText: Text {
-        return !userHasEdited ? Text(LocalizedString("Accept Setting", comment: "The button text for accepting the prescribed setting")) : Text(LocalizedString("Save Setting", comment: "The button text for saving the edited setting"))
     }
 }
