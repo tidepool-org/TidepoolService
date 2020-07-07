@@ -11,7 +11,6 @@ import LoopKit
 import HealthKit
 import TidepoolServiceKit
 
-
 struct CorrectionRangeReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     @State var userHasEdited: Bool = false
