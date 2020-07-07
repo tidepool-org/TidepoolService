@@ -15,7 +15,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionReviewViewModel
 
-    let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+    let blueGray = Color("Blue Gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     
     var body: some View {
         List {

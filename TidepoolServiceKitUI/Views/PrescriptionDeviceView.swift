@@ -14,7 +14,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     var prescription: MockPrescription
 
-    let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
+    let blueGray = Color("Blue Gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     static let imageWidth: CGFloat = 48
     
     var body: some View {
