@@ -13,8 +13,6 @@ import TidepoolServiceKit
 struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     var prescription: MockPrescription
-
-    let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
     static let imageWidth: CGFloat = 48
     
     var body: some View {
@@ -47,7 +45,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     private var prescribedDeviceInfo: some View {
         Section {
             Text(LocalizedString("Since your provider included your recommended settings with your prescription, you'll have the chance to review and accept each of these settings now.", comment: "Text describing purpose of settings walk-through"))
-            .foregroundColor(blueGray)
+            .foregroundColor(.blueGray)
             .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -56,7 +54,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         Section {
             VStack(alignment: .leading, spacing: 20) {
                 Text(LocalizedString("Your prescription contains recommended settings for the following devices:", comment: "Title for devices prescribed section"))
-                .foregroundColor(blueGray)
+                .foregroundColor(.blueGray)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 // TODO: get images and descriptions from pump manager
                 pumpStack
@@ -76,11 +74,11 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         HStack {
             dashIcon
             .padding(.horizontal)
-            VStack (alignment: .leading) {
+            VStack(alignment: .leading) {
                 Text(LocalizedString("Omnipod 5", comment: "Text describing insulin pump name"))
                 Text(LocalizedString("Insulin Pump", comment: "Insulin pump label"))
                 .font(.footnote)
-                .foregroundColor(blueGray)
+                .foregroundColor(.blueGray)
             }
             Spacer()
         }
@@ -106,11 +104,11 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         HStack {
             dexcomIcon
             .padding(.horizontal)
-            VStack (alignment: .leading) {
+            VStack(alignment: .leading) {
                 Text(LocalizedString("Dexcom G6", comment: "Text describing CGM name"))
                 Text(LocalizedString("Continuous Glucose Monitor", comment: "CGM label"))
                 .font(.footnote)
-                .foregroundColor(blueGray)
+                .foregroundColor(.blueGray)
             }
             Spacer()
         }
@@ -125,10 +123,10 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     
     private var disclaimer: some View {
         Section {
-            VStack (alignment: .leading) {
+            VStack(alignment: .leading) {
                 Text(LocalizedString("Note", comment: "Title for disclaimer section"))
                 .font(.headline)
-                VStack (alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 10) {
                     Text(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings", comment: "Text describing that Tidepool Loop doesn't automatically change settings"))
                     .italic()
                     .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
@@ -137,7 +135,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                     .italic()
                 }
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
-                .foregroundColor(blueGray)
+                .foregroundColor(.blueGray)
             }
         }
     }
