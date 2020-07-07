@@ -52,9 +52,9 @@ enum PrescriptionReviewScreen {
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
-    var settingDelegate: ((LoopSettings) -> Void)?
+    var settingDelegate: ((TherapySettings) -> Void)?
 
-    let viewModel = PrescriptionReviewViewModel(settings: LoopSettings())
+    let viewModel = PrescriptionReviewViewModel(settings: TherapySettings())
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
@@ -99,7 +99,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = CorrectionRangeInformationView(exitPage: exiting)
+            let view = CorrectionRangeInformationView(onExit: exiting)
             
             return DismissibleHostingController(rootView: view)
         case .correctionRangeEditor:
@@ -114,7 +114,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = CorrectionRangeOverrideInformationView(exitPage: exiting)
+            let view = CorrectionRangeOverrideInformationView(onExit: exiting)
             
             return DismissibleHostingController(rootView: view)
         case .correctionRangeOverrideEditor:
@@ -129,7 +129,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = SuspendThresholdInformationView(exitPage: exiting)
+            let view = SuspendThresholdInformationView(onExit: exiting)
             
             return DismissibleHostingController(rootView: view)
         case .suspendThresholdEditor:

@@ -11,7 +11,6 @@ import LoopKit
 import HealthKit
 import TidepoolServiceKit
 
-
 struct CorrectionRangeReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     @State var userHasEdited: Bool = false
@@ -29,8 +28,8 @@ struct CorrectionRangeReview: View {
         CorrectionRangeScheduleEditor(
             buttonText: buttonText,
             schedule: prescription.glucoseTargetRangeSchedule,
-            unit: viewModel.prescription?.bloodGlucoseUnit.hkUnit ?? .milligramsPerDeciliter,
-            minValue: viewModel.prescription?.suspendThreshold.quantity,
+            unit: prescription.bloodGlucoseUnit.hkUnit,
+            minValue: prescription.suspendThreshold.quantity,
             onSave: { newSchedule in
                 self.viewModel.saveCorrectionRange(range: newSchedule)
                 self.viewModel.didFinishStep()
