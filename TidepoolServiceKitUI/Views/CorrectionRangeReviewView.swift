@@ -27,7 +27,6 @@ struct CorrectionRangeReviewView: View {
     
     var body: some View {
         CorrectionRangeScheduleEditor(
-            buttonText: buttonText,
             schedule: prescription.glucoseTargetRangeSchedule,
             unit: prescription.bloodGlucoseUnit.hkUnit,
             minValue: prescription.suspendThreshold.quantity,
@@ -38,9 +37,5 @@ struct CorrectionRangeReviewView: View {
             mode: .flow,
             userHasEdited: $userHasEdited
         )
-    }
-    
-    private var buttonText: Text {
-        return !userHasEdited ? Text(LocalizedString("Accept Setting", comment: "The button text for accepting the prescribed setting")) : Text(LocalizedString("Save Setting", comment: "The button text for saving the edited setting"))
     }
 }
