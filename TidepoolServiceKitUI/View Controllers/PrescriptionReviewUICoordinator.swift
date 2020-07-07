@@ -81,7 +81,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = CorrectionRangeInformationView(exitPage: exiting)
+            let view = CorrectionRangeInformationView(onExit: exiting)
             
             return DismissibleHostingController(rootView: view)
         case .correctionRangeEditor:

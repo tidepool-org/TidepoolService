@@ -15,8 +15,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionReviewViewModel
 
-    let blueGray = Color("blue gray", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
-    
     var body: some View {
         List {
             VStack(alignment: .leading, spacing: 25) {
@@ -55,11 +53,11 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var itemsNeededDescription: some View {
-        VStack (alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(LocalizedString("What you'll need", comment: "Title for section describing items needed to review settings"))
             .font(.headline)
             Text(LocalizedString("For the next section, you'll want to have the following:", comment: "Subheader for items-needed section"))
-            .foregroundColor(blueGray)
+            .foregroundColor(.blueGray)
             .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
         }
         
@@ -67,26 +65,26 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     private var itemsNeededList: some View {
         Section {
-            VStack (alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 10) {
                 itemsNeededDescription
                 InstructionList(instructions: [
                     LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
                     LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
                     ],
-                    stepsColor: blueGray
+                    stepsColor: .blueGray
                 )
-                .foregroundColor(blueGray)
+                .foregroundColor(.blueGray)
             }
         }
     }
 
     private var codeEntryRequest: some View {
         Section {
-            VStack (alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
                 .font(.headline)
                 Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
-                .foregroundColor(blueGray)
+                .foregroundColor(.blueGray)
                 prescriptionCodeInputField
             }
         }
