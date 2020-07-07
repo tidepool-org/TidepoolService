@@ -123,7 +123,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = SuspendThresholdInformationView(exitPage: exiting)
+            let view = SuspendThresholdInformationView(onExit: exiting)
             
             return DismissibleHostingController(rootView: view)
         case .suspendThresholdEditor:
