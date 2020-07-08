@@ -13,7 +13,6 @@ import TidepoolServiceKit
 
 struct CorrectionRangeReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State var userHasEdited: Bool = false
     let prescription: MockPrescription
     
     init(
@@ -33,8 +32,7 @@ struct CorrectionRangeReview: View {
                 self.viewModel.saveCorrectionRange(range: newSchedule)
                 self.viewModel.didFinishStep()
             },
-            mode: .flow,
-            userHasEdited: $userHasEdited
+            mode: .flow
         )
     }
 }
