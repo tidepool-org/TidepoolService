@@ -66,7 +66,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: viewModel)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Your Settings", comment: "Navigation view title")
+            return hostedView
         case .reviewDevices:
             viewModel.didFinishStep = { [weak self] in
                 self?.stepFinished()
@@ -76,14 +78,17 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 return restartFlow()
             }
             let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
+            return hostedView
         case .correctionRangeInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
             let view = CorrectionRangeInformationView(onExit: exiting)
-            
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
+            return hostedView
         case .correctionRangeEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
