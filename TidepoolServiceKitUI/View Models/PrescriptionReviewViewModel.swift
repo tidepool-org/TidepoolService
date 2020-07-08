@@ -8,16 +8,21 @@
 
 import Foundation
 import TidepoolServiceKit
+import LoopKit
 
-class PrescriptionCodeEntryViewModel: ObservableObject {
+class PrescriptionReviewViewModel: ObservableObject {
     var didFinishStep: (() -> Void)
     var didCancel: (() -> Void)?
     
     var prescription: MockPrescription?
     let prescriptionCodeLength = 4
     
-    init(finishedStepHandler: @escaping () -> Void = { }) {
+    var settings: TherapySettings
+    
+    init(finishedStepHandler: @escaping () -> Void = { },
+         settings: TherapySettings) {
         self.didFinishStep = finishedStepHandler
+        self.settings = settings
     }
     
     func entryNavigation(success: Bool) {
@@ -48,5 +53,9 @@ class PrescriptionCodeEntryViewModel: ObservableObject {
                 self.entryNavigation(success: true)
             }
         }
+    }
+    
+    func saveCorrectionRange(range: GlucoseRangeSchedule) {
+        settings.glucoseTargetRangeSchedule = range
     }
 }

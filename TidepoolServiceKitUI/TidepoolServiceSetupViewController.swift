@@ -32,7 +32,6 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
         title = service.localizedTitle
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(startFlow))
 
         var loginSignupViewController = service.tapi.loginSignupViewController()
         loginSignupViewController.delegate = self
@@ -46,13 +45,6 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
 
     @objc private func cancel() {
         notifyComplete()
-    }
-    
-    
-    @objc private func startFlow() {
-        let setupViewController = PrescriptionReviewUICoordinator()
-        setupViewController.completionDelegate = self
-        self.present(setupViewController, animated: true, completion: nil)
     }
 
     func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {

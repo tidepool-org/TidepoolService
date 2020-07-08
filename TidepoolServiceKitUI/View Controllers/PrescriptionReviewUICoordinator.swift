@@ -9,16 +9,23 @@
 import Foundation
 import SwiftUI
 import LoopKitUI
+import LoopKit
 
 enum PrescriptionReviewScreen {
     case enterCode
     case reviewDevices
+    case correctionRangeInfo
+    case correctionRangeEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
         case .enterCode:
             return .reviewDevices
         case .reviewDevices:
+            return .correctionRangeInfo
+        case .correctionRangeInfo:
+            return .correctionRangeEditor
+        case .correctionRangeEditor:
             return nil
         }
     }
@@ -27,14 +34,14 @@ enum PrescriptionReviewScreen {
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
-    
-    let viewModel = PrescriptionCodeEntryViewModel()
+    var onReviewFinished: ((TherapySettings) -> Void)?
+
+    let viewModel = PrescriptionReviewViewModel(settings: TherapySettings())
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
     }
-    
-    // TODO: create delegate so we can add settings to LoopDataManager
+
     init() {
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
     }
@@ -59,19 +66,45 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: viewModel)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Your Settings", comment: "Navigation view title")
+            return hostedView
         case .reviewDevices:
             viewModel.didFinishStep = { [weak self] in
                 self?.stepFinished()
             }
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+                return restartFlow()
             }
             let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
+            return hostedView
+        case .correctionRangeInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CorrectionRangeInformationView(onExit: exiting)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
+            return hostedView
+        case .correctionRangeEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                return restartFlow()
+            }
+            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // fix for jumping
+            return hostedView
         }
+    }
+    
+    private func restartFlow() -> UIViewController {
+        screenStack = [.enterCode]
+        let view = PrescriptionCodeEntryView(viewModel: viewModel)
+        return DismissibleHostingController(rootView: view)
     }
     
     public func navigationController(_ navigationController: UINavigationController,
@@ -94,6 +127,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         setViewControllers([viewController], animated: false)
     }
     
+    // TODO: have separate flow for cancelling
     private func setupCanceled() {
         completionDelegate?.completionNotifyingDidComplete(self)
     }
@@ -102,6 +136,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
+            if let settingDelegate = onReviewFinished {
+                settingDelegate(viewModel.settings)
+            }
             completionDelegate?.completionNotifyingDidComplete(self)
         }
     }
