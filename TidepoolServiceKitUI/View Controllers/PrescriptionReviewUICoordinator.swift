@@ -100,9 +100,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 // Go back to code entry step if we don't have prescription
                 return restartFlow()
             }
-            let view = CorrectionRangeReview(model: viewModel, prescription: prescription)
+            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
             let hostedView = DismissibleHostingController(rootView: view)
-            hostedView.navigationItem.largeTitleDisplayMode = .never // hack to fix jumping, will be removed once editors have titles
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
         case .correctionRangeOverrideInfo:
             let exiting: (() -> Void) = { [weak self] in
@@ -110,7 +110,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = CorrectionRangeOverrideInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
-            hostedView.navigationItem.largeTitleDisplayMode = .always // hack to fix jumping, will be removed once editors have titles
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = LocalizedString("Temporary Correction Range", comment: "Title for temporary correction range informational screen")
             return hostedView
         case .correctionRangeOverrideEditor:
@@ -122,7 +122,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             
             let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
             let hostedView = DismissibleHostingController(rootView: view)
-            hostedView.navigationItem.largeTitleDisplayMode = .never // hack to fix jumping, will be removed once editors have titles
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
         }
     }
