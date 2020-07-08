@@ -111,7 +111,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = CorrectionRangeOverrideInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = LocalizedString("Temporary Correction Range", comment: "Title for temporary correction range informational screen")
+            hostedView.title = LocalizedString("Temporary Ranges", comment: "Title for temporary correction range informational screen") // TODO: make this title be "Temporary Correction Ranges" when SwiftUI supports multi-line titles
             return hostedView
         case .correctionRangeOverrideEditor:
             guard let prescription = viewModel.prescription else {
