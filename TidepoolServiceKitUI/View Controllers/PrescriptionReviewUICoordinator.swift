@@ -94,9 +94,10 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 // Go back to code entry step if we don't have prescription
                 return restartFlow()
             }
-            
             let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // fix for jumping
+            return hostedView
         }
     }
     
