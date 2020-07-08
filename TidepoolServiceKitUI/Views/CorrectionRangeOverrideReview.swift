@@ -13,7 +13,6 @@ import LoopKitUI
 
 struct CorrectionRangeOverrideReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State var userHasEdited: Bool = false
     let prescription: MockPrescription
     
     init(
@@ -38,8 +37,7 @@ struct CorrectionRangeOverrideReview: View {
                 self.viewModel.didFinishStep()
             },
             sensitivityOverridesEnabled: true,
-            mode: .flow,
-            userHasEdited: $userHasEdited
+            mode: .flow
         )
     }
 }
