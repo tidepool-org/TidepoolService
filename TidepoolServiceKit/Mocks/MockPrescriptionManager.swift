@@ -77,7 +77,7 @@ public class MockPrescriptionManager {
                 suspendThreshold: GlucoseThreshold(unit: .milligramsPerDeciliter, value: 70),
                 insulinModel: MockPrescription.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3)),
                 preMealTargetRange: DoubleRange(minValue: 80.0, maxValue: 90.0),
-                workoutTargetRange: DoubleRange(minValue: 80.0, maxValue: 90.0))
+                workoutTargetRange: DoubleRange(minValue: 130.0, maxValue: 140.0))
         }
     }
     
