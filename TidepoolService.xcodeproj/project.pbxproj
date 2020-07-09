@@ -286,7 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				A94AE4F7235A909A005CA320 /* UIColor.swift */,
-				E9086B3D24B3D8890062F5C8 /* Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -795,11 +794,11 @@
 				E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */,
 				E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
-				E9086B3E24B3D8890062F5C8 /* Color.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
 				E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */,
 				E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */,
+				E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */,
 				A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */,
 				E96DCB5C24AF7723007117BC /* SuspendThresholdReview.swift in Sources */,
 				A9DAAD3B22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift in Sources */,

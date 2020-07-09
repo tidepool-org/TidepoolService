@@ -108,8 +108,46 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
             let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .correctionRangeOverrideInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CorrectionRangeOverrideInformationView(onExit: exiting)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Temporary Ranges", comment: "Title for temporary correction range informational screen") // TODO: make this title be "Temporary Correction Ranges" when SwiftUI supports multi-line titles
+            return hostedView
+        case .correctionRangeOverrideEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
+            }
+            
+            let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .correctionRangeInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CorrectionRangeInformationView(onExit: exiting)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
+            return hostedView
+        case .correctionRangeEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                return restartFlow()
+            }
+            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
+            let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // fix for jumping
             return hostedView
+>>>>>>>>> Temporary merge branch 2
         }
     }
     
@@ -148,8 +186,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
-            if let settingDelegate = onReviewFinished {
-                settingDelegate(viewModel.settings)
+            if let onReviewFinished = onReviewFinished {
+                onReviewFinished(viewModel.settings)
             }
             completionDelegate?.completionNotifyingDidComplete(self)
         }

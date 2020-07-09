@@ -18,7 +18,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     var body: some View {
         List {
             VStack(alignment: .leading, spacing: 25) {
-                inBodyTitle
                 itemsNeededList
                 codeEntryRequest
             }
@@ -31,16 +30,10 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
-        .navigationBarTitle(Text(""), displayMode: .inline)
+        .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
         .onAppear() {
             UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
-    }
-    
-    private var inBodyTitle: Text {
-         Text(LocalizedString("Your Settings", comment: "Navigation view title"))
-        .bold()
-        .font(.largeTitle)
     }
 
     private var cancelButton: some View {

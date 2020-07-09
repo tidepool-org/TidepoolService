@@ -13,7 +13,6 @@ import LoopKitUI
 
 struct CorrectionRangeOverrideReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State var userHasEdited: Bool = false
     let prescription: MockPrescription
     
     init(
@@ -26,7 +25,6 @@ struct CorrectionRangeOverrideReview: View {
     
     var body: some View {
         CorrectionRangeOverridesEditor(
-            buttonText: buttonText,
             value: CorrectionRangeOverrides(
                 preMeal: prescription.preMealTargetRange,
                 workout: prescription.workoutTargetRange,
@@ -39,12 +37,7 @@ struct CorrectionRangeOverrideReview: View {
                 self.viewModel.didFinishStep()
             },
             sensitivityOverridesEnabled: true,
-            mode: .flow,
-            userHasEdited: $userHasEdited
+            mode: .flow
         )
-    }
-    
-    private var buttonText: Text {
-        return !userHasEdited ? Text(LocalizedString("Accept Setting", comment: "The button text for accepting the prescribed setting")) : Text(LocalizedString("Save Setting", comment: "The button text for saving the edited setting"))
     }
 }
