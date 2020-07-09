@@ -52,7 +52,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     @objc private func startFlow() {
         let setupViewController = PrescriptionReviewUICoordinator()
         setupViewController.completionDelegate = self
-        setupViewController.settingDelegate = { [weak service] (settings) in
+        setupViewController.onReviewFinished = { [weak service] (settings) in
             service?.saveSettings(settings: settings)
         }
         self.present(setupViewController, animated: true, completion: nil)
