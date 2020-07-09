@@ -9,6 +9,8 @@
 import Foundation
 import TidepoolServiceKit
 import LoopKit
+import LoopKitUI
+import HealthKit
 
 class PrescriptionReviewViewModel: ObservableObject {
     var didFinishStep: (() -> Void)
@@ -57,5 +59,10 @@ class PrescriptionReviewViewModel: ObservableObject {
     
     func saveCorrectionRange(range: GlucoseRangeSchedule) {
         settings.glucoseTargetRangeSchedule = range
+    }
+    
+    func saveCorrectionRangeOverrides(overrides: CorrectionRangeOverrides, unit: HKUnit) {
+        settings.preMealTargetRange = overrides.preMeal?.doubleRange(for: unit)
+        settings.workoutTargetRange = overrides.workout?.doubleRange(for: unit)
     }
 }
