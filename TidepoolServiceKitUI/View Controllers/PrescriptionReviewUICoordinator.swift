@@ -130,24 +130,25 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
-        case .correctionRangeInfo:
+        case .suspendThresholdInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = CorrectionRangeInformationView(onExit: exiting)
+            let view = SuspendThresholdInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
-            hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Suspend Threshold", comment: "Title for suspend threshold informational screen")
             return hostedView
-        case .correctionRangeEditor:
+        case .suspendThresholdEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                return restartFlow()
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
             }
-            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
+            let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
             let hostedView = DismissibleHostingController(rootView: view)
-            hostedView.navigationItem.largeTitleDisplayMode = .never // fix for jumping
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
->>>>>>>>> Temporary merge branch 2
         }
     }
     

@@ -63,7 +63,7 @@ class PrescriptionReviewViewModel: ObservableObject {
     
     func saveCorrectionRangeOverrides(overrides: CorrectionRangeOverrides, unit: HKUnit) {
         settings.preMealTargetRange = overrides.preMeal?.doubleRange(for: unit)
-        settings.legacyWorkoutTargetRange = overrides.workout?.doubleRange(for: unit)
+        settings.workoutTargetRange = overrides.workout?.doubleRange(for: unit)
     }
     
     func saveSuspendThreshold(value: GlucoseThreshold) {

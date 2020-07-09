@@ -15,7 +15,6 @@ import TidepoolServiceKit
 
 struct SuspendThresholdReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State var userHasEdited: Bool = false
     let prescription: MockPrescription
     
     init(
@@ -28,7 +27,6 @@ struct SuspendThresholdReview: View {
     
     var body: some View {
         SuspendThresholdEditor(
-            buttonText: buttonText,
             value: prescription.suspendThreshold.quantity,
             unit: prescription.bloodGlucoseUnit.hkUnit,
             maxValue: prescription.glucoseTargetRangeSchedule.minLowerBound(),
@@ -37,12 +35,7 @@ struct SuspendThresholdReview: View {
                 self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: unit, value: newValue.doubleValue(for: unit)))
                 self.viewModel.didFinishStep()
             },
-             mode: .flow,
-             userHasEdited: $userHasEdited
+            mode: .flow
         )
-    }
-    
-    private var buttonText: Text {
-        return !userHasEdited ? Text(LocalizedString("Accept Setting", comment: "The button text for accepting the prescribed setting")) : Text(LocalizedString("Save Setting", comment: "The button text for saving the edited setting"))
     }
 }
