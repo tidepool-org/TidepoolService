@@ -162,8 +162,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
-            if let settingDelegate = onReviewFinished {
-                settingDelegate(viewModel.settings)
+            if let onReviewFinished = onReviewFinished {
+                onReviewFinished(viewModel.settings)
             }
             completionDelegate?.completionNotifyingDidComplete(self)
         }
