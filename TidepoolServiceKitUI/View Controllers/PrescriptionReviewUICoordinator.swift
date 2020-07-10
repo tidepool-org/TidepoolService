@@ -151,14 +151,18 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 return restartFlow()
             }
             let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
         case .basalRatesInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
             let view = BasalRatesInformationView(onExit: exiting)
-            
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Basal Rates", comment: "Title for basal rates informational screen")
+            return hostedView
         case .basalRatesEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
@@ -166,7 +170,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             
             let view = BasalRatesReview(model: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
         }
     }
     
