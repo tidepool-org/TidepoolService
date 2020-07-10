@@ -18,7 +18,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     var body: some View {
         List {
             VStack(alignment: .leading, spacing: 25) {
-                inBodyTitle
                 itemsNeededList
                 codeEntryRequest
             }
@@ -31,16 +30,10 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
-        .navigationBarTitle(Text(""), displayMode: .inline)
+        .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
         .onAppear() {
             UITableView.appearance().separatorStyle = .none // Remove lines between sections
         }
-    }
-    
-    private var inBodyTitle: Text {
-         Text(LocalizedString("Your Settings", comment: "Navigation view title"))
-        .bold()
-        .font(.largeTitle)
     }
 
     private var cancelButton: some View {
@@ -57,7 +50,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             Text(LocalizedString("What you'll need", comment: "Title for section describing items needed to review settings"))
             .font(.headline)
             Text(LocalizedString("For the next section, you'll want to have the following:", comment: "Subheader for items-needed section"))
-            .foregroundColor(.blueGray)
+            .foregroundColor(.secondary)
             .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
         }
         
@@ -70,10 +63,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 InstructionList(instructions: [
                     LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
                     LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
-                    ],
-                    stepsColor: .blueGray
+                    ]
                 )
-                .foregroundColor(.blueGray)
+                .foregroundColor(.secondary)
             }
         }
     }
@@ -84,7 +76,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
                 .font(.headline)
                 Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
-                .foregroundColor(.blueGray)
+                .foregroundColor(.secondary)
                 prescriptionCodeInputField
             }
         }

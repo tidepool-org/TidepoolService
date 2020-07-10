@@ -63,8 +63,8 @@
 		A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */; };
 		A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */; };
 		E916F56D24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E916F56C24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift */; };
-		E9086B3E24B3D8890062F5C8 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9086B3D24B3D8890062F5C8 /* Color.swift */; };
 		E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */; };
+		E916F56D24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E916F56C24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift */; };
 		E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 		E949E38724AF864A00024DA0 /* BasalRatesReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E949E38624AF864A00024DA0 /* BasalRatesReview.swift */; };
@@ -75,7 +75,7 @@
 		E96DCB5C24AF7723007117BC /* SuspendThresholdReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96DCB5B24AF7723007117BC /* SuspendThresholdReview.swift */; };
 		E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */; };
 		E991F1BB24A654CC0059281B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1BA24A654CC0059281B /* TimeInterval.swift */; };
-		E991F1C524AAB25C0059281B /* CorrectionRangeReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1C424AAB25C0059281B /* CorrectionRangeReview.swift */; };
+		E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,8 +183,8 @@
 		A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
 		A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		E916F56C24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeOverrideReview.swift; sourceTree = "<group>"; };
-		E9086B3D24B3D8890062F5C8 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
+		E916F56C24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeOverrideReview.swift; sourceTree = "<group>"; };
 		E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E949E38624AF864A00024DA0 /* BasalRatesReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalRatesReview.swift; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 		E96DCB5B24AF7723007117BC /* SuspendThresholdReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuspendThresholdReview.swift; sourceTree = "<group>"; };
 		E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveKeyboardPadding.swift; sourceTree = "<group>"; };
 		E991F1BA24A654CC0059281B /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		E991F1C424AAB25C0059281B /* CorrectionRangeReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeReview.swift; sourceTree = "<group>"; };
+		E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeReviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,7 +290,6 @@
 			isa = PBXGroup;
 			children = (
 				A94AE4F7235A909A005CA320 /* UIColor.swift */,
-				E9086B3D24B3D8890062F5C8 /* Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -425,7 +424,7 @@
 				E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */,
 				E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */,
 				E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */,
-				E991F1C424AAB25C0059281B /* CorrectionRangeReview.swift */,
+				E991F1C424AAB25C0059281B /* CorrectionRangeReviewView.swift */,
 				E916F56C24AD3DA600BE3547 /* CorrectionRangeOverrideReview.swift */,
 				E96DCB5B24AF7723007117BC /* SuspendThresholdReview.swift */,
 				E949E38624AF864A00024DA0 /* BasalRatesReview.swift */,
@@ -801,11 +800,10 @@
 				E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */,
 				E949E38724AF864A00024DA0 /* BasalRatesReview.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
-				E9086B3E24B3D8890062F5C8 /* Color.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
-				E991F1C524AAB25C0059281B /* CorrectionRangeReview.swift in Sources */,
 				E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */,
+				E991F1C524AAB25C0059281B /* CorrectionRangeReviewView.swift in Sources */,
 				A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */,
 				E96DCB5C24AF7723007117BC /* SuspendThresholdReview.swift in Sources */,
 				A9DAAD3B22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift in Sources */,

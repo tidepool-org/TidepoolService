@@ -52,7 +52,7 @@ enum PrescriptionReviewScreen {
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
-    var settingDelegate: ((TherapySettings) -> Void)?
+    var onReviewFinished: ((TherapySettings) -> Void)?
 
     let viewModel = PrescriptionReviewViewModel(settings: TherapySettings())
     
@@ -84,7 +84,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: viewModel)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Your Settings", comment: "Navigation view title")
+            return hostedView
         case .reviewDevices:
             viewModel.didFinishStep = { [weak self] in
                 self?.stepFinished()
@@ -94,50 +96,60 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 return restartFlow()
             }
             let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
+            return hostedView
         case .correctionRangeInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
             let view = CorrectionRangeInformationView(onExit: exiting)
-            
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
+            return hostedView
         case .correctionRangeEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
                 return restartFlow()
             }
-            
-            let view = CorrectionRangeReview(model: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
         case .correctionRangeOverrideInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
             let view = CorrectionRangeOverrideInformationView(onExit: exiting)
-            
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Temporary Ranges", comment: "Title for temporary correction range informational screen") // TODO: make this title be "Temporary Correction Ranges" when SwiftUI supports multi-line titles
+            return hostedView
         case .correctionRangeOverrideEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                return restartFlow()
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
             }
             
             let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
         case .suspendThresholdInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
             let view = SuspendThresholdInformationView(onExit: exiting)
-            
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Suspend Threshold", comment: "Title for suspend threshold informational screen")
+            return hostedView
         case .suspendThresholdEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
                 return restartFlow()
             }
-            
             let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
             return DismissibleHostingController(rootView: view)
         case .basalRatesInfo:
@@ -193,8 +205,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
-            if let settingDelegate = settingDelegate {
-                settingDelegate(viewModel.settings)
+            if let onReviewFinished = onReviewFinished {
+                onReviewFinished(viewModel.settings)
             }
             completionDelegate?.completionNotifyingDidComplete(self)
         }
