@@ -19,10 +19,10 @@ class PrescriptionReviewViewModel: ObservableObject {
     var prescription: MockPrescription?
     let prescriptionCodeLength = 4
     
-    var settings: LoopSettings
+    var settings: TherapySettings
     
     init(finishedStepHandler: @escaping () -> Void = { },
-         settings: LoopSettings) {
+         settings: TherapySettings) {
         self.didFinishStep = finishedStepHandler
         self.settings = settings
     }
@@ -63,11 +63,15 @@ class PrescriptionReviewViewModel: ObservableObject {
     
     func saveCorrectionRangeOverrides(overrides: CorrectionRangeOverrides, unit: HKUnit) {
         settings.preMealTargetRange = overrides.preMeal?.doubleRange(for: unit)
-        settings.legacyWorkoutTargetRange = overrides.workout?.doubleRange(for: unit)
+        settings.workoutTargetRange = overrides.workout?.doubleRange(for: unit)
     }
     
     func saveSuspendThreshold(value: GlucoseThreshold) {
         settings.suspendThreshold = value
+    }
+    
+    func saveBasalRates(basalRates: BasalRateSchedule) {
+        settings.basalRateSchedule = basalRates
     }
     
     func saveDeliveryLimits(limits: DeliveryLimits) {
