@@ -183,9 +183,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = DeliveryLimitsInformationView(exitPage: exiting)
-            
-            return DismissibleHostingController(rootView: view)
+            let view = DeliveryLimitsInformationView(onExit: exiting)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Delivery Limits", comment: "Title for delivery limits informational screen")
+            return hostedView
         case .deliveryLimitsEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
@@ -193,7 +195,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             
             let view = DeliveryLimitsReviewView(model: viewModel, prescription: prescription)
-            return DismissibleHostingController(rootView: view)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
         }
     }
     
