@@ -31,12 +31,13 @@ struct CorrectionRangeOverrideReview: View {
                 unit: prescription.bloodGlucoseUnit.hkUnit
             ),
             unit: prescription.bloodGlucoseUnit.hkUnit,
+            correctionRangeScheduleRange: prescription.glucoseTargetRangeSchedule.scheduleRange(),
             minValue: prescription.suspendThreshold.quantity,
             onSave: { overrides in
                 self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.prescription.bloodGlucoseUnit.hkUnit)
                 self.viewModel.didFinishStep()
             },
-            sensitivityOverridesEnabled: true,
+            sensitivityOverridesEnabled: false,
             mode: .flow
         )
     }
