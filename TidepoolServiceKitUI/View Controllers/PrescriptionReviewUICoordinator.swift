@@ -18,6 +18,8 @@ enum PrescriptionReviewScreen {
     case correctionRangeEditor
     case correctionRangeOverrideInfo
     case correctionRangeOverrideEditor
+    case suspendThresholdInfo
+    case suspendThresholdEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -32,6 +34,10 @@ enum PrescriptionReviewScreen {
         case .correctionRangeOverrideInfo:
             return .correctionRangeOverrideEditor
         case .correctionRangeOverrideEditor:
+            return .suspendThresholdInfo
+        case .suspendThresholdInfo:
+            return .suspendThresholdEditor
+        case .suspendThresholdEditor:
             return nil
         }
     }
@@ -121,6 +127,25 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             
             let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .suspendThresholdInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = SuspendThresholdInformationView(onExit: exiting)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Suspend Threshold", comment: "Title for suspend threshold informational screen")
+            return hostedView
+        case .suspendThresholdEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                let view = PrescriptionCodeEntryView(viewModel: viewModel)
+                return DismissibleHostingController(rootView: view)
+            }
+            let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView

@@ -63,8 +63,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 InstructionList(instructions: [
                     LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
                     LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
-                    ],
-                    stepsColor: .secondary
+                    ]
                 )
                 .foregroundColor(.secondary)
             }

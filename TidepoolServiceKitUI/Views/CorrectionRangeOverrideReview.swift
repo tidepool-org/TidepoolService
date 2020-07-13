@@ -26,13 +26,13 @@ struct CorrectionRangeOverrideReview: View {
     var body: some View {
         CorrectionRangeOverridesEditor(
             value: CorrectionRangeOverrides(
-                preMeal: prescription.preMealTargetRange,
-                workout: prescription.workoutTargetRange,
+                preMeal: prescription.therapySettings.preMealTargetRange,
+                workout: prescription.therapySettings.workoutTargetRange,
                 unit: prescription.bloodGlucoseUnit.hkUnit
             ),
             unit: prescription.bloodGlucoseUnit.hkUnit,
-            correctionRangeScheduleRange: prescription.glucoseTargetRangeSchedule.scheduleRange(),
-            minValue: prescription.suspendThreshold.quantity,
+            correctionRangeScheduleRange: (prescription.therapySettings.glucoseTargetRangeSchedule?.scheduleRange())!,
+            minValue: prescription.therapySettings.suspendThreshold?.quantity,
             onSave: { overrides in
                 self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.prescription.bloodGlucoseUnit.hkUnit)
                 self.viewModel.didFinishStep()

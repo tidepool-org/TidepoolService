@@ -1,10 +1,11 @@
 //
-//  CorrectionRangeReviewView.swift
+//  SuspendThresholdReview.swift
 //  TidepoolServiceKitUI
 //
-//  Created by Anna Quinlan on 6/29/20.
+//  Created by Anna Quinlan on 7/3/20.
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
+
 import SwiftUI
 import LoopKitUI
 import LoopKit
@@ -12,7 +13,7 @@ import HealthKit
 import TidepoolServiceKit
 
 
-struct CorrectionRangeReviewView: View {
+struct SuspendThresholdReview: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     let prescription: MockPrescription
     
@@ -25,12 +26,13 @@ struct CorrectionRangeReviewView: View {
     }
     
     var body: some View {
-        CorrectionRangeScheduleEditor(
-            schedule: prescription.therapySettings.glucoseTargetRangeSchedule,
+        SuspendThresholdEditor(
+            value: prescription.therapySettings.suspendThreshold?.quantity,
             unit: prescription.bloodGlucoseUnit.hkUnit,
-            minValue: prescription.therapySettings.suspendThreshold?.quantity,
-            onSave: { newSchedule in
-                self.viewModel.saveCorrectionRange(range: newSchedule)
+            maxValue: prescription.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
+            onSave: { newValue in
+                let unit = self.prescription.bloodGlucoseUnit.hkUnit
+                self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: unit, value: newValue.doubleValue(for: unit)))
                 self.viewModel.didFinishStep()
             },
             mode: .flow
