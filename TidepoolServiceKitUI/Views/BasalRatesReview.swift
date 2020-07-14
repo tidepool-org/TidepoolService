@@ -27,9 +27,9 @@ struct BasalRatesReview: View {
     
     var body: some View {
         BasalRateScheduleEditor(
-            schedule: prescription.basalRateSchedule,
+            schedule: prescription.therapySettings.basalRateSchedule,
             supportedBasalRates: supportedBasalRates,
-            maximumBasalRate: prescription.maximumBasalRatePerHour,
+            maximumBasalRate: prescription.therapySettings.maximumBasalRatePerHour,
             maximumScheduleEntryCount: maximumBasalScheduleEntryCount,
             syncSchedule: { result, error  in
                 // Since pump isn't set up, this syncing shouldn't do anything
