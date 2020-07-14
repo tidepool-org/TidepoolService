@@ -42,14 +42,15 @@ struct BasalRatesReview: View {
         )
     }
     
+    // TODO: don't hard-code these values
     private var supportedBasalRates: [Double] {
         switch prescription.pump {
         case .dash:
-            // ANNA TODO: make this (1, 600) once guardrail bug is resolved
             return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
         }
     }
     
+    // TODO: don't hard-code these values
     private var maximumBasalScheduleEntryCount: Int {
         switch prescription.pump {
         case .dash:
@@ -57,6 +58,7 @@ struct BasalRatesReview: View {
         }
     }
     
+    // TODO: don't hard-code these values
     private var syncBasalRateSchedule: Int {
         switch prescription.pump {
         case .dash:
