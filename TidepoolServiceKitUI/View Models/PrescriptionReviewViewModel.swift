@@ -69,4 +69,8 @@ class PrescriptionReviewViewModel: ObservableObject {
     func saveSuspendThreshold(value: GlucoseThreshold) {
         settings.suspendThreshold = value
     }
+    
+    func saveBasalRates(basalRates: BasalRateSchedule) {
+        settings.basalRateSchedule = basalRates
+    }
 }

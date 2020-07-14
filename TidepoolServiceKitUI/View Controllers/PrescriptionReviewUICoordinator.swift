@@ -20,6 +20,8 @@ enum PrescriptionReviewScreen {
     case correctionRangeOverrideEditor
     case suspendThresholdInfo
     case suspendThresholdEditor
+    case basalRatesInfo
+    case basalRatesEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -38,6 +40,10 @@ enum PrescriptionReviewScreen {
         case .suspendThresholdInfo:
             return .suspendThresholdEditor
         case .suspendThresholdEditor:
+            return .basalRatesInfo
+        case .basalRatesInfo:
+            return .basalRatesEditor
+        case .basalRatesEditor:
             return nil
         }
     }
@@ -142,10 +148,28 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .suspendThresholdEditor:
             guard let prescription = viewModel.prescription else {
                 // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+                return restartFlow()
             }
             let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .basalRatesInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = BasalRatesInformationView(onExit: exiting)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Basal Rates", comment: "Title for basal rates informational screen")
+            return hostedView
+        case .basalRatesEditor:
+            guard let prescription = viewModel.prescription else {
+                // Go back to code entry step if we don't have prescription
+                return restartFlow()
+            }
+            
+            let view = BasalRatesReview(model: viewModel, prescription: prescription)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
