@@ -31,7 +31,7 @@ struct DeliveryLimitsReviewView: View {
             buttonText: buttonText,
             value: DeliveryLimits(maximumBasalRate: maxBasal, maximumBolus: maxBolus),
             supportedBasalRates: supportedBasalRates,
-            scheduledBasalRange: prescription.basalRateSchedule.valueRange(),
+            scheduledBasalRange: prescription.therapySettings.basalRateSchedule?.valueRange(),
             supportedBolusVolumes: supportedBolusVolumes,
             onSave: { limits in
                 self.viewModel.saveDeliveryLimits(limits: limits)
@@ -42,12 +42,13 @@ struct DeliveryLimitsReviewView: View {
         )
     }
     
+    // ANNA TODO: check that this forced unwrapping is appropriate
     private var maxBasal: HKQuantity {
-        return HKQuantity(unit: HKUnit.internationalUnit().unitDivided(by: .hour()), doubleValue: prescription.maximumBasalRatePerHour)
+        return HKQuantity(unit: HKUnit.internationalUnit().unitDivided(by: .hour()), doubleValue: prescription.therapySettings.maximumBasalRatePerHour!)
     }
     
     private var maxBolus: HKQuantity {
-        return HKQuantity(unit: .internationalUnit(), doubleValue: prescription.maximumBolus)
+        return HKQuantity(unit: .internationalUnit(), doubleValue: prescription.therapySettings.maximumBolus!)
     }
     
     private var supportedBasalRates: [Double] {
