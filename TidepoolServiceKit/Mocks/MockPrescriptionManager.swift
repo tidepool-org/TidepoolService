@@ -60,7 +60,20 @@ public class MockPrescriptionManager {
                              RepeatingScheduleValue(startTime: .hours(16), value: 12.0),
                              RepeatingScheduleValue(startTime: .hours(18), value: 8.0),
                              RepeatingScheduleValue(startTime: .hours(21), value: 10.0)],
-                timeZone: timeZone)!            
+                timeZone: timeZone)!
+            
+            let therapySettings = TherapySettings(
+                glucoseTargetRangeSchedule: glucoseTargetRangeSchedule,
+                preMealTargetRange: DoubleRange(minValue: 80.0, maxValue: 90.0),
+                workoutTargetRange: DoubleRange(minValue: 130.0, maxValue: 140.0),
+                maximumBasalRatePerHour: 3,
+                maximumBolus: 5,
+                suspendThreshold: GlucoseThreshold(unit: .milligramsPerDeciliter, value: 80),
+                insulinSensitivitySchedule: insulinSensitivitySchedule,
+                carbRatioSchedule: carbRatioSchedule,
+                basalRateSchedule: basalRateSchedule,
+                insulinModel: StoredSettings.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3))
+            )
             
             self.prescription = MockPrescription(
                 datePrescribed: Date(),
@@ -68,16 +81,8 @@ public class MockPrescriptionManager {
                 cgmType: CGMType.g6,
                 pumpType: PumpType.dash,
                 bloodGlucoseUnit: .mgdl,
-                basalRateSchedule: basalRateSchedule,
-                glucoseTargetRangeSchedule: glucoseTargetRangeSchedule,
-                carbRatioSchedule: carbRatioSchedule,
-                insulinSensitivitySchedule: insulinSensitivitySchedule,
-                maximumBasalRatePerHour: 3.0,
-                maximumBolus: 5.0,
-                suspendThreshold: GlucoseThreshold(unit: .milligramsPerDeciliter, value: 70),
-                insulinModel: MockPrescription.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3)),
-                preMealTargetRange: DoubleRange(minValue: 80.0, maxValue: 90.0),
-                workoutTargetRange: DoubleRange(minValue: 130.0, maxValue: 140.0))
+                therapySettings: therapySettings
+            )
         }
     }
     
