@@ -26,9 +26,9 @@ struct CorrectionRangeReviewView: View {
     
     var body: some View {
         CorrectionRangeScheduleEditor(
-            schedule: prescription.glucoseTargetRangeSchedule,
+            schedule: prescription.therapySettings.glucoseTargetRangeSchedule,
             unit: prescription.bloodGlucoseUnit.hkUnit,
-            minValue: prescription.suspendThreshold.quantity,
+            minValue: prescription.therapySettings.suspendThreshold?.quantity,
             onSave: { newSchedule in
                 self.viewModel.saveCorrectionRange(range: newSchedule)
                 self.viewModel.didFinishStep()

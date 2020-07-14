@@ -27,9 +27,9 @@ struct SuspendThresholdReview: View {
     
     var body: some View {
         SuspendThresholdEditor(
-            value: prescription.suspendThreshold.quantity,
+            value: prescription.therapySettings.suspendThreshold?.quantity,
             unit: prescription.bloodGlucoseUnit.hkUnit,
-            maxValue: prescription.glucoseTargetRangeSchedule.minLowerBound(),
+            maxValue: prescription.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
             onSave: { newValue in
                 let unit = self.prescription.bloodGlucoseUnit.hkUnit
                 self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: unit, value: newValue.doubleValue(for: unit)))
