@@ -19,13 +19,13 @@ struct SuspendThresholdReview: View {
     
     init(model: TherapySettingsViewModel) {
         self.viewModel = model
-        self.unit = model.therapySettings.glucoseUnit?.hkUnit ?? .milligramsPerDeciliter
+        self.unit = model.therapySettings.glucoseUnit ?? .milligramsPerDeciliter
     }
     
     var body: some View {
         SuspendThresholdEditor(
             value: viewModel.therapySettings.suspendThreshold?.quantity,
-            unit: viewModel.therapySettings.glucoseUnit?.hkUnit ?? .milligramsPerDeciliter,
+            unit: unit,
             maxValue: viewModel.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
             onSave: { newValue in
                 self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: self.unit, value: newValue.doubleValue(for: self.unit)))

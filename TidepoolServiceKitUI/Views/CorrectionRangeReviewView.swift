@@ -15,16 +15,14 @@ import TidepoolServiceKit
 struct CorrectionRangeReviewView: View {
     @ObservedObject var viewModel: TherapySettingsViewModel
     
-    init(
-        model: TherapySettingsViewModel
-    ) {
+    init(model: TherapySettingsViewModel){
         self.viewModel = model
     }
     
     var body: some View {
         CorrectionRangeScheduleEditor(
             schedule: viewModel.therapySettings.glucoseTargetRangeSchedule,
-            unit: viewModel.therapySettings.glucoseUnit?.hkUnit ?? .milligramsPerDeciliter,
+            unit: viewModel.therapySettings.glucoseUnit ?? .milligramsPerDeciliter,
             minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { newSchedule in
                 self.viewModel.saveCorrectionRange(range: newSchedule)

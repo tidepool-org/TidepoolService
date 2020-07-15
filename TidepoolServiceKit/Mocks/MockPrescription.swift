@@ -10,6 +10,19 @@ import Foundation
 import HealthKit
 import LoopKit
 
+public enum BGUnit: String, Codable {
+    case mgdl
+    case mmol
+    
+    public var hkUnit: HKUnit {
+        switch self {
+        case .mgdl:
+            return .milligramsPerDeciliter
+        case .mmol:
+            return .millimolesPerLiter
+        }
+    }
+}
 
 public enum CGMType: String, Codable {
     case g6
@@ -17,12 +30,6 @@ public enum CGMType: String, Codable {
 
 public enum PumpType: String, Codable {
     case dash
-}
-
-public enum TrainingType: String, Codable {
-    case inPerson // Patient must have hands-on training with clinician/CDE
-    case inModule // Patient can train in-app
-
 }
 
 public struct MockPrescription: Codable {

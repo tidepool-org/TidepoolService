@@ -88,7 +88,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.setupCanceled()
             }
             prescriptionViewModel.didFinishStep = { [weak self] in
-                // ANNA TODO: check about force unwrap
                 self?.settingsViewModel.reset(settings: (self?.prescriptionViewModel.prescription!.therapySettings)!)
                 self?.stepFinished()
             }
@@ -111,7 +110,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = CorrectionRangeInformationView(onExit: onExit)
             let hostedView = DismissibleHostingController(rootView: view)
-            hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
+            hostedView.title = TherapySetting.glucoseTargetRange.title
             return hostedView
         case .correctionRangeEditor:
             let didFinishStep: (() -> Void) = { [weak self] in
@@ -143,7 +142,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = SuspendThresholdInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = LocalizedString("Suspend Threshold", comment: "Title for suspend threshold informational screen")
+            hostedView.title = TherapySetting.suspendThreshold.title
             return hostedView
         case .suspendThresholdEditor:
             let view = SuspendThresholdReview(model: settingsViewModel)
@@ -157,7 +156,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = BasalRatesInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = LocalizedString("Basal Rates", comment: "Title for basal rates informational screen")
+            hostedView.title = TherapySetting.basalRate.title
             return hostedView
         case .basalRatesEditor:
             // We shouldn't be able to get here without a prescription, so we can force unwrap it
@@ -172,7 +171,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = DeliveryLimitsInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = LocalizedString("Delivery Limits", comment: "Title for delivery limits informational screen")
+            hostedView.title = TherapySetting.deliveryLimits.title
             return hostedView
         case .deliveryLimitsEditor:
             // We shouldn't be able to get here without a prescription, so we can force unwrap it
