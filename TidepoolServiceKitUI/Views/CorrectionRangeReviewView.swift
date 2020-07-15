@@ -13,25 +13,24 @@ import TidepoolServiceKit
 
 
 struct CorrectionRangeReviewView: View {
-    @ObservedObject var viewModel: PrescriptionReviewViewModel
-    let prescription: MockPrescription
+    @ObservedObject var viewModel: TherapySettingsViewModel
     
     init(
-        model: PrescriptionReviewViewModel,
-        prescription: MockPrescription
+        model: TherapySettingsViewModel
     ) {
         self.viewModel = model
-        self.prescription = prescription
     }
     
     var body: some View {
         CorrectionRangeScheduleEditor(
-            schedule: prescription.therapySettings.glucoseTargetRangeSchedule,
-            unit: prescription.bloodGlucoseUnit.hkUnit,
-            minValue: prescription.therapySettings.suspendThreshold?.quantity,
+            schedule: viewModel.therapySettings.glucoseTargetRangeSchedule,
+            unit: viewModel.therapySettings.glucoseUnit?.hkUnit ?? .milligramsPerDeciliter,
+            minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { newSchedule in
                 self.viewModel.saveCorrectionRange(range: newSchedule)
-                self.viewModel.didFinishStep()
+                if let didFinishStep = self.viewModel.didFinishStep {
+                    didFinishStep()
+                }
             },
             mode: .flow
         )

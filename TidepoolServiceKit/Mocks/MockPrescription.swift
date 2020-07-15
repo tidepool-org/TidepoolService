@@ -25,20 +25,6 @@ public enum TrainingType: String, Codable {
 
 }
 
-public enum BGUnit: String, Codable {
-    case mgdl
-    case mmol
-    
-    public var hkUnit: HKUnit {
-        switch self {
-        case .mgdl:
-            return .milligramsPerDeciliter
-        case .mmol:
-            return .millimolesPerLiter
-        }
-    }
-}
-
 public struct MockPrescription: Codable {
     public let datePrescribed: Date // Date prescription was prescribed
     public let providerName: String // Name of clinician prescribing

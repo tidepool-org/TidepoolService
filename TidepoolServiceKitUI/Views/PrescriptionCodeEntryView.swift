@@ -124,7 +124,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
 
 struct PrescriptionCodeEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        PrescriptionCodeEntryView(viewModel: PrescriptionReviewViewModel(settings: TherapySettings()))
+        PrescriptionCodeEntryView(viewModel: PrescriptionReviewViewModel())
     }
 }
 

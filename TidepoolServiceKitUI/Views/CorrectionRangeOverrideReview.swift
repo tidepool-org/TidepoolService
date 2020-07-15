@@ -12,30 +12,31 @@ import LoopKit
 import LoopKitUI
 
 struct CorrectionRangeOverrideReview: View {
-    @ObservedObject var viewModel: PrescriptionReviewViewModel
-    let prescription: MockPrescription
+    @ObservedObject var viewModel: TherapySettingsViewModel
     
     init(
-        model: PrescriptionReviewViewModel,
-        prescription: MockPrescription
+        model: TherapySettingsViewModel
     ) {
         self.viewModel = model
-        self.prescription = prescription
     }
     
     var body: some View {
         CorrectionRangeOverridesEditor(
             value: CorrectionRangeOverrides(
-                preMeal: prescription.therapySettings.preMealTargetRange,
-                workout: prescription.therapySettings.workoutTargetRange,
-                unit: prescription.bloodGlucoseUnit.hkUnit
+                preMeal: viewModel.therapySettings.preMealTargetRange,
+                workout: viewModel.therapySettings.workoutTargetRange,
+                // ANNA TODO: add units into view model & don't force unwrap
+                unit: viewModel.therapySettings.glucoseTargetRangeSchedule!.unit
             ),
-            unit: prescription.bloodGlucoseUnit.hkUnit,
-            correctionRangeScheduleRange: (prescription.therapySettings.glucoseTargetRangeSchedule?.scheduleRange())!,
-            minValue: prescription.therapySettings.suspendThreshold?.quantity,
+            // ANNA TODO: add units into view model & don't force unwrap
+            unit: viewModel.therapySettings.glucoseTargetRangeSchedule!.unit,
+            correctionRangeScheduleRange: (viewModel.therapySettings.glucoseTargetRangeSchedule?.scheduleRange())!,
+            minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { overrides in
-                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.prescription.bloodGlucoseUnit.hkUnit)
-                self.viewModel.didFinishStep()
+                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.viewModel.therapySettings.glucoseTargetRangeSchedule!.unit) // ANNA TODO
+                if let didFinishStep = self.viewModel.didFinishStep {
+                    didFinishStep()
+                }
             },
             sensitivityOverridesEnabled: false,
             mode: .flow

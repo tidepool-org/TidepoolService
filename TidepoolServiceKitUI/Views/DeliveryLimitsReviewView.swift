@@ -14,41 +14,40 @@ import TidepoolServiceKit
 
 
 struct DeliveryLimitsReviewView: View {
-    @ObservedObject var viewModel: PrescriptionReviewViewModel
-    let prescription: MockPrescription
+    @ObservedObject var viewModel: TherapySettingsViewModel
+    let pumpType: PumpType
     
-    init(
-        model: PrescriptionReviewViewModel,
-        prescription: MockPrescription
-    ) {
+    init(model: TherapySettingsViewModel, pump: PumpType){
         self.viewModel = model
-        self.prescription = prescription
+        self.pumpType = pump
     }
     
     var body: some View {
         DeliveryLimitsEditor(
             value: DeliveryLimits(maximumBasalRate: maxBasal, maximumBolus: maxBolus),
             supportedBasalRates: supportedBasalRates,
-            scheduledBasalRange: prescription.therapySettings.basalRateSchedule?.valueRange(),
+            scheduledBasalRange: viewModel.therapySettings.basalRateSchedule?.valueRange(),
             supportedBolusVolumes: supportedBolusVolumes,
             onSave: { limits in
                 self.viewModel.saveDeliveryLimits(limits: limits)
-                self.viewModel.didFinishStep()
+                if let didFinishStep = self.viewModel.didFinishStep {
+                    didFinishStep()
+                }
             },
             mode: .flow
         )
     }
 
     private var maxBasal: HKQuantity {
-        return HKQuantity(unit: .unitsPerHour, doubleValue: prescription.therapySettings.maximumBasalRatePerHour!)
+        return HKQuantity(unit: .unitsPerHour, doubleValue: viewModel.therapySettings.maximumBasalRatePerHour!)
     }
     
     private var maxBolus: HKQuantity {
-        return HKQuantity(unit: .internationalUnit(), doubleValue: prescription.therapySettings.maximumBolus!)
+        return HKQuantity(unit: .internationalUnit(), doubleValue: viewModel.therapySettings.maximumBolus!)
     }
     
     private var supportedBasalRates: [Double] {
-        switch prescription.pump {
+        switch pumpType {
         case .dash:
             // TODO: don't hard-code this value
             return (0...600).map { Double($0) / Double(1/0.05) }
@@ -56,7 +55,7 @@ struct DeliveryLimitsReviewView: View {
     }
     
     private var supportedBolusVolumes: [Double] {
-        switch prescription.pump {
+        switch pumpType {
         case .dash:
             // TODO: don't hard-code this value
             return (0...600).map { Double($0) / Double(1/0.05) }

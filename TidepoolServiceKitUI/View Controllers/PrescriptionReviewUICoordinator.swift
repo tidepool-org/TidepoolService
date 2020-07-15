@@ -60,7 +60,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
-    let viewModel = PrescriptionReviewViewModel(settings: TherapySettings())
+    let prescriptionViewModel = PrescriptionReviewViewModel()
+    let settingsViewModel = TherapySettingsViewModel(therapySettings: TherapySettings())
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
@@ -83,42 +84,37 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     private func viewControllerForScreen(_ screen: PrescriptionReviewScreen) -> UIViewController {
         switch screen {
         case .enterCode:
-            viewModel.didCancel = { [weak self] in
+            prescriptionViewModel.didCancel = { [weak self] in
                 self?.setupCanceled()
             }
-            viewModel.didFinishStep = { [weak self] in
+            prescriptionViewModel.didFinishStep = { [weak self] in
+                // ANNA TODO: check about force unwrap
+                self?.settingsViewModel.reset(settings: (self?.prescriptionViewModel.prescription!.therapySettings)!)
                 self?.stepFinished()
             }
-            let view = PrescriptionCodeEntryView(viewModel: viewModel)
+            let view = PrescriptionCodeEntryView(viewModel: prescriptionViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Your Settings", comment: "Navigation view title")
             return hostedView
         case .reviewDevices:
-            viewModel.didFinishStep = { [weak self] in
+            prescriptionViewModel.didFinishStep = { [weak self] in
                 self?.stepFinished()
             }
-            guard let prescription = viewModel.prescription else {
-                // Go back to code entry step if we don't have prescription
-                return restartFlow()
-            }
-            let view = PrescriptionDeviceView(viewModel: viewModel, prescription: prescription)
+            // We're using the prescription here because it has device info on it
+            let view = PrescriptionDeviceView(viewModel: prescriptionViewModel, prescription: prescriptionViewModel.prescription!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
             return hostedView
         case .correctionRangeInfo:
-            let exiting: (() -> Void) = { [weak self] in
+            let onExit: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = CorrectionRangeInformationView(onExit: exiting)
+            let view = CorrectionRangeInformationView(onExit: onExit)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
             return hostedView
         case .correctionRangeEditor:
-            guard let prescription = viewModel.prescription else {
-                // Go back to code entry step if we don't have prescription
-                return restartFlow()
-            }
-            let view = CorrectionRangeReviewView(model: viewModel, prescription: prescription)
+            let view = CorrectionRangeReviewView(model: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -132,13 +128,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Temporary Ranges", comment: "Title for temporary correction range informational screen") // TODO: make this title be "Temporary Correction Ranges" when SwiftUI supports multi-line titles
             return hostedView
         case .correctionRangeOverrideEditor:
-            guard let prescription = viewModel.prescription else {
-                // Go back to code entry step if we don't have prescription
-                let view = PrescriptionCodeEntryView(viewModel: viewModel)
-                return DismissibleHostingController(rootView: view)
+            let didFinishStep: (() -> Void) = { [weak self] in
+                self?.stepFinished()
             }
-            
-            let view = CorrectionRangeOverrideReview(model: viewModel, prescription: prescription)
+            settingsViewModel.didFinishStep = didFinishStep
+            let view = CorrectionRangeOverrideReview(model: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -152,11 +146,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Suspend Threshold", comment: "Title for suspend threshold informational screen")
             return hostedView
         case .suspendThresholdEditor:
-            guard let prescription = viewModel.prescription else {
-                // Go back to code entry step if we don't have prescription
-                return restartFlow()
-            }
-            let view = SuspendThresholdReview(model: viewModel, prescription: prescription)
+            let view = SuspendThresholdReview(model: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -170,12 +160,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Basal Rates", comment: "Title for basal rates informational screen")
             return hostedView
         case .basalRatesEditor:
-            guard let prescription = viewModel.prescription else {
-                // Go back to code entry step if we don't have prescription
-                return restartFlow()
-            }
-            
-            let view = BasalRatesReview(model: viewModel, prescription: prescription)
+            // We shouldn't be able to get here without a prescription, so we can force unwrap it
+            let view = BasalRatesReview(model: settingsViewModel, pump: prescriptionViewModel.prescription!.pump)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -189,22 +175,12 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Delivery Limits", comment: "Title for delivery limits informational screen")
             return hostedView
         case .deliveryLimitsEditor:
-            guard let prescription = viewModel.prescription else {
-                // Go back to code entry step if we don't have prescription
-                return restartFlow()
-            }
-            
-            let view = DeliveryLimitsReviewView(model: viewModel, prescription: prescription)
+            // We shouldn't be able to get here without a prescription, so we can force unwrap it
+            let view = DeliveryLimitsReviewView(model: settingsViewModel, pump: prescriptionViewModel.prescription!.pump)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
         }
-    }
-    
-    private func restartFlow() -> UIViewController {
-        screenStack = [.enterCode]
-        let view = PrescriptionCodeEntryView(viewModel: viewModel)
-        return DismissibleHostingController(rootView: view)
     }
     
     public func navigationController(_ navigationController: UINavigationController,
@@ -237,7 +213,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             navigate(to: nextStep)
         } else {
             if let onReviewFinished = onReviewFinished {
-                onReviewFinished(viewModel.settings)
+                onReviewFinished(settingsViewModel.therapySettings)
             }
             completionDelegate?.completionNotifyingDidComplete(self)
         }

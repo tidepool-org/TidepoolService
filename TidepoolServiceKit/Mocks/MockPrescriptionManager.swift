@@ -72,7 +72,8 @@ public class MockPrescriptionManager {
                 insulinSensitivitySchedule: insulinSensitivitySchedule,
                 carbRatioSchedule: carbRatioSchedule,
                 basalRateSchedule: basalRateSchedule,
-                insulinModel: StoredSettings.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3))
+                insulinModel: StoredSettings.InsulinModel(modelType: .rapidAdult, actionDuration: .hours(6), peakActivity: .hours(3)),
+                glucoseUnit: .mgdl
             )
             
             self.prescription = MockPrescription(

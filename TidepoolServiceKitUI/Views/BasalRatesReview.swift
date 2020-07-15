@@ -14,29 +14,28 @@ import TidepoolServiceKit
 
 
 struct BasalRatesReview: View {
-    @ObservedObject var viewModel: PrescriptionReviewViewModel
-    let prescription: MockPrescription
+    @ObservedObject var viewModel: TherapySettingsViewModel
+    let pumpType: PumpType
     
-    init(
-        model: PrescriptionReviewViewModel,
-        prescription: MockPrescription
-    ) {
+    init(model: TherapySettingsViewModel, pump: PumpType){
         self.viewModel = model
-        self.prescription = prescription
+        self.pumpType = pump
     }
     
     var body: some View {
         BasalRateScheduleEditor(
-            schedule: prescription.therapySettings.basalRateSchedule,
+            schedule: viewModel.therapySettings.basalRateSchedule,
             supportedBasalRates: supportedBasalRates,
-            maximumBasalRate: prescription.therapySettings.maximumBasalRatePerHour,
+            maximumBasalRate: viewModel.therapySettings.maximumBasalRatePerHour,
             maximumScheduleEntryCount: maximumBasalScheduleEntryCount,
             syncSchedule: { result, error  in
                 // Since pump isn't set up, this syncing shouldn't do anything
             },
             onSave: { newRates in
                 self.viewModel.saveBasalRates(basalRates: newRates)
-                self.viewModel.didFinishStep()
+                if let didFinishStep = self.viewModel.didFinishStep {
+                    didFinishStep()
+                }
             },
             mode: .flow
         )
@@ -44,7 +43,7 @@ struct BasalRatesReview: View {
     
     // TODO: don't hard-code these values
     private var supportedBasalRates: [Double] {
-        switch prescription.pump {
+        switch pumpType {
         case .dash:
             return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
         }
@@ -52,7 +51,7 @@ struct BasalRatesReview: View {
     
     // TODO: don't hard-code these values
     private var maximumBasalScheduleEntryCount: Int {
-        switch prescription.pump {
+        switch pumpType {
         case .dash:
             return 24
         }
@@ -60,7 +59,7 @@ struct BasalRatesReview: View {
     
     // TODO: don't hard-code these values
     private var syncBasalRateSchedule: Int {
-        switch prescription.pump {
+        switch pumpType {
         case .dash:
             return 24
         }
