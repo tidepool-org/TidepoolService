@@ -114,6 +114,10 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Correction Range", comment: "Title for correction range informational screen")
             return hostedView
         case .correctionRangeEditor:
+            let didFinishStep: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            settingsViewModel.didFinishStep = didFinishStep
             let view = CorrectionRangeReviewView(model: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -128,10 +132,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Temporary Ranges", comment: "Title for temporary correction range informational screen") // TODO: make this title be "Temporary Correction Ranges" when SwiftUI supports multi-line titles
             return hostedView
         case .correctionRangeOverrideEditor:
-            let didFinishStep: (() -> Void) = { [weak self] in
-                self?.stepFinished()
-            }
-            settingsViewModel.didFinishStep = didFinishStep
             let view = CorrectionRangeOverrideReview(model: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
