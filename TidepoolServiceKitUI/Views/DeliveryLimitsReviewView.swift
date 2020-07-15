@@ -15,7 +15,6 @@ import TidepoolServiceKit
 
 struct DeliveryLimitsReviewView: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State var userHasEdited: Bool = false
     let prescription: MockPrescription
     
     init(
@@ -28,7 +27,6 @@ struct DeliveryLimitsReviewView: View {
     
     var body: some View {
         DeliveryLimitsEditor(
-            buttonText: buttonText,
             value: DeliveryLimits(maximumBasalRate: maxBasal, maximumBolus: maxBolus),
             supportedBasalRates: supportedBasalRates,
             scheduledBasalRange: prescription.therapySettings.basalRateSchedule?.valueRange(),
@@ -37,14 +35,12 @@ struct DeliveryLimitsReviewView: View {
                 self.viewModel.saveDeliveryLimits(limits: limits)
                 self.viewModel.didFinishStep()
             },
-            mode: .flow,
-            userHasEdited: $userHasEdited
+            mode: .flow
         )
     }
-    
-    // ANNA TODO: check that this forced unwrapping is appropriate
+
     private var maxBasal: HKQuantity {
-        return HKQuantity(unit: HKUnit.internationalUnit().unitDivided(by: .hour()), doubleValue: prescription.therapySettings.maximumBasalRatePerHour!)
+        return HKQuantity(unit: .unitsPerHour, doubleValue: prescription.therapySettings.maximumBasalRatePerHour!)
     }
     
     private var maxBolus: HKQuantity {
@@ -54,20 +50,16 @@ struct DeliveryLimitsReviewView: View {
     private var supportedBasalRates: [Double] {
         switch prescription.pump {
         case .dash:
-            // ANNA TODO: make this (1, 600) once guardrail bug is resolved
-            return (0...600).map { round(Double($0) / Double(1/0.05)) }
+            // TODO: don't hard-code this value
+            return (0...600).map { Double($0) / Double(1/0.05) }
         }
     }
     
     private var supportedBolusVolumes: [Double] {
         switch prescription.pump {
         case .dash:
-            // ANNA TODO: make this (1, 600) once guardrail bug is resolved
-            return (0...600).map { round(Double($0) / Double(1/0.05)) }
+            // TODO: don't hard-code this value
+            return (0...600).map { Double($0) / Double(1/0.05) }
         }
-    }
-    
-    private var buttonText: Text {
-        return !userHasEdited ? Text(LocalizedString("Accept Setting", comment: "The button text for accepting the prescribed setting")) : Text(LocalizedString("Save Setting", comment: "The button text for saving the edited setting"))
     }
 }
