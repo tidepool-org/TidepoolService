@@ -14,26 +14,23 @@ import TidepoolServiceKit
 
 
 struct SuspendThresholdReview: View {
-    @ObservedObject var viewModel: PrescriptionReviewViewModel
-    let prescription: MockPrescription
+    @ObservedObject var viewModel: TherapySettingsViewModel
+    let unit: HKUnit
     
-    init(
-        model: PrescriptionReviewViewModel,
-        prescription: MockPrescription
-    ) {
+    init(model: TherapySettingsViewModel) {
+        precondition(model.therapySettings.glucoseUnit != nil)
         self.viewModel = model
-        self.prescription = prescription
+        self.unit = model.therapySettings.glucoseUnit!
     }
     
     var body: some View {
         SuspendThresholdEditor(
-            value: prescription.therapySettings.suspendThreshold?.quantity,
-            unit: prescription.bloodGlucoseUnit.hkUnit,
-            maxValue: prescription.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
+            value: viewModel.therapySettings.suspendThreshold?.quantity,
+            unit: unit,
+            maxValue: viewModel.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
             onSave: { newValue in
-                let unit = self.prescription.bloodGlucoseUnit.hkUnit
-                self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: unit, value: newValue.doubleValue(for: unit)))
-                self.viewModel.didFinishStep()
+                self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: self.unit, value: newValue.doubleValue(for: self.unit)))
+                self.viewModel.didFinishStep?()
             },
             mode: .flow
         )

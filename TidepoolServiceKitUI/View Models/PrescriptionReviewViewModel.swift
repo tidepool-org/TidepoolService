@@ -19,12 +19,8 @@ class PrescriptionReviewViewModel: ObservableObject {
     var prescription: MockPrescription?
     let prescriptionCodeLength = 4
     
-    var settings: TherapySettings
-    
-    init(finishedStepHandler: @escaping () -> Void = { },
-         settings: TherapySettings) {
+    init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler
-        self.settings = settings
     }
     
     func entryNavigation(success: Bool) {
@@ -55,22 +51,5 @@ class PrescriptionReviewViewModel: ObservableObject {
                 self.entryNavigation(success: true)
             }
         }
-    }
-    
-    func saveCorrectionRange(range: GlucoseRangeSchedule) {
-        settings.glucoseTargetRangeSchedule = range
-    }
-    
-    func saveCorrectionRangeOverrides(overrides: CorrectionRangeOverrides, unit: HKUnit) {
-        settings.preMealTargetRange = overrides.preMeal?.doubleRange(for: unit)
-        settings.workoutTargetRange = overrides.workout?.doubleRange(for: unit)
-    }
-    
-    func saveSuspendThreshold(value: GlucoseThreshold) {
-        settings.suspendThreshold = value
-    }
-    
-    func saveBasalRates(basalRates: BasalRateSchedule) {
-        settings.basalRateSchedule = basalRates
     }
 }

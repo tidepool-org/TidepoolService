@@ -10,32 +10,31 @@ import SwiftUI
 import TidepoolServiceKit
 import LoopKit
 import LoopKitUI
+import HealthKit
 
 struct CorrectionRangeOverrideReview: View {
-    @ObservedObject var viewModel: PrescriptionReviewViewModel
-    let prescription: MockPrescription
+    @ObservedObject var viewModel: TherapySettingsViewModel
+    let unit: HKUnit
     
-    init(
-        model: PrescriptionReviewViewModel,
-        prescription: MockPrescription
-    ) {
+    init(model: TherapySettingsViewModel){
+        precondition(model.therapySettings.glucoseUnit != nil)
         self.viewModel = model
-        self.prescription = prescription
+        self.unit = model.therapySettings.glucoseUnit!
     }
     
     var body: some View {
         CorrectionRangeOverridesEditor(
             value: CorrectionRangeOverrides(
-                preMeal: prescription.therapySettings.preMealTargetRange,
-                workout: prescription.therapySettings.workoutTargetRange,
-                unit: prescription.bloodGlucoseUnit.hkUnit
+                preMeal: viewModel.therapySettings.preMealTargetRange,
+                workout: viewModel.therapySettings.workoutTargetRange,
+                unit: unit
             ),
-            unit: prescription.bloodGlucoseUnit.hkUnit,
-            correctionRangeScheduleRange: (prescription.therapySettings.glucoseTargetRangeSchedule?.scheduleRange())!,
-            minValue: prescription.therapySettings.suspendThreshold?.quantity,
+            unit: unit,
+            correctionRangeScheduleRange: (viewModel.therapySettings.glucoseTargetRangeSchedule?.scheduleRange())!,
+            minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { overrides in
-                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.prescription.bloodGlucoseUnit.hkUnit)
-                self.viewModel.didFinishStep()
+                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.viewModel.therapySettings.glucoseTargetRangeSchedule!.unit) // ANNA TODO
+                self.viewModel.didFinishStep?()
             },
             sensitivityOverridesEnabled: false,
             mode: .flow
