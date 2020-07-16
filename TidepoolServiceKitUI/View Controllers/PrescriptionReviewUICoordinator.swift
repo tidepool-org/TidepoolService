@@ -61,7 +61,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     var onReviewFinished: ((TherapySettings) -> Void)?
 
     let prescriptionViewModel = PrescriptionReviewViewModel() // Used for retreving & keeping track of prescription
-    let settingsViewModel = TherapySettingsViewModel(therapySettings: TherapySettings()) // Used for keeping track of & updating settings
+    let settingsViewModel = TherapySettingsViewModel(therapySettings: TherapySettings(), supportedBasalRates: nil) // Used for keeping track of & updating settings
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
