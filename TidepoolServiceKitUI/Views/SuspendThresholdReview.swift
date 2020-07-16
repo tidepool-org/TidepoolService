@@ -18,8 +18,9 @@ struct SuspendThresholdReview: View {
     let unit: HKUnit
     
     init(model: TherapySettingsViewModel) {
+        precondition(model.therapySettings.glucoseUnit != nil)
         self.viewModel = model
-        self.unit = model.therapySettings.glucoseUnit ?? .milligramsPerDeciliter
+        self.unit = model.therapySettings.glucoseUnit!
     }
     
     var body: some View {
@@ -29,9 +30,7 @@ struct SuspendThresholdReview: View {
             maxValue: viewModel.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
             onSave: { newValue in
                 self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: self.unit, value: newValue.doubleValue(for: self.unit)))
-                if let didFinishStep = self.viewModel.didFinishStep {
-                    didFinishStep()
-                }
+                self.viewModel.didFinishStep?()
             },
             mode: .flow
         )

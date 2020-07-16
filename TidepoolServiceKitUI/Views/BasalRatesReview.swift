@@ -33,9 +33,7 @@ struct BasalRatesReview: View {
             },
             onSave: { newRates in
                 self.viewModel.saveBasalRates(basalRates: newRates)
-                if let didFinishStep = self.viewModel.didFinishStep {
-                    didFinishStep()
-                }
+                self.viewModel.didFinishStep?()
             },
             mode: .flow
         )

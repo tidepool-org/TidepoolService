@@ -17,8 +17,9 @@ struct CorrectionRangeOverrideReview: View {
     let unit: HKUnit
     
     init(model: TherapySettingsViewModel){
+        precondition(model.therapySettings.glucoseUnit != nil)
         self.viewModel = model
-        self.unit = model.therapySettings.glucoseUnit ?? .milligramsPerDeciliter
+        self.unit = model.therapySettings.glucoseUnit!
     }
     
     var body: some View {
@@ -33,9 +34,7 @@ struct CorrectionRangeOverrideReview: View {
             minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { overrides in
                 self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.viewModel.therapySettings.glucoseTargetRangeSchedule!.unit) // ANNA TODO
-                if let didFinishStep = self.viewModel.didFinishStep {
-                    didFinishStep()
-                }
+                self.viewModel.didFinishStep?()
             },
             sensitivityOverridesEnabled: false,
             mode: .flow

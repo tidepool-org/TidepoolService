@@ -60,8 +60,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
-    let prescriptionViewModel = PrescriptionReviewViewModel()
-    let settingsViewModel = TherapySettingsViewModel(therapySettings: TherapySettings())
+    let prescriptionViewModel = PrescriptionReviewViewModel() // Used for retreving & keeping track of prescription
+    let settingsViewModel = TherapySettingsViewModel(therapySettings: TherapySettings()) // Used for keeping track of & updating settings
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
@@ -159,7 +159,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.basalRate.title
             return hostedView
         case .basalRatesEditor:
-            // We shouldn't be able to get here without a prescription, so we can force unwrap it
+            precondition(prescriptionViewModel.prescription != nil)
             let view = BasalRatesReview(model: settingsViewModel, pump: prescriptionViewModel.prescription!.pump)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -174,7 +174,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.deliveryLimits.title
             return hostedView
         case .deliveryLimitsEditor:
-            // We shouldn't be able to get here without a prescription, so we can force unwrap it
+            precondition(prescriptionViewModel.prescription != nil)
             let view = DeliveryLimitsReviewView(model: settingsViewModel, pump: prescriptionViewModel.prescription!.pump)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles

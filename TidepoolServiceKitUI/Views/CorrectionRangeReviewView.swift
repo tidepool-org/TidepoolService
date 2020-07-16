@@ -16,19 +16,18 @@ struct CorrectionRangeReviewView: View {
     @ObservedObject var viewModel: TherapySettingsViewModel
     
     init(model: TherapySettingsViewModel){
+        precondition(model.therapySettings.glucoseUnit != nil)
         self.viewModel = model
     }
     
     var body: some View {
         CorrectionRangeScheduleEditor(
             schedule: viewModel.therapySettings.glucoseTargetRangeSchedule,
-            unit: viewModel.therapySettings.glucoseUnit ?? .milligramsPerDeciliter,
+            unit: viewModel.therapySettings.glucoseUnit!,
             minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { newSchedule in
                 self.viewModel.saveCorrectionRange(range: newSchedule)
-                if let didFinishStep = self.viewModel.didFinishStep {
-                    didFinishStep()
-                }
+                self.viewModel.didFinishStep?()
             },
             mode: .flow
         )

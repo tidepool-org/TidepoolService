@@ -30,9 +30,7 @@ struct DeliveryLimitsReviewView: View {
             supportedBolusVolumes: supportedBolusVolumes,
             onSave: { limits in
                 self.viewModel.saveDeliveryLimits(limits: limits)
-                if let didFinishStep = self.viewModel.didFinishStep {
-                    didFinishStep()
-                }
+                self.viewModel.didFinishStep?()
             },
             mode: .flow
         )
