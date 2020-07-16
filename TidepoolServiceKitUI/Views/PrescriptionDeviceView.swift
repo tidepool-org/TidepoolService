@@ -122,10 +122,12 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings", comment: "Text describing that Tidepool Loop doesn't automatically change settings"))
                     .italic()
+                    .bold()
                     .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                     .padding(.vertical)
                     Text(LocalizedString("Work with your healthcare provider to find the right settings for you", comment: "Text describing determining settings with your doctor"))
                     .italic()
+                    .bold()
                 }
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 .foregroundColor(.secondary)
