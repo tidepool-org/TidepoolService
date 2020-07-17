@@ -30,6 +30,10 @@ enum PrescriptionReviewScreen {
         case .enterCode:
             return .reviewDevices
         case .reviewDevices:
+            return .suspendThresholdInfo
+        case .suspendThresholdInfo:
+            return .suspendThresholdEditor
+        case .suspendThresholdEditor:
             return .correctionRangeInfo
         case .correctionRangeInfo:
             return .correctionRangeEditor
@@ -38,10 +42,6 @@ enum PrescriptionReviewScreen {
         case .correctionRangeOverrideInfo:
             return .correctionRangeOverrideEditor
         case .correctionRangeOverrideEditor:
-            return .suspendThresholdInfo
-        case .suspendThresholdInfo:
-            return .suspendThresholdEditor
-        case .suspendThresholdEditor:
             return .basalRatesInfo
         case .basalRatesInfo:
             return .basalRatesEditor
@@ -110,13 +110,10 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             }
             let view = CorrectionRangeInformationView(onExit: onExit)
             let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.glucoseTargetRange.title
             return hostedView
         case .correctionRangeEditor:
-            let didFinishStep: (() -> Void) = { [weak self] in
-                self?.stepFinished()
-            }
-            settingsViewModel.didFinishStep = didFinishStep
             let view = CorrectionRangeReviewView(model: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -192,12 +189,13 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         }
     }
     
-    private func determineFirstScreen() -> PrescriptionReviewScreen {
-        return .enterCode
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
-        screenStack = [determineFirstScreen()]
+        let didFinishStep: (() -> Void) = { [weak self] in
+            self?.stepFinished()
+        }
+        settingsViewModel.didFinishStep = didFinishStep
+        
+        screenStack = [.enterCode]
         let viewController = viewControllerForScreen(currentScreen)
         setViewControllers([viewController], animated: false)
     }
