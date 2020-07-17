@@ -18,7 +18,7 @@ struct CorrectionRangeOverrideReview: View {
     
     init(model: TherapySettingsViewModel){
         precondition(model.therapySettings.glucoseUnit != nil)
-        precondition(model.therapySettings.glucoseTargetRangeSchedule?.scheduleRange() != nil)
+        precondition(model.therapySettings.glucoseTargetRangeSchedule != nil)
         self.viewModel = model
         self.unit = model.therapySettings.glucoseUnit!
     }
