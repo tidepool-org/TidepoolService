@@ -27,7 +27,14 @@ struct SuspendThresholdReview: View {
         SuspendThresholdEditor(
             value: viewModel.therapySettings.suspendThreshold?.quantity,
             unit: unit,
-            maxValue: viewModel.therapySettings.glucoseTargetRangeSchedule?.minLowerBound(),
+            maxValue: [
+                viewModel.therapySettings.glucoseTargetRangeSchedule?.minLowerBound().doubleValue(for: unit),
+                viewModel.therapySettings.preMealTargetRange?.minValue,
+                viewModel.therapySettings.workoutTargetRange?.minValue
+            ]
+            .compactMap { $0 }
+            .min()
+            .map { HKQuantity(unit: unit, doubleValue: $0) },
             onSave: { newValue in
                 self.viewModel.saveSuspendThreshold(value: GlucoseThreshold(unit: self.unit, value: newValue.doubleValue(for: self.unit)))
                 self.viewModel.didFinishStep?()
