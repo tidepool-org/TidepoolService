@@ -18,6 +18,7 @@ struct CorrectionRangeOverrideReview: View {
     
     init(model: TherapySettingsViewModel){
         precondition(model.therapySettings.glucoseUnit != nil)
+        precondition(model.therapySettings.glucoseTargetRangeSchedule != nil)
         self.viewModel = model
         self.unit = model.therapySettings.glucoseUnit!
     }
@@ -33,7 +34,7 @@ struct CorrectionRangeOverrideReview: View {
             correctionRangeScheduleRange: (viewModel.therapySettings.glucoseTargetRangeSchedule?.scheduleRange())!,
             minValue: viewModel.therapySettings.suspendThreshold?.quantity,
             onSave: { overrides in
-                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.viewModel.therapySettings.glucoseTargetRangeSchedule!.unit) // ANNA TODO
+                self.viewModel.saveCorrectionRangeOverrides(overrides: overrides, unit: self.unit)
                 self.viewModel.didFinishStep?()
             },
             sensitivityOverridesEnabled: false,
