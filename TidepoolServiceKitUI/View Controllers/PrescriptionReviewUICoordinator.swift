@@ -61,7 +61,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     var onReviewFinished: ((TherapySettings) -> Void)?
 
     let prescriptionViewModel = PrescriptionReviewViewModel() // Used for retreving & keeping track of prescription
-    let settingsViewModel = TherapySettingsViewModel(therapySettings: TherapySettings()) // Used for keeping track of & updating settings
+    var settingsViewModel: TherapySettingsViewModel! // Used for keeping track of & updating settings
     
     var currentScreen: PrescriptionReviewScreen {
         return screenStack.last!
@@ -88,7 +88,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.setupCanceled()
             }
             prescriptionViewModel.didFinishStep = { [weak self] in
-                self?.settingsViewModel.reset(settings: (self?.prescriptionViewModel.prescription!.therapySettings)!)
+                if let therapySettings = self?.prescriptionViewModel.prescription?.therapySettings {
+                    self?.settingsViewModel = TherapySettingsViewModel(therapySettings: therapySettings)
+                }
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: prescriptionViewModel)
