@@ -116,7 +116,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.glucoseTargetRange.title
             return hostedView
         case .correctionRangeEditor:
-            let view = CorrectionRangeReviewView(viewModel: settingsViewModel)
+            let view = CorrectionRangeReviewView(viewModel: settingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -130,7 +130,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.correctionRangeOverrides.title
             return hostedView
         case .correctionRangeOverrideEditor:
-            let view = CorrectionRangeOverrideReview(viewModel: settingsViewModel)
+            let view = CorrectionRangeOverrideReview(viewModel: settingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -144,7 +144,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.suspendThreshold.title
             return hostedView
         case .suspendThresholdEditor:
-            let view = SuspendThresholdReview(viewModel: settingsViewModel)
+            let view = SuspendThresholdReview(viewModel: settingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -159,7 +159,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .basalRatesEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = BasalRatesReview(viewModel: settingsViewModel)
+            let view = BasalRatesReview(viewModel: settingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -174,7 +174,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .deliveryLimitsEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = DeliveryLimitsReviewView(viewModel: settingsViewModel)
+            let view = DeliveryLimitsReviewView(viewModel: settingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -195,7 +195,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         let didFinishStep: (() -> Void) = { [weak self] in
             self?.stepFinished()
         }
-        settingsViewModel.didFinishEditing = didFinishStep
+        settingsViewModel?.didFinishEditing = didFinishStep
         
         screenStack = [.enterCode]
         let viewController = viewControllerForScreen(currentScreen)
@@ -212,7 +212,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             navigate(to: nextStep)
         } else {
             if let onReviewFinished = onReviewFinished {
-                onReviewFinished(settingsViewModel.therapySettings)
+                onReviewFinished(settingsViewModel!.therapySettings)
             }
             completionDelegate?.completionNotifyingDidComplete(self)
         }
