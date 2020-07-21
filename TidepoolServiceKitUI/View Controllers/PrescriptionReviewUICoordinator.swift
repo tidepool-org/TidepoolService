@@ -116,7 +116,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.glucoseTargetRange.title
             return hostedView
         case .correctionRangeEditor:
-            let view = CorrectionRangeReviewView(model: settingsViewModel)
+            let view = CorrectionRangeReviewView(viewModel: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -130,7 +130,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.correctionRangeOverrides.title
             return hostedView
         case .correctionRangeOverrideEditor:
-            let view = CorrectionRangeOverrideReview(model: settingsViewModel)
+            let view = CorrectionRangeOverrideReview(viewModel: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -144,7 +144,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.suspendThreshold.title
             return hostedView
         case .suspendThresholdEditor:
-            let view = SuspendThresholdReview(model: settingsViewModel)
+            let view = SuspendThresholdReview(viewModel: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -159,7 +159,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .basalRatesEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = BasalRatesReview(model: settingsViewModel, pump: prescriptionViewModel.prescription!.pump)
+            let view = BasalRatesReview(viewModel: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -174,7 +174,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .deliveryLimitsEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = DeliveryLimitsReviewView(model: settingsViewModel, pump: prescriptionViewModel.prescription!.pump)
+            let view = DeliveryLimitsReviewView(viewModel: settingsViewModel)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -195,7 +195,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         let didFinishStep: (() -> Void) = { [weak self] in
             self?.stepFinished()
         }
-        settingsViewModel.didFinishStep = didFinishStep
+        settingsViewModel.didFinishEditing = didFinishStep
         
         screenStack = [.enterCode]
         let viewController = viewControllerForScreen(currentScreen)
