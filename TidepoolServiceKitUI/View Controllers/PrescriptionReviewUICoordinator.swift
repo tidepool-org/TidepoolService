@@ -88,8 +88,53 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.setupCanceled()
             }
             prescriptionViewModel.didFinishStep = { [weak self] in
-                if let therapySettings = self?.prescriptionViewModel.prescription?.therapySettings {
-                    self?.therapySettingsViewModel = TherapySettingsViewModel(therapySettings: therapySettings) { [weak self] _, _ in 
+                if let prescription = self?.prescriptionViewModel.prescription {
+                    var supportedBasalRates: [Double] {
+                        switch prescription.pump {
+                        case .dash:
+                            return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
+                        }
+                    }
+
+                    // TODO: don't hard-code these values
+                    var maximumBasalScheduleEntryCount: Int {
+                        switch prescription.pump {
+                        case .dash:
+                            return 24
+                        }
+                    }
+
+                    // TODO: don't hard-code these values
+                    var syncBasalRateSchedule: Int {
+                        switch prescription.pump {
+                        case .dash:
+                            return 24
+                        }
+                    }
+                    
+                    var supportedBolusVolumes: [Double] {
+                        switch prescription.pump {
+                        case .dash:
+                            // TODO: don't hard-code this value
+                            return (0...600).map { Double($0) / Double(1/0.05) }
+                        }
+                    }
+                    
+                    let pumpSupportedIncrements = PumpSupportedIncrements(
+                        basalRates: supportedBasalRates,
+                        bolusVolumes: supportedBolusVolumes,
+                        maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount
+                    )
+                    let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
+                    
+                    self?.therapySettingsViewModel = TherapySettingsViewModel(
+                        therapySettings: prescription.therapySettings,
+                        supportedInsulinModelSettings: supportedInsulinModelSettings,
+                        pumpSupportedIncrements: pumpSupportedIncrements,
+                        pumpSyncSchedule: { result, error  in
+                            // Since pump isn't set up, this syncing shouldn't do anything
+                        }
+                    ) { [weak self] _, _ in
                         self?.stepFinished()
                     }
                 }
@@ -129,7 +174,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = CorrectionRangeOverrideInformationView(onExit: exiting)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = TherapySetting.correctionRangeOverrides.title
+            hostedView.title = TherapySetting.correctionRangeOverrides.smallTitle
             return hostedView
         case .correctionRangeOverrideEditor:
             let view = CorrectionRangeOverrideReview(viewModel: therapySettingsViewModel!)
