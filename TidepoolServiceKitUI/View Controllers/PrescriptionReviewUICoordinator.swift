@@ -131,7 +131,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                         therapySettings: prescription.therapySettings,
                         supportedInsulinModelSettings: supportedInsulinModelSettings,
                         pumpSupportedIncrements: pumpSupportedIncrements,
-                        pumpSyncSchedule: { result, error  in
+                        syncPumpSchedule: { result, error  in
                             // Since pump isn't set up, this syncing shouldn't do anything
                         }
                     ) { [weak self] _, _ in
