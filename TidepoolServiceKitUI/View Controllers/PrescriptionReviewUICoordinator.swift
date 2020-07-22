@@ -103,14 +103,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                             return 24
                         }
                     }
-
-                    // TODO: don't hard-code these values
-                    var syncBasalRateSchedule: Int {
-                        switch prescription.pump {
-                        case .dash:
-                            return 24
-                        }
-                    }
                     
                     var supportedBolusVolumes: [Double] {
                         switch prescription.pump {
@@ -131,8 +123,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                         therapySettings: prescription.therapySettings,
                         supportedInsulinModelSettings: supportedInsulinModelSettings,
                         pumpSupportedIncrements: pumpSupportedIncrements,
-                        syncPumpSchedule: { result, error  in
+                        syncPumpSchedule: { _, _ in
                             // Since pump isn't set up, this syncing shouldn't do anything
+                            assertionFailure()
                         }
                     ) { [weak self] _, _ in
                         self?.stepFinished()
