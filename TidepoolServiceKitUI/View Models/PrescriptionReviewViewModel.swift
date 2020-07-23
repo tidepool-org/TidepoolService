@@ -17,7 +17,7 @@ class PrescriptionReviewViewModel: ObservableObject {
     var didCancel: (() -> Void)?
     
     var prescription: MockPrescription?
-    let prescriptionCodeLength = 4
+    let prescriptionCodeLength = 6
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler
