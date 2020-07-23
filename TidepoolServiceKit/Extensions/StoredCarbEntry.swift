@@ -11,7 +11,7 @@ import TidepoolKit
 
 extension StoredCarbEntry {
     var datum: TDatum? {
-        guard syncIdentifier != nil else {
+        guard isActive, syncIdentifier != nil else {
             return nil
         }
         return TFoodDatum(time: datumTime, name: datumName, nutrition: datumNutrition).adorn(withOrigin: datumOrigin)
@@ -41,8 +41,17 @@ extension StoredCarbEntry {
             return nil
         }
         if !createdByCurrentApp {
-            return TOrigin(id: syncIdentifier, name: "com.apple.HealthKit", type: .service)
+            return TOrigin(id: syncIdentifier, name: "com.apple.HealthKit", type: .service)  // TODO: Use application once backend support is added
         }
         return TOrigin(id: syncIdentifier)
+    }
+}
+
+extension StoredCarbEntry {
+    var selector: TDatum.Selector? {
+        guard !isActive, let syncIdentifier = syncIdentifier else {
+            return nil
+        }
+        return TDatum.Selector(origin: TDatum.Selector.Origin(id: syncIdentifier))
     }
 }

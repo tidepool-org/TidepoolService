@@ -29,7 +29,6 @@
 		A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA2243563CD00E02268 /* TOrigin.swift */; };
-		A9309CA52435986300E02268 /* DeletedCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA42435986300E02268 /* DeletedCarbEntry.swift */; };
 		A9309CA72435987000E02268 /* StoredCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA62435987000E02268 /* StoredCarbEntry.swift */; };
 		A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -122,7 +121,6 @@
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
 		A9309CA2243563CD00E02268 /* TOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOrigin.swift; sourceTree = "<group>"; };
-		A9309CA42435986300E02268 /* DeletedCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedCarbEntry.swift; sourceTree = "<group>"; };
 		A9309CA62435987000E02268 /* StoredCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredCarbEntry.swift; sourceTree = "<group>"; };
 		A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSample.swift; sourceTree = "<group>"; };
 		A94AE4E4235A89B5005CA320 /* TidepoolServiceKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				A913B37C24200C97000805C4 /* Bundle.swift */,
-				A9309CA42435986300E02268 /* DeletedCarbEntry.swift */,
 				A9D1107B242289720091C620 /* HKUnit.swift */,
 				A9309CA62435987000E02268 /* StoredCarbEntry.swift */,
 				A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */,
@@ -750,7 +747,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9309CA52435986300E02268 /* DeletedCarbEntry.swift in Sources */,
 				A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */,
 				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
 				E9692174249BF2A100D9BE3B /* MockPrescription.swift in Sources */,

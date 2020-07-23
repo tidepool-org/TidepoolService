@@ -165,18 +165,36 @@ extension TidepoolService: RemoteDataService {
 
     public var carbDataLimit: Int? { return 1000 }
 
-    public func uploadCarbData(deleted: [DeletedCarbEntry], stored: [StoredCarbEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
-        createData(stored.compactMap { $0.datum }) { result in
+    public func uploadCarbData(_ stored: [StoredCarbEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
+
+        // TODO: This implementation is incorrect and will not record the full carb history, but only the latest change within this
+        // subset of data. Waiting on https://tidepool.atlassian.net/browse/BACK-815 for backend to support new API to capture full
+        // history of carb changes. Once backend support is available, this will be updated in
+        // https://tidepool.atlassian.net/browse/LOOP-1660.
+
+        // TODO: Temporary, per above. Filter stored to only use entries with greatest syncVersion per syncIdentifier.
+        var latestEntries = [String: StoredCarbEntry]()
+        for storedEntry in stored {
+            guard let syncIdentifier = storedEntry.syncIdentifier else {
+                continue
+            }
+            if let latestEntry = latestEntries[syncIdentifier], latestEntry.syncVersion > storedEntry.syncVersion {
+                continue
+            }
+            latestEntries[syncIdentifier] = storedEntry
+        }
+
+        createData(latestEntries.values.filter({ $0.isActive }).compactMap({ $0.datum })) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(let storedUploaded):
-                self.deleteData(withSelectors: deleted.compactMap { $0.selector }) { result in
+            case .success(let createdUploaded):
+                self.deleteData(withSelectors: latestEntries.values.filter({ !$0.isActive }).compactMap({ $0.selector })) { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
                     case .success(let deletedUploaded):
-                        completion(.success(storedUploaded || deletedUploaded))
+                        completion(.success(createdUploaded || deletedUploaded))
                     }
                 }
             }
