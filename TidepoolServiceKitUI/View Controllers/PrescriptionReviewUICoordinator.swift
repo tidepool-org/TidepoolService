@@ -24,6 +24,8 @@ enum PrescriptionReviewScreen {
     case basalRatesEditor
     case deliveryLimitsInfo
     case deliveryLimitsEditor
+    case insulinModelInfo
+    case insulinModelEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -50,6 +52,10 @@ enum PrescriptionReviewScreen {
         case .deliveryLimitsInfo:
             return .deliveryLimitsEditor
         case .deliveryLimitsEditor:
+            return .insulinModelInfo
+        case .insulinModelInfo:
+            return .insulinModelEditor
+        case .insulinModelEditor:
             return nil
         }
     }
@@ -218,6 +224,18 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
+        case .insulinModelInfo:
+            let onExit: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = InsulinModelInformationView(onExit: onExit)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.insulinModel.title
+            return hostedView
+        case .insulinModelEditor:
+            precondition(prescriptionViewModel.prescription != nil)
+            let view = DeliveryLimitsReview(viewModel: therapySettingsViewModel!)
         }
     }
     
