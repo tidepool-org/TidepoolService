@@ -63,6 +63,7 @@ enum PrescriptionReviewScreen {
 
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
+    var appName = "Tidepool Loop" // TODO: don't hardcode this?
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
@@ -235,7 +236,34 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = DeliveryLimitsReview(viewModel: therapySettingsViewModel!)
+            let glucoseUnit = therapySettingsViewModel!.therapySettings.glucoseUnit!
+            let storedModel = InsulinModelSettings(from: therapySettingsViewModel!.therapySettings.insulinModel!)
+            
+            let viewModel = InsulinModelSelectionViewModel(
+                insulinModelSettings: storedModel,
+                insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule
+            )
+
+            viewModel.$insulinModelSettings
+                .sink { [weak self] newModel in
+                    print(newModel)
+//                    if let newModel = newModel {
+//                        self?.therapySettingsViewModel.saveInsulinModel(insulinModel: newModel)
+//                    }
+                }
+            
+            let modelSelectionView = InsulinModelSelection(
+                viewModel: viewModel,
+                glucoseUnit: glucoseUnit,
+                supportedModelSettings: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false),
+                appName: appName,
+                mode: .acceptanceFlow
+            )
+            
+            let hostedView = DismissibleHostingController(rootView: modelSelectionView)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.deliveryLimits.title
+            return hostedView
         }
     }
     
@@ -275,5 +303,21 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         screenStack.append(screen)
         let viewController = viewControllerForScreen(screen)
         self.pushViewController(viewController, animated: true)
+    }
+}
+
+// ANNA TODO
+extension InsulinModelSettings {
+    init(from storedSettingsInsulinModel: StoredSettings.InsulinModel) {
+        switch storedSettingsInsulinModel.modelType {
+        case .fiasp:
+            self = .exponentialPreset(.fiasp)
+        case .rapidAdult:
+            self = .exponentialPreset(.humalogNovologAdult)
+        case .rapidChild:
+            self = .exponentialPreset(.humalogNovologChild)
+        case .walsh:
+            self = .walsh(WalshInsulinModel(actionDuration: storedSettingsInsulinModel.actionDuration))
+        }
     }
 }
