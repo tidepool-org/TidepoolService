@@ -236,33 +236,14 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let glucoseUnit = therapySettingsViewModel!.therapySettings.glucoseUnit!
-            let storedModel = InsulinModelSettings(from: therapySettingsViewModel!.therapySettings.insulinModel!)
-            
-            let viewModel = InsulinModelSelectionViewModel(
-                insulinModelSettings: storedModel,
-                insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule
+            let view = InsulinModelReview(
+                settingsViewModel: therapySettingsViewModel!,
+                supportedModels: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false),
+                appName: appName
             )
-
-            viewModel.$insulinModelSettings
-                .sink { [weak self] newModel in
-                    print(newModel)
-//                    if let newModel = newModel {
-//                        self?.therapySettingsViewModel.saveInsulinModel(insulinModel: newModel)
-//                    }
-                }
-            
-            let modelSelectionView = InsulinModelSelection(
-                viewModel: viewModel,
-                glucoseUnit: glucoseUnit,
-                supportedModelSettings: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false),
-                appName: appName,
-                mode: .acceptanceFlow
-            )
-            
-            let hostedView = DismissibleHostingController(rootView: modelSelectionView)
+            let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = TherapySetting.deliveryLimits.title
+            hostedView.title = TherapySetting.insulinModel.title
             return hostedView
         }
     }
