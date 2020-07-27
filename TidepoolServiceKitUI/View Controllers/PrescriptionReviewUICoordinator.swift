@@ -63,7 +63,7 @@ enum PrescriptionReviewScreen {
 
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
-    var appName = "Tidepool Loop" // TODO: don't hardcode this?
+    var appName = "Tidepool Loop" // TODO: pull this from the environment
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
