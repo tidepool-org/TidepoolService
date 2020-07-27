@@ -14,6 +14,7 @@ import LoopKit
 enum PrescriptionReviewScreen {
     case enterCode
     case reviewDevices
+    case therapySettingsOverview
     case correctionRangeInfo
     case correctionRangeEditor
     case correctionRangeOverrideInfo
@@ -30,6 +31,8 @@ enum PrescriptionReviewScreen {
         case .enterCode:
             return .reviewDevices
         case .reviewDevices:
+            return .therapySettingsOverview
+        case .therapySettingsOverview:
             return .suspendThresholdInfo
         case .suspendThresholdInfo:
             return .suspendThresholdEditor
@@ -120,6 +123,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                     let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
                     
                     self?.therapySettingsViewModel = TherapySettingsViewModel(
+                        mode: .acceptanceFlow,
                         therapySettings: prescription.therapySettings,
                         supportedInsulinModelSettings: supportedInsulinModelSettings,
                         pumpSupportedIncrements: pumpSupportedIncrements,
@@ -145,6 +149,15 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = PrescriptionDeviceView(viewModel: prescriptionViewModel, prescription: prescriptionViewModel.prescription!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
+            return hostedView
+        case .therapySettingsOverview:
+            let nextButtonString = LocalizedString("Next: Review settings", comment: "Therapy settings overview next button title")
+            let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
+                self?.stepFinished()
+            }
+            let view = TherapySettingsView(viewModel: therapySettingsViewModel!, actionButton: actionButton)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.title = LocalizedString("Therapy Settings", comment: "Navigation view title")
             return hostedView
         case .correctionRangeInfo:
             let onExit: (() -> Void) = { [weak self] in
