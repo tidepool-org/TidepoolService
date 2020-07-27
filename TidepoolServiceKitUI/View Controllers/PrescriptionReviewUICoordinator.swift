@@ -125,6 +125,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                     self?.therapySettingsViewModel = TherapySettingsViewModel(
                         mode: .acceptanceFlow,
                         therapySettings: prescription.therapySettings,
+                        appName: Bundle.main.bundleDisplayName,
                         supportedInsulinModelSettings: supportedInsulinModelSettings,
                         pumpSupportedIncrements: pumpSupportedIncrements,
                         syncPumpSchedule: { _, _ in
@@ -272,3 +273,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         self.pushViewController(viewController, animated: true)
     }
 }
+
+extension Bundle {
+
+    var bundleDisplayName: String {
+        return object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+    }
+}
+
