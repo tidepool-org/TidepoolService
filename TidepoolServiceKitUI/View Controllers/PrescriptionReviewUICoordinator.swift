@@ -286,19 +286,3 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         self.pushViewController(viewController, animated: true)
     }
 }
-
-// ANNA TODO
-extension InsulinModelSettings {
-    init(from storedSettingsInsulinModel: StoredSettings.InsulinModel) {
-        switch storedSettingsInsulinModel.modelType {
-        case .fiasp:
-            self = .exponentialPreset(.fiasp)
-        case .rapidAdult:
-            self = .exponentialPreset(.humalogNovologAdult)
-        case .rapidChild:
-            self = .exponentialPreset(.humalogNovologChild)
-        case .walsh:
-            self = .walsh(WalshInsulinModel(actionDuration: storedSettingsInsulinModel.actionDuration))
-        }
-    }
-}
