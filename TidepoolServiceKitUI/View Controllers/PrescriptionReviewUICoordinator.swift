@@ -257,6 +257,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
+            appName: Bundle.main.bundleDisplayName,
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: pumpSupportedIncrements,
             syncPumpSchedule: { _, _ in
