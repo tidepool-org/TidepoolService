@@ -25,6 +25,8 @@ enum PrescriptionReviewScreen {
     case basalRatesEditor
     case deliveryLimitsInfo
     case deliveryLimitsEditor
+    case insulinModelInfo
+    case insulinModelEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -53,6 +55,10 @@ enum PrescriptionReviewScreen {
         case .deliveryLimitsInfo:
             return .deliveryLimitsEditor
         case .deliveryLimitsEditor:
+            return .insulinModelInfo
+        case .insulinModelInfo:
+            return .insulinModelEditor
+        case .insulinModelEditor:
             return nil
         }
     }
@@ -60,6 +66,7 @@ enum PrescriptionReviewScreen {
 
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
+    var appName = "Tidepool Loop" // TODO: pull this from the environment
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
@@ -230,6 +237,26 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let view = DeliveryLimitsReview(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .insulinModelInfo:
+            let onExit: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = InsulinModelInformationView(onExit: onExit)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.insulinModel.title
+            return hostedView
+        case .insulinModelEditor:
+            precondition(prescriptionViewModel.prescription != nil)
+            let view = InsulinModelReview(
+                settingsViewModel: therapySettingsViewModel!,
+                supportedModels: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false),
+                appName: appName
+            )
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.insulinModel.title
             return hostedView
         }
     }
