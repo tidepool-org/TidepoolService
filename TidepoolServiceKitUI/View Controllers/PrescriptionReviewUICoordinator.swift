@@ -90,7 +90,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     private func viewControllerForScreen(_ screen: PrescriptionReviewScreen) -> UIViewController {
         switch screen {
         case .enterCode:
@@ -98,51 +98,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.setupCanceled()
             }
             prescriptionViewModel.didFinishStep = { [weak self] in
-                if let prescription = self?.prescriptionViewModel.prescription {
-                    var supportedBasalRates: [Double] {
-                        switch prescription.pump {
-                        case .dash:
-                            return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
-                        }
-                    }
-
-                    // TODO: don't hard-code these values
-                    var maximumBasalScheduleEntryCount: Int {
-                        switch prescription.pump {
-                        case .dash:
-                            return 24
-                        }
-                    }
-                    
-                    var supportedBolusVolumes: [Double] {
-                        switch prescription.pump {
-                        case .dash:
-                            // TODO: don't hard-code this value
-                            return (0...600).map { Double($0) / Double(1/0.05) }
-                        }
-                    }
-                    
-                    let pumpSupportedIncrements = PumpSupportedIncrements(
-                        basalRates: supportedBasalRates,
-                        bolusVolumes: supportedBolusVolumes,
-                        maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount
-                    )
-                    let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
-                    
-                    self?.therapySettingsViewModel = TherapySettingsViewModel(
-                        mode: .acceptanceFlow,
-                        therapySettings: prescription.therapySettings,
-                        appName: Bundle.main.bundleDisplayName,
-                        supportedInsulinModelSettings: supportedInsulinModelSettings,
-                        pumpSupportedIncrements: pumpSupportedIncrements,
-                        syncPumpSchedule: { _, _ in
-                            // Since pump isn't set up, this syncing shouldn't do anything
-                            assertionFailure()
-                        }
-                    ) { [weak self] _, _ in
-                        self?.stepFinished()
-                    }
-                }
+                self?.therapySettingsViewModel = self?.constructTherapySettingsViewModel()
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: prescriptionViewModel)
@@ -163,7 +119,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 self?.stepFinished()
             }
-            let view = TherapySettingsView(viewModel: therapySettingsViewModel!, actionButton: actionButton)
+            // The initial overview screen should _always_ show the prescription.
+            let originalTherapySettingsViewModel = constructTherapySettingsViewModel()
+            let view = TherapySettingsView(viewModel: originalTherapySettingsViewModel!, actionButton: actionButton)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Therapy Settings", comment: "Navigation view title")
             return hostedView
@@ -262,6 +220,55 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         }
     }
     
+    private func constructTherapySettingsViewModel() -> TherapySettingsViewModel? {
+        guard let prescription = prescriptionViewModel.prescription else {
+            return nil
+        }
+        var supportedBasalRates: [Double] {
+            switch prescription.pump {
+            case .dash:
+                return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
+            }
+        }
+        
+        // TODO: don't hard-code these values
+        var maximumBasalScheduleEntryCount: Int {
+            switch prescription.pump {
+            case .dash:
+                return 24
+            }
+        }
+        
+        var supportedBolusVolumes: [Double] {
+            switch prescription.pump {
+            case .dash:
+                // TODO: don't hard-code this value
+                return (0...600).map { Double($0) / Double(1/0.05) }
+            }
+        }
+        
+        let pumpSupportedIncrements = PumpSupportedIncrements(
+            basalRates: supportedBasalRates,
+            bolusVolumes: supportedBolusVolumes,
+            maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount
+        )
+        let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
+        
+        return TherapySettingsViewModel(
+            mode: .acceptanceFlow,
+            therapySettings: prescription.therapySettings,
+            appName: Bundle.main.bundleDisplayName,
+            supportedInsulinModelSettings: supportedInsulinModelSettings,
+            pumpSupportedIncrements: pumpSupportedIncrements,
+            syncPumpSchedule: { _, _ in
+                // Since pump isn't set up, this syncing shouldn't do anything
+                assertionFailure()
+        }
+        ) { [weak self] _, _ in
+            self?.stepFinished()
+        }
+    }
+
     public func navigationController(_ navigationController: UINavigationController,
                                      willShow viewController: UIViewController,
                                      animated: Bool) {
