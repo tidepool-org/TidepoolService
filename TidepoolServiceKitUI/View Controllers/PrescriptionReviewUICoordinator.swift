@@ -27,6 +27,8 @@ enum PrescriptionReviewScreen {
     case deliveryLimitsEditor
     case insulinModelInfo
     case insulinModelEditor
+    case carbRatioInfo
+    case carbRatioEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -59,6 +61,10 @@ enum PrescriptionReviewScreen {
         case .insulinModelInfo:
             return .insulinModelEditor
         case .insulinModelEditor:
+            return .carbRatioInfo
+        case .carbRatioInfo:
+            return .carbRatioEditor
+        case .carbRatioEditor:
             return nil
         }
     }
@@ -257,6 +263,27 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
+            return hostedView
+        case .carbRatioInfo:
+            let onExit: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CarbRatioInformationView(onExit: onExit)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.carbRatio.title
+            return hostedView
+        case .carbRatioEditor:
+            precondition(prescriptionViewModel.prescription != nil)
+            let view = CarbRatioScheduleEditor(
+                schedule: therapySettingsViewModel!.therapySettings.carbRatioSchedule!,
+                mode: .acceptanceFlow,
+                onSave: { newSchedule in
+                    self.therapySettingsViewModel!.saveCarbRatioSchedule(carbRatioSchedule: newSchedule)
+                }
+            )
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
         }
     }
