@@ -72,7 +72,7 @@ public class MockPrescriptionManager {
                 insulinSensitivitySchedule: insulinSensitivitySchedule,
                 carbRatioSchedule: carbRatioSchedule,
                 basalRateSchedule: basalRateSchedule,
-                insulinModel: InsulinModelSettings(model: ExponentialInsulinModelPreset.humalogNovologAdult)
+                insulinModelSettings: InsulinModelSettings(model: ExponentialInsulinModelPreset.humalogNovologAdult)
             )
             
             self.prescription = MockPrescription(
