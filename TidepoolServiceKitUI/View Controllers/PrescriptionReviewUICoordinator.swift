@@ -66,7 +66,6 @@ enum PrescriptionReviewScreen {
 
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
-    var appName = "Tidepool Loop" // TODO: pull this from the environment
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
@@ -132,7 +131,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                     self?.therapySettingsViewModel = TherapySettingsViewModel(
                         mode: .acceptanceFlow,
                         therapySettings: prescription.therapySettings,
-                        appName: Bundle.main.bundleDisplayName,
                         supportedInsulinModelSettings: supportedInsulinModelSettings,
                         pumpSupportedIncrements: pumpSupportedIncrements,
                         syncPumpSchedule: { _, _ in
@@ -252,8 +250,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             precondition(prescriptionViewModel.prescription != nil)
             let view = InsulinModelReview(
                 settingsViewModel: therapySettingsViewModel!,
-                supportedModels: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false),
-                appName: appName
+                supportedModels: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
