@@ -297,11 +297,3 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         self.pushViewController(viewController, animated: true)
     }
 }
-
-extension Bundle {
-
-    var bundleDisplayName: String {
-        return object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
-    }
-}
-
