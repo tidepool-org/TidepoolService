@@ -227,7 +227,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         var supportedBasalRates: [Double] {
             switch prescription.pump {
             case .dash:
-                return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
+                return (1...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
             }
         }
         
@@ -243,7 +243,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             switch prescription.pump {
             case .dash:
                 // TODO: don't hard-code this value
-                return (0...600).map { Double($0) / Double(1/0.05) }
+                return (1...600).map { Double($0) / Double(1/0.05) }
             }
         }
         
