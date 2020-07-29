@@ -29,6 +29,8 @@ enum PrescriptionReviewScreen {
     case insulinModelEditor
     case carbRatioInfo
     case carbRatioEditor
+    case insulinSensitivityInfo
+    case insulinSensitivityEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -65,6 +67,10 @@ enum PrescriptionReviewScreen {
         case .carbRatioInfo:
             return .carbRatioEditor
         case .carbRatioEditor:
+            return .insulinSensitivityInfo
+        case .insulinSensitivityInfo:
+            return .insulinSensitivityEditor
+        case .insulinSensitivityEditor:
             return nil
         }
     }
@@ -239,6 +245,28 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 mode: .acceptanceFlow,
                 onSave: { newSchedule in
                     self.therapySettingsViewModel!.saveCarbRatioSchedule(carbRatioSchedule: newSchedule)
+                }
+            )
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .insulinSensitivityInfo:
+            let onExit: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = InsulinSensitivityInformationView(onExit: onExit)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.insulinSensitivity.title
+            return hostedView
+        case .insulinSensitivityEditor:
+            precondition(prescriptionViewModel.prescription != nil)
+            let view = InsulinSensitivityScheduleEditor(
+                schedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule!,
+                mode: .acceptanceFlow,
+                glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
+                onSave: { newSchedule in
+                    self.therapySettingsViewModel!.saveInsulinSensitivitySchedule(insulinSensitivitySchedule: newSchedule)
                 }
             )
             let hostedView = DismissibleHostingController(rootView: view)
