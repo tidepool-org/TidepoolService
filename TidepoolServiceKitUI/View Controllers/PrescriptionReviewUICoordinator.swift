@@ -220,10 +220,16 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = InsulinModelReview(
-                settingsViewModel: therapySettingsViewModel!,
-                supportedModels: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false),
-                appName: appName
+            let view = InsulinModelSelection(
+                value: therapySettingsViewModel!.therapySettings.insulinModelSettings!,
+                insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule,
+                glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
+                supportedModelSettings: therapySettingsViewModel!.supportedInsulinModelSettings,
+                appName: appName,
+                mode: .acceptanceFlow, // don't wrap the view in a navigation view
+                onSave: { [weak self] in
+                    self?.therapySettingsViewModel?.saveInsulinModel(insulinModelSettings: $0)
+                }
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
