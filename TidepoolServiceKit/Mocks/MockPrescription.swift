@@ -32,7 +32,7 @@ public enum PumpType: String, Codable {
     case dash
 }
 
-public struct MockPrescription: Codable {
+public struct MockPrescription: Prescription, Codable {
     public let datePrescribed: Date // Date prescription was prescribed
     public let providerName: String // Name of clinician prescribing
     public let cgm: CGMType // CGM type (manufacturer & model)

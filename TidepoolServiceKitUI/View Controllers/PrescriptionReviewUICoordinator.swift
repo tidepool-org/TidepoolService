@@ -318,7 +318,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             syncPumpSchedule: { _, _ in
                 // Since pump isn't set up, this syncing shouldn't do anything
                 assertionFailure()
-        }
+            },
+            prescription: prescription
         ) { [weak self] _, _ in
             self?.stepFinished()
         }
