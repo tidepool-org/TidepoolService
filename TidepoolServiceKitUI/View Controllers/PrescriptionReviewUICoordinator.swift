@@ -14,7 +14,7 @@ import LoopKit
 enum PrescriptionReviewScreen {
     case enterCode
     case reviewDevices
-    case therapySettingsOverview
+    case prescriptionTherapySettingsOverview
     case correctionRangeInfo
     case correctionRangeEditor
     case correctionRangeOverrideInfo
@@ -31,14 +31,15 @@ enum PrescriptionReviewScreen {
     case carbRatioEditor
     case insulinSensitivityInfo
     case insulinSensitivityEditor
+    case therapySettingsRecap
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
         case .enterCode:
             return .reviewDevices
         case .reviewDevices:
-            return .therapySettingsOverview
-        case .therapySettingsOverview:
+            return .prescriptionTherapySettingsOverview
+        case .prescriptionTherapySettingsOverview:
             return .suspendThresholdInfo
         case .suspendThresholdInfo:
             return .suspendThresholdEditor
@@ -71,6 +72,8 @@ enum PrescriptionReviewScreen {
         case .insulinSensitivityInfo:
             return .insulinSensitivityEditor
         case .insulinSensitivityEditor:
+            return .therapySettingsRecap
+        case .therapySettingsRecap:
             return nil
         }
     }
@@ -126,7 +129,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
             return hostedView
-        case .therapySettingsOverview:
+        case .prescriptionTherapySettingsOverview:
             let nextButtonString = LocalizedString("Next: Review settings", comment: "Therapy settings overview next button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 self?.stepFinished()
@@ -278,6 +281,18 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
+        case .therapySettingsRecap:
+            // Get rid of the "prescription" card because it should not be shown as part of the recap
+            therapySettingsViewModel?.prescription = nil
+            let nextButtonString = LocalizedString("Save settings", comment: "Therapy settings save button title")
+            let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
+                self?.stepFinished()
+            }
+            let view = TherapySettingsView(viewModel: therapySettingsViewModel!, actionButton: actionButton)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = LocalizedString("Therapy Settings", comment: "Navigation view title")
+            return hostedView
         }
     }
     
@@ -356,9 +371,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         if let nextStep = currentScreen.next() {
             navigate(to: nextStep)
         } else {
-            if let onReviewFinished = onReviewFinished {
-                onReviewFinished(therapySettingsViewModel!.therapySettings)
-            }
+            onReviewFinished?(therapySettingsViewModel!.therapySettings)
             completionDelegate?.completionNotifyingDidComplete(self)
         }
     }
