@@ -95,7 +95,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             font: .preferredFont(forTextStyle: .body),
             textColor: .darkGray,
             textAlignment: .left,
-            keyboardType: .default
+            keyboardType: .asciiCapable
         )
         .padding()
         .overlay(
