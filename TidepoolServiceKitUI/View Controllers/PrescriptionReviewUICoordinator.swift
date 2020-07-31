@@ -283,7 +283,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .therapySettingsRecap:
             // Get rid of the "prescription" card because it should not be shown as part of the recap
             therapySettingsViewModel?.prescription = nil
-            let nextButtonString = LocalizedString("Save settings", comment: "Therapy settings save button title")
+            let nextButtonString = LocalizedString("Save Settings", comment: "Therapy settings save button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 self?.stepFinished()
             }
