@@ -14,6 +14,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionReviewViewModel
+    @State private var isKeyboardVisible = false
 
     var body: some View {
         List {
@@ -26,7 +27,11 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             requestPrescriptionButton
             Spacer()
         }
-        .adaptiveKeyboardPadding() // To ensure the keyboard doesn't obstruct the TextField
+        .onKeyboardStateChange { state in
+            self.isKeyboardVisible = state.height > 0
+        }
+        .keyboardAware()
+        .edgesIgnoringSafeArea(isKeyboardVisible ? [] : .bottom)
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
@@ -84,16 +89,28 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var prescriptionCodeInputField: some View {
-        TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
-        .keyboardType(.default)
-        .disableAutocorrection(true)
-        .font(.body)
-        .multilineTextAlignment(.leading)
+//        TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
+//        .keyboardType(.default)
+//        .disableAutocorrection(true)
+//        .font(.body)
+//        .multilineTextAlignment(.leading)
+//        .padding()
+//        .overlay(
+//            RoundedRectangle(cornerRadius: 10)
+//            .stroke(Color.gray, lineWidth: 1)
+//        )
+        DismissibleKeyboardTextField(
+            text: $prescriptionCode,
+            placeholder: LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"),
+            font: .preferredFont(forTextStyle: .body),
+            textColor: .darkGray,
+            textAlignment: .left,
+            keyboardType: .default
+        )
         .padding()
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
-
         )
     }
 
