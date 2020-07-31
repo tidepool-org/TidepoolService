@@ -212,7 +212,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let onExit: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = InsulinModelInformationView(onExit: onExit)
+            let view = InsulinModelInformationView(onExit: onExit).environment(\.appName, Bundle.main.bundleDisplayName)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -228,7 +228,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 onSave: { [weak self] in
                     self?.therapySettingsViewModel?.saveInsulinModel(insulinModelSettings: $0)
                 }
-            )
+            ).environment(\.appName, Bundle.main.bundleDisplayName)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -366,3 +366,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         self.pushViewController(viewController, animated: true)
     }
 }
+
+extension Bundle {
+
+    var bundleDisplayName: String {
+        return object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+    }
+}
+
