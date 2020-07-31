@@ -27,6 +27,10 @@ enum PrescriptionReviewScreen {
     case deliveryLimitsEditor
     case insulinModelInfo
     case insulinModelEditor
+    case carbRatioInfo
+    case carbRatioEditor
+    case insulinSensitivityInfo
+    case insulinSensitivityEditor
     
     func next() -> PrescriptionReviewScreen? {
         switch self {
@@ -59,6 +63,14 @@ enum PrescriptionReviewScreen {
         case .insulinModelInfo:
             return .insulinModelEditor
         case .insulinModelEditor:
+            return .carbRatioInfo
+        case .carbRatioInfo:
+            return .carbRatioEditor
+        case .carbRatioEditor:
+            return .insulinSensitivityInfo
+        case .insulinSensitivityInfo:
+            return .insulinSensitivityEditor
+        case .insulinSensitivityEditor:
             return nil
         }
     }
@@ -89,7 +101,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     private func viewControllerForScreen(_ screen: PrescriptionReviewScreen) -> UIViewController {
         switch screen {
         case .enterCode:
@@ -97,50 +109,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.setupCanceled()
             }
             prescriptionViewModel.didFinishStep = { [weak self] in
-                if let prescription = self?.prescriptionViewModel.prescription {
-                    var supportedBasalRates: [Double] {
-                        switch prescription.pump {
-                        case .dash:
-                            return (0...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
-                        }
-                    }
-
-                    // TODO: don't hard-code these values
-                    var maximumBasalScheduleEntryCount: Int {
-                        switch prescription.pump {
-                        case .dash:
-                            return 24
-                        }
-                    }
-                    
-                    var supportedBolusVolumes: [Double] {
-                        switch prescription.pump {
-                        case .dash:
-                            // TODO: don't hard-code this value
-                            return (0...600).map { Double($0) / Double(1/0.05) }
-                        }
-                    }
-                    
-                    let pumpSupportedIncrements = PumpSupportedIncrements(
-                        basalRates: supportedBasalRates,
-                        bolusVolumes: supportedBolusVolumes,
-                        maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount
-                    )
-                    let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
-                    
-                    self?.therapySettingsViewModel = TherapySettingsViewModel(
-                        mode: .acceptanceFlow,
-                        therapySettings: prescription.therapySettings,
-                        supportedInsulinModelSettings: supportedInsulinModelSettings,
-                        pumpSupportedIncrements: pumpSupportedIncrements,
-                        syncPumpSchedule: { _, _ in
-                            // Since pump isn't set up, this syncing shouldn't do anything
-                            assertionFailure()
-                        }
-                    ) { [weak self] _, _ in
-                        self?.stepFinished()
-                    }
-                }
+                self?.therapySettingsViewModel = self?.constructTherapySettingsViewModel()
                 self?.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: prescriptionViewModel)
@@ -161,7 +130,9 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 self?.stepFinished()
             }
-            let view = TherapySettingsView(viewModel: therapySettingsViewModel!, actionButton: actionButton)
+            // The initial overview screen should _always_ show the prescription.
+            let originalTherapySettingsViewModel = constructTherapySettingsViewModel()
+            let view = TherapySettingsView(viewModel: originalTherapySettingsViewModel!, actionButton: actionButton)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.title = LocalizedString("Therapy Settings", comment: "Navigation view title")
             return hostedView
@@ -248,17 +219,115 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = InsulinModelReview(
-                settingsViewModel: therapySettingsViewModel!,
-                supportedModels: SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
+            let view = InsulinModelSelection(
+                value: therapySettingsViewModel!.therapySettings.insulinModelSettings!,
+                insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule,
+                glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
+                supportedModelSettings: therapySettingsViewModel!.supportedInsulinModelSettings,
+                mode: .acceptanceFlow, // don't wrap the view in a navigation view
+                onSave: { [weak self] in
+                    self?.therapySettingsViewModel?.saveInsulinModel(insulinModelSettings: $0)
+                }
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
             return hostedView
+        case .carbRatioInfo:
+            let onExit: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CarbRatioInformationView(onExit: onExit)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.carbRatio.title
+            return hostedView
+        case .carbRatioEditor:
+            precondition(prescriptionViewModel.prescription != nil)
+            let view = CarbRatioScheduleEditor(
+                schedule: therapySettingsViewModel!.therapySettings.carbRatioSchedule!,
+                mode: .acceptanceFlow,
+                onSave: { newSchedule in
+                    self.therapySettingsViewModel!.saveCarbRatioSchedule(carbRatioSchedule: newSchedule)
+                }
+            )
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .insulinSensitivityInfo:
+            let onExit: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = InsulinSensitivityInformationView(onExit: onExit)
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.insulinSensitivity.title
+            return hostedView
+        case .insulinSensitivityEditor:
+            precondition(prescriptionViewModel.prescription != nil)
+            let view = InsulinSensitivityScheduleEditor(
+                schedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule!,
+                mode: .acceptanceFlow,
+                glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
+                onSave: { newSchedule in
+                    self.therapySettingsViewModel!.saveInsulinSensitivitySchedule(insulinSensitivitySchedule: newSchedule)
+                }
+            )
+            let hostedView = DismissibleHostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
         }
     }
     
+    private func constructTherapySettingsViewModel() -> TherapySettingsViewModel? {
+        guard let prescription = prescriptionViewModel.prescription else {
+            return nil
+        }
+        var supportedBasalRates: [Double] {
+            switch prescription.pump {
+            case .dash:
+                return (1...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
+            }
+        }
+        
+        // TODO: don't hard-code these values
+        var maximumBasalScheduleEntryCount: Int {
+            switch prescription.pump {
+            case .dash:
+                return 24
+            }
+        }
+        
+        var supportedBolusVolumes: [Double] {
+            switch prescription.pump {
+            case .dash:
+                // TODO: don't hard-code this value
+                return (1...600).map { Double($0) / Double(1/0.05) }
+            }
+        }
+        
+        let pumpSupportedIncrements = PumpSupportedIncrements(
+            basalRates: supportedBasalRates,
+            bolusVolumes: supportedBolusVolumes,
+            maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount
+        )
+        let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
+        
+        return TherapySettingsViewModel(
+            mode: .acceptanceFlow,
+            therapySettings: prescription.therapySettings,
+            supportedInsulinModelSettings: supportedInsulinModelSettings,
+            pumpSupportedIncrements: pumpSupportedIncrements,
+            syncPumpSchedule: { _, _ in
+                // Since pump isn't set up, this syncing shouldn't do anything
+                assertionFailure()
+            },
+            prescription: prescription
+        ) { [weak self] _, _ in
+            self?.stepFinished()
+        }
+    }
+
     public func navigationController(_ navigationController: UINavigationController,
                                      willShow viewController: UIViewController,
                                      animated: Bool) {
