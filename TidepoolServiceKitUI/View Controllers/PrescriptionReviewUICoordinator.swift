@@ -81,7 +81,6 @@ enum PrescriptionReviewScreen {
 
 class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying, UINavigationControllerDelegate {
     var screenStack = [PrescriptionReviewScreen]()
-    var appName = "Tidepool Loop" // TODO: pull this from the environment
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
 
@@ -216,7 +215,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let onExit: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = InsulinModelInformationView(onExit: onExit)
+            let view = InsulinModelInformationView(onExit: onExit).environment(\.appName, Bundle.main.bundleDisplayName)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -228,12 +227,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule,
                 glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
                 supportedModelSettings: therapySettingsViewModel!.supportedInsulinModelSettings,
-                appName: appName,
                 mode: .acceptanceFlow, // don't wrap the view in a navigation view
                 onSave: { [weak self] in
                     self?.therapySettingsViewModel?.saveInsulinModel(insulinModelSettings: $0)
                 }
-            )
+            ).environment(\.appName, Bundle.main.bundleDisplayName)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -333,7 +331,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
-            appName: Bundle.main.bundleDisplayName,
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: pumpSupportedIncrements,
             syncPumpSchedule: { _, _ in
