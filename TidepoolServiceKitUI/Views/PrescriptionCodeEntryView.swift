@@ -89,16 +89,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var prescriptionCodeInputField: some View {
-//        TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
-//        .keyboardType(.default)
-//        .disableAutocorrection(true)
-//        .font(.body)
-//        .multilineTextAlignment(.leading)
-//        .padding()
-//        .overlay(
-//            RoundedRectangle(cornerRadius: 10)
-//            .stroke(Color.gray, lineWidth: 1)
-//        )
         DismissibleKeyboardTextField(
             text: $prescriptionCode,
             placeholder: LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"),

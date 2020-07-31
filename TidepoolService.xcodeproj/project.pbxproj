@@ -69,7 +69,6 @@
 		E9692174249BF2A100D9BE3B /* MockPrescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692173249BF2A100D9BE3B /* MockPrescription.swift */; };
 		E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9692175249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift */; };
 		E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */; };
-		E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */; };
 		E991F1BB24A654CC0059281B /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E991F1BA24A654CC0059281B /* TimeInterval.swift */; };
 /* End PBXBuildFile section */
 
@@ -184,7 +183,6 @@
 		E9692173249BF2A100D9BE3B /* MockPrescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrescription.swift; sourceTree = "<group>"; };
 		E9692175249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
 		E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
-		E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveKeyboardPadding.swift; sourceTree = "<group>"; };
 		E991F1BA24A654CC0059281B /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -413,7 +411,6 @@
 			children = (
 				E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */,
 				E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */,
-				E991F1B624A548580059281B /* AdaptiveKeyboardPadding.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -779,7 +776,6 @@
 			files = (
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
 				A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */,
-				E991F1B724A548580059281B /* AdaptiveKeyboardPadding.swift in Sources */,
 				E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */,
