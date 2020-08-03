@@ -14,7 +14,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State private var isKeyboardVisible = false
 
     var body: some View {
         List {
@@ -26,9 +25,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             submitCodeButton
             requestPrescriptionButton
             Spacer()
-        }
-        .onKeyboardStateChange { state in
-            self.isKeyboardVisible = state.height > 0
         }
         .keyboardAware()
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
@@ -91,9 +87,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         DismissibleKeyboardTextField(
             text: $prescriptionCode,
             placeholder: LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"),
-            font: .preferredFont(forTextStyle: .body),
-            textAlignment: .left,
-            keyboardType: .asciiCapable
+            keyboardType: .asciiCapable,
+            autocapitalizationType: .allCharacters,
+            autocorrectionType: .no
         )
         .padding()
         .overlay(
