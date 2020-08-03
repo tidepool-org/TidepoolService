@@ -26,7 +26,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             requestPrescriptionButton
             Spacer()
         }
-        .adaptiveKeyboardPadding() // To ensure the keyboard doesn't obstruct the TextField
+        .keyboardAware()
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
@@ -84,16 +84,17 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var prescriptionCodeInputField: some View {
-        TextField(LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"), text: $prescriptionCode)
-        .keyboardType(.default)
-        .disableAutocorrection(true)
-        .font(.body)
-        .multilineTextAlignment(.leading)
+        DismissibleKeyboardTextField(
+            text: $prescriptionCode,
+            placeholder: LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"),
+            keyboardType: .asciiCapable,
+            autocapitalizationType: .allCharacters,
+            autocorrectionType: .no
+        )
         .padding()
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
-
         )
     }
 
