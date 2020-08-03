@@ -31,7 +31,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             self.isKeyboardVisible = state.height > 0
         }
         .keyboardAware()
-        .edgesIgnoringSafeArea(isKeyboardVisible ? [] : .bottom)
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
         .navigationBarItems(trailing: cancelButton)
@@ -93,7 +92,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             text: $prescriptionCode,
             placeholder: LocalizedString("Activation code", comment: "Placeholder text before entering prescription code in text field"),
             font: .preferredFont(forTextStyle: .body),
-            textColor: .darkGray,
             textAlignment: .left,
             keyboardType: .asciiCapable
         )
