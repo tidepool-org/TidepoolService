@@ -149,7 +149,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.glucoseTargetRange.title
             return hostedView
         case .correctionRangeEditor:
-            let view = CorrectionRangeReview(viewModel: therapySettingsViewModel!)
+            let view = CorrectionRangeScheduleEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -163,7 +163,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.correctionRangeOverrides.smallTitle
             return hostedView
         case .correctionRangeOverrideEditor:
-            let view = CorrectionRangeOverrideReview(viewModel: therapySettingsViewModel!)
+            let view = CorrectionRangeOverridesEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -177,7 +177,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.suspendThreshold.title
             return hostedView
         case .suspendThresholdEditor:
-            let view = SuspendThresholdReview(viewModel: therapySettingsViewModel!)
+            let view = SuspendThresholdEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -192,7 +192,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .basalRatesEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = BasalRatesReview(viewModel: therapySettingsViewModel!)
+            let view = BasalRateScheduleEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -207,7 +207,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .deliveryLimitsEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = DeliveryLimitsReview(viewModel: therapySettingsViewModel!)
+            let view = DeliveryLimitsEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -222,6 +222,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
+            
             let view = InsulinModelSelection(
                 value: therapySettingsViewModel!.therapySettings.insulinModelSettings!,
                 insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule,
@@ -282,7 +283,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .therapySettingsRecap:
             // Get rid of the "prescription" card because it should not be shown as part of the recap
             therapySettingsViewModel?.prescription = nil
-            let nextButtonString = LocalizedString("Save settings", comment: "Therapy settings save button title")
+            let nextButtonString = LocalizedString("Save Settings", comment: "Therapy settings save button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 self?.stepFinished()
             }
