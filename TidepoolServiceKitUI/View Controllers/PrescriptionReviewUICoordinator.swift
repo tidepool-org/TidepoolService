@@ -150,10 +150,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .correctionRangeEditor:
             let view = CorrectionRangeScheduleEditor(
-                viewModel: therapySettingsViewModel!,
-                onSave: {[weak therapySettingsViewModel] newSchedule in
-                    therapySettingsViewModel?.saveCorrectionRange(range: newSchedule)
-                }
+                viewModel: therapySettingsViewModel!
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -169,11 +166,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .correctionRangeOverrideEditor:
             let view = CorrectionRangeOverridesEditor(
-                viewModel: therapySettingsViewModel!,
-                onSave: {[weak therapySettingsViewModel] overrides in
-                    let unit = therapySettingsViewModel?.therapySettings.glucoseUnit!
-                    therapySettingsViewModel?.saveCorrectionRangeOverrides(overrides: overrides, unit: unit!)
-                }
+                viewModel: therapySettingsViewModel!
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -189,13 +182,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .suspendThresholdEditor:
             let view = SuspendThresholdEditor(
-                viewModel: therapySettingsViewModel!,
-                onSave: {[weak therapySettingsViewModel] newValue in
-                    let unit = therapySettingsViewModel?.therapySettings.glucoseUnit!
-                    therapySettingsViewModel?.saveSuspendThreshold(
-                        value: GlucoseThreshold(unit: unit!, value: newValue.doubleValue(for: unit!))
-                    )
-                }
+                viewModel: therapySettingsViewModel!
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -212,10 +199,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .basalRatesEditor:
             precondition(prescriptionViewModel.prescription != nil)
             let view = BasalRateScheduleEditor(
-                viewModel: therapySettingsViewModel!,
-                onSave: {[weak therapySettingsViewModel] newRates in
-                    therapySettingsViewModel?.saveBasalRates(basalRates: newRates)
-                }
+                viewModel: therapySettingsViewModel!
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
@@ -232,10 +216,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .deliveryLimitsEditor:
             precondition(prescriptionViewModel.prescription != nil)
             let view = DeliveryLimitsEditor(
-                viewModel: therapySettingsViewModel!,
-                onSave: {[weak therapySettingsViewModel] limits in
-                    therapySettingsViewModel?.saveDeliveryLimits(limits: limits)
-                }
+                viewModel: therapySettingsViewModel!
             )
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
