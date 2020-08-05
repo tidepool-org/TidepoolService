@@ -83,6 +83,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     var screenStack = [PrescriptionReviewScreen]()
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
+    
+    let chartColors: ChartColorPalette
 
     let prescriptionViewModel = PrescriptionReviewViewModel() // Used for retreving & keeping track of prescription
     private var therapySettingsViewModel: TherapySettingsViewModel? // Used for keeping track of & updating settings
@@ -91,7 +93,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return screenStack.last!
     }
 
-    init() {
+    init(chartColors: ChartColorPalette) {
+        self.chartColors = chartColors
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
     }
     
@@ -229,6 +232,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
                 supportedModelSettings: therapySettingsViewModel!.supportedInsulinModelSettings,
                 mode: .acceptanceFlow, // don't wrap the view in a navigation view
+                chartColors: therapySettingsViewModel!.chartColors,
                 onSave: { [weak self] in
                     self?.therapySettingsViewModel?.saveInsulinModel(insulinModelSettings: $0)
                 }
@@ -338,7 +342,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 // Since pump isn't set up, this syncing shouldn't do anything
                 assertionFailure()
             },
-            prescription: prescription
+            prescription: prescription,
+            chartColors: chartColors
         ) { [weak self] _, _ in
             self?.stepFinished()
         }

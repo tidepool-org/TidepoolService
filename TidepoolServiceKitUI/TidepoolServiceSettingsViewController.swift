@@ -12,9 +12,11 @@ import TidepoolServiceKit
 final class TidepoolServiceSettingsViewController: UITableViewController, CompletionDelegate {
 
     private let service: TidepoolService
+    let chartColors: ChartColorPalette
 
-    init(service: TidepoolService) {
+    init(service: TidepoolService, chartColors: ChartColorPalette) {
         self.service = service
+        self.chartColors = chartColors
 
         super.init(style: .grouped)
     }
@@ -50,7 +52,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     }
     
     @objc private func startFlow() {
-        let setupViewController = PrescriptionReviewUICoordinator()
+        let setupViewController = PrescriptionReviewUICoordinator(chartColors: chartColors)
         setupViewController.completionDelegate = self
         setupViewController.onReviewFinished = { [weak service] (settings) in
             service?.saveSettings(settings: settings)
