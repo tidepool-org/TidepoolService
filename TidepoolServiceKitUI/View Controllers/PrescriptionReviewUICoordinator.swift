@@ -223,16 +223,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
             
-            let view = InsulinModelSelection(
-                value: therapySettingsViewModel!.therapySettings.insulinModelSettings!,
-                insulinSensitivitySchedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule,
-                glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
-                supportedModelSettings: therapySettingsViewModel!.supportedInsulinModelSettings,
-                mode: .acceptanceFlow, // don't wrap the view in a navigation view
-                onSave: { [weak self] in
-                    self?.therapySettingsViewModel?.saveInsulinModel(insulinModelSettings: $0)
-                }
-            ).environment(\.appName, Bundle.main.bundleDisplayName)
+            let view = InsulinModelSelection(viewModel: therapySettingsViewModel!).environment(\.appName, Bundle.main.bundleDisplayName)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -248,13 +239,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .carbRatioEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = CarbRatioScheduleEditor(
-                schedule: therapySettingsViewModel!.therapySettings.carbRatioSchedule!,
-                mode: .acceptanceFlow,
-                onSave: { newSchedule in
-                    self.therapySettingsViewModel!.saveCarbRatioSchedule(carbRatioSchedule: newSchedule)
-                }
-            )
+            let view = CarbRatioScheduleEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -269,14 +254,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinSensitivityEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = InsulinSensitivityScheduleEditor(
-                schedule: therapySettingsViewModel!.therapySettings.insulinSensitivitySchedule!,
-                mode: .acceptanceFlow,
-                glucoseUnit: therapySettingsViewModel!.therapySettings.glucoseUnit!,
-                onSave: { newSchedule in
-                    self.therapySettingsViewModel!.saveInsulinSensitivitySchedule(insulinSensitivitySchedule: newSchedule)
-                }
-            )
+            let view = InsulinSensitivityScheduleEditor(viewModel: therapySettingsViewModel!)
             let hostedView = DismissibleHostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
