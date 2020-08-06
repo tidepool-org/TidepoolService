@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tidepool Project. All rights reserved.
 //
 
+import SwiftUI
 import LoopKit
 import LoopKitUI
 import TidepoolServiceKit
@@ -16,8 +17,8 @@ extension TidepoolService: ServiceUI {
         return ServiceViewController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService()))
     }
 
-    public func settingsViewController(chartColors: ChartColorPalette) -> (UIViewController & ServiceSettingsNotifying & CompletionNotifying) {
-        return ServiceViewController(rootViewController: TidepoolServiceSettingsViewController(service: self, chartColors: chartColors))
+    public func settingsViewController(chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) -> (UIViewController & ServiceSettingsNotifying & CompletionNotifying) {
+        return ServiceViewController(rootViewController: TidepoolServiceSettingsViewController(service: self, chartColors: chartColors, carbTintColor: carbTintColor, glucoseTintColor: glucoseTintColor, guidanceColors: guidanceColors, insulinTintColor: insulinTintColor))
     }
 
 }
