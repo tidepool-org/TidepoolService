@@ -16,8 +16,8 @@ extension TidepoolService: ServiceUI {
         return ServiceViewController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService()))
     }
 
-    public func settingsViewController() -> (UIViewController & ServiceSettingsNotifying & CompletionNotifying) {
-      return ServiceViewController(rootViewController: TidepoolServiceSettingsViewController(service: self))
+    public func settingsViewController(chartColors: ChartColorPalette) -> (UIViewController & ServiceSettingsNotifying & CompletionNotifying) {
+        return ServiceViewController(rootViewController: TidepoolServiceSettingsViewController(service: self, chartColors: chartColors))
     }
 
 }
