@@ -6,17 +6,26 @@
 //  Copyright © 2019 Tidepool Project. All rights reserved.
 //
 
+import SwiftUI
 import LoopKitUI
 import TidepoolServiceKit
                                                                         /* Added to support prescription flow */
 final class TidepoolServiceSettingsViewController: UITableViewController, CompletionDelegate {
 
     private let service: TidepoolService
-    let chartColors: ChartColorPalette
+    private let chartColors: ChartColorPalette
+    private let carbTintColor: Color
+    private let glucoseTintColor: Color
+    private let guidanceColors: GuidanceColors
+    private let insulinTintColor: Color
 
-    init(service: TidepoolService, chartColors: ChartColorPalette) {
+    init(service: TidepoolService, chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) {
         self.service = service
         self.chartColors = chartColors
+        self.carbTintColor = carbTintColor
+        self.glucoseTintColor = glucoseTintColor
+        self.guidanceColors = guidanceColors
+        self.insulinTintColor = insulinTintColor
 
         super.init(style: .grouped)
     }
@@ -52,7 +61,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     }
     
     @objc private func startFlow() {
-        let setupViewController = PrescriptionReviewUICoordinator(chartColors: chartColors)
+        let setupViewController = PrescriptionReviewUICoordinator(chartColors: chartColors, carbTintColor: carbTintColor, glucoseTintColor: glucoseTintColor, guidanceColors: guidanceColors, insulinTintColor: insulinTintColor)
         setupViewController.completionDelegate = self
         setupViewController.onReviewFinished = { [weak service] (settings) in
             service?.saveSettings(settings: settings)
@@ -105,7 +114,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
             cell.textLabel?.text = LocalizedString("Delete Service", comment: "Button title to delete a service")
             cell.textLabel?.textAlignment = .center
-            cell.tintColor = .delete
+            cell.tintColor = .systemRed
             return cell
         }
     }
