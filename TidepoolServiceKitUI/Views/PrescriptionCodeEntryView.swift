@@ -13,19 +13,23 @@ import LoopKit
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     @State private var prescriptionCode: String = ""
+    @State private var birthday = Date()
     @ObservedObject var viewModel: PrescriptionReviewViewModel
+    @State var showSelect = false
 
     var body: some View {
         List {
             VStack(alignment: .leading, spacing: 25) {
                 itemsNeededList
-                codeEntryRequest
+                codeEntrySection
+                birthdayPickerSection
             }
             .padding(.vertical)
             submitCodeButton
-            requestPrescriptionButton
+            /* requestPrescriptionButton */ // Slated for post-510K
             Spacer()
         }
+        
         .keyboardAware()
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
@@ -70,17 +74,16 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         }
     }
 
-    private var codeEntryRequest: some View {
+    private var codeEntrySection: some View {
         Section {
             VStack(alignment: .leading, spacing: 10) {
-                Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
+                Text(LocalizedString("Enter your 6-digit prescription code", comment: "Title for section to enter prescription code"))
                 .font(.headline)
                 Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
                 .foregroundColor(.secondary)
                 prescriptionCodeInputField
             }
         }
-        
     }
     
     private var prescriptionCodeInputField: some View {
@@ -96,6 +99,30 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
         )
+    }
+    
+    private var birthdayPickerSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(LocalizedString("Enter your birthday", comment: "Title for section to select birthday"))
+                .font(.headline)
+                Text(LocalizedString("In order for us to verify the prescription code, please enter the birthdate associated with your Tidepool account.", comment: "Text explaining need for birthday"))
+                .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+                .foregroundColor(.secondary)
+                birthdayPicker
+            }
+        }
+        
+    }
+    
+    private var birthdayPicker: some View {
+        ExpandableDatePicker(for: self.$birthday)
+        .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+            .stroke(Color.gray, lineWidth: 1)
+        )
+        
     }
 
     private var submitCodeButton: some View {
@@ -115,7 +142,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     private var requestPrescriptionButton: some View {
         Button(action: {
             // TODO: open contact prescriber window
-            print("TODO")
+            print("Post 510K")
         }) {
             Text(LocalizedString("Request activation code", comment:"Button title for requesting a prescription activation code from the prescriber"))
                 .actionButtonStyle(.secondary)

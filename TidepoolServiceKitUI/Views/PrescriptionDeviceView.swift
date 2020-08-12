@@ -24,7 +24,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             }
             .padding(.vertical)
             approveDevicesButton
-            editDevicesButton
+            /* editDevicesButton */ // Slated for post-510K
             Spacer()
         }
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
@@ -147,7 +147,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     private var editDevicesButton: some View {
         Button(action: {
             // TODO: open window to edit the devices
-            print("TODO")
+            print("Post 510K")
         }) {
             Text(LocalizedString("Edit devices", comment: "Button title for editing the prescribed devices"))
                 .actionButtonStyle(.secondary)
