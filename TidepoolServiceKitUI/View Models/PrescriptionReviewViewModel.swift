@@ -13,13 +13,18 @@ import LoopKitUI
 import HealthKit
 
 class PrescriptionReviewViewModel: ObservableObject {
+    // MARK: Navigation
     var didFinishStep: (() -> Void)
     var didCancel: (() -> Void)?
     
+    // MARK: State
     var prescription: MockPrescription?
     let prescriptionCodeLength = 6
-    
+
+    let validDateRange = Calendar.current.date(byAdding: .year, value: -100, to: Date())!...Date()
+
     @Published var shouldDisplayError = false
+    
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler

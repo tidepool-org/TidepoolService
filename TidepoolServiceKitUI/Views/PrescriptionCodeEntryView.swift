@@ -109,7 +109,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var birthdayPicker: some View {
-        ExpandableDatePicker(with: self.$birthday)
+        ExpandableDatePicker(with: self.$birthday, pickerRange: viewModel.validDateRange)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
