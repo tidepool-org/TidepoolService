@@ -11,7 +11,6 @@ import LoopKitUI
 import LoopKit
 
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
-    
     @State private var prescriptionCode: String = ""
     @State private var birthday = Date()
     @ObservedObject var viewModel: PrescriptionReviewViewModel
@@ -24,6 +23,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 birthdayPickerSection
             }
             .padding(.vertical)
+            errorIfNeeded
             submitCodeButton
             /* requestPrescriptionButton */ // Slated for post-510K
             Spacer()
@@ -120,12 +120,22 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             .stroke(Color.gray, lineWidth: 1)
         )
     }
+    
+    private var errorIfNeeded: some View {
+        Group {
+            if viewModel.shouldDisplayError {
+                Text(LocalizedString("The activation code and/or birthdate entered are incorrect. Please update or contact Tidepool Support.", comment: "Prescription validation error message"))
+                .foregroundColor(Color.red)
+                .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+            }
+        }
+    }
 
     private var submitCodeButton: some View {
         Button(action: {
-            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode)
+            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode, birthday: self.birthday)
         }) {
-            Text(LocalizedString("Submit activation code", comment: "Button title for submitting the prescription activation code to Tidepool"))
+            Text(LocalizedString("Continue", comment: "Button title to submit prescription activation information to Tidepool"))
                 .actionButtonStyle(submitButtonStyle(enabled: prescriptionCode.count == self.viewModel.prescriptionCodeLength))
                 .disabled(prescriptionCode.count != viewModel.prescriptionCodeLength)
         }

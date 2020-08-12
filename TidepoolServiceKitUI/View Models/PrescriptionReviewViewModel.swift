@@ -19,25 +19,28 @@ class PrescriptionReviewViewModel: ObservableObject {
     var prescription: MockPrescription?
     let prescriptionCodeLength = 6
     
+    @Published var shouldDisplayError = false
+    
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler
     }
     
     func entryNavigation(success: Bool) {
         if success {
+            shouldDisplayError = false
             didFinishStep()
         } else {
-           // TODO: handle error
+           shouldDisplayError = true
         }
     }
     
-    func validatePrescriptionCode(prescriptionCode: String) -> Bool {
-        return prescriptionCode.count == prescriptionCodeLength
+    func validatePrescriptionCode(_ prescriptionCode: String, _ birthday: Date) -> Bool {
+        return prescriptionCode.count == prescriptionCodeLength && birthday.timeIntervalSinceReferenceDate > 0
     }
     
-    func loadPrescriptionFromCode(prescriptionCode: String) {
-        guard validatePrescriptionCode(prescriptionCode: prescriptionCode) else {
-            // TODO: handle error
+    func loadPrescriptionFromCode(prescriptionCode: String, birthday: Date) {
+        guard validatePrescriptionCode(prescriptionCode, birthday) else {
+            self.entryNavigation(success: false)
             return
         }
 
