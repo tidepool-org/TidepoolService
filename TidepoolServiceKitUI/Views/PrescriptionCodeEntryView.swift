@@ -18,6 +18,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     var body: some View {
         List {
             VStack(alignment: .leading, spacing: 35) {
+                itemsNeededDescription
                 itemsNeededList
                 codeEntrySection
                 birthdayPickerSection
@@ -57,17 +58,12 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var itemsNeededList: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 10) {
-                itemsNeededDescription
-                InstructionList(instructions: [
-                    LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
-                    LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
-                    ]
-                )
-                .foregroundColor(.secondary)
-            }
-        }
+        InstructionList(instructions: [
+            LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
+            LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
+            ]
+        )
+        .foregroundColor(.secondary)
     }
 
     private var codeEntrySection: some View {
