@@ -142,7 +142,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private func submitButtonStyle(enabled: Bool) -> ActionButton.ButtonType {
-        return enabled ? .primary : .secondary
+        return enabled ? .primary : .deactivated
     }
         
     private var requestPrescriptionButton: some View {
