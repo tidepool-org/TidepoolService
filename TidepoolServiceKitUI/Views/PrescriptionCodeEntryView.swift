@@ -15,7 +15,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     @State private var birthday = Date()
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    @State var showSelect = false
 
     var body: some View {
         List {
@@ -29,7 +28,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             /* requestPrescriptionButton */ // Slated for post-510K
             Spacer()
         }
-        
         .keyboardAware()
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
         .environment(\.horizontalSizeClass, horizontalOverride)
@@ -116,13 +114,11 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var birthdayPicker: some View {
-        ExpandableDatePicker(for: self.$birthday)
-        .padding()
+        ExpandableDatePicker(with: self.$birthday)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
         )
-        
     }
 
     private var submitCodeButton: some View {
