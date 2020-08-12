@@ -21,7 +21,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 itemsNeededList
                 codeEntrySection
                 birthdayPickerSection
-                errorIfNeeded
             }
             .padding(.vertical)
             submitCodeButton
@@ -55,7 +54,6 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             .foregroundColor(.secondary)
             .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
         }
-        
     }
     
     private var itemsNeededList: some View {
@@ -108,6 +106,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 .foregroundColor(.secondary)
                 birthdayPicker
+                errorIfNeeded
             }
         }
         
