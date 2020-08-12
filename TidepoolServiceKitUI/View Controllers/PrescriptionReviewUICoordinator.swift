@@ -17,8 +17,10 @@ enum PrescriptionReviewScreen {
     case prescriptionTherapySettingsOverview
     case correctionRangeInfo
     case correctionRangeEditor
-    case correctionRangeOverrideInfo
-    case correctionRangeOverrideEditor
+    case correctionRangePreMealOverrideInfo
+    case correctionRangePreMealOverrideEditor
+    case correctionRangeWorkoutOverrideInfo
+    case correctionRangeWorkoutOverrideEditor
     case suspendThresholdInfo
     case suspendThresholdEditor
     case basalRatesInfo
@@ -48,10 +50,14 @@ enum PrescriptionReviewScreen {
         case .correctionRangeInfo:
             return .correctionRangeEditor
         case .correctionRangeEditor:
-            return .correctionRangeOverrideInfo
-        case .correctionRangeOverrideInfo:
-            return .correctionRangeOverrideEditor
-        case .correctionRangeOverrideEditor:
+            return .correctionRangePreMealOverrideInfo
+        case .correctionRangePreMealOverrideInfo:
+            return .correctionRangePreMealOverrideEditor
+        case .correctionRangePreMealOverrideEditor:
+            return .correctionRangeWorkoutOverrideInfo
+        case .correctionRangeWorkoutOverrideInfo:
+            return .correctionRangeWorkoutOverrideEditor
+        case .correctionRangeWorkoutOverrideEditor:
             return .basalRatesInfo
         case .basalRatesInfo:
             return .basalRatesEditor
@@ -164,17 +170,31 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
-        case .correctionRangeOverrideInfo:
+        case .correctionRangePreMealOverrideInfo:
             let exiting: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = CorrectionRangeOverrideInformationView(onExit: exiting)
+            let view = CorrectionRangeOverrideInformationView(preset: .preMeal, onExit: exiting)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
-            hostedView.title = TherapySetting.correctionRangeOverrides.smallTitle
+            hostedView.title = TherapySetting.preMealCorrectionRangeOverride.smallTitle
             return hostedView
-        case .correctionRangeOverrideEditor:
-            let view = CorrectionRangeOverridesEditor(viewModel: therapySettingsViewModel!)
+        case .correctionRangePreMealOverrideEditor:
+            let view = CorrectionRangeOverridesEditor(viewModel: therapySettingsViewModel!, preset: .preMeal)
+            let hostedView = hostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
+            return hostedView
+        case .correctionRangeWorkoutOverrideInfo:
+            let exiting: (() -> Void) = { [weak self] in
+                self?.stepFinished()
+            }
+            let view = CorrectionRangeOverrideInformationView(preset: .workout, onExit: exiting)
+            let hostedView = hostingController(rootView: view)
+            hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
+            hostedView.title = TherapySetting.workoutCorrectionRangeOverride.smallTitle
+            return hostedView
+        case .correctionRangeWorkoutOverrideEditor:
+            let view = CorrectionRangeOverridesEditor(viewModel: therapySettingsViewModel!, preset: .workout)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
