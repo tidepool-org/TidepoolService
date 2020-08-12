@@ -21,9 +21,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
                 itemsNeededList
                 codeEntrySection
                 birthdayPickerSection
+                errorIfNeeded
             }
             .padding(.vertical)
-            errorIfNeeded
             submitCodeButton
             /* requestPrescriptionButton */ // Slated for post-510K
             Spacer()
@@ -135,7 +135,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         Button(action: {
             self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode, birthday: self.birthday)
         }) {
-            Text(LocalizedString("Continue", comment: "Button title to submit prescription activation information to Tidepool"))
+            Text(LocalizedString("Submit activation code", comment: "Button title to submit prescription activation information to Tidepool"))
                 .actionButtonStyle(submitButtonStyle(enabled: prescriptionCode.count == self.viewModel.prescriptionCodeLength))
                 .disabled(prescriptionCode.count != viewModel.prescriptionCodeLength)
         }
