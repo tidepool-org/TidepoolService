@@ -50,8 +50,10 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 // TODO: get images and descriptions from pump manager
-                pumpStack
-                cgmStack
+                VStack(alignment: .trailing, spacing: 35) {
+                    pumpStack
+                    cgmStack
+                }
             }
         }
     }
@@ -111,7 +113,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         Image("dexcom", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
         .resizable()
         .aspectRatio(contentMode: ContentMode.fit)
-        .frame(width: Self.imageWidth)
+        .frame(width: Self.imageWidth, height: 50)
     }
     
     private var disclaimer: some View {

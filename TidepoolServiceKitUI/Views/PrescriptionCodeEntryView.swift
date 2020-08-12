@@ -17,7 +17,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
 
     var body: some View {
         List {
-            VStack(alignment: .leading, spacing: 25) {
+            VStack(alignment: .leading, spacing: 35) {
                 itemsNeededList
                 codeEntrySection
                 birthdayPickerSection
@@ -101,7 +101,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     
     private var birthdayPickerSection: some View {
         Section {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 15) {
                 Text(LocalizedString("Enter your birthday", comment: "Title for section to select birthday"))
                 .font(.headline)
                 Text(LocalizedString("In order for us to verify the prescription code, please enter the birthdate associated with your Tidepool account.", comment: "Text explaining need for birthday"))
