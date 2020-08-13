@@ -11,6 +11,7 @@ import TidepoolServiceKit
 import LoopKit
 import LoopKitUI
 import HealthKit
+import SwiftUI
 
 class PrescriptionReviewViewModel: ObservableObject {
     // MARK: Navigation
@@ -18,13 +19,15 @@ class PrescriptionReviewViewModel: ObservableObject {
     var didCancel: (() -> Void)?
     
     // MARK: State
+    @Published var shouldDisplayError = false
+    
+    // MARK: Prescription Information
     var prescription: MockPrescription?
     let prescriptionCodeLength = 6
 
-    let validDateRange = Calendar.current.date(byAdding: .year, value: -100, to: Date())!...Date()
-
-    @Published var shouldDisplayError = false
-    
+    // MARK: Date Picker Information
+    let validDateRange = Calendar.current.date(byAdding: .year, value: -130, to: Date())!...Date()
+    let placeholderFieldText = "MM/DD/YYYY"
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler

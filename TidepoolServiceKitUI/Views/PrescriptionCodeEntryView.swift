@@ -11,9 +11,10 @@ import LoopKitUI
 import LoopKit
 
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
-    @State private var prescriptionCode: String = ""
-    @State private var birthday = Date()
     @ObservedObject var viewModel: PrescriptionReviewViewModel
+    @State private var prescriptionCode: String = ""
+    // Default to 35 years ago for birthdays, which is what the Apple Health app does
+    @State private var birthday: Date = Calendar.current.date(byAdding: .year, value: -35, to: Date())!
 
     var body: some View {
         List {
@@ -109,7 +110,11 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var birthdayPicker: some View {
-        ExpandableDatePicker(with: self.$birthday, pickerRange: viewModel.validDateRange)
+        ExpandableDatePicker(
+            with: $birthday,
+            pickerRange: viewModel.validDateRange,
+            placeholderText: viewModel.placeholderFieldText
+        )
         .overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
