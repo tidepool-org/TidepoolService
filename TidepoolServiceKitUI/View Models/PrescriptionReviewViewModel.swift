@@ -11,7 +11,6 @@ import TidepoolServiceKit
 import LoopKit
 import LoopKitUI
 import HealthKit
-import SwiftUI
 
 class PrescriptionReviewViewModel: ObservableObject {
     // MARK: Navigation
