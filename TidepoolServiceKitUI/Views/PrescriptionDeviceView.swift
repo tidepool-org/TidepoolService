@@ -139,7 +139,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         Button(action: {
             self.viewModel.didFinishStep()
         }) {
-            Text(LocalizedString("Next: Review Settings", comment: "Button title for approving devices"))
+            Text(LocalizedString("Continue", comment: "Button title for approving devices"))
                 .actionButtonStyle(.primary)
         }
     }

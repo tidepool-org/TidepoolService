@@ -102,7 +102,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         Button(action: {
             self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode)
         }) {
-            Text(LocalizedString("Submit activation code", comment: "Button title for submitting the prescription activation code to Tidepool"))
+            Text(LocalizedString("Submit", comment: "Button title for submitting the prescription activation code to Tidepool"))
                 .actionButtonStyle(submitButtonStyle(enabled: prescriptionCode.count == self.viewModel.prescriptionCodeLength))
                 .disabled(prescriptionCode.count != viewModel.prescriptionCodeLength)
         }
