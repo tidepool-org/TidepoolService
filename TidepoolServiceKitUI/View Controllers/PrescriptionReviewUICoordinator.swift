@@ -140,7 +140,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = LocalizedString("Review your settings", comment: "Navigation view title")
             return hostedView
         case .prescriptionTherapySettingsOverview:
-            let nextButtonString = LocalizedString("Next: Review settings", comment: "Therapy settings overview next button title")
+            let nextButtonString = LocalizedString("Continue", comment: "Therapy settings overview next button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 self?.stepFinished()
             }
