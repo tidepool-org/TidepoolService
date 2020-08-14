@@ -97,9 +97,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     private var birthdayPickerSection: some View {
         Section {
             VStack(alignment: .leading, spacing: 15) {
-                Text(LocalizedString("Enter your birthday", comment: "Title for section to select birthday"))
+                Text(LocalizedString("Enter your birthdate", comment: "Title for section to select birthdate"))
                 .font(.headline)
-                Text(LocalizedString("In order for us to verify the prescription code, please enter the birthdate associated with your Tidepool account.", comment: "Text explaining need for birthday"))
+                Text(LocalizedString("In order for us to verify the prescription code, please enter the birthdate associated with your Tidepool account.", comment: "Text explaining need for birthdate"))
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 .foregroundColor(.secondary)
                 birthdayPicker

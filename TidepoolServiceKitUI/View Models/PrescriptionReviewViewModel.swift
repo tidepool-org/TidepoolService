@@ -26,7 +26,7 @@ class PrescriptionReviewViewModel: ObservableObject {
 
     // MARK: Date Picker Information
     let validDateRange = Calendar.current.date(byAdding: .year, value: -130, to: Date())!...Date()
-    let placeholderFieldText = "MM/DD/YYYY"
+    let placeholderFieldText = "Select birthdate"
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler
