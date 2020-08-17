@@ -15,6 +15,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @State private var prescriptionCode: String = ""
     // Default to 35 years ago for birthdays, which is what the Apple Health app does
     @State private var birthday: Date = Calendar.current.date(byAdding: .year, value: -35, to: Date())!
+    @State private var didTapOnPicker: Bool = false
 
     var body: some View {
         List {
@@ -113,9 +114,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         ExpandableDatePicker(
             with: $birthday,
             pickerRange: viewModel.validDateRange,
-            placeholderText: viewModel.placeholderFieldText
-        )
-        .overlay(
+            placeholderText: viewModel.placeholderFieldText,
+            userDidTap: $didTapOnPicker
+        ).overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
         )
@@ -132,7 +133,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var shouldEnableButton: Bool {
-        return prescriptionCode.count == viewModel.prescriptionCodeLength
+        return prescriptionCode.count == viewModel.prescriptionCodeLength && didTapOnPicker
     }
 
     private var submitCodeButton: some View {
