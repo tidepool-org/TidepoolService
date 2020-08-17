@@ -130,21 +130,21 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             }
         }
     }
+    
+    private var shouldEnableButton: Bool {
+        return prescriptionCode.count == viewModel.prescriptionCodeLength
+    }
 
     private var submitCodeButton: some View {
         Button(action: {
             self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode, birthday: self.birthday)
         }) {
             Text(LocalizedString("Submit", comment: "Button title for submitting the prescription activation code to Tidepool"))
-                .actionButtonStyle(submitButtonStyle(enabled: prescriptionCode.count == self.viewModel.prescriptionCodeLength))
-                .disabled(prescriptionCode.count != viewModel.prescriptionCodeLength)
+                .actionButtonStyle(shouldEnableButton ? .primary : .deactivated)
+                .disabled(!shouldEnableButton)
         }
     }
-    
-    private func submitButtonStyle(enabled: Bool) -> ActionButton.ButtonType {
-        return enabled ? .primary : .deactivated
-    }
-        
+
     private var requestPrescriptionButton: some View {
         Button(action: {
             // TODO: open contact prescriber window

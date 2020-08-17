@@ -42,7 +42,7 @@ class PrescriptionReviewViewModel: ObservableObject {
     }
     
     func validate(_ prescriptionCode: String, _ birthday: Date) -> Bool {
-        return prescriptionCode.count == prescriptionCodeLength && prescriptionCode.isAlphanumeric()
+        return prescriptionCode.count == prescriptionCodeLength && prescriptionCode.isAlphanumeric() && validDateRange.contains(birthday)
     }
     
     func loadPrescriptionFromCode(prescriptionCode: String, birthday: Date) {
