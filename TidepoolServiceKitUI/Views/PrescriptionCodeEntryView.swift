@@ -143,7 +143,7 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             Text(LocalizedString("Submit", comment: "Button title for submitting the prescription activation code to Tidepool"))
                 .actionButtonStyle(shouldEnableButton ? .primary : .deactivated)
         }
-        .disabled(shouldEnableButton)
+        .disabled(!shouldEnableButton)
     }
 
     private var requestPrescriptionButton: some View {
