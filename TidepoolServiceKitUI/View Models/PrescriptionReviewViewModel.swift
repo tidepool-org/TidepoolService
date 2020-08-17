@@ -26,6 +26,8 @@ class PrescriptionReviewViewModel: ObservableObject {
 
     // MARK: Date Picker Information
     let validDateRange = Calendar.current.date(byAdding: .year, value: -130, to: Date())!...Date()
+    // Default to 35 years ago for birthdays, which is what the Apple Health app does
+    let pickerStartDate = Calendar.current.date(byAdding: .year, value: -35, to: Date())!
     let placeholderFieldText = LocalizedString("Select birthdate", comment: "Prompt to select birthdate with picker")
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
