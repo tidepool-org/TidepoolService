@@ -41,12 +41,12 @@ class PrescriptionReviewViewModel: ObservableObject {
         }
     }
     
-    func validatePrescriptionCode(_ prescriptionCode: String, _ birthday: Date) -> Bool {
-        return prescriptionCode.count == prescriptionCodeLength && validDateRange.contains(birthday)
+    func validate(_ prescriptionCode: String, _ birthday: Date) -> Bool {
+        return prescriptionCode.count == prescriptionCodeLength && prescriptionCode.isAlphanumeric()
     }
     
     func loadPrescriptionFromCode(prescriptionCode: String, birthday: Date) {
-        guard validatePrescriptionCode(prescriptionCode, birthday) else {
+        guard validate(prescriptionCode, birthday) else {
             self.entryNavigation(success: false)
             return
         }
@@ -61,5 +61,11 @@ class PrescriptionReviewViewModel: ObservableObject {
                 self.entryNavigation(success: true)
             }
         }
+    }
+}
+
+extension String {
+    fileprivate func isAlphanumeric() -> Bool {
+        return self.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) == nil && self != ""
     }
 }
