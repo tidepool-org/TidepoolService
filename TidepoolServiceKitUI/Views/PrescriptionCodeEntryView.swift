@@ -13,9 +13,7 @@ import LoopKit
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     @State private var prescriptionCode: String = ""
-    // Default to 35 years ago for birthdays, which is what the Apple Health app does
-    @State private var birthday: Date = Calendar.current.date(byAdding: .year, value: -35, to: Date())!
-    @State private var didTapOnPicker: Bool = false
+    @State private var birthday: Date?
 
     var body: some View {
         List {
@@ -111,11 +109,20 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var birthdayPicker: some View {
-        ExpandableDatePicker(
-            with: $birthday,
+        let binding = Binding<Date>(
+            get: {
+                // Default to 35 years ago for birthdays, which is what the Apple Health app does
+                self.birthday ?? self.viewModel.pickerStartDate
+            },
+            set: {
+                self.birthday = $0
+            }
+        )
+        
+        return ExpandableDatePicker(
+            with: binding,
             pickerRange: viewModel.validDateRange,
-            placeholderText: viewModel.placeholderFieldText,
-            userDidTap: $didTapOnPicker
+            placeholderText: viewModel.placeholderFieldText
         ).overlay(
             RoundedRectangle(cornerRadius: 10)
             .stroke(Color.gray, lineWidth: 1)
@@ -133,12 +140,12 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
     }
     
     private var shouldEnableButton: Bool {
-        return prescriptionCode.count == viewModel.prescriptionCodeLength && didTapOnPicker
+        return prescriptionCode.count == viewModel.prescriptionCodeLength && self.birthday != nil
     }
 
     private var submitCodeButton: some View {
         Button(action: {
-            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode, birthday: self.birthday)
+            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode, birthday: self.birthday!)
         }) {
             Text(LocalizedString("Submit", comment: "Button title for submitting the prescription activation code to Tidepool"))
                 .actionButtonStyle(shouldEnableButton ? .primary : .deactivated)
