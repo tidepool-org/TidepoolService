@@ -13,11 +13,22 @@ import LoopKitUI
 import HealthKit
 
 class PrescriptionReviewViewModel: ObservableObject {
+    // MARK: Navigation
     var didFinishStep: (() -> Void)
     var didCancel: (() -> Void)?
     
+    // MARK: State
+    @Published var shouldDisplayError = false
+    
+    // MARK: Prescription Information
     var prescription: MockPrescription?
     let prescriptionCodeLength = 6
+
+    // MARK: Date Picker Information
+    let validDateRange = Calendar.current.date(byAdding: .year, value: -130, to: Date())!...Date()
+    // Default to 35 years ago for birthdays, which is what the Apple Health app does
+    let pickerStartDate = Calendar.current.date(byAdding: .year, value: -35, to: Date())!
+    let placeholderFieldText = LocalizedString("Select birthdate", comment: "Prompt to select birthdate with picker")
     
     init(finishedStepHandler: @escaping () -> Void = { }) {
         self.didFinishStep = finishedStepHandler
@@ -25,19 +36,20 @@ class PrescriptionReviewViewModel: ObservableObject {
     
     func entryNavigation(success: Bool) {
         if success {
+            shouldDisplayError = false
             didFinishStep()
         } else {
-           // TODO: handle error
+           shouldDisplayError = true
         }
     }
     
-    func validatePrescriptionCode(prescriptionCode: String) -> Bool {
-        return prescriptionCode.count == prescriptionCodeLength
+    func validate(_ prescriptionCode: String, _ birthday: Date) -> Bool {
+        return prescriptionCode.count == prescriptionCodeLength && prescriptionCode.isAlphanumeric() && validDateRange.contains(birthday)
     }
     
-    func loadPrescriptionFromCode(prescriptionCode: String) {
-        guard validatePrescriptionCode(prescriptionCode: prescriptionCode) else {
-            // TODO: handle error
+    func loadPrescriptionFromCode(prescriptionCode: String, birthday: Date) {
+        guard validate(prescriptionCode, birthday) else {
+            self.entryNavigation(success: false)
             return
         }
 
@@ -51,5 +63,11 @@ class PrescriptionReviewViewModel: ObservableObject {
                 self.entryNavigation(success: true)
             }
         }
+    }
+}
+
+extension String {
+    fileprivate func isAlphanumeric() -> Bool {
+        return self.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) == nil && self != ""
     }
 }

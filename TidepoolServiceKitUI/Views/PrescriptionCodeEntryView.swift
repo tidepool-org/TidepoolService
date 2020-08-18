@@ -11,19 +11,21 @@ import LoopKitUI
 import LoopKit
 
 struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
-    
-    @State private var prescriptionCode: String = ""
     @ObservedObject var viewModel: PrescriptionReviewViewModel
+    @State private var prescriptionCode: String = ""
+    @State private var birthday: Date?
 
     var body: some View {
         List {
-            VStack(alignment: .leading, spacing: 25) {
+            VStack(alignment: .leading, spacing: 35) {
+                itemsNeededDescription
                 itemsNeededList
-                codeEntryRequest
+                codeEntrySection
+                birthdayPickerSection
             }
             .padding(.vertical)
             submitCodeButton
-            requestPrescriptionButton
+            /* requestPrescriptionButton */ // Slated for post-510K
             Spacer()
         }
         .keyboardAware()
@@ -53,34 +55,27 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             .foregroundColor(.secondary)
             .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
         }
-        
     }
     
     private var itemsNeededList: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 10) {
-                itemsNeededDescription
-                InstructionList(instructions: [
-                    LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
-                    LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
-                    ]
-                )
-                .foregroundColor(.secondary)
-            }
-        }
+        InstructionList(instructions: [
+            LocalizedString("Prescription activation code", comment: "Label text for the first needed prescription activation item"),
+            LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Label text for the second needed prescription activation item")
+            ]
+        )
+        .foregroundColor(.secondary)
     }
 
-    private var codeEntryRequest: some View {
+    private var codeEntrySection: some View {
         Section {
             VStack(alignment: .leading, spacing: 10) {
-                Text(LocalizedString("Enter your prescription code", comment: "Title for section to enter your prescription code"))
+                Text(LocalizedString("Enter your 6-digit prescription code", comment: "Title for section to enter prescription code"))
                 .font(.headline)
                 Text(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Text requesting entry of activation code"))
                 .foregroundColor(.secondary)
                 prescriptionCodeInputField
             }
         }
-        
     }
     
     private var prescriptionCodeInputField: some View {
@@ -97,25 +92,71 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
             .stroke(Color.gray, lineWidth: 1)
         )
     }
-
-    private var submitCodeButton: some View {
-        Button(action: {
-            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode)
-        }) {
-            Text(LocalizedString("Submit", comment: "Button title for submitting the prescription activation code to Tidepool"))
-                .actionButtonStyle(submitButtonStyle(enabled: prescriptionCode.count == self.viewModel.prescriptionCodeLength))
-                .disabled(prescriptionCode.count != viewModel.prescriptionCodeLength)
+    
+    private var birthdayPickerSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 15) {
+                Text(LocalizedString("Enter your birthdate", comment: "Title for section to select birthdate"))
+                .font(.headline)
+                Text(LocalizedString("In order for us to verify the prescription code, please enter the birthdate associated with your Tidepool account.", comment: "Text explaining need for birthdate"))
+                .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+                .foregroundColor(.secondary)
+                birthdayPicker
+                errorIfNeeded
+            }
+        }
+        
+    }
+    
+    private var birthdayPicker: some View {
+        let binding = Binding<Date>(
+            get: {
+                // Default to 35 years ago for birthdays, which is what the Apple Health app does
+                self.birthday ?? self.viewModel.pickerStartDate
+            },
+            set: {
+                self.birthday = $0
+            }
+        )
+        
+        return ExpandableDatePicker(
+            with: binding,
+            pickerRange: viewModel.validDateRange,
+            placeholderText: viewModel.placeholderFieldText
+        ).overlay(
+            RoundedRectangle(cornerRadius: 10)
+            .stroke(Color.gray, lineWidth: 1)
+        )
+    }
+    
+    private var errorIfNeeded: some View {
+        Group {
+            if viewModel.shouldDisplayError {
+                Text(LocalizedString("The activation code and/or birthdate entered are incorrect. Please update or contact Tidepool Support.", comment: "Prescription validation error message"))
+                .foregroundColor(Color.red)
+                .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
+            }
         }
     }
     
-    private func submitButtonStyle(enabled: Bool) -> ActionButton.ButtonType {
-        return enabled ? .primary : .secondary
+    private var shouldEnableButton: Bool {
+        return prescriptionCode.count == viewModel.prescriptionCodeLength && self.birthday != nil
     }
-        
+
+    private var submitCodeButton: some View {
+        Button(action: {
+            self.viewModel.loadPrescriptionFromCode(prescriptionCode: self.prescriptionCode, birthday: self.birthday!)
+        }) {
+            Text(LocalizedString("Submit", comment: "Button title for submitting the prescription activation code to Tidepool"))
+                .actionButtonStyle(shouldEnableButton ? .primary : .deactivated)
+        }
+        .disabled(!shouldEnableButton)
+    }
+
     private var requestPrescriptionButton: some View {
         Button(action: {
             // TODO: open contact prescriber window
-            print("TODO")
+            print("Post 510K")
         }) {
             Text(LocalizedString("Request activation code", comment:"Button title for requesting a prescription activation code from the prescriber"))
                 .actionButtonStyle(.secondary)

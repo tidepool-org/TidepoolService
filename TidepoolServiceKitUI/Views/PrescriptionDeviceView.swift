@@ -24,7 +24,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             }
             .padding(.vertical)
             approveDevicesButton
-            editDevicesButton
+            /* editDevicesButton */ // Slated for post-510K
             Spacer()
         }
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
@@ -50,8 +50,10 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true) // prevent text from being cut off
                 // TODO: get images and descriptions from pump manager
-                pumpStack
-                cgmStack
+                VStack(alignment: .trailing, spacing: 35) {
+                    pumpStack
+                    cgmStack
+                }
             }
         }
     }
@@ -111,7 +113,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
         Image("dexcom", bundle: Bundle(for: PrescriptionReviewUICoordinator.self))
         .resizable()
         .aspectRatio(contentMode: ContentMode.fit)
-        .frame(width: Self.imageWidth)
+        .frame(width: Self.imageWidth, height: 50)
     }
     
     private var disclaimer: some View {
@@ -147,7 +149,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     private var editDevicesButton: some View {
         Button(action: {
             // TODO: open window to edit the devices
-            print("TODO")
+            print("Post 510K")
         }) {
             Text(LocalizedString("Edit devices", comment: "Button title for editing the prescribed devices"))
                 .actionButtonStyle(.secondary)
