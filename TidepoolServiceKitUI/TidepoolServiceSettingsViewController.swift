@@ -28,6 +28,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
         self.insulinTintColor = insulinTintColor
 
         super.init(style: .grouped)
+        
+        title = "Tidepool Service"
     }
 
     required init?(coder: NSCoder) {
@@ -85,6 +87,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     // MARK: - Data Source
 
     private enum Section: Int, CaseIterable {
+        case startFlow
         case deleteService
     }
 
@@ -96,6 +99,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Section(rawValue: section)! {
+        case .startFlow:
+            return 1
         case .deleteService:
             return 1
         }
@@ -103,6 +108,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section)! {
+        case .startFlow:
+            return " " // Use an empty string for more dramatic spacing
         case .deleteService:
             return " " // Use an empty string for more dramatic spacing
         }
@@ -110,6 +117,11 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section)! {
+        case .startFlow:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
+            cell.textLabel?.text = LocalizedString("Start Acceptance Flow (under development)", comment: "Button title to start acceptance flow")
+            cell.textLabel?.textAlignment = .center
+            return cell
         case .deleteService:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
             cell.textLabel?.text = LocalizedString("Delete Service", comment: "Button title to delete a service")
@@ -123,6 +135,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Section(rawValue: indexPath.section)! {
+        case .startFlow:
+            startFlow()
         case .deleteService:
             confirmDeletion {
                 tableView.deselectRow(at: indexPath, animated: true)
