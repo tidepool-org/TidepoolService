@@ -29,7 +29,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
         super.init(style: .grouped)
         
-        title = "Tidepool Service"
+        title = NSLocalizedString("Tidepool Service", comment: "The title of the Tidepool Service settings screen")
     }
 
     required init?(coder: NSCoder) {
@@ -118,7 +118,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
         switch Section(rawValue: indexPath.section)! {
         case .startFlow:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
-            cell.textLabel?.text = LocalizedString("Start Acceptance Flow (under development)", comment: "Button title to start acceptance flow")
+            cell.textLabel?.text = "Start Acceptance Flow (under development)"
             cell.textLabel?.textAlignment = .center
             return cell
         case .deleteService:
@@ -136,6 +136,7 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
         switch Section(rawValue: indexPath.section)! {
         case .startFlow:
             startFlow()
+            tableView.deselectRow(at: indexPath, animated: true)
         case .deleteService:
             confirmDeletion {
                 tableView.deselectRow(at: indexPath, animated: true)
