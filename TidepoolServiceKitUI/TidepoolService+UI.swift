@@ -12,7 +12,10 @@ import LoopKitUI
 import TidepoolServiceKit
 
 extension TidepoolService: ServiceUI {
-
+    public static var image: UIImage? {
+        UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSettingsViewController.self), compatibleWith: nil)!
+    }
+        
     public static func setupViewController() -> (UIViewController & ServiceSetupNotifying & CompletionNotifying)? {
         return ServiceViewController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService()))
     }
