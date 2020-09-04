@@ -28,7 +28,7 @@ extension StoredGlucoseSample {
 
     private var datumOrigin: TOrigin {
         if !provenanceIdentifier.isEmpty && provenanceIdentifier != Bundle.main.bundleIdentifier {
-            return TOrigin(id: syncIdentifier, name: provenanceIdentifier, type: .application)
+            return TOrigin(id: syncIdentifier, name: provenanceIdentifier, type: .service)  // TODO: Use application once backend support is added
         }
         return TOrigin(id: syncIdentifier)
     }

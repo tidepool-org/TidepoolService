@@ -10,6 +10,6 @@ import TidepoolKit
 
 extension TOrigin {
     init(id: String) {
-        self.init(id: id, name: Bundle.main.bundleIdentifier, version: Bundle.main.semanticVersion, type: .application)
+        self.init(id: id, name: Bundle.main.bundleIdentifier, version: Bundle.main.semanticVersion, type: .service)  // TODO: Use application once backend support is added
     }
 }
