@@ -346,10 +346,12 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
             supportedInsulinModelSettings: supportedInsulinModelSettings,
-            pumpSupportedIncrements: pumpSupportedIncrements,
-            syncPumpSchedule: { _, _ in
-                // Since pump isn't set up, this syncing shouldn't do anything
-                assertionFailure()
+            pumpSupportedIncrements: { pumpSupportedIncrements },
+            syncPumpSchedule: {
+                { _, _ in
+                    // Since pump isn't set up, this syncing shouldn't do anything
+                    assertionFailure()
+                }
             },
             prescription: prescription,
             chartColors: chartColors
