@@ -344,7 +344,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
-            therapySettings: prescription.therapySettings,
+            therapySettings: { prescription.therapySettings },
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: { pumpSupportedIncrements },
             syncPumpSchedule: {
