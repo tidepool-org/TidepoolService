@@ -11,77 +11,35 @@ import SwiftUI
 import LoopKitUI
 import LoopKit
 
-enum PrescriptionReviewScreen {
+enum PrescriptionReviewScreen: CaseIterable {
     case enterCode
     case reviewDevices
     case prescriptionTherapySettingsOverview
+    case suspendThresholdInfo
+    case suspendThresholdEditor
     case correctionRangeInfo
     case correctionRangeEditor
     case correctionRangePreMealOverrideInfo
     case correctionRangePreMealOverrideEditor
     case correctionRangeWorkoutOverrideInfo
     case correctionRangeWorkoutOverrideEditor
-    case suspendThresholdInfo
-    case suspendThresholdEditor
+    case carbRatioInfo
+    case carbRatioEditor
     case basalRatesInfo
     case basalRatesEditor
     case deliveryLimitsInfo
     case deliveryLimitsEditor
     case insulinModelInfo
     case insulinModelEditor
-    case carbRatioInfo
-    case carbRatioEditor
     case insulinSensitivityInfo
     case insulinSensitivityEditor
     case therapySettingsRecap
     
     func next() -> PrescriptionReviewScreen? {
-        switch self {
-        case .enterCode:
-            return .reviewDevices
-        case .reviewDevices:
-            return .prescriptionTherapySettingsOverview
-        case .prescriptionTherapySettingsOverview:
-            return .suspendThresholdInfo
-        case .suspendThresholdInfo:
-            return .suspendThresholdEditor
-        case .suspendThresholdEditor:
-            return .correctionRangeInfo
-        case .correctionRangeInfo:
-            return .correctionRangeEditor
-        case .correctionRangeEditor:
-            return .correctionRangePreMealOverrideInfo
-        case .correctionRangePreMealOverrideInfo:
-            return .correctionRangePreMealOverrideEditor
-        case .correctionRangePreMealOverrideEditor:
-            return .correctionRangeWorkoutOverrideInfo
-        case .correctionRangeWorkoutOverrideInfo:
-            return .correctionRangeWorkoutOverrideEditor
-        case .correctionRangeWorkoutOverrideEditor:
-            return .basalRatesInfo
-        case .basalRatesInfo:
-            return .basalRatesEditor
-        case .basalRatesEditor:
-            return .deliveryLimitsInfo
-        case .deliveryLimitsInfo:
-            return .deliveryLimitsEditor
-        case .deliveryLimitsEditor:
-            return .insulinModelInfo
-        case .insulinModelInfo:
-            return .insulinModelEditor
-        case .insulinModelEditor:
-            return .carbRatioInfo
-        case .carbRatioInfo:
-            return .carbRatioEditor
-        case .carbRatioEditor:
-            return .insulinSensitivityInfo
-        case .insulinSensitivityInfo:
-            return .insulinSensitivityEditor
-        case .insulinSensitivityEditor:
-            return .therapySettingsRecap
-        case .therapySettingsRecap:
-            return nil
-        }
+        guard let thisIndex = Self.allCases.firstIndex(where: { $0 == self }) else { return nil }
+        let nextIndex = thisIndex + 1
+        guard nextIndex < Self.allCases.count else { return nil }
+        return Self.allCases[nextIndex]
     }
 }
 
