@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import LoopKitUI
 import LoopKit
+import HealthKit
 
 enum PrescriptionReviewScreen: CaseIterable {
     case enterCode
@@ -48,12 +49,14 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     weak var completionDelegate: CompletionDelegate?
     var onReviewFinished: ((TherapySettings) -> Void)?
     
+    private let preferredGlucoseUnit: HKUnit
     private let chartColors: ChartColorPalette
     private let carbTintColor: Color
     private let glucoseTintColor: Color
     private let guidanceColors: GuidanceColors
     private let insulinTintColor: Color
 
+    
     let prescriptionViewModel = PrescriptionReviewViewModel() // Used for retreving & keeping track of prescription
     private var therapySettingsViewModel: TherapySettingsViewModel? // Used for keeping track of & updating settings
     
@@ -61,7 +64,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return screenStack.last!
     }
 
-    init(chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) {
+    init(preferredGlucoseUnit: HKUnit, chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) {
+        self.preferredGlucoseUnit = preferredGlucoseUnit
         self.chartColors = chartColors
         self.carbTintColor = carbTintColor
         self.glucoseTintColor = glucoseTintColor
@@ -303,6 +307,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
+            preferredGlucoseUnit: preferredGlucoseUnit,
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: { pumpSupportedIncrements },
             syncPumpSchedule: {
