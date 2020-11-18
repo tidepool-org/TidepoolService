@@ -16,7 +16,9 @@ extension TidepoolService: ServiceUI {
     public static var image: UIImage? {
         UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSettingsViewController.self), compatibleWith: nil)!
     }
-        
+
+    public static var providesOnboarding: Bool { true }
+
     public static func setupViewController(currentTherapySettings: TherapySettings, preferredGlucoseUnit: HKUnit, chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) -> (UIViewController & ServiceSetupNotifying & CompletionNotifying)?
     {
         var navVC: ServiceViewController?
