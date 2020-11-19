@@ -1,9 +1,9 @@
 //
 //  AdverseEventReportViewModel.swift
-//  Loop
+//  TidepoolServiceKitUI
 //
 //  Created by Nathaniel Hamming on 2020-10-02.
-//  Copyright © 2020 LoopKit Authors. All rights reserved.
+//  Copyright © 2020 Tidepool Project. All rights reserved.
 //
 
 import UIKit
