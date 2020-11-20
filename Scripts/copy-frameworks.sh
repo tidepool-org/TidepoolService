@@ -7,6 +7,8 @@
 
 date
 
+\rm -rf ${TMPDIR}TemporaryItems
+
 CARTHAGE_BUILD_DIR="${SRCROOT}/Carthage/Build"
 if [ -n "${IPHONEOS_DEPLOYMENT_TARGET}" ]; then
     CARTHAGE_BUILD_DIR="${CARTHAGE_BUILD_DIR}/iOS"
