@@ -119,7 +119,7 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
     private var disclaimer: some View {
         Section {
             VStack(alignment: .leading) {
-                Text(LocalizedString("Note", comment: "Title for disclaimer section"))
+                Text(LocalizedString("Note:", comment: "Title for disclaimer section"))
                 .font(.headline)
                 VStack(alignment: .leading, spacing: 10) {
                     Text(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings", comment: "Text describing that Tidepool Loop doesn't automatically change settings"))
