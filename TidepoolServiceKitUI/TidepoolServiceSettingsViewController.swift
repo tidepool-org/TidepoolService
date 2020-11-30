@@ -7,20 +7,26 @@
 //
 
 import SwiftUI
+import LoopKit
 import LoopKitUI
 import TidepoolServiceKit
+import HealthKit
                                                                         /* Added to support prescription flow */
 final class TidepoolServiceSettingsViewController: UITableViewController, CompletionDelegate {
 
     private let service: TidepoolService
+    private let currentTherapySettings: TherapySettings
+    private let preferredGlucoseUnit: HKUnit
     private let chartColors: ChartColorPalette
     private let carbTintColor: Color
     private let glucoseTintColor: Color
     private let guidanceColors: GuidanceColors
     private let insulinTintColor: Color
 
-    init(service: TidepoolService, chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) {
+    init(service: TidepoolService, currentTherapySettings: TherapySettings, preferredGlucoseUnit: HKUnit, chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) {
         self.service = service
+        self.currentTherapySettings = currentTherapySettings
+        self.preferredGlucoseUnit = preferredGlucoseUnit
         self.chartColors = chartColors
         self.carbTintColor = carbTintColor
         self.glucoseTintColor = glucoseTintColor
@@ -41,7 +47,11 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
         tableView.register(TextButtonTableViewCell.self, forCellReuseIdentifier: TextButtonTableViewCell.className)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        if currentTherapySettings.isComplete {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        } else {
+            self.isModalInPresentation = true
+        }
     }
 
     @objc private func done() {
@@ -62,10 +72,11 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     }
     
     @objc private func startFlow() {
-        let setupViewController = PrescriptionReviewUICoordinator(chartColors: chartColors, carbTintColor: carbTintColor, glucoseTintColor: glucoseTintColor, guidanceColors: guidanceColors, insulinTintColor: insulinTintColor)
+        let setupViewController = PrescriptionReviewUICoordinator(preferredGlucoseUnit: preferredGlucoseUnit, chartColors: chartColors, carbTintColor: carbTintColor, glucoseTintColor: glucoseTintColor, guidanceColors: guidanceColors, insulinTintColor: insulinTintColor)
         setupViewController.completionDelegate = self
         setupViewController.onReviewFinished = { [weak service] (settings) in
             service?.saveSettings(settings: settings)
+            self.notifyComplete()
         }
         self.present(setupViewController, animated: true, completion: nil)
     }
@@ -93,7 +104,11 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.allCases.count
+        if currentTherapySettings.isComplete {
+            return Section.allCases.count
+        } else {
+            return Section.allCases.count - 1
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

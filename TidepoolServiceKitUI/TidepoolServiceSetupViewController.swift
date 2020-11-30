@@ -11,13 +11,17 @@ import SwiftUI
 import TidepoolKit
 import TidepoolKitUI
 import TidepoolServiceKit
+import HealthKit
 
 final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDelegate {
 
     private let service: TidepoolService
+    
+    private let completionHandler: () -> Void
 
-    init(service: TidepoolService) {
+    init(service: TidepoolService, completionHandler: @escaping () -> Void) {
         self.service = service
+        self.completionHandler = completionHandler
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -44,7 +48,7 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
     }
 
     @objc private func cancel() {
-        notifyComplete()
+        completionHandler()
     }
 
     func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {
@@ -57,23 +61,9 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
                 if let serviceViewController = self.navigationController as? ServiceViewController {
                     serviceViewController.notifyServiceCreated(self.service)
                 }
-                self.notifyComplete()
+                self.completionHandler()
                 completion(nil)
             }
-        }
-    }
-
-    private func notifyComplete() {
-        if let serviceViewController = navigationController as? ServiceViewController {
-            serviceViewController.notifyComplete()
-        }
-    }
-}
-
-extension TidepoolServiceSetupViewController: CompletionDelegate {
-    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
-        if let vc = object as? UIViewController, presentedViewController === vc {
-            dismiss(animated: true, completion: nil)
         }
     }
 }

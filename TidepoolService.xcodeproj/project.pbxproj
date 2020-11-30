@@ -61,6 +61,9 @@
 		A9DAAD6A22E7E81E00E76C9F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */; };
 		A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */; };
 		A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */; };
+		C19F49332562E150003632D7 /* AdverseEventReportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F49322562E150003632D7 /* AdverseEventReportButton.swift */; };
+		C19F493B2562E29A003632D7 /* AdverseEventReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F493A2562E29A003632D7 /* AdverseEventReportViewModel.swift */; };
+		C1F463E92567019800227710 /* AdverseEventReportViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F463E82567019800227710 /* AdverseEventReportViewModelTests.swift */; };
 		E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */; };
 		E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
@@ -174,6 +177,9 @@
 		A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
 		A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		C19F49322562E150003632D7 /* AdverseEventReportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportButton.swift; sourceTree = "<group>"; };
+		C19F493A2562E29A003632D7 /* AdverseEventReportViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdverseEventReportViewModel.swift; sourceTree = "<group>"; };
+		C1F463E82567019800227710 /* AdverseEventReportViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdverseEventReportViewModelTests.swift; sourceTree = "<group>"; };
 		E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
 		E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -358,6 +364,7 @@
 		A9DAAD2722E7988900E76C9F /* TidepoolServiceKitUITests */ = {
 			isa = PBXGroup;
 			children = (
+				C1F463E82567019800227710 /* AdverseEventReportViewModelTests.swift */,
 				A9DAAD2A22E7988900E76C9F /* Info.plist */,
 			);
 			path = TidepoolServiceKitUITests;
@@ -381,6 +388,7 @@
 		E93BA05C24A126E000C5D7E6 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				C19F493A2562E29A003632D7 /* AdverseEventReportViewModel.swift */,
 				E93BA05D24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift */,
 			);
 			path = "View Models";
@@ -408,6 +416,7 @@
 			children = (
 				E96AEB97249C2FF1003797B4 /* PrescriptionCodeEntryView.swift */,
 				E93BA05F24A15FA800C5D7E6 /* PrescriptionDeviceView.swift */,
+				C19F49322562E150003632D7 /* AdverseEventReportButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -569,6 +578,7 @@
 					};
 					A9DAAD2222E7988900E76C9F = {
 						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1220;
 					};
 				};
 			};
@@ -772,12 +782,14 @@
 			files = (
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
 				A94AE4F8235A909A005CA320 /* UIColor.swift in Sources */,
+				C19F493B2562E29A003632D7 /* AdverseEventReportViewModel.swift in Sources */,
 				E96AEB98249C2FF1003797B4 /* PrescriptionCodeEntryView.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				E93BA06024A15FA800C5D7E6 /* PrescriptionDeviceView.swift in Sources */,
 				E9692176249C1AE700D9BE3B /* PrescriptionReviewUICoordinator.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
+				C19F49332562E150003632D7 /* AdverseEventReportButton.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
 				E93BA05E24A14CBA00C5D7E6 /* PrescriptionReviewViewModel.swift in Sources */,
 				A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */,
@@ -789,6 +801,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1F463E92567019800227710 /* AdverseEventReportViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1294,6 +1307,7 @@
 		A9DAAD3022E7988900E76C9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TidepoolServiceKitUITests/Info.plist;
@@ -1304,6 +1318,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolServiceKitUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1311,6 +1327,7 @@
 		A9DAAD3122E7988900E76C9F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TidepoolServiceKitUITests/Info.plist;
@@ -1321,6 +1338,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolServiceKitUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
