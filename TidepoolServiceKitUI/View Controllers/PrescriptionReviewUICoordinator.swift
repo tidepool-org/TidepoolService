@@ -215,7 +215,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            
             let view = InsulinModelSelection(viewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
