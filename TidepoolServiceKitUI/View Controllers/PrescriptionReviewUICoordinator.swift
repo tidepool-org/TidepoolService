@@ -208,7 +208,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             let onExit: (() -> Void) = { [weak self] in
                 self?.stepFinished()
             }
-            let view = InsulinModelInformationView(onExit: onExit).environment(\.appName, Bundle.main.bundleDisplayName)
+            let view = InsulinModelInformationView(onExit: onExit)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -216,7 +216,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
             
-            let view = InsulinModelSelection(viewModel: therapySettingsViewModel!).environment(\.appName, Bundle.main.bundleDisplayName)
+            let view = InsulinModelSelection(viewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -267,7 +267,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     }
     
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
-        return DismissibleHostingController(rootView: rootView, carbTintColor: carbTintColor, glucoseTintColor: glucoseTintColor, guidanceColors: guidanceColors, insulinTintColor: insulinTintColor)
+        return DismissibleHostingController(rootView: rootView.environment(\.appName, Bundle.main.bundleDisplayName),
+                                            carbTintColor: carbTintColor,
+                                            glucoseTintColor: glucoseTintColor,
+                                            guidanceColors: guidanceColors,
+                                            insulinTintColor: insulinTintColor)
     }
     
     private func constructTherapySettingsViewModel() -> TherapySettingsViewModel? {
