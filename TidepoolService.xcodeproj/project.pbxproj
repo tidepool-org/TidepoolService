@@ -89,13 +89,6 @@
 			remoteGlobalIDString = A9DAAD1A22E7988900E76C9F;
 			remoteInfo = TidepoolServiceKitUI;
 		};
-		A9BF371A24180D88008D7F34 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9DAACD622E7978800E76C9F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A9BF371524180BE6008D7F34;
-			remoteInfo = Cartfile;
-		};
 		A9DAAD0922E7987800E76C9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9DAACD622E7978800E76C9F /* Project object */;
@@ -484,7 +477,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A9BF371B24180D88008D7F34 /* PBXTargetDependency */,
 			);
 			name = TidepoolServiceKit;
 			productName = TidepoolServiceKit;
@@ -817,11 +809,6 @@
 			isa = PBXTargetDependency;
 			target = A9DAAD1A22E7988900E76C9F /* TidepoolServiceKitUI */;
 			targetProxy = A94AE4EE235A8B19005CA320 /* PBXContainerItemProxy */;
-		};
-		A9BF371B24180D88008D7F34 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A9BF371524180BE6008D7F34 /* Cartfile */;
-			targetProxy = A9BF371A24180D88008D7F34 /* PBXContainerItemProxy */;
 		};
 		A9DAAD0A22E7987800E76C9F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
