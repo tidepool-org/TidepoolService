@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 import LoopKit
 
-struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
+struct PrescriptionCodeEntryView: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     @State private var prescriptionCode: String = ""
     @State private var birthday: Date?
@@ -30,12 +30,9 @@ struct PrescriptionCodeEntryView: View, HorizontalSizeClassOverride {
         }
         .keyboardAware()
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
-        .environment(\.horizontalSizeClass, horizontalOverride)
+        .insetGroupedListStyle()
         .navigationBarItems(trailing: cancelButton)
         .navigationBarTitle(Text(LocalizedString("Your Settings", comment: "Navigation view title")))
-        .onAppear() {
-            UITableView.appearance().separatorStyle = .none // Remove lines between sections
-        }
     }
 
     private var cancelButton: some View {

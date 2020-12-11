@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 import TidepoolServiceKit
 
-struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
+struct PrescriptionDeviceView: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
     var prescription: MockPrescription
     static let imageWidth: CGFloat = 48
@@ -28,11 +28,8 @@ struct PrescriptionDeviceView: View, HorizontalSizeClassOverride {
             Spacer()
         }
         .buttonStyle(BorderlessButtonStyle()) // Fix for button click highlighting the whole cell
-        .environment(\.horizontalSizeClass, horizontalOverride)
+        .insetGroupedListStyle()
         .navigationBarTitle(Text(LocalizedString("Review your settings", comment: "Navigation view title")))
-        .onAppear() {
-            UITableView.appearance().separatorStyle = .none // Remove lines between sections
-        }
     }
     
     private var prescribedDeviceInfo: some View {
