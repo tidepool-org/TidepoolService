@@ -22,7 +22,5 @@
 	<string>Tidepool Service</string>
 	<key>com.loopkit.Loop.ServiceIdentifier</key>
 	<string>TidepoolService</string>
-	<key>com.loopkit.Loop.Plugin.ProvidesOnboarding</key>
-	<true/>
 </dict>
 </plist>

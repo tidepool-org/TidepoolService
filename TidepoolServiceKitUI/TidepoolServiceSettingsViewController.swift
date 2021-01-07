@@ -6,32 +6,15 @@
 //  Copyright © 2019 Tidepool Project. All rights reserved.
 //
 
-import SwiftUI
-import LoopKit
 import LoopKitUI
 import TidepoolServiceKit
-import HealthKit
-                                                                        /* Added to support prescription flow */
-final class TidepoolServiceSettingsViewController: UITableViewController, CompletionDelegate {
+
+final class TidepoolServiceSettingsViewController: UITableViewController {
 
     private let service: TidepoolService
-    private let currentTherapySettings: TherapySettings
-    private let preferredGlucoseUnit: HKUnit
-    private let chartColors: ChartColorPalette
-    private let carbTintColor: Color
-    private let glucoseTintColor: Color
-    private let guidanceColors: GuidanceColors
-    private let insulinTintColor: Color
 
-    init(service: TidepoolService, currentTherapySettings: TherapySettings, preferredGlucoseUnit: HKUnit, chartColors: ChartColorPalette, carbTintColor: Color, glucoseTintColor: Color, guidanceColors: GuidanceColors, insulinTintColor: Color) {
+    init(service: TidepoolService) {
         self.service = service
-        self.currentTherapySettings = currentTherapySettings
-        self.preferredGlucoseUnit = preferredGlucoseUnit
-        self.chartColors = chartColors
-        self.carbTintColor = carbTintColor
-        self.glucoseTintColor = glucoseTintColor
-        self.guidanceColors = guidanceColors
-        self.insulinTintColor = insulinTintColor
 
         super.init(style: .grouped)
         
@@ -46,12 +29,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
         super.viewDidLoad()
 
         tableView.register(TextButtonTableViewCell.self, forCellReuseIdentifier: TextButtonTableViewCell.className)
-        
-        if currentTherapySettings.isComplete {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        } else {
-            self.isModalInPresentation = true
-        }
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
     }
 
     @objc private func done() {
@@ -62,30 +41,10 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     private func confirmDeletion(completion: (() -> Void)? = nil) {
         let alert = UIAlertController(serviceDeletionHandler: {
             self.service.completeDelete()
-            if let serviceViewController = self.navigationController as? ServiceViewController {
-                serviceViewController.notifyServiceDeleted(self.service)
-            }
             self.notifyComplete()
         })
 
         present(alert, animated: true, completion: completion)
-    }
-    
-    @objc private func startFlow() {
-        let setupViewController = PrescriptionReviewUICoordinator(preferredGlucoseUnit: preferredGlucoseUnit, chartColors: chartColors, carbTintColor: carbTintColor, glucoseTintColor: glucoseTintColor, guidanceColors: guidanceColors, insulinTintColor: insulinTintColor)
-        setupViewController.completionDelegate = self
-        setupViewController.onReviewFinished = { [weak service] (settings) in
-            service?.saveSettings(settings: settings)
-            self.notifyComplete()
-        }
-        self.present(setupViewController, animated: true, completion: nil)
-    }
-    
-    /* Added to support prescription flow */
-    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
-        if let vc = object as? UIViewController, presentedViewController === vc {
-            dismiss(animated: true, completion: nil)
-        }
     }
 
     private func notifyComplete() {
@@ -97,24 +56,17 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
     // MARK: - Data Source
 
     private enum Section: Int, CaseIterable {
-        case startFlow
         case deleteService
     }
 
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if currentTherapySettings.isComplete {
-            return Section.allCases.count
-        } else {
-            return Section.allCases.count - 1
-        }
+        return Section.allCases.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Section(rawValue: section)! {
-        case .startFlow:
-            return 1
         case .deleteService:
             return 1
         }
@@ -122,8 +74,6 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section)! {
-        case .startFlow:
-            return " " // Use an empty string for more dramatic spacing
         case .deleteService:
             return " " // Use an empty string for more dramatic spacing
         }
@@ -131,11 +81,6 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section)! {
-        case .startFlow:
-            let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
-            cell.textLabel?.text = "Start Acceptance Flow (under development)"
-            cell.textLabel?.textAlignment = .center
-            return cell
         case .deleteService:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
             cell.textLabel?.text = LocalizedString("Delete Service", comment: "Button title to delete a service")
@@ -149,9 +94,6 @@ final class TidepoolServiceSettingsViewController: UITableViewController, Comple
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Section(rawValue: indexPath.section)! {
-        case .startFlow:
-            startFlow()
-            tableView.deselectRow(at: indexPath, animated: true)
         case .deleteService:
             confirmDeletion {
                 tableView.deselectRow(at: indexPath, animated: true)

@@ -12,7 +12,6 @@ import TidepoolKit
 
 public enum TidepoolServiceError: Error {
     case configuration
-    case noPrescriptionDataAvailable
 }
 
 public protocol SessionStorage {
@@ -81,6 +80,12 @@ public final class TidepoolService: Service {
         return rawValue
     }
 
+    public let isOnboarded = true   // No distinction between created and onboarded
+
+    public func delete() {
+        completeDelete()
+    }
+
     public func completeCreate(withSession session: TSession, completion: @escaping (Error?) -> Void) {
         self.session = session
 
@@ -92,21 +97,15 @@ public final class TidepoolService: Service {
     public func completeUpdate() {
         serviceDelegate?.serviceDidUpdateState(self)
     }
-    
-    public func saveSettings(settings: TherapySettings) {
-        serviceDelegate?.serviceHasNewTherapySettings(settings)
-    }
 
     public func completeDelete() {
-        guard let session = session else {
-            return
+        if let session = session {
+            self.session = nil
+            DispatchQueue.global(qos: .background).async {
+                self.tapi.logout(session: session) { _ in }
+            }
         }
-
-        self.session = nil
-
-        DispatchQueue.global(qos: .background).async {
-            self.tapi.logout(session: session) { _ in }
-        }
+        serviceDelegate?.serviceWasDeleted(self)
     }
 
     private func getDataSet(completion: @escaping (Error?) -> Void) {
@@ -149,13 +148,6 @@ public final class TidepoolService: Service {
                 completion(nil)
             }
         }
-    }
-    
-    public func getPrescriptionData(completion: @escaping (Result<MockPrescription, Error>) -> Void) {
-        MockPrescriptionManager().getPrescriptionData { result in
-            completion(result)
-        }
-        // TODO: add in proper query to backend
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
