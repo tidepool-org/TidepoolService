@@ -195,7 +195,7 @@ extension TidepoolService: RemoteDataService {
 
     public var doseDataLimit: Int? { return 1000 }
 
-    public var dosingDecisionDataLimit: Int? { return 1000 }
+    public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
     public var glucoseDataLimit: Int? { return 1000 }
 
@@ -205,7 +205,7 @@ extension TidepoolService: RemoteDataService {
 
     public var pumpEventDataLimit: Int? { return 1000 }
 
-    public var settingsDataLimit: Int? { return 1000 }
+    public var settingsDataLimit: Int? { return 400 }  // Each can be up to 2.5K bytes of serialized JSON, target ~1M or less
 
     private func createData(_ data: [TDatum], completion: @escaping (Result<Bool, Error>) -> Void) {
         if let error = error {
