@@ -105,7 +105,7 @@ public final class TidepoolService: Service {
                 self.tapi.logout(session: session) { _ in }
             }
         }
-        serviceDelegate?.serviceWasDeleted(self)
+        serviceDelegate?.serviceWantsDeletion(self)
     }
 
     private func getDataSet(completion: @escaping (Error?) -> Void) {

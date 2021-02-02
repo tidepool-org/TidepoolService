@@ -54,7 +54,7 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
             }
             DispatchQueue.main.async {
                 if let serviceViewController = self.navigationController as? ServiceViewController {
-                    serviceViewController.notifyServiceCreatedAndSetup(self.service)
+                    serviceViewController.notifyServiceCreatedAndOnboarded(self.service)
                 }
                 self.notifyComplete()
                 completion(nil)

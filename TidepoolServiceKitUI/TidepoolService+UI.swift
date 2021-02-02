@@ -16,7 +16,7 @@ extension TidepoolService: ServiceUI {
         UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSettingsViewController.self), compatibleWith: nil)!
     }
 
-    public static func setupViewController(colorPalette: LoopUIColorPalette) -> UIResult<UIViewController & ServiceCreateNotifying & ServiceOnboardNotifying & CompletionNotifying, ServiceUI, Error> {
+    public static func setupViewController(colorPalette: LoopUIColorPalette) -> SetupUIResult<UIViewController & ServiceCreateNotifying & ServiceOnboardNotifying & CompletionNotifying, ServiceUI> {
         return .userInteractionRequired(ServiceViewController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService())))
     }
 
