@@ -82,10 +82,6 @@ public final class TidepoolService: Service {
 
     public let isOnboarded = true   // No distinction between created and onboarded
 
-    public func delete() {
-        completeDelete()
-    }
-
     public func completeCreate(withSession session: TSession, completion: @escaping (Error?) -> Void) {
         self.session = session
 
