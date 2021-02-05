@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A901F92325CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */; };
+		A901F92B25CCBDE4006EA7E2 /* AdverseEventReportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */; };
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
 		A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
@@ -102,6 +104,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportViewModel.swift; sourceTree = "<group>"; };
+		A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportButton.swift; sourceTree = "<group>"; };
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
 		A9309CA2243563CD00E02268 /* TOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOrigin.swift; sourceTree = "<group>"; };
@@ -216,6 +220,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A901F92025CCBDB6006EA7E2 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		A901F92125CCBDBD006EA7E2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		A913B37B24200C86000805C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,8 +332,10 @@
 				A9DAAD3822E7DEE000E76C9F /* TidepoolService+UI.swift */,
 				A9DAAD3A22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift */,
 				A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */,
-				A9DAAD4F22E7DFD400E76C9F /* Localizable.strings */,
 				E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */,
+				A9DAAD4F22E7DFD400E76C9F /* Localizable.strings */,
+				A901F92025CCBDB6006EA7E2 /* View Models */,
+				A901F92125CCBDBD006EA7E2 /* Views */,
 			);
 			path = TidepoolServiceKitUI;
 			sourceTree = "<group>";
@@ -696,8 +718,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A901F92325CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift in Sources */,
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
+				A901F92B25CCBDE4006EA7E2 /* AdverseEventReportButton.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
