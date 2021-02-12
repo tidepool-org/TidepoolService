@@ -12,9 +12,8 @@ import LoopKit
 import LoopKitUI
 
 public class AdverseEventReportViewModel {
-    
     let supportInfoProvider: SupportInfoProvider
-    
+
     let formURLString = "https://support.tidepool.org/hc/en-us/requests/new?ticket_form_id=360000551951"
 
     let subjectID = "request_subject"
@@ -53,7 +52,7 @@ public class AdverseEventReportViewModel {
 
     var cgmDetailsValue: String {
         guard let cgmDevice = supportInfoProvider.cgmDevice else { return "" }
-        
+
         return "CGM Device Details: " + cgmDevice.details
     }
 
@@ -68,7 +67,7 @@ public class AdverseEventReportViewModel {
         urlString += "&\(cgmDetailsID)=\(cgmDetailsValue)"
 
         guard let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: encodedURLString) else
+              let url = URL(string: encodedURLString) else
         {
             return nil
         }
@@ -85,7 +84,6 @@ public class AdverseEventReportViewModel {
 // based on https://stackoverflow.com/questions/26028918/how-to-determine-the-current-iphone-device-model
 
 public extension UIDevice {
-
     static let modelIdentifier: String = {
         var systemInfo = utsname()
         uname(&systemInfo)

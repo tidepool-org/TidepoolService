@@ -12,7 +12,6 @@ import TidepoolServiceKit
 import TidepoolServiceKitUI
 
 class TidepoolServiceKitPlugin: NSObject, ServiceUIPlugin {
-
     private let log = OSLog(category: "TidepoolServiceKitPlugin")
 
     public var serviceType: ServiceUI.Type? {
@@ -21,7 +20,6 @@ class TidepoolServiceKitPlugin: NSObject, ServiceUIPlugin {
 
     override init() {
         super.init()
-        log.default("TidepoolServiceKitPlugin Instantiated")
+        log.default("Instantiated")
     }
-
 }

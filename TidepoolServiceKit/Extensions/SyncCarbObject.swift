@@ -66,7 +66,7 @@ fileprivate extension SyncCarbObject {
         // we can generate one based upon the HealthKit provenance identifier (the unique source identifier of
         // the carb, namely the bundle identifier) plus the HealthKit sync identifier.
         //
-        // However, while all carbs created within Loop are guaranteed to have a HealthKit sync identifer, this
+        // However, while all carbs created within Loop are guaranteed to have a HealthKit sync identifier, this
         // is not true for carbs created outside of Loop. In this case, we fall back to using the HealthKit UUID.
         // This works because any HealthKit objects without a sync identifier CANNOT be updated, by definition,
         // (only created and deleted) and the UUID is constant for this use case.
