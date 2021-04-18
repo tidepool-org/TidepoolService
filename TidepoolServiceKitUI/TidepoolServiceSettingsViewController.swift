@@ -48,8 +48,8 @@ final class TidepoolServiceSettingsViewController: UITableViewController {
     }
 
     private func notifyComplete() {
-        if let serviceViewController = navigationController as? ServiceViewController {
-            serviceViewController.notifyComplete()
+        if let serviceNavigationController = navigationController as? ServiceNavigationController {
+            serviceNavigationController.notifyComplete()
         }
     }
 

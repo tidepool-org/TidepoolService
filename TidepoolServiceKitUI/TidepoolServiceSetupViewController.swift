@@ -11,7 +11,7 @@ import TidepoolKit
 import TidepoolKitUI
 import TidepoolServiceKit
 
-final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDelegate {
+final class TidepoolServiceSetupViewController: UIViewController {
 
     private let service: TidepoolService
 
@@ -28,12 +28,10 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = service.localizedTitle
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationController?.setNavigationBarHidden(true, animated: false)
 
         var loginSignupViewController = service.tapi.loginSignupViewController()
-        loginSignupViewController.delegate = self
+        loginSignupViewController.loginSignupDelegate = self
         loginSignupViewController.view.frame = CGRect(origin: CGPoint(), size: view.frame.size)
 
         addChild(loginSignupViewController)
@@ -41,11 +39,9 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
 
         loginSignupViewController.didMove(toParent: self)
     }
+}
 
-    @objc private func cancel() {
-        notifyComplete()
-    }
-
+extension TidepoolServiceSetupViewController: TLoginSignupDelegate {
     func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {
         service.completeCreate(withSession: session) { error in
             guard error == nil else {
@@ -53,18 +49,20 @@ final class TidepoolServiceSetupViewController: UIViewController, TLoginSignupDe
                 return
             }
             DispatchQueue.main.async {
-                if let serviceViewController = self.navigationController as? ServiceViewController {
-                    serviceViewController.notifyServiceCreatedAndOnboarded(self.service)
+                if let serviceNavigationController = self.navigationController as? ServiceNavigationController {
+                    serviceNavigationController.notifyServiceCreatedAndOnboarded(self.service)
+                    serviceNavigationController.notifyComplete()
                 }
-                self.notifyComplete()
                 completion(nil)
             }
         }
     }
 
-    private func notifyComplete() {
-        if let serviceViewController = navigationController as? ServiceViewController {
-            serviceViewController.notifyComplete()
+    func loginSignupCancelled() {
+        DispatchQueue.main.async {
+            if let serviceNavigationController = self.navigationController as? ServiceNavigationController {
+                serviceNavigationController.notifyComplete()
+            }
         }
     }
 }
