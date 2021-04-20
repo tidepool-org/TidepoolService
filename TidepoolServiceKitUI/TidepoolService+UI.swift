@@ -16,12 +16,12 @@ extension TidepoolService: ServiceUI {
         UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSettingsViewController.self), compatibleWith: nil)!
     }
 
-    public static func setupViewController(colorPalette: LoopUIColorPalette) -> SetupUIResult<UIViewController & ServiceCreateNotifying & ServiceOnboardNotifying & CompletionNotifying, ServiceUI> {
-        return .userInteractionRequired(ServiceViewController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService())))
+    public static func setupViewController(colorPalette: LoopUIColorPalette) -> SetupUIResult<ServiceViewController, ServiceUI> {
+        return .userInteractionRequired(ServiceNavigationController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService())))
     }
 
-    public func settingsViewController(colorPalette: LoopUIColorPalette) -> (UIViewController & ServiceOnboardNotifying & CompletionNotifying) {
-        return ServiceViewController(rootViewController: TidepoolServiceSettingsViewController(service: self))
+    public func settingsViewController(colorPalette: LoopUIColorPalette) -> ServiceViewController {
+        return ServiceNavigationController(rootViewController: TidepoolServiceSettingsViewController(service: self))
     }
 }
 
