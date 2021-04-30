@@ -19,7 +19,7 @@ public protocol SessionStorage {
     func getSession(for service: String) throws -> TSession?
 }
 
-public final class TidepoolService: Service {
+public final class TidepoolService: Service, TAPIObserver {
 
     public static let serviceIdentifier = "TidepoolService"
 
@@ -35,19 +35,6 @@ public final class TidepoolService: Service {
 
     private let id: String
 
-    private var session: TSession? {
-        didSet {
-            if session == nil {
-                self.dataSetId = nil
-            }
-            do {
-                try sessionStorage?.setSession(session, for: sessionService)
-            } catch let error {
-                self.error = error
-            }
-        }
-    }
-
     private var dataSetId: String? {
         didSet {
             completeUpdate()
@@ -58,6 +45,11 @@ public final class TidepoolService: Service {
 
     public init() {
         self.id = UUID().uuidString
+        tapi.addObserver(self)
+    }
+
+    deinit {
+        tapi.removeObserver(self)
     }
 
     public init?(rawState: RawStateValue) {
@@ -67,10 +59,11 @@ public final class TidepoolService: Service {
         do {
             self.id = id
             self.dataSetId = rawState["dataSetId"] as? String
-            self.session = try sessionStorage?.getSession(for: sessionService)
+            tapi.session = try sessionStorage?.getSession(for: sessionService)
         } catch let error {
             self.error = error
         }
+        tapi.addObserver(self)
     }
 
     public var rawState: RawStateValue {
@@ -82,9 +75,18 @@ public final class TidepoolService: Service {
 
     public let isOnboarded = true   // No distinction between created and onboarded
 
-    public func completeCreate(withSession session: TSession, completion: @escaping (Error?) -> Void) {
-        self.session = session
+    public func apiDidUpdateSession(_ session: TSession?) {
+        if session == nil {
+            self.dataSetId = nil
+        }
+        do {
+            try sessionStorage?.setSession(session, for: sessionService)
+        } catch let error {
+            self.error = error
+        }
+    }
 
+    public func completeCreate(completion: @escaping (Error?) -> Void) {
         DispatchQueue.global(qos: .background).async {
             self.getDataSet(completion: completion)
         }
@@ -95,21 +97,18 @@ public final class TidepoolService: Service {
     }
 
     public func completeDelete() {
-        if let session = session {
-            self.session = nil
-            DispatchQueue.global(qos: .background).async {
-                self.tapi.logout(session: session) { _ in }
-            }
+        DispatchQueue.global(qos: .background).async {
+            self.tapi.logout() { _ in }
         }
         serviceDelegate?.serviceWantsDeletion(self)
     }
 
     private func getDataSet(completion: @escaping (Error?) -> Void) {
-        guard let session = session, let clientName = Bundle.main.bundleIdentifier else {
+        guard let clientName = Bundle.main.bundleIdentifier else {
             completion(TidepoolServiceError.configuration)
             return
         }
-        tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName), session: session) { result in
+        tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName)) { result in
             switch result {
             case .failure(let error):
                 completion(error)
@@ -128,14 +127,14 @@ public final class TidepoolService: Service {
     }
 
     private func createDataSet(completion: @escaping (Error?) -> Void) {
-        guard let session = session, let clientName = Bundle.main.bundleIdentifier, let clientVersion = Bundle.main.semanticVersion else {
+        guard let clientName = Bundle.main.bundleIdentifier, let clientVersion = Bundle.main.semanticVersion else {
             completion(TidepoolServiceError.configuration)
             return
         }
         let dataSet = TDataSet(dataSetType: .continuous,
                                client: TDataSet.Client(name: clientName, version: clientVersion),
                                deduplicator: TDataSet.Deduplicator(name: .dataSetDeleteOrigin))
-        tapi.createDataSet(dataSet, session: session) { result in
+        tapi.createDataSet(dataSet) { result in
             switch result {
             case .failure(let error):
                 completion(error)
@@ -200,12 +199,12 @@ extension TidepoolService: RemoteDataService {
             completion(.failure(error))
             return
         }
-        guard let session = session, let dataSetId = dataSetId else {
+        guard let dataSetId = dataSetId else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
 
-        tapi.createData(data, dataSetId: dataSetId, session: session) { error in
+        tapi.createData(data, dataSetId: dataSetId) { error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -219,12 +218,12 @@ extension TidepoolService: RemoteDataService {
             completion(.failure(error))
             return
         }
-        guard let session = session, let dataSetId = dataSetId else {
+        guard let dataSetId = dataSetId else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
 
-        tapi.deleteData(withSelectors: selectors, dataSetId: dataSetId, session: session) { error in
+        tapi.deleteData(withSelectors: selectors, dataSetId: dataSetId) { error in
             if let error = error {
                 completion(.failure(error))
                 return

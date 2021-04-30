@@ -42,8 +42,8 @@ final class TidepoolServiceSetupViewController: UIViewController {
 }
 
 extension TidepoolServiceSetupViewController: TLoginSignupDelegate {
-    func loginSignup(_ loginSignup: TLoginSignup, didCreateSession session: TSession, completion: @escaping (Error?) -> Void) {
-        service.completeCreate(withSession: session) { error in
+    func loginSignupDidComplete(completion: @escaping (Error?) -> Void) {
+        service.completeCreate { error in
             guard error == nil else {
                 completion(error)
                 return
