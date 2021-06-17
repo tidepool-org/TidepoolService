@@ -23,18 +23,11 @@ extension SyncCarbObject {
     private var datumName: String? { foodType }
 
     private var datumNutrition: TFoodDatum.Nutrition {
-        return TFoodDatum.Nutrition(carbohydrate: datumCarbohydrate, estimatedAbsorptionDuration: datumEstimatedAbsorptionDuration)
+        return TFoodDatum.Nutrition(carbohydrate: datumCarbohydrate, estimatedAbsorptionDuration: absorptionTime)
     }
 
     private var datumCarbohydrate: TFoodDatum.Nutrition.Carbohydrate {
         return TFoodDatum.Nutrition.Carbohydrate(net: grams)
-    }
-
-    private var datumEstimatedAbsorptionDuration: Int? {
-        guard let absorptionTime = absorptionTime else {
-            return nil
-        }
-        return Int(absorptionTime)
     }
 
     private var datumOrigin: TOrigin? {
