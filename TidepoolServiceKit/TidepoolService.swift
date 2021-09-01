@@ -42,6 +42,7 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private let log = OSLog(category: "TidepoolService")
+    private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
     public init() {
         self.id = UUID().uuidString
@@ -146,6 +147,24 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
+}
+
+extension TidepoolService: TLogging {
+    public func debug(_ message: String, function: StaticString, file: StaticString, line: UInt) {
+        tidepoolKitLog.debug("%{public}@ %{public}@", message, location(function: function, file: file, line: line))
+    }
+
+    public func info(_ message: String, function: StaticString, file: StaticString, line: UInt) {
+        tidepoolKitLog.info("%{public}@ %{public}@", message, location(function: function, file: file, line: line))
+    }
+
+    public func error(_ message: String, function: StaticString, file: StaticString, line: UInt) {
+        tidepoolKitLog.error("%{public}@ %{public}@", message, location(function: function, file: file, line: line))
+    }
+
+    private func location(function: StaticString, file: StaticString, line: UInt) -> String {
+        return "[\(URL(fileURLWithPath: file.description).lastPathComponent):\(line):\(function)]"
+    }
 }
 
 extension TidepoolService: RemoteDataService {
