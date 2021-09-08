@@ -9,8 +9,13 @@
 import TidepoolKit
 
 extension TDatum {
-    func adorn(withOrigin origin: TOrigin?) -> TDatum {
-        self.origin = origin
+    func adornWith(annotations: [TDictionary]? = nil, origin: TOrigin? = nil) -> TDatum {
+        if let annotations = annotations {
+            self.annotations = annotations
+        }
+        if let origin = origin {
+            self.origin = origin
+        }
         return self
     }
 }

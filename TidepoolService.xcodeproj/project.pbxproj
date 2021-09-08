@@ -36,6 +36,7 @@
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
+		A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */; };
 		A97651752421AA10002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A97651762421AA11002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97A60FA243818C900AD69A5 /* TDatum.swift */; };
@@ -116,6 +117,7 @@
 		A94AE4E7235A89B5005CA320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceKitPlugin.swift; sourceTree = "<group>"; };
 		A94AE4F4235A8BAC005CA320 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSampleTests.swift; sourceTree = "<group>"; };
 		A97A60FA243818C900AD69A5 /* TDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDatum.swift; sourceTree = "<group>"; };
 		A99222FA235A879600C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A99222FB235A87B100C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -267,6 +269,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A9672B5626E82E6E0025B0CD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A9DAACD522E7978800E76C9F = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +327,7 @@
 		A9DAAD0B22E7987800E76C9F /* TidepoolServiceKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				A9672B5626E82E6E0025B0CD /* Extensions */,
 				A9DAAD0E22E7987800E76C9F /* Info.plist */,
 			);
 			path = TidepoolServiceKitTests;
@@ -711,6 +722,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

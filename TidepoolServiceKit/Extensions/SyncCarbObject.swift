@@ -15,7 +15,7 @@ extension SyncCarbObject {
         guard let origin = datumOrigin else {
             return nil
         }
-        return TFoodDatum(time: datumTime, name: datumName, nutrition: datumNutrition).adorn(withOrigin: origin)
+        return TFoodDatum(time: datumTime, name: datumName, nutrition: datumNutrition).adornWith(origin: origin)
     }
 
     private var datumTime: Date { startDate }
@@ -34,8 +34,8 @@ extension SyncCarbObject {
         guard let resolvedSyncIdentifier = resolvedSyncIdentifier else {
             return nil
         }
-        if !createdByCurrentApp {
-            return TOrigin(id: resolvedSyncIdentifier, name: "com.apple.HealthKit", type: .service)  // TODO: Use application once backend support is added
+        if let provenanceIdentifier = provenanceIdentifier, !provenanceIdentifier.isEmpty, provenanceIdentifier != Bundle.main.bundleIdentifier {
+            return TOrigin(id: resolvedSyncIdentifier, name: provenanceIdentifier, type: .application)
         }
         return TOrigin(id: resolvedSyncIdentifier)
     }
@@ -71,7 +71,7 @@ fileprivate extension SyncCarbObject {
             }
         } else {
 
-            // DEPRECATED: Backwards compatibility
+            // DEPRECATED: Backwards compatibility (DIY)
             // For previously existing carbs created outside of Loop we do not have a provenance identifier and
             // we cannot rely on the sync identifier (since it is scoped by the provenance identifier). Therefore,
             // just fallback to use the UUID.
