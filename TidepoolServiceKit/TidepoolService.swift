@@ -233,6 +233,26 @@ extension TidepoolService: RemoteDataService {
     }
 }
 
+extension TidepoolService: VersionCheckService {
+    public func checkVersion(currentVersion: String, completion: @escaping (Result<VersionUpdate, Error>) -> Void) {
+        tapi.getInfo(environment: nil) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let info):
+                completion(.success(LoopVersionInfo(info).needsVersionUpdate(currentVersion: currentVersion)))
+            }
+        }
+    }
+}
+
+extension LoopVersionInfo {
+    init(_ info: TInfo) {
+        self.init(minimumSupported: info.versions?.loop?.minimumSupported,
+                  criticalUpdateNeeded: info.versions?.loop?.criticalUpdateNeeded)
+    }
+}
+
 extension KeychainManager: SessionStorage {
     public func setSession(_ session: TSession?, for service: String) throws {
         try deleteGenericPassword(forService: service)
