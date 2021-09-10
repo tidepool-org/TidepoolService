@@ -240,7 +240,7 @@ extension TidepoolService: VersionCheckService {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let info):
-                completion(.success(LoopVersionInfo(info).needsVersionUpdate(currentVersion: currentVersion)))
+                completion(.success(LoopVersionInfo(info).getVersionUpdateNeeded(currentVersion: currentVersion)))
             }
         }
     }
