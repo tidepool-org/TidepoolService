@@ -234,8 +234,9 @@ extension TidepoolService: RemoteDataService {
 }
 
 extension TidepoolService: VersionCheckService {
-    public func checkVersion(currentVersion: String, completion: @escaping (Result<VersionUpdate, Error>) -> Void) {
-        tapi.getInfo(environment: nil) { result in
+    
+    public func checkVersion(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate, Error>) -> Void) {
+        tapi.getInfo() { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
