@@ -12,6 +12,7 @@ import TidepoolKit
 
 public enum TidepoolServiceError: Error {
     case configuration
+    case versionMissing
 }
 
 public protocol SessionStorage {
@@ -241,16 +242,14 @@ extension TidepoolService: VersionCheckService {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let info):
-                completion(.success(LoopVersionInfo(info).getVersionUpdateNeeded(currentVersion: currentVersion)))
+                self.log.debug("checkVersion info = %{public}@ for %{public}@", info.versions.debugDescription, bundleIdentifier)
+                if let versionInfo = LoopVersionInfo(info) {
+                    completion(.success(versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion)))
+                } else {
+                    completion(.failure(TidepoolServiceError.versionMissing))
+                }
             }
         }
-    }
-}
-
-extension LoopVersionInfo {
-    init(_ info: TInfo) {
-        self.init(minimumSupported: info.versions?.loop?.minimumSupported,
-                  criticalUpdateNeeded: info.versions?.loop?.criticalUpdateNeeded)
     }
 }
 
@@ -267,5 +266,14 @@ extension KeychainManager: SessionStorage {
     public func getSession(for service: String) throws -> TSession? {
         let sessionData = try getGenericPasswordForServiceAsData(service)
         return try JSONDecoder.tidepool.decode(TSession.self, from: sessionData)
+    }
+}
+
+extension TidepoolServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .configuration: return NSLocalizedString("Configuration Error", comment: "Error string for configuration error")
+        case .versionMissing: return NSLocalizedString("Version response missing", comment: "Error string for version missing error")
+        }
     }
 }
