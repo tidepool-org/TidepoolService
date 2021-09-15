@@ -23,7 +23,7 @@
 /* Begin PBXBuildFile section */
 		1D70C40326EFF2B700C62570 /* VersionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40226EFF2B700C62570 /* VersionInfo.swift */; };
 		1D70C40526EFF33400C62570 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40426EFF33400C62570 /* SemanticVersion.swift */; };
-		1D70C40726EFF8E000C62570 /* LoopVersionInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40626EFF8E000C62570 /* LoopVersionInfoTests.swift */; };
+		1D70C40726EFF8E000C62570 /* VersionInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */; };
 		1D70C40926EFF8F400C62570 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */; };
 		1D70C40F26F1744A00C62570 /* TidepoolServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */; };
 		1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C41326F28CC900C62570 /* URLProtocolMock.swift */; };
@@ -112,7 +112,7 @@
 /* Begin PBXFileReference section */
 		1D70C40226EFF2B700C62570 /* VersionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionInfo.swift; sourceTree = "<group>"; };
 		1D70C40426EFF33400C62570 /* SemanticVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticVersion.swift; sourceTree = "<group>"; };
-		1D70C40626EFF8E000C62570 /* LoopVersionInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopVersionInfoTests.swift; sourceTree = "<group>"; };
+		1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionInfoTests.swift; sourceTree = "<group>"; };
 		1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTests.swift; sourceTree = "<group>"; };
 		1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceTests.swift; sourceTree = "<group>"; };
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
@@ -332,7 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				A9DAAD0E22E7987800E76C9F /* Info.plist */,
-				1D70C40626EFF8E000C62570 /* LoopVersionInfoTests.swift */,
+				1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */,
 				1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */,
 				1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */,
 				1D70C41326F28CC900C62570 /* URLProtocolMock.swift */,
@@ -733,7 +733,7 @@
 			files = (
 				1D70C40926EFF8F400C62570 /* SemanticVersionTests.swift in Sources */,
 				1D70C40F26F1744A00C62570 /* TidepoolServiceTests.swift in Sources */,
-				1D70C40726EFF8E000C62570 /* LoopVersionInfoTests.swift in Sources */,
+				1D70C40726EFF8E000C62570 /* VersionInfoTests.swift in Sources */,
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

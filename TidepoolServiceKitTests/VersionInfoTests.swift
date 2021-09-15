@@ -1,6 +1,6 @@
 //
-//  LoopVersionInfoTests.swift
-//  LoopKitTests
+//  VersionInfoTests.swift
+//  TidepoolServiceKitTests
 //
 //  Created by Rick Pasetto on 9/10/21.
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
@@ -10,7 +10,7 @@ import XCTest
 import LoopKit
 @testable import TidepoolServiceKit
 
-class LoopVersionInfoTests: XCTestCase {
+class VersionInfoTests: XCTestCase {
 
     let info = VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"])!
 
