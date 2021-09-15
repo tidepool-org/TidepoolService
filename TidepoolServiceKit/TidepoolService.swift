@@ -250,18 +250,15 @@ extension TidepoolService: VersionCheckService {
         tapi.getInfo() { [weak self] result in
             switch result {
             case .failure(let error):
-                switch error {
-                default:
-                    // If an error occurs, respond with the last-known version info, otherwise, reply with an error
-                    if let versionInfo = self?.lastVersionInfo {
-                        self?.log.error("checkVersion error: %{public}@ Returning %{public}@",
-                                        error.localizedDescription,
-                                        versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion).localizedDescription)
-                        completion(.success(versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion)))
-                    } else {
-                        self?.log.error("checkVersion error: %{public}@", error.localizedDescription)
-                        completion(.failure(error))
-                    }
+                // If an error occurs, respond with the last-known version info, otherwise, reply with an error
+                if let versionInfo = self?.lastVersionInfo {
+                    self?.log.error("checkVersion error: %{public}@ Returning %{public}@",
+                                    error.localizedDescription,
+                                    versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion).localizedDescription)
+                    completion(.success(versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion)))
+                } else {
+                    self?.log.error("checkVersion error: %{public}@", error.localizedDescription)
+                    completion(.failure(error))
                 }
             case .success(let info):
                 self?.log.debug("checkVersion info = %{public}@ for %{public}@", info.versions.debugDescription, bundleIdentifier)
