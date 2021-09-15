@@ -12,6 +12,7 @@ import TidepoolKit
 
 public enum TidepoolServiceError: Error {
     case configuration
+    case versionMissing
 }
 
 public protocol SessionStorage {
@@ -29,7 +30,7 @@ public final class TidepoolService: Service, TAPIObserver {
 
     public lazy var sessionStorage: SessionStorage? = KeychainManager()
 
-    public let tapi = TAPI()
+    public let tapi: TAPI
 
     public private (set) var error: Error?
 
@@ -41,10 +42,13 @@ public final class TidepoolService: Service, TAPIObserver {
         }
     }
 
+    private var lastVersionInfo: VersionInfo?
+    
     private let log = OSLog(category: "TidepoolService")
 
-    public init() {
+    public init(automaticallyFetchEnvironments: Bool = true) {
         self.id = UUID().uuidString
+        tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
         tapi.addObserver(self)
     }
 
@@ -53,12 +57,14 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     public init?(rawState: RawStateValue) {
+        tapi = TAPI()
         guard let id = rawState["id"] as? String else {
             return nil
         }
         do {
             self.id = id
             self.dataSetId = rawState["dataSetId"] as? String
+            self.lastVersionInfo = (rawState["lastVersionInfo"] as? String).flatMap { VersionInfo(from: $0) }
             tapi.session = try sessionStorage?.getSession(for: sessionService)
         } catch let error {
             self.error = error
@@ -70,6 +76,7 @@ public final class TidepoolService: Service, TAPIObserver {
         var rawValue: RawStateValue = [:]
         rawValue["id"] = id
         rawValue["dataSetId"] = dataSetId
+        rawValue["lastVersionInfo"] = lastVersionInfo?.toJSON()
         return rawValue
     }
 
@@ -233,6 +240,36 @@ extension TidepoolService: RemoteDataService {
     }
 }
 
+extension TidepoolService: VersionCheckService {
+    
+    public func checkVersion(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate?, Error>) -> Void) {
+        // TODO: ideally the backend API takes `bundleIdentifier` as a parameter, instead of returning a big struct
+        // with all version info (which we parse below)
+        // Note also that this will use the _default environment_ unless the user
+        // switches environments and logs in.
+        tapi.getInfo() { [weak self] result in
+            switch result {
+            case .failure(let error):
+                // If an error occurs, respond with the last-known version info, otherwise, reply with an error
+                if let versionInfo = self?.lastVersionInfo {
+                    self?.log.error("checkVersion error: %{public}@ Returning %{public}@",
+                                    error.localizedDescription,
+                                    versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion).localizedDescription)
+                    completion(.success(versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion)))
+                } else {
+                    self?.log.error("checkVersion error: %{public}@", error.localizedDescription)
+                    completion(.failure(error))
+                }
+            case .success(let info):
+                self?.log.debug("checkVersion info = %{public}@ for %{public}@", info.versions.debugDescription, bundleIdentifier)
+                let versionInfo = info.versions?.loop.flatMap { VersionInfo(bundleIdentifier: bundleIdentifier, loop: $0) }
+                self?.lastVersionInfo = versionInfo
+                completion(.success(versionInfo?.getVersionUpdateNeeded(currentVersion: currentVersion)))
+            }
+        }
+    }
+}
+
 extension KeychainManager: SessionStorage {
     public func setSession(_ session: TSession?, for service: String) throws {
         try deleteGenericPassword(forService: service)
@@ -246,5 +283,14 @@ extension KeychainManager: SessionStorage {
     public func getSession(for service: String) throws -> TSession? {
         let sessionData = try getGenericPasswordForServiceAsData(service)
         return try JSONDecoder.tidepool.decode(TSession.self, from: sessionData)
+    }
+}
+
+extension TidepoolServiceError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .configuration: return NSLocalizedString("Configuration Error", comment: "Error string for configuration error")
+        case .versionMissing: return NSLocalizedString("Version response missing", comment: "Error string for version missing error")
+        }
     }
 }
