@@ -12,12 +12,12 @@ import LoopKit
 
 class LoopVersionInfoTests: XCTestCase {
 
-    let info = LoopVersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"])!
+    let info = VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"])!
 
     func testInit() {
-        XCTAssertNotNil(LoopVersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"]))
-        XCTAssertNotNil(LoopVersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: []))
-        XCTAssertNil(LoopVersionInfo(minimumSupported: nil, criticalUpdateNeeded: ["1.1.0", "0.3.1"]))
+        XCTAssertNotNil(VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"]))
+        XCTAssertNotNil(VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: []))
+        XCTAssertNil(VersionInfo(minimumSupported: nil, criticalUpdateNeeded: ["1.1.0", "0.3.1"]))
     }
     
     func testNeedsCriticalUpdate() {
