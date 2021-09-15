@@ -9,21 +9,28 @@
 import LoopKit
 import TidepoolKit
 
-public struct VersionInfo {
-    /// Minimum supported version.  A `nil` means all versions supported.
-    public let minimumSupported: String?
-    /// List of versions requiring critical updates.
-    public let criticalUpdateNeeded: [String]
+struct VersionInfo {
+    private let loop: TInfo.Versions.Loop
     
-    public init?(minimumSupported: String? = nil, criticalUpdateNeeded: [String] = []) {
-        guard let minimumSupported = minimumSupported else {
+    init?(bundleIdentifier: String, loop: TInfo.Versions.Loop) {
+        // Right now, there's a "hard-coded mapping" between the bundle identifier for Tidepool Loop and
+        // TInfo.Versions.Loop.  Otherwise, return nil.
+        guard bundleIdentifier == "org.tidepool.Loop" else {
             return nil
         }
-        self.minimumSupported = minimumSupported
-        self.criticalUpdateNeeded = criticalUpdateNeeded
+        self.loop = loop
     }
     
-    public func getVersionUpdateNeeded(currentVersion version: String) -> VersionUpdate {
+    func getVersionUpdateNeeded(currentVersion version: String) -> VersionUpdate {
+        return loop.getVersionUpdateNeeded(currentVersion: version)
+    }
+
+    fileprivate static let decoder = JSONDecoder()
+    fileprivate static let encoder = JSONEncoder()
+}
+
+extension TInfo.Versions.Loop {
+     func getVersionUpdateNeeded(currentVersion version: String) -> VersionUpdate {
         if needsCriticalUpdate(version: version) {
             return .criticalNeeded
         }
@@ -33,32 +40,17 @@ public struct VersionInfo {
         return .noneNeeded
     }
     
-    public func needsCriticalUpdate(version: String) -> Bool {
-        return criticalUpdateNeeded.contains(version)
+    func needsCriticalUpdate(version: String) -> Bool {
+        return criticalUpdateNeeded?.contains(version) ?? false
     }
     
-    public func needsSupportedUpdate(version: String) -> Bool {
+    func needsSupportedUpdate(version: String) -> Bool {
         guard let minimumSupported = minimumSupported,
               let minimumSupportedVersion = SemanticVersion(minimumSupported),
               let thisVersion = SemanticVersion(version) else {
             return false
         }
         return thisVersion < minimumSupportedVersion
-    }
-    
-    fileprivate static let decoder = JSONDecoder()
-    fileprivate static let encoder = JSONEncoder()
-}
-
-extension TInfo {
-    func versionInfo(for bundleIdentifier: String) -> VersionInfo? {
-        // Right now, there's a "hard-coded mapping" between the bundle identifier for Tidepool Loop and
-        // TInfo.Versions.Loop.  Otherwise, return nil.
-        guard bundleIdentifier == "org.tidepool.Loop" else {
-            return nil
-        }
-        return VersionInfo(minimumSupported: self.versions?.loop?.minimumSupported,
-                           criticalUpdateNeeded: self.versions?.loop?.criticalUpdateNeeded ?? [])
     }
 }
 

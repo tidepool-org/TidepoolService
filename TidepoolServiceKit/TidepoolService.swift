@@ -262,7 +262,7 @@ extension TidepoolService: VersionCheckService {
                 }
             case .success(let info):
                 self?.log.debug("checkVersion info = %{public}@ for %{public}@", info.versions.debugDescription, bundleIdentifier)
-                let versionInfo = info.versionInfo(for: bundleIdentifier)
+                let versionInfo = info.versions?.loop.flatMap { VersionInfo(bundleIdentifier: bundleIdentifier, loop: $0) }
                 self?.lastVersionInfo = versionInfo
                 completion(.success(versionInfo?.getVersionUpdateNeeded(currentVersion: currentVersion)))
             }

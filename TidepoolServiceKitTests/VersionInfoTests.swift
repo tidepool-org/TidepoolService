@@ -8,32 +8,32 @@
 
 import XCTest
 import LoopKit
+@testable import TidepoolKit
 @testable import TidepoolServiceKit
 
 class VersionInfoTests: XCTestCase {
 
-    let info = VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"])!
-
-    func testInit() {
-        XCTAssertNotNil(VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"]))
-        XCTAssertNotNil(VersionInfo(minimumSupported: "1.2.0", criticalUpdateNeeded: []))
-        XCTAssertNil(VersionInfo(minimumSupported: nil, criticalUpdateNeeded: ["1.1.0", "0.3.1"]))
-    }
+    let info = VersionInfo(bundleIdentifier: "org.tidepool.Loop", loop: TInfo.Versions.Loop(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"]))!
+    let loop = TInfo.Versions.Loop(minimumSupported: "1.2.0", criticalUpdateNeeded: ["1.1.0", "0.3.1"])
     
+    func testInit() {
+        XCTAssertNotNil(VersionInfo(bundleIdentifier: "org.tidepool.Loop", loop: TInfo.Versions.Loop(minimumSupported: nil, criticalUpdateNeeded: nil)))
+        XCTAssertNil(VersionInfo(bundleIdentifier: "foobar", loop: TInfo.Versions.Loop(minimumSupported: nil, criticalUpdateNeeded: nil)))
+    }
     func testNeedsCriticalUpdate() {
-        XCTAssertFalse(info.needsCriticalUpdate(version: "1.2.0"))
-        XCTAssertTrue(info.needsCriticalUpdate(version: "1.1.0"))
+        XCTAssertFalse(loop.needsCriticalUpdate(version: "1.2.0"))
+        XCTAssertTrue(loop.needsCriticalUpdate(version: "1.1.0"))
     }
     
     func testNeedsSupportedUpdate() {
-        XCTAssertFalse(info.needsSupportedUpdate(version: "1.2.0"))
-        XCTAssertFalse(info.needsSupportedUpdate(version: "1.2.1"))
-        XCTAssertFalse(info.needsSupportedUpdate(version: "2.1.0"))
-        XCTAssertTrue(info.needsSupportedUpdate(version: "0.1.0"))
-        XCTAssertTrue(info.needsSupportedUpdate(version: "0.3.0"))
-        XCTAssertTrue(info.needsSupportedUpdate(version: "0.3.1"))
-        XCTAssertTrue(info.needsSupportedUpdate(version: "1.1.0"))
-        XCTAssertTrue(info.needsSupportedUpdate(version: "1.1.99"))
+        XCTAssertFalse(loop.needsSupportedUpdate(version: "1.2.0"))
+        XCTAssertFalse(loop.needsSupportedUpdate(version: "1.2.1"))
+        XCTAssertFalse(loop.needsSupportedUpdate(version: "2.1.0"))
+        XCTAssertTrue(loop.needsSupportedUpdate(version: "0.1.0"))
+        XCTAssertTrue(loop.needsSupportedUpdate(version: "0.3.0"))
+        XCTAssertTrue(loop.needsSupportedUpdate(version: "0.3.1"))
+        XCTAssertTrue(loop.needsSupportedUpdate(version: "1.1.0"))
+        XCTAssertTrue(loop.needsSupportedUpdate(version: "1.1.99"))
     }
     
     func testGetVersionUpdateNeeded() {
