@@ -25,7 +25,17 @@ extension StoredGlucoseSample {
 
     private var datumTime: Date { startDate }
 
-    private var datumValue: Double { quantity.doubleValue(for: .milligramsPerDeciliter) }
+    private var datumValue: Double {
+        let value = quantity.doubleValue(for: .milligramsPerDeciliter)
+        switch condition {
+        case .none:
+            return value
+        case .belowRange:
+            return value - 1
+        case .aboveRange:
+            return value + 1
+        }
+    }
 
     private var datumUnits: TBloodGlucose.Units { .milligramsPerDeciliter }
 
@@ -39,23 +49,17 @@ extension StoredGlucoseSample {
         }
 
         switch condition {
-        case .belowRange(let threshold):
-            guard let threshold = threshold else {
-                return nil
-            }
+        case .belowRange:
             return [TDictionary([
                 "code": "bg/out-of-range",
                 "value": "low",
-                "threshold": threshold.doubleValue(for: .milligramsPerDeciliter)
+                "threshold": quantity.doubleValue(for: .milligramsPerDeciliter)
             ])]
-        case .aboveRange(let threshold):
-            guard let threshold = threshold else {
-                return nil
-            }
+        case .aboveRange:
             return [TDictionary([
                 "code": "bg/out-of-range",
                 "value": "high",
-                "threshold": threshold.doubleValue(for: .milligramsPerDeciliter)
+                "threshold": quantity.doubleValue(for: .milligramsPerDeciliter)
             ])]
         }
     }
