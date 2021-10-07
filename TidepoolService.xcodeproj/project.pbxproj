@@ -27,6 +27,7 @@
 		1D70C40926EFF8F400C62570 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */; };
 		1D70C40F26F1744A00C62570 /* TidepoolServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */; };
 		1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C41326F28CC900C62570 /* URLProtocolMock.swift */; };
+		1DF1F58D270FB45C0097C43E /* AppStoreVersionCheckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF1F58C270FB45C0097C43E /* AppStoreVersionCheckService.swift */; };
 		A901F92325CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */; };
 		A901F92B25CCBDE4006EA7E2 /* AdverseEventReportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */; };
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
@@ -117,6 +118,7 @@
 		1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTests.swift; sourceTree = "<group>"; };
 		1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceTests.swift; sourceTree = "<group>"; };
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
+		1DF1F58C270FB45C0097C43E /* AppStoreVersionCheckService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreVersionCheckService.swift; sourceTree = "<group>"; };
 		A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportViewModel.swift; sourceTree = "<group>"; };
 		A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportButton.swift; sourceTree = "<group>"; };
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 			children = (
 				A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */,
 				A9DAAD0222E7987800E76C9F /* Info.plist */,
+				1DF1F58C270FB45C0097C43E /* AppStoreVersionCheckService.swift */,
 				A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */,
 				A913B37B24200C86000805C4 /* Extensions */,
 				A9DAAD4122E7DF9B00E76C9F /* Localizable.strings */,
@@ -733,6 +736,7 @@
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
 				A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
+				1DF1F58D270FB45C0097C43E /* AppStoreVersionCheckService.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
 				1D70C40526EFF33400C62570 /* SemanticVersion.swift in Sources */,
 			);

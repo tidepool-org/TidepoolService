@@ -31,6 +31,8 @@ public final class TidepoolService: Service, TAPIObserver {
     public lazy var sessionStorage: SessionStorage? = KeychainManager()
 
     public let tapi: TAPI
+    
+    private let appStoreVersionCheckService = AppStoreVersionCheckService()
 
     public private (set) var error: Error?
 
@@ -262,6 +264,40 @@ extension TidepoolService: RemoteDataService {
 extension TidepoolService: VersionCheckService {
     
     public func checkVersion(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate?, Error>) -> Void) {
+        
+        let group = DispatchGroup()
+        var infoVersion = VersionUpdate.noneNeeded
+        var appStoreVersion = VersionUpdate.noneNeeded
+        
+        group.enter()
+        checkVersionInfo(bundleIdentifier: bundleIdentifier, currentVersion: currentVersion) { infoResult in
+            switch infoResult {
+            case .success(let v):
+                infoVersion = v ?? .noneNeeded
+            case .failure:
+                break
+            }
+            group.leave()
+        }
+        
+        group.enter()
+        appStoreVersionCheckService.checkVersion(bundleIdentifier: bundleIdentifier, currentVersion: currentVersion) { [weak self] appStoreResult in
+            switch appStoreResult {
+            case .success(let v):
+                appStoreVersion = v ?? .noneNeeded
+            case .failure(let error):
+                self?.log.error("appStoreVersionCheckService.checkVersion failed: %@", error.localizedDescription)
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: DispatchQueue.global(qos: .background)) {
+            completion(.success(max(infoVersion, appStoreVersion)))
+        }
+    }
+    
+    
+    public func checkVersionInfo(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate?, Error>) -> Void) {
         // TODO: ideally the backend API takes `bundleIdentifier` as a parameter, instead of returning a big struct
         // with all version info (which we parse below)
         // Note also that this will use the _default environment_ unless the user
