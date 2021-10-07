@@ -9,7 +9,10 @@
 import TidepoolKit
 
 extension TOrigin {
-    init(id: String) {
-        self.init(id: id, name: Bundle.main.bundleIdentifier, version: Bundle.main.semanticVersion, type: .service)  // TODO: Use application once backend support is added
+    init?(id: String) {
+        guard let name = Bundle.main.bundleIdentifier, let semanticVersion = Bundle.main.semanticVersion else {
+            return nil
+        }
+        self.init(id: id, name: name, version: semanticVersion, type: .application)
     }
 }

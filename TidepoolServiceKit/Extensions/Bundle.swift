@@ -16,10 +16,15 @@ extension Bundle {
         while semanticVersion.split(separator: ".").count < 3 {
             semanticVersion += ".0"
         }
+        if let bundleVersion = bundleVersion {
+            semanticVersion += "+\(bundleVersion)"
+        }
         return semanticVersion
     }
 
     var bundleShortVersionString: String? { string(forInfoDictionaryKey: "CFBundleShortVersionString") }
+
+    var bundleVersion: String? { string(forInfoDictionaryKey: "CFBundleVersion") }
 
     private func string(forInfoDictionaryKey key: String) -> String? { object(forInfoDictionaryKey: key) as? String }
 }
