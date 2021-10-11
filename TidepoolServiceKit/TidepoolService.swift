@@ -45,6 +45,9 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private var lastVersionInfo: VersionInfo?
+    public var lastVersionCheckAlertDate: Date?
+
+    public weak var alertIssuer: AlertIssuer?
     
     private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
@@ -68,6 +71,7 @@ public final class TidepoolService: Service, TAPIObserver {
             self.id = id
             self.dataSetId = rawState["dataSetId"] as? String
             self.lastVersionInfo = (rawState["lastVersionInfo"] as? String).flatMap { VersionInfo(from: $0) }
+            self.lastVersionCheckAlertDate = rawState["lastVersionCheckAlertDate"] as? Date
             tapi.session = try sessionStorage?.getSession(for: sessionService)
         } catch let error {
             self.error = error
@@ -80,6 +84,7 @@ public final class TidepoolService: Service, TAPIObserver {
         rawValue["id"] = id
         rawValue["dataSetId"] = dataSetId
         rawValue["lastVersionInfo"] = lastVersionInfo?.toJSON()
+        rawValue["lastVersionCheckAlertDate"] = lastVersionCheckAlertDate
         return rawValue
     }
 
@@ -266,14 +271,14 @@ extension TidepoolService: VersionCheckService {
     public func checkVersion(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate?, Error>) -> Void) {
         
         let group = DispatchGroup()
-        var infoVersion = VersionUpdate.noneNeeded
-        var appStoreVersion = VersionUpdate.noneNeeded
+        var infoVersion = VersionUpdate.default
+        var appStoreVersion = VersionUpdate.default
         
         group.enter()
         checkVersionInfo(bundleIdentifier: bundleIdentifier, currentVersion: currentVersion) { infoResult in
             switch infoResult {
             case .success(let v):
-                infoVersion = v ?? .noneNeeded
+                infoVersion = v ?? .default
             case .failure:
                 break
             }
@@ -284,7 +289,7 @@ extension TidepoolService: VersionCheckService {
         appStoreVersionCheckService.checkVersion(bundleIdentifier: bundleIdentifier, currentVersion: currentVersion) { [weak self] appStoreResult in
             switch appStoreResult {
             case .success(let v):
-                appStoreVersion = v ?? .noneNeeded
+                appStoreVersion = v ?? .default
             case .failure(let error):
                 self?.log.error("appStoreVersionCheckService.checkVersion failed: %@", error.localizedDescription)
             }

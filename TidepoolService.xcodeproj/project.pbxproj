@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1D3528CE2710E98F0065697A /* SoftwareUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3528CD2710E98F0065697A /* SoftwareUpdateView.swift */; };
+		1D3528D02710E9F30065697A /* SoftwareUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3528CF2710E9F30065697A /* SoftwareUpdateViewModel.swift */; };
 		1D70C40326EFF2B700C62570 /* VersionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40226EFF2B700C62570 /* VersionInfo.swift */; };
 		1D70C40526EFF33400C62570 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40426EFF33400C62570 /* SemanticVersion.swift */; };
 		1D70C40726EFF8E000C62570 /* VersionInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */; };
@@ -28,6 +30,7 @@
 		1D70C40F26F1744A00C62570 /* TidepoolServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */; };
 		1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C41326F28CC900C62570 /* URLProtocolMock.swift */; };
 		1DF1F58D270FB45C0097C43E /* AppStoreVersionCheckService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF1F58C270FB45C0097C43E /* AppStoreVersionCheckService.swift */; };
+		1DFFB9012714C89E0075AEAA /* TidepoolService+VersionCheckServiceUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFFB9002714C89E0075AEAA /* TidepoolService+VersionCheckServiceUI.swift */; };
 		A901F92325CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */; };
 		A901F92B25CCBDE4006EA7E2 /* AdverseEventReportButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */; };
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
@@ -112,6 +115,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D3528CD2710E98F0065697A /* SoftwareUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareUpdateView.swift; sourceTree = "<group>"; };
+		1D3528CF2710E9F30065697A /* SoftwareUpdateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoftwareUpdateViewModel.swift; sourceTree = "<group>"; };
 		1D70C40226EFF2B700C62570 /* VersionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionInfo.swift; sourceTree = "<group>"; };
 		1D70C40426EFF33400C62570 /* SemanticVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemanticVersion.swift; sourceTree = "<group>"; };
 		1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionInfoTests.swift; sourceTree = "<group>"; };
@@ -119,6 +124,7 @@
 		1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceTests.swift; sourceTree = "<group>"; };
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		1DF1F58C270FB45C0097C43E /* AppStoreVersionCheckService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreVersionCheckService.swift; sourceTree = "<group>"; };
+		1DFFB9002714C89E0075AEAA /* TidepoolService+VersionCheckServiceUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidepoolService+VersionCheckServiceUI.swift"; sourceTree = "<group>"; };
 		A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportViewModel.swift; sourceTree = "<group>"; };
 		A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdverseEventReportButton.swift; sourceTree = "<group>"; };
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -240,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				A901F92225CCBDD9006EA7E2 /* AdverseEventReportViewModel.swift */,
+				1D3528CF2710E9F30065697A /* SoftwareUpdateViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -248,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				A901F92A25CCBDE4006EA7E2 /* AdverseEventReportButton.swift */,
+				1D3528CD2710E98F0065697A /* SoftwareUpdateView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -362,6 +370,7 @@
 				A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */,
 				A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */,
 				A9DAAD3822E7DEE000E76C9F /* TidepoolService+UI.swift */,
+				1DFFB9002714C89E0075AEAA /* TidepoolService+VersionCheckServiceUI.swift */,
 				A9DAAD3A22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift */,
 				A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */,
 				E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */,
@@ -763,8 +772,11 @@
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				A901F92B25CCBDE4006EA7E2 /* AdverseEventReportButton.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
+				1DFFB9012714C89E0075AEAA /* TidepoolService+VersionCheckServiceUI.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
+				1D3528CE2710E98F0065697A /* SoftwareUpdateView.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
+				1D3528D02710E9F30065697A /* SoftwareUpdateViewModel.swift in Sources */,
 				A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */,
 				A9DAAD3B22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift in Sources */,
 			);

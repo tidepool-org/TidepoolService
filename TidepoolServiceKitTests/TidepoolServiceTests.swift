@@ -60,7 +60,7 @@ class TidepoolServiceTests: XCTestCase {
         wait(for: [e], timeout: 1.0)
         let result = try XCTUnwrap(tempResult)
         XCTAssertNil(result.error)
-        XCTAssertEqual(VersionUpdate.supportedNeeded, result.value)
+        XCTAssertEqual(VersionUpdate.recommended, result.value)
     }
     
     func testCheckVersionReturnsNilForOtherBundleIdentifiers() throws {
@@ -103,7 +103,7 @@ class TidepoolServiceTests: XCTestCase {
         wait(for: [e], timeout: 1.0)
         var result = try XCTUnwrap(tempResult)
         XCTAssertNil(result.error)
-        XCTAssertEqual(VersionUpdate.supportedNeeded, result.value)
+        XCTAssertEqual(VersionUpdate.recommended, result.value)
         
         setupToReturnErrorOnInfo()
         let e2 = self.expectation(description: #function + " error")
@@ -114,7 +114,7 @@ class TidepoolServiceTests: XCTestCase {
         wait(for: [e2], timeout: 1.0)
         result = try XCTUnwrap(tempResult)
         XCTAssertNil(result.error)
-        XCTAssertEqual(VersionUpdate.supportedNeeded, result.value)
+        XCTAssertEqual(VersionUpdate.recommended, result.value)
     }
     
 }

@@ -32,12 +32,12 @@ struct VersionInfo {
 extension TInfo.Versions.Loop {
      func getVersionUpdateNeeded(currentVersion version: String) -> VersionUpdate {
         if needsCriticalUpdate(version: version) {
-            return .criticalNeeded
+            return .required
         }
         if needsSupportedUpdate(version: version) {
-            return .supportedNeeded
+            return .recommended
         }
-        return .noneNeeded
+        return .none
     }
     
     func needsCriticalUpdate(version: String) -> Bool {

@@ -37,9 +37,9 @@ class AppStoreVersionCheckService: VersionCheckService {
                        let current = SemanticVersion(currentVersion),
                        appStoreVersion > current
                     {
-                        completion(.success(.updateAvailable))
+                        completion(.success(.available))
                     } else {
-                        completion(.success(.noneNeeded))
+                        completion(.success(VersionUpdate.none))
                     }
                 case .failure(let error):
                     completion(.failure(error))

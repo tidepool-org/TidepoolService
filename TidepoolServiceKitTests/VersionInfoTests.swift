@@ -37,13 +37,13 @@ class VersionInfoTests: XCTestCase {
     }
     
     func testGetVersionUpdateNeeded() {
-        XCTAssertEqual(.noneNeeded, info.getVersionUpdateNeeded(currentVersion: "1.2.0"))
-        XCTAssertEqual(.noneNeeded, info.getVersionUpdateNeeded(currentVersion: "1.2.1"))
-        XCTAssertEqual(.noneNeeded, info.getVersionUpdateNeeded(currentVersion: "2.1.0"))
-        XCTAssertEqual(.supportedNeeded, info.getVersionUpdateNeeded(currentVersion: "0.1.0"))
-        XCTAssertEqual(.supportedNeeded, info.getVersionUpdateNeeded(currentVersion: "0.3.0"))
-        XCTAssertEqual(.criticalNeeded, info.getVersionUpdateNeeded(currentVersion: "0.3.1"))
-        XCTAssertEqual(.criticalNeeded, info.getVersionUpdateNeeded(currentVersion: "1.1.0"))
-        XCTAssertEqual(.supportedNeeded, info.getVersionUpdateNeeded(currentVersion: "1.1.99"))
+        XCTAssertEqual(.none, info.getVersionUpdateNeeded(currentVersion: "1.2.0"))
+        XCTAssertEqual(.none, info.getVersionUpdateNeeded(currentVersion: "1.2.1"))
+        XCTAssertEqual(.none, info.getVersionUpdateNeeded(currentVersion: "2.1.0"))
+        XCTAssertEqual(.recommended, info.getVersionUpdateNeeded(currentVersion: "0.1.0"))
+        XCTAssertEqual(.recommended, info.getVersionUpdateNeeded(currentVersion: "0.3.0"))
+        XCTAssertEqual(.required, info.getVersionUpdateNeeded(currentVersion: "0.3.1"))
+        XCTAssertEqual(.required, info.getVersionUpdateNeeded(currentVersion: "1.1.0"))
+        XCTAssertEqual(.recommended, info.getVersionUpdateNeeded(currentVersion: "1.1.99"))
     }
 }
