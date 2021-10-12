@@ -42,13 +42,13 @@ public class SoftwareUpdateViewModel: ObservableObject {
     
     lazy private var cancellables = Set<AnyCancellable>()
 
-    private weak var versionCheckService: VersionCheckServiceUI?
+    private weak var versionCheckService: VersionCheckService?
     private let guidanceColors: GuidanceColors
     private let openAppStoreHook: (() -> Void)?
     private let bundleIdentifier: String
     private let currentVersion: String
     
-    init(versionCheckService: VersionCheckServiceUI? = nil,
+    init(versionCheckService: VersionCheckService? = nil,
          guidanceColors: GuidanceColors,
          openAppStoreHook: (() -> Void)? = nil,
          bundleIdentifier: String,
