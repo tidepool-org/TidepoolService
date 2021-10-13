@@ -12,7 +12,6 @@ import TidepoolKit
 
 public enum TidepoolServiceError: Error {
     case configuration
-    case versionMissing
 }
 
 public protocol SessionStorage {
@@ -32,8 +31,6 @@ public final class TidepoolService: Service, TAPIObserver {
 
     public let tapi: TAPI
     
-    private let appStoreVersionCheckService = AppStoreVersionCheckService()
-
     public private (set) var error: Error?
 
     private let id: String
@@ -44,11 +41,6 @@ public final class TidepoolService: Service, TAPIObserver {
         }
     }
 
-    private var lastVersionInfo: VersionInfo?
-    public var lastVersionCheckAlertDate: Date?
-
-    public weak var alertIssuer: AlertIssuer?
-    
     private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
@@ -70,8 +62,6 @@ public final class TidepoolService: Service, TAPIObserver {
         do {
             self.id = id
             self.dataSetId = rawState["dataSetId"] as? String
-            self.lastVersionInfo = (rawState["lastVersionInfo"] as? String).flatMap { VersionInfo(from: $0) }
-            self.lastVersionCheckAlertDate = rawState["lastVersionCheckAlertDate"] as? Date
             tapi.session = try sessionStorage?.getSession(for: sessionService)
         } catch let error {
             self.error = error
@@ -83,8 +73,6 @@ public final class TidepoolService: Service, TAPIObserver {
         var rawValue: RawStateValue = [:]
         rawValue["id"] = id
         rawValue["dataSetId"] = dataSetId
-        rawValue["lastVersionInfo"] = lastVersionInfo?.toJSON()
-        rawValue["lastVersionCheckAlertDate"] = lastVersionCheckAlertDate
         return rawValue
     }
 
@@ -266,70 +254,6 @@ extension TidepoolService: RemoteDataService {
     }
 }
 
-extension TidepoolService: VersionCheckService {
-    
-    public func checkVersion(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate?, Error>) -> Void) {
-        
-        let group = DispatchGroup()
-        var infoVersion = VersionUpdate.default
-        var appStoreVersion = VersionUpdate.default
-        
-        group.enter()
-        checkVersionInfo(bundleIdentifier: bundleIdentifier, currentVersion: currentVersion) { infoResult in
-            switch infoResult {
-            case .success(let v):
-                infoVersion = v ?? .default
-            case .failure:
-                break
-            }
-            group.leave()
-        }
-        
-        group.enter()
-        appStoreVersionCheckService.checkVersion(bundleIdentifier: bundleIdentifier, currentVersion: currentVersion) { [weak self] appStoreResult in
-            switch appStoreResult {
-            case .success(let v):
-                appStoreVersion = v ?? .default
-            case .failure(let error):
-                self?.log.error("appStoreVersionCheckService.checkVersion failed: %@", error.localizedDescription)
-            }
-            group.leave()
-        }
-        
-        group.notify(queue: DispatchQueue.global(qos: .background)) {
-            completion(.success(max(infoVersion, appStoreVersion)))
-        }
-    }
-    
-    
-    public func checkVersionInfo(bundleIdentifier: String, currentVersion: String, completion: @escaping (Result<VersionUpdate?, Error>) -> Void) {
-        // TODO: ideally the backend API takes `bundleIdentifier` as a parameter, instead of returning a big struct
-        // with all version info (which we parse below)
-        // Note also that this will use the _default environment_ unless the user
-        // switches environments and logs in.
-        tapi.getInfo() { [weak self] result in
-            switch result {
-            case .failure(let error):
-                // If an error occurs, respond with the last-known version info, otherwise, reply with an error
-                if let versionInfo = self?.lastVersionInfo {
-                    self?.log.error("checkVersion error: %{public}@ Returning %{public}@",
-                                    error.localizedDescription,
-                                    versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion).localizedDescription)
-                    completion(.success(versionInfo.getVersionUpdateNeeded(currentVersion: currentVersion)))
-                } else {
-                    self?.log.error("checkVersion error: %{public}@", error.localizedDescription)
-                    completion(.failure(error))
-                }
-            case .success(let info):
-                self?.log.debug("checkVersion info = %{public}@ for %{public}@", info.versions.debugDescription, bundleIdentifier)
-                let versionInfo = info.versions?.loop.flatMap { VersionInfo(bundleIdentifier: bundleIdentifier, loop: $0) }
-                self?.lastVersionInfo = versionInfo
-                completion(.success(versionInfo?.getVersionUpdateNeeded(currentVersion: currentVersion)))
-            }
-        }
-    }
-}
-
 extension KeychainManager: SessionStorage {
     public func setSession(_ session: TSession?, for service: String) throws {
         try deleteGenericPassword(forService: service)
@@ -350,7 +274,6 @@ extension TidepoolServiceError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .configuration: return NSLocalizedString("Configuration Error", comment: "Error string for configuration error")
-        case .versionMissing: return NSLocalizedString("Version response missing", comment: "Error string for version missing error")
         }
     }
 }

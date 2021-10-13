@@ -23,12 +23,3 @@ extension TidepoolService: ServiceUI {
         return ServiceNavigationController(rootViewController: TidepoolServiceSettingsViewController(service: self))
     }
 }
-
-extension TidepoolService: SupportUI {
-    public var supportIdentifier: String { serviceIdentifier }
-
-    public func supportMenuItem(supportInfoProvider: SupportInfoProvider, urlHandler: @escaping (URL) -> Void) -> AnyView? {
-        let viewModel = AdverseEventReportViewModel(supportInfoProvider: supportInfoProvider)
-        return AnyView(AdverseEventReportButton(adverseEventReportViewModel: viewModel, urlHandler: urlHandler))
-    }
-}
