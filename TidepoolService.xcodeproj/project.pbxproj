@@ -21,9 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		1D70C40726EFF8E000C62570 /* VersionInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */; };
-		1D70C40926EFF8F400C62570 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */; };
-		1D70C40F26F1744A00C62570 /* TidepoolServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */; };
 		1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C41326F28CC900C62570 /* URLProtocolMock.swift */; };
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
 		A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
@@ -107,9 +104,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionInfoTests.swift; sourceTree = "<group>"; };
-		1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTests.swift; sourceTree = "<group>"; };
-		1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceTests.swift; sourceTree = "<group>"; };
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
@@ -317,9 +311,6 @@
 			children = (
 				A9672B5626E82E6E0025B0CD /* Extensions */,
 				A9DAAD0E22E7987800E76C9F /* Info.plist */,
-				1D70C40626EFF8E000C62570 /* VersionInfoTests.swift */,
-				1D70C40826EFF8F400C62570 /* SemanticVersionTests.swift */,
-				1D70C40E26F1744A00C62570 /* TidepoolServiceTests.swift */,
 				1D70C41326F28CC900C62570 /* URLProtocolMock.swift */,
 			);
 			path = TidepoolServiceKitTests;
@@ -712,9 +703,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D70C40926EFF8F400C62570 /* SemanticVersionTests.swift in Sources */,
-				1D70C40F26F1744A00C62570 /* TidepoolServiceTests.swift in Sources */,
-				1D70C40726EFF8E000C62570 /* VersionInfoTests.swift in Sources */,
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 				A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */,
 			);
