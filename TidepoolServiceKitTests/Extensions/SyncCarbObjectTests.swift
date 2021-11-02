@@ -34,7 +34,7 @@ class SyncCarbObjectTests: XCTestCase {
         let datum = object.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
-  "id" : "6BFD8643743DEA29867E79BED18E08BF",
+  "id" : "6bcc86152b10e405e126714fb583b783",
   "name" : "Pizza",
   "nutrition" : {
     "carbohydrate" : {
@@ -44,7 +44,7 @@ class SyncCarbObjectTests: XCTestCase {
     "estimatedAbsorptionDuration" : 18000
   },
   "origin" : {
-    "id" : "72B3626CFE267489DF889FB597995437",
+    "id" : "72b3626cfe267489df889fb597995437",
     "name" : "com.loopkit.Loop",
     "type" : "application"
   },

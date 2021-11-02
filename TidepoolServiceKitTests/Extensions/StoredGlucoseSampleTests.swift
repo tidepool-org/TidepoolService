@@ -30,9 +30,9 @@ class StoredGlucoseSampleTests: XCTestCase {
         let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
-  "id" : "A7C68902F9F396222674A76AD7A34A6D",
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
   "origin" : {
-    "id" : "E71808A78873168E1C21DCD6636290BA",
+    "id" : "e71808a78873168e1c21dcd6636290ba",
     "name" : "135CDABE-9343-7242-4233-1020384789AE",
     "type" : "application"
   },
@@ -68,9 +68,9 @@ class StoredGlucoseSampleTests: XCTestCase {
         let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
-  "id" : "A7C68902F9F396222674A76AD7A34A6D",
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
   "origin" : {
-    "id" : "E71808A78873168E1C21DCD6636290BA",
+    "id" : "e71808a78873168e1c21dcd6636290ba",
     "name" : "135CDABE-9343-7242-4233-1020384789AE",
     "type" : "application"
   },
@@ -106,9 +106,9 @@ class StoredGlucoseSampleTests: XCTestCase {
         let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
-  "id" : "A7C68902F9F396222674A76AD7A34A6D",
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
   "origin" : {
-    "id" : "E71808A78873168E1C21DCD6636290BA",
+    "id" : "e71808a78873168e1c21dcd6636290ba",
     "name" : "135CDABE-9343-7242-4233-1020384789AE",
     "type" : "application"
   },
@@ -152,9 +152,9 @@ class StoredGlucoseSampleTests: XCTestCase {
       "value" : "low"
     }
   ],
-  "id" : "A7C68902F9F396222674A76AD7A34A6D",
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
   "origin" : {
-    "id" : "E71808A78873168E1C21DCD6636290BA",
+    "id" : "e71808a78873168e1c21dcd6636290ba",
     "name" : "135CDABE-9343-7242-4233-1020384789AE",
     "type" : "application"
   },
@@ -198,9 +198,9 @@ class StoredGlucoseSampleTests: XCTestCase {
       "value" : "high"
     }
   ],
-  "id" : "A7C68902F9F396222674A76AD7A34A6D",
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
   "origin" : {
-    "id" : "E71808A78873168E1C21DCD6636290BA",
+    "id" : "e71808a78873168e1c21dcd6636290ba",
     "name" : "135CDABE-9343-7242-4233-1020384789AE",
     "type" : "application"
   },
