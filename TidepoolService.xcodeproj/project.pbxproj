@@ -36,12 +36,15 @@
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */; };
+		A9752A9D270B972D00E50750 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9752A9C270B972D00E50750 /* TimeInterval.swift */; };
 		A97651752421AA10002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A97651762421AA11002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97A60FA243818C900AD69A5 /* TDatum.swift */; };
+		A9A53E2F271508D80050C0B1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A53E2E271508D80050C0B1 /* String.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
+		A9D58155272B266700AA5C18 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D58154272B266700AA5C18 /* Date.swift */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A9DAAD0F22E7987800E76C9F /* TidepoolServiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; };
@@ -62,6 +65,9 @@
 		A9DAAD6A22E7E81E00E76C9F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */; };
 		A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */; };
 		A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */; };
+		A9E8C60D272C723400016E2E /* SyncCarbObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8C60C272C723400016E2E /* SyncCarbObjectTests.swift */; };
+		A9E8C611272C76A500016E2E /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8C610272C76A500016E2E /* TimeInterval.swift */; };
+		A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -116,12 +122,15 @@
 		A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceKitPlugin.swift; sourceTree = "<group>"; };
 		A94AE4F4235A8BAC005CA320 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
 		A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSampleTests.swift; sourceTree = "<group>"; };
+		A9752A9C270B972D00E50750 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A97A60FA243818C900AD69A5 /* TDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDatum.swift; sourceTree = "<group>"; };
 		A99222FA235A879600C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A99222FB235A87B100C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A9A53E2E271508D80050C0B1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
+		A9D58154272B266700AA5C18 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKit.h; sourceTree = "<group>"; };
 		A9DAAD0222E7987800E76C9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +171,9 @@
 		A9DAAD6922E7E81E00E76C9F /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableClass.swift; sourceTree = "<group>"; };
 		A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		A9E8C60C272C723400016E2E /* SyncCarbObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCarbObjectTests.swift; sourceTree = "<group>"; };
+		A9E8C610272C76A500016E2E /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableHKDatum.swift; sourceTree = "<group>"; };
 		E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,10 +236,13 @@
 			isa = PBXGroup;
 			children = (
 				A913B37C24200C97000805C4 /* Bundle.swift */,
+				A9D58154272B266700AA5C18 /* Date.swift */,
 				A9D1107B242289720091C620 /* HKUnit.swift */,
 				A9309CA62435987000E02268 /* SyncCarbObject.swift */,
 				A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */,
+				A9A53E2E271508D80050C0B1 /* String.swift */,
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
+				A9752A9C270B972D00E50750 /* TimeInterval.swift */,
 				A9309CA2243563CD00E02268 /* TOrigin.swift */,
 			);
 			path = Extensions;
@@ -255,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */,
+				A9E8C60C272C723400016E2E /* SyncCarbObjectTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -299,6 +315,7 @@
 			children = (
 				A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */,
 				A9DAAD0222E7987800E76C9F /* Info.plist */,
+				A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */,
 				A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */,
 				A913B37B24200C86000805C4 /* Extensions */,
 				A9DAAD4122E7DF9B00E76C9F /* Localizable.strings */,
@@ -309,9 +326,10 @@
 		A9DAAD0B22E7987800E76C9F /* TidepoolServiceKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				A9672B5626E82E6E0025B0CD /* Extensions */,
 				A9DAAD0E22E7987800E76C9F /* Info.plist */,
 				1D70C41326F28CC900C62570 /* URLProtocolMock.swift */,
+				A9672B5626E82E6E0025B0CD /* Extensions */,
+				A9E8C60E272C768300016E2E /* Private */,
 			);
 			path = TidepoolServiceKitTests;
 			sourceTree = "<group>";
@@ -353,6 +371,22 @@
 				A9DAAD5A22E7E6BE00E76C9F /* LoopKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9E8C60E272C768300016E2E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				A9E8C60F272C768C00016E2E /* Extensions */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		A9E8C60F272C768C00016E2E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A9E8C610272C76A500016E2E /* TimeInterval.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -689,13 +723,17 @@
 			files = (
 				A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */,
 				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
+				A9752A9D270B972D00E50750 /* TimeInterval.swift in Sources */,
 				A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */,
+				A9A53E2F271508D80050C0B1 /* String.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
+				A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */,
 				A9309CA3243563CD00E02268 /* TOrigin.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
+				A9D58155272B266700AA5C18 /* Date.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,6 +741,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9E8C611272C76A500016E2E /* TimeInterval.swift in Sources */,
+				A9E8C60D272C723400016E2E /* SyncCarbObjectTests.swift in Sources */,
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 				A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */,
 			);
