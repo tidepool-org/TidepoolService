@@ -9,9 +9,26 @@
 import TidepoolKit
 
 extension TDatum {
-    func adornWith(annotations: [TDictionary]? = nil, origin: TOrigin? = nil) -> TDatum {
+    func adornWith(id: String? = nil,
+                   deviceId: String? = nil,
+                   annotations: [TDictionary]? = nil,
+                   associations: [TAssociation]? = nil,
+                   payload: TDictionary? = nil,
+                   origin: TOrigin? = nil) -> Self {
+        if let id = id {
+            self.id = !id.isEmpty ? id : nil
+        }
+        if let deviceId = deviceId {
+            self.deviceId = !deviceId.isEmpty ? deviceId : nil
+        }
         if let annotations = annotations {
-            self.annotations = annotations
+            self.annotations = annotations.contains(where: { !$0.isEmpty }) ? annotations : nil
+        }
+        if let associations = associations {
+            self.associations = !associations.isEmpty ? associations : nil
+        }
+        if let payload = payload {
+            self.payload = !payload.isEmpty ? payload : nil
         }
         if let origin = origin {
             self.origin = origin

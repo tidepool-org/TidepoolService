@@ -48,9 +48,11 @@ public final class TidepoolService: Service, TAPIObserver {
         self.id = UUID().uuidString
         tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
         tapi.addObserver(self)
+        TSharedLogging.instance = self
     }
 
     deinit {
+        TSharedLogging.instance = nil
         tapi.removeObserver(self)
     }
 
@@ -67,6 +69,7 @@ public final class TidepoolService: Service, TAPIObserver {
             self.error = error
         }
         tapi.addObserver(self)
+        TSharedLogging.instance = self
     }
 
     public var rawState: RawStateValue {
@@ -149,6 +152,8 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
+
+    private var userId: String? { tapi.session?.userId }
 }
 
 extension TidepoolService: TLogging {
@@ -174,15 +179,20 @@ extension TidepoolService: RemoteDataService {
     public var carbDataLimit: Int? { return 1000 }
 
     public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject], completion: @escaping (Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+
         // TODO: This implementation is incorrect and will not record the full carb history, but only the latest change within this
         // subset of data. Waiting on https://tidepool.atlassian.net/browse/BACK-815 for backend to support new API to capture full
         // history of carb changes. Once backend support is available, this will be updated in https://tidepool.atlassian.net/browse/LOOP-1660.
-        createData(created.compactMap { $0.datum }) { result in
+        createData(created.compactMap { $0.datum(for: userId) }) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let createdUploaded):
-                self.createData(updated.compactMap { $0.datum }) { result in
+                self.createData(updated.compactMap { $0.datum(for: userId) }) { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
@@ -208,7 +218,11 @@ extension TidepoolService: RemoteDataService {
     public var glucoseDataLimit: Int? { return 1000 }
 
     public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
-        createData(stored.compactMap { $0.datum }, completion: completion)
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
     }
 
     public var pumpEventDataLimit: Int? { return 1000 }
@@ -227,6 +241,7 @@ extension TidepoolService: RemoteDataService {
 
         tapi.createData(data, dataSetId: dataSetId) { error in
             if let error = error {
+                self.log.error("Failed to created data - %{public}@", error.errorDescription!)
                 completion(.failure(error))
                 return
             }

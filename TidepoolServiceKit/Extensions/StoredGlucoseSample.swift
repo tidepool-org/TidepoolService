@@ -6,21 +6,45 @@
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
 
+import HealthKit
 import LoopKit
 import TidepoolKit
 
-extension StoredGlucoseSample {
-    var datum: TDatum? {
-        guard let origin = datumOrigin else {
+/*
+ StoredGlucoseSample
+ 
+ Properties:
+ - uuid                     UUID?                  .id, .origin.id, .payload["uuid"]
+ - provenanceIdentifier     String                 .id, .origin.id, .origin.name (if not this app)
+ - syncIdentifier           String?                .id, .origin.id, .payload["syncIdentifier"]
+ - syncVersion              Int?                   .payload["syncVersion"]
+ - device                   HKDevice?              .deviceId
+ - healthKitEligibleDate    Date?                  (N/A - internal implementation detail only)
+ - startDate                Date                   .time
+ - quantity                 HKQuantity             .value
+ - isDisplayOnly            Bool                   (N/A - implicit in datum type)
+ - wasUserEntered           Bool                   (N/A - implicit in datum type)
+ - condition                GlucoseCondition?      .annotations
+ - trend                    GlucoseTrend?          .trend
+ - trendRate                HKQuantity?            .trendRate
+ */
+
+extension StoredGlucoseSample: IdentifiableHKDatum {
+    func datum(for userId: String) -> TDatum? {
+        guard let id = datumId(for: userId) else {
             return nil
         }
+
+        var datum: TDatum
         if isDisplayOnly {
-            return TCalibrationDeviceEventDatum(time: datumTime, value: datumValue, units: datumUnits).adornWith(annotations: datumAnnotations, origin: origin)
+            datum = TCalibrationDeviceEventDatum(time: datumTime, value: datumValue, units: datumUnits)
         } else if wasUserEntered {
-            return TSMBGDatum(time: datumTime, value: datumValue, units: datumUnits, subType: .manual).adornWith(annotations: datumAnnotations, origin: origin)
+            datum = TSMBGDatum(time: datumTime, value: datumValue, units: datumUnits, subType: .manual)
         } else {
-            return TCBGDatum(time: datumTime, value: datumValue, units: datumUnits, trend: datumTrend, trendRate: datumTrendRate).adornWith(annotations: datumAnnotations, origin: origin)
+            datum = TCBGDatum(time: datumTime, value: datumValue, units: datumUnits, trend: datumTrend, trendRate: datumTrendRate)
         }
+
+        return datum.adornWith(id: id, deviceId: datumDeviceId, annotations: datumAnnotations, payload: datumPayload, origin: datumOrigin)
     }
 
     private var datumTime: Date { startDate }
@@ -31,9 +55,9 @@ extension StoredGlucoseSample {
         case .none:
             return value
         case .belowRange:
-            return value - 1
+            return value - 1    // Tidepool Loop stores last in-range value while Tidepool backend expects first out-of-range value
         case .aboveRange:
-            return value + 1
+            return value + 1    // Tidepool Loop stores last in-range value while Tidepool backend expects first out-of-range value
         }
     }
 
@@ -42,6 +66,8 @@ extension StoredGlucoseSample {
     private var datumTrend: TBloodGlucose.Trend? { trend?.datum }
 
     private var datumTrendRate: Double? { trendRate?.doubleValue(for: .milligramsPerDeciliterPerMinute) }
+
+    private var datumDeviceId: String? { device?.datumDeviceId }
 
     private var datumAnnotations: [TDictionary]? {
         guard let condition = condition else {
@@ -64,18 +90,16 @@ extension StoredGlucoseSample {
         }
     }
 
-    private var datumOrigin: TOrigin? {
-        guard let syncIdentifier = syncIdentifier else {
-            return nil
-        }
-        if !provenanceIdentifier.isEmpty, provenanceIdentifier != Bundle.main.bundleIdentifier {
-            return TOrigin(id: syncIdentifier, name: provenanceIdentifier, type: .application)
-        }
-        return TOrigin(id: syncIdentifier)
+    private var datumPayload: TDictionary? {
+        var dictionary = TDictionary()
+        dictionary["uuid"] = uuid?.uuidString
+        dictionary["syncIdentifier"] = syncIdentifier
+        dictionary["syncVersion"] = syncVersion
+        return !dictionary.isEmpty ? dictionary : nil
     }
 }
 
-extension GlucoseTrend {
+fileprivate extension GlucoseTrend {
     var datum: TBloodGlucose.Trend {
         switch self {
         case .upUpUp:
@@ -93,5 +117,11 @@ extension GlucoseTrend {
         case .downDownDown:
             return .rapidFall
         }
+    }
+}
+
+fileprivate extension HKDevice {
+    var datumDeviceId: String? {
+        return [manufacturer, model, localIdentifier].compactMap({ $0 }).joined(separator: "_")
     }
 }

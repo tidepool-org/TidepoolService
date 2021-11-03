@@ -13,12 +13,12 @@ import LoopKit
 @testable import TidepoolServiceKit
 
 class StoredGlucoseSampleTests: XCTestCase {
-    func testCalibrationDeviceEvent() {
-        let sample = StoredGlucoseSample(uuid: UUID(),
-                                         provenanceIdentifier: UUID().uuidString,
-                                         syncIdentifier: UUID().uuidString,
+    func testDatumCalibrationDeviceEvent() {
+        let sample = StoredGlucoseSample(uuid: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!,
+                                         provenanceIdentifier: "135CDABE-9343-7242-4233-1020384789AE",
+                                         syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
                                          syncVersion: 1,
-                                         startDate: Date(),
+                                         startDate: Self.dateFormatter.date(from: "2020-01-02T03:00:23Z")!,
                                          quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 123),
                                          condition: nil,
                                          trend: nil,
@@ -27,25 +27,36 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum as? TidepoolKit.TCalibrationDeviceEventDatum
-        XCTAssertNotNil(datum)
-        XCTAssertEqual(datum?.time, sample.startDate)
-        XCTAssertEqual(datum?.value, 123)
-        XCTAssertEqual(datum?.units, .milligramsPerDeciliter)
-        XCTAssertNil(datum?.annotations)
-        XCTAssertNotNil(datum?.origin)
-        XCTAssertEqual(datum?.origin?.id, sample.syncIdentifier)
-        XCTAssertEqual(datum?.origin?.name, sample.provenanceIdentifier)
-        XCTAssertNil(datum?.origin?.version)
-        XCTAssertEqual(datum?.origin?.type, .application)
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
+{
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
+  "origin" : {
+    "id" : "e71808a78873168e1c21dcd6636290ba",
+    "name" : "135CDABE-9343-7242-4233-1020384789AE",
+    "type" : "application"
+  },
+  "payload" : {
+    "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
+    "syncVersion" : 1,
+    "uuid" : "2A67A303-1234-4CB8-8263-79498265368E"
+  },
+  "subType" : "calibration",
+  "time" : "2020-01-02T03:00:23.000Z",
+  "type" : "deviceEvent",
+  "units" : "mg/dL",
+  "value" : 123
+}
+"""
+        )
     }
     
-    func testSMBG() {
-        let sample = StoredGlucoseSample(uuid: UUID(),
-                                         provenanceIdentifier: UUID().uuidString,
-                                         syncIdentifier: UUID().uuidString,
+    func testDatumSMBG() {
+        let sample = StoredGlucoseSample(uuid: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!,
+                                         provenanceIdentifier: "135CDABE-9343-7242-4233-1020384789AE",
+                                         syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
                                          syncVersion: 2,
-                                         startDate: Date(),
+                                         startDate: Self.dateFormatter.date(from: "2020-01-02T03:00:23Z")!,
                                          quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 167),
                                          condition: nil,
                                          trend: nil,
@@ -54,26 +65,36 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: true,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum as? TidepoolKit.TSMBGDatum
-        XCTAssertNotNil(datum)
-        XCTAssertEqual(datum?.time, sample.startDate)
-        XCTAssertEqual(datum?.value, 167)
-        XCTAssertEqual(datum?.units, .milligramsPerDeciliter)
-        XCTAssertEqual(datum?.subType, .manual)
-        XCTAssertNil(datum?.annotations)
-        XCTAssertNotNil(datum?.origin)
-        XCTAssertEqual(datum?.origin?.id, sample.syncIdentifier)
-        XCTAssertEqual(datum?.origin?.name, sample.provenanceIdentifier)
-        XCTAssertNil(datum?.origin?.version)
-        XCTAssertEqual(datum?.origin?.type, .application)
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
+{
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
+  "origin" : {
+    "id" : "e71808a78873168e1c21dcd6636290ba",
+    "name" : "135CDABE-9343-7242-4233-1020384789AE",
+    "type" : "application"
+  },
+  "payload" : {
+    "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
+    "syncVersion" : 2,
+    "uuid" : "2A67A303-1234-4CB8-8263-79498265368E"
+  },
+  "subType" : "manual",
+  "time" : "2020-01-02T03:00:23.000Z",
+  "type" : "smbg",
+  "units" : "mg/dL",
+  "value" : 167
+}
+"""
+        )
     }
     
-    func testCBGNormal() {
-        let sample = StoredGlucoseSample(uuid: UUID(),
-                                         provenanceIdentifier: UUID().uuidString,
-                                         syncIdentifier: UUID().uuidString,
+    func testDatumCBGNormal() {
+        let sample = StoredGlucoseSample(uuid: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!,
+                                         provenanceIdentifier: "135CDABE-9343-7242-4233-1020384789AE",
+                                         syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
                                          syncVersion: 3,
-                                         startDate: Date(),
+                                         startDate: Self.dateFormatter.date(from: "2020-01-02T03:00:23Z")!,
                                          quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 123),
                                          condition: nil,
                                          trend: .flat,
@@ -82,27 +103,37 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum as? TidepoolKit.TCBGDatum
-        XCTAssertNotNil(datum)
-        XCTAssertEqual(datum?.time, sample.startDate)
-        XCTAssertEqual(datum?.value, 123)
-        XCTAssertEqual(datum?.units, .milligramsPerDeciliter)
-        XCTAssertEqual(datum?.trend, .constant)
-        XCTAssertEqual(datum?.trendRate, 0.1)
-        XCTAssertNil(datum?.annotations)
-        XCTAssertNotNil(datum?.origin)
-        XCTAssertEqual(datum?.origin?.id, sample.syncIdentifier)
-        XCTAssertEqual(datum?.origin?.name, sample.provenanceIdentifier)
-        XCTAssertNil(datum?.origin?.version)
-        XCTAssertEqual(datum?.origin?.type, .application)
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
+{
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
+  "origin" : {
+    "id" : "e71808a78873168e1c21dcd6636290ba",
+    "name" : "135CDABE-9343-7242-4233-1020384789AE",
+    "type" : "application"
+  },
+  "payload" : {
+    "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
+    "syncVersion" : 3,
+    "uuid" : "2A67A303-1234-4CB8-8263-79498265368E"
+  },
+  "time" : "2020-01-02T03:00:23.000Z",
+  "trend" : "constant",
+  "trendRate" : 0.10000000000000001,
+  "type" : "cbg",
+  "units" : "mg/dL",
+  "value" : 123
+}
+"""
+        )
     }
     
-    func testCBGBelowRange() {
-        let sample = StoredGlucoseSample(uuid: UUID(),
-                                         provenanceIdentifier: UUID().uuidString,
-                                         syncIdentifier: UUID().uuidString,
+    func testDatumCBGBelowRange() {
+        let sample = StoredGlucoseSample(uuid: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!,
+                                         provenanceIdentifier: "135CDABE-9343-7242-4233-1020384789AE",
+                                         syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
                                          syncVersion: 4,
-                                         startDate: Date(),
+                                         startDate: Self.dateFormatter.date(from: "2020-01-02T03:00:23Z")!,
                                          quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 40.0),
                                          condition: .belowRange,
                                          trend: .down,
@@ -111,31 +142,44 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum as? TidepoolKit.TCBGDatum
-        XCTAssertNotNil(datum)
-        XCTAssertEqual(datum?.time, sample.startDate)
-        XCTAssertEqual(datum?.value, 39.0)
-        XCTAssertEqual(datum?.units, .milligramsPerDeciliter)
-        XCTAssertEqual(datum?.trend, .slowFall)
-        XCTAssertEqual(datum?.trendRate, -1.0)
-        XCTAssertNotNil(datum?.annotations)
-        XCTAssertEqual(datum?.annotations?.count, 1)
-        XCTAssertEqual(datum?.annotations?[0]["code"] as? String, "bg/out-of-range")
-        XCTAssertEqual(datum?.annotations?[0]["value"] as? String, "low")
-        XCTAssertEqual(datum?.annotations?[0]["threshold"] as? Double, 40.0)
-        XCTAssertNotNil(datum?.origin)
-        XCTAssertEqual(datum?.origin?.id, sample.syncIdentifier)
-        XCTAssertEqual(datum?.origin?.name, sample.provenanceIdentifier)
-        XCTAssertNil(datum?.origin?.version)
-        XCTAssertEqual(datum?.origin?.type, .application)
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
+{
+  "annotations" : [
+    {
+      "code" : "bg/out-of-range",
+      "threshold" : 40,
+      "value" : "low"
+    }
+  ],
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
+  "origin" : {
+    "id" : "e71808a78873168e1c21dcd6636290ba",
+    "name" : "135CDABE-9343-7242-4233-1020384789AE",
+    "type" : "application"
+  },
+  "payload" : {
+    "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
+    "syncVersion" : 4,
+    "uuid" : "2A67A303-1234-4CB8-8263-79498265368E"
+  },
+  "time" : "2020-01-02T03:00:23.000Z",
+  "trend" : "slowFall",
+  "trendRate" : -1,
+  "type" : "cbg",
+  "units" : "mg/dL",
+  "value" : 39
+}
+"""
+        )
     }
     
-    func testCBGAboveRange() {
-        let sample = StoredGlucoseSample(uuid: UUID(),
-                                         provenanceIdentifier: UUID().uuidString,
-                                         syncIdentifier: UUID().uuidString,
+    func testDatumCBGAboveRange() {
+        let sample = StoredGlucoseSample(uuid: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!,
+                                         provenanceIdentifier: "135CDABE-9343-7242-4233-1020384789AE",
+                                         syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
                                          syncVersion: 5,
-                                         startDate: Date(),
+                                         startDate: Self.dateFormatter.date(from: "2020-01-02T03:00:23Z")!,
                                          quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400.0),
                                          condition: .aboveRange,
                                          trend: .upUp,
@@ -144,22 +188,43 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum as? TidepoolKit.TCBGDatum
-        XCTAssertNotNil(datum)
-        XCTAssertEqual(datum?.time, sample.startDate)
-        XCTAssertEqual(datum?.value, 401.0)
-        XCTAssertEqual(datum?.units, .milligramsPerDeciliter)
-        XCTAssertEqual(datum?.trend, .moderateRise)
-        XCTAssertEqual(datum?.trendRate, 4.0)
-        XCTAssertNotNil(datum?.annotations)
-        XCTAssertEqual(datum?.annotations?.count, 1)
-        XCTAssertEqual(datum?.annotations?[0]["code"] as? String, "bg/out-of-range")
-        XCTAssertEqual(datum?.annotations?[0]["value"] as? String, "high")
-        XCTAssertEqual(datum?.annotations?[0]["threshold"] as? Double, 400.0)
-        XCTAssertNotNil(datum?.origin)
-        XCTAssertEqual(datum?.origin?.id, sample.syncIdentifier)
-        XCTAssertEqual(datum?.origin?.name, sample.provenanceIdentifier)
-        XCTAssertNil(datum?.origin?.version)
-        XCTAssertEqual(datum?.origin?.type, .application)
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
+{
+  "annotations" : [
+    {
+      "code" : "bg/out-of-range",
+      "threshold" : 400,
+      "value" : "high"
     }
+  ],
+  "id" : "4cf2a0566365e60b3f9618f39de149b8",
+  "origin" : {
+    "id" : "e71808a78873168e1c21dcd6636290ba",
+    "name" : "135CDABE-9343-7242-4233-1020384789AE",
+    "type" : "application"
+  },
+  "payload" : {
+    "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
+    "syncVersion" : 5,
+    "uuid" : "2A67A303-1234-4CB8-8263-79498265368E"
+  },
+  "time" : "2020-01-02T03:00:23.000Z",
+  "trend" : "moderateRise",
+  "trendRate" : 4,
+  "type" : "cbg",
+  "units" : "mg/dL",
+  "value" : 401
+}
+"""
+        )
+    }
+    
+    private static let encoder: JSONEncoder = {
+        let encoder = JSONEncoder.tidepool
+        encoder.outputFormatting.insert(.prettyPrinted)
+        return encoder
+    }()
+    
+    private static let dateFormatter = ISO8601DateFormatter()
 }
