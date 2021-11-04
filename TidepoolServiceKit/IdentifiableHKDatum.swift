@@ -8,10 +8,6 @@
 
 import TidepoolKit
 
-protocol TypedDatum {
-    static var resolvedType: String { get }
-}
-
 protocol IdentifiableHKDatum {
     var provenanceIdentifier: String { get }
     var syncIdentifier: String? { get }
@@ -47,9 +43,15 @@ extension IdentifiableHKDatum {
             return nil
         }
         if !provenanceIdentifier.isEmpty, provenanceIdentifier != Bundle.main.bundleIdentifier {
-            return TOrigin(id: resolvedIdentifier, name: provenanceIdentifier, type: .application)
+            return TOrigin(id: resolvedIdentifier,
+                           name: provenanceIdentifier,
+                           type: .application)
+        } else {
+            return TOrigin(id: resolvedIdentifier,
+                           name: Bundle.main.bundleIdentifier,
+                           version: Bundle.main.semanticVersion,
+                           type: .application)
         }
-        return TOrigin(id: resolvedIdentifier)
     }
 
     var resolvedIdentifier: String? {
