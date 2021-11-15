@@ -54,9 +54,9 @@ public final class TidepoolService: Service, TAPIObserver {
 
     public init(automaticallyFetchEnvironments: Bool = true) {
         self.id = UUID().uuidString
-        tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
+        self.tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
+        tapi.logging = self
         tapi.addObserver(self)
-        TSharedLogging.instance = self
     }
 
     deinit {
@@ -64,7 +64,7 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     public init?(rawState: RawStateValue) {
-        tapi = TAPI()
+        self.tapi = TAPI()
         guard let id = rawState["id"] as? String else {
             return nil
         }
@@ -79,8 +79,8 @@ public final class TidepoolService: Service, TAPIObserver {
         } catch let error {
             self.error = error
         }
+        tapi.logging = self
         tapi.addObserver(self)
-        TSharedLogging.instance = self
     }
 
     public var rawState: RawStateValue {
@@ -357,10 +357,14 @@ extension TidepoolService: RemoteDataService {
 
             if !pumpSettingsOverrideDeviceEventDatumIsEffectivelyEquivalent {
 
-                // If we need to update the duration of the last override, then do so and upload
+                // If we need to update the duration of the last override, then do so
                 if let lastPumpSettingsOverrideDeviceEventDatum = lastPumpSettingsOverrideDeviceEventDatum,
                    lastPumpSettingsOverrideDeviceEventDatum.updateDuration(basedUpon: pumpSettingsOverrideDeviceEventDatum?.time ?? pumpSettingsDatum.time) {
-                    updated.append(lastPumpSettingsOverrideDeviceEventDatum)
+
+                    // If it isn't already being created, then update it
+                    if !created.contains(where: { $0 === lastPumpSettingsOverrideDeviceEventDatum }) {
+                        updated.append(lastPumpSettingsOverrideDeviceEventDatum)
+                    }
                 }
 
                 if let pumpSettingsOverrideDeviceEventDatum = pumpSettingsOverrideDeviceEventDatum {
@@ -499,6 +503,7 @@ extension TCGMSettingsDatum: EffectivelyEquivalent {
             self.hardwareVersion == other.hardwareVersion &&
             self.manufacturers == other.manufacturers &&
             self.model == other.model &&
+            self.name == other.name &&
             self.serialNumber == other.serialNumber &&
             self.softwareVersion == other.softwareVersion &&
             self.transmitterId == other.transmitterId &&
@@ -555,6 +560,7 @@ extension TPumpSettingsDatum: EffectivelyEquivalent {
             self.insulinSensitivitySchedules == other.insulinSensitivitySchedules &&
             self.manufacturers == other.manufacturers &&
             self.model == other.model &&
+            self.name == other.name &&
             self.overridePresets == other.overridePresets &&
             self.scheduleTimeZoneOffset == other.scheduleTimeZoneOffset &&
             self.serialNumber == other.serialNumber &&

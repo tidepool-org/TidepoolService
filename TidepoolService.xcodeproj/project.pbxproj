@@ -53,6 +53,7 @@
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9D58155272B266700AA5C18 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D58154272B266700AA5C18 /* Date.swift */; };
+		A9D891302742DC0F008E800A /* TidepoolServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8912F2742DC0E008E800A /* TidepoolServiceTests.swift */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A9DAAD0F22E7987800E76C9F /* TidepoolServiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; };
@@ -148,6 +149,7 @@
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9D58154272B266700AA5C18 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		A9D8912F2742DC0E008E800A /* TidepoolServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceTests.swift; sourceTree = "<group>"; };
 		A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKit.h; sourceTree = "<group>"; };
 		A9DAAD0222E7987800E76C9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				A9DAAD0E22E7987800E76C9F /* Info.plist */,
+				A9D8912F2742DC0E008E800A /* TidepoolServiceTests.swift */,
 				1D70C41326F28CC900C62570 /* URLProtocolMock.swift */,
 				A9672B5626E82E6E0025B0CD /* Extensions */,
 				A9E8C60E272C768300016E2E /* Private */,
@@ -777,6 +780,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9E8C611272C76A500016E2E /* TimeInterval.swift in Sources */,
+				A9D891302742DC0F008E800A /* TidepoolServiceTests.swift in Sources */,
 				A9E8C60D272C723400016E2E /* SyncCarbObjectTests.swift in Sources */,
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 				A9E8C60B272C721F00016E2E /* StoredSettingsTests.swift in Sources */,
