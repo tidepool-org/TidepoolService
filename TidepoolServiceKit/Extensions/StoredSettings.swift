@@ -90,6 +90,7 @@ extension StoredSettings: IdentifiableDatum {
                                        display: datumPumpDisplay,
                                        firmwareVersion: datumPumpFirmwareVersion,
                                        hardwareVersion: datumPumpHardwareVersion,
+                                       insulinFormulation: datumPumpInsulinFormulation,
                                        insulinModel: datumPumpInsulinModel,
                                        insulinSensitivitySchedules: datumPumpInsulinSensitivitySchedules,
                                        manufacturers: datumPumpManufacturers,
@@ -248,6 +249,10 @@ extension StoredSettings: IdentifiableDatum {
     private var datumPumpFirmwareVersion: String? { pumpDevice?.firmwareVersion }
 
     private var datumPumpHardwareVersion: String? { pumpDevice?.hardwareVersion }
+
+    private var datumPumpInsulinFormulation: TPumpSettingsDatum.InsulinFormulation? {
+        return insulinType?.datum
+    }
 
     private var datumPumpInsulinModel: TPumpSettingsDatum.InsulinModel? {
         guard let defaultRapidActingModel = defaultRapidActingModel else {
@@ -476,5 +481,20 @@ fileprivate extension TemporaryScheduleOverrideSettings {
             return nil
         }
         return TPumpSettingsOverrideDeviceEventDatum.Units(bloodGlucose: .milligramsPerDeciliter)
+    }
+}
+
+fileprivate extension InsulinType {
+    var datum: TPumpSettingsDatum.InsulinFormulation {
+        switch self {
+        case .novolog:
+            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "NovaLog"))
+        case .humalog:
+            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "Humalog"))
+        case .apidra:
+            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "Apidra"))
+        case .fiasp:
+            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "Fiasp"))
+        }
     }
 }

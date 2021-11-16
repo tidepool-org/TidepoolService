@@ -170,6 +170,12 @@ class StoredSettingsTests: XCTestCase {
   "firmwareVersion" : "Pump Firmware Version",
   "hardwareVersion" : "Pump Hardware Version",
   "id" : "7e81874fd60ce84e7f83731bf80aba49",
+  "insulinFormulation" : {
+    "simple" : {
+      "actingType" : "rapid",
+      "brand" : "Humalog"
+    }
+  },
   "insulinModel" : {
     "actionDelay" : 600,
     "actionDuration" : 21600,
@@ -314,6 +320,7 @@ fileprivate extension StoredSettings {
         let maximumBasalRatePerHour = 3.5
         let maximumBolus = 10.0
         let suspendThreshold = GlucoseThreshold(unit: .milligramsPerDeciliter, value: 75.0)
+        let insulinType = InsulinType.humalog
         let defaultRapidActingModel = StoredInsulinModel(modelType: .rapidAdult, delay: .minutes(10), actionDuration: .hours(6), peakActivity: .hours(3))
         let basalRateSchedule = BasalRateSchedule(dailyItems: [RepeatingScheduleValue(startTime: .hours(0), value: 1.0),
                                                                RepeatingScheduleValue(startTime: .hours(6), value: 1.5),
@@ -375,6 +382,7 @@ fileprivate extension StoredSettings {
                               maximumBasalRatePerHour: maximumBasalRatePerHour,
                               maximumBolus: maximumBolus,
                               suspendThreshold: suspendThreshold,
+                              insulinType: insulinType,
                               defaultRapidActingModel: defaultRapidActingModel,
                               basalRateSchedule: basalRateSchedule,
                               insulinSensitivitySchedule: insulinSensitivitySchedule,

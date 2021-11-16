@@ -555,6 +555,7 @@ extension TPumpSettingsDatum: EffectivelyEquivalent {
             self.display == other.display &&
             self.firmwareVersion == other.firmwareVersion &&
             self.hardwareVersion == other.hardwareVersion &&
+            self.insulinFormulation == other.insulinFormulation &&
             self.insulinModel == other.insulinModel &&
             self.insulinSensitivitySchedule == other.insulinSensitivitySchedule &&
             self.insulinSensitivitySchedules == other.insulinSensitivitySchedules &&
@@ -586,6 +587,7 @@ extension TPumpSettingsDatum: EffectivelyEquivalent {
             display == nil &&
             firmwareVersion == nil &&
             hardwareVersion == nil &&
+            insulinFormulation == nil &&
             insulinModel == nil &&
             insulinSensitivitySchedule == nil &&
             insulinSensitivitySchedules == nil &&
