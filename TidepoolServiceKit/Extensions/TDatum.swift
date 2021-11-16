@@ -6,11 +6,14 @@
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
 
+import Foundation
 import TidepoolKit
 
 extension TDatum {
     func adornWith(id: String? = nil,
                    deviceId: String? = nil,
+                   timeZone: TimeZone? = nil,
+                   timeZoneOffset: TimeInterval? = nil,
                    annotations: [TDictionary]? = nil,
                    associations: [TAssociation]? = nil,
                    payload: TDictionary? = nil,
@@ -20,6 +23,12 @@ extension TDatum {
         }
         if let deviceId = deviceId {
             self.deviceId = !deviceId.isEmpty ? deviceId : nil
+        }
+        if let timeZone = timeZone {
+            self.timeZone = timeZone
+        }
+        if let timeZoneOffset = timeZoneOffset {
+            self.timeZoneOffset = timeZoneOffset
         }
         if let annotations = annotations {
             self.annotations = annotations.contains(where: { !$0.isEmpty }) ? annotations : nil

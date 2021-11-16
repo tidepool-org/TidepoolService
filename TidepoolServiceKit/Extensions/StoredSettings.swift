@@ -15,6 +15,7 @@ import TidepoolKit
  
  Properties:
  - date                             Date                                    .time
+ - timeZone                         TimeInterval                            .timeZone, .timeZoneOffset
  - dosingEnabled                    Bool                                    TPumpSettingsDatum.automatedDelivery
  - glucoseTargetRangeSchedule       GlucoseRangeSchedule?                   TPumpSettingsDatum.bloodGlucoseTargetSchedules["Default"]
  - preMealTargetRange               ClosedRange<HKQuantity>?                TPumpSettingsDatum.bloodGlucoseTargetPreprandial
@@ -53,6 +54,8 @@ extension StoredSettings: IdentifiableDatum {
                                              device: datumControllerDevice,
                                              notifications: datumControllerNotifications)
         return datum.adornWith(id: datumId(for: userId, type: TControllerSettingsDatum.self),
+                               timeZone: datumTimeZone,
+                               timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
                                origin: datumOrigin(for: TControllerSettingsDatum.self))
     }
@@ -71,6 +74,8 @@ extension StoredSettings: IdentifiableDatum {
                                       defaultAlerts: nil,       // TODO: https://tidepool.atlassian.net/browse/LOOP-3929
                                       scheduledAlerts: nil)     // TODO: https://tidepool.atlassian.net/browse/LOOP-3929
         return datum.adornWith(id: datumId(for: userId, type: TCGMSettingsDatum.self),
+                               timeZone: datumTimeZone,
+                               timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
                                origin: datumOrigin(for: TCGMSettingsDatum.self))
     }
@@ -102,6 +107,8 @@ extension StoredSettings: IdentifiableDatum {
                                        softwareVersion: datumPumpSoftwareVersion,
                                        units: datumPumpUnits)
         return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsDatum.self),
+                               timeZone: datumTimeZone,
+                               timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
                                origin: datumOrigin(for: TPumpSettingsDatum.self))
     }
@@ -122,12 +129,18 @@ extension StoredSettings: IdentifiableDatum {
                                                           insulinSensitivityScaleFactor: activeOverride.datumInsulinSensitivityScaleFactor,
                                                           units: activeOverride.datumUnits)
         return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsOverrideDeviceEventDatum.self),
+                               timeZone: datumTimeZone,
+                               timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
                                origin: datumOrigin(for: TPumpSettingsOverrideDeviceEventDatum.self))
     }
 
     private var datumTime: Date { date }
     
+    private var datumTimeZone: TimeZone { timeZone }
+
+    private var datumTimeZoneOffset: TimeInterval { TimeInterval(timeZone.secondsFromGMT(for: date)) }
+
     private var datumControllerDevice: TControllerSettingsDatum.Device? {
         guard let controllerDevice = controllerDevice else {
             return nil
@@ -296,10 +309,12 @@ extension StoredSettings: IdentifiableDatum {
     }
     
     private var datumPumpScheduleTimeZoneOffset: TimeInterval? {
-        guard let timeZone = basalRateSchedule?.timeZone ?? glucoseTargetRangeSchedule?.timeZone ?? carbRatioSchedule?.timeZone ?? insulinSensitivitySchedule?.timeZone else {
+        guard let scheduleTimeZone = basalRateSchedule?.timeZone ?? glucoseTargetRangeSchedule?.timeZone ?? carbRatioSchedule?.timeZone ?? insulinSensitivitySchedule?.timeZone,
+              scheduleTimeZone.secondsFromGMT(for: date) != timeZone.secondsFromGMT(for: date)
+        else {
             return nil
         }
-        return TimeInterval(seconds: timeZone.secondsFromGMT())
+        return TimeInterval(seconds: scheduleTimeZone.secondsFromGMT(for: date))
     }
 
     private var datumPumpSerialNumber: String? { pumpDevice?.localIdentifier }
