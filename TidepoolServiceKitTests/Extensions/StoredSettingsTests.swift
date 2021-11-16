@@ -13,6 +13,77 @@ import TidepoolKit
 @testable import TidepoolServiceKit
 
 class StoredSettingsTests: XCTestCase {
+    func testDatumControllerSettings() {
+        let data = try! Self.encoder.encode(StoredSettings.test.datumControllerSettings(for: "1234567890"))
+        XCTAssertEqual(String(data: data, encoding: .utf8), """
+{
+  "device" : {
+    "manufacturers" : [
+      "Apple"
+    ],
+    "model" : "Controller Model Identifier",
+    "name" : "Controller Name",
+    "softwareVersion" : "Controller System Version"
+  },
+  "id" : "771f448b16fa6f154c25a0a976d70e6f",
+  "notifications" : {
+    "alert" : false,
+    "alertStyle" : "banner",
+    "announcement" : true,
+    "authorization" : "authorized",
+    "badge" : true,
+    "criticalAlert" : true,
+    "lockScreen" : false,
+    "notificationCenter" : false,
+    "sound" : true
+  },
+  "origin" : {
+    "id" : "2A67A303-1234-4CB8-1234-79498265368E:controllerSettings",
+    "name" : "com.apple.dt.xctest.tool",
+    "type" : "application",
+    "version" : "13.1.0+19455"
+  },
+  "payload" : {
+    "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
+  },
+  "time" : "2020-05-14T22:48:15.000Z",
+  "type" : "controllerSettings"
+}
+"""
+        )
+    }
+
+    func testDatumCGMSettings() {
+        let data = try! Self.encoder.encode(StoredSettings.test.datumCGMSettings(for: "1234567890"))
+        XCTAssertEqual(String(data: data, encoding: .utf8), """
+{
+  "firmwareVersion" : "CGM Firmware Version",
+  "hardwareVersion" : "CGM Hardware Version",
+  "id" : "8c9463e463bfed71cf23f833be163f69",
+  "manufacturers" : [
+    "CGM Manufacturer"
+  ],
+  "model" : "CGM Model",
+  "name" : "CGM Name",
+  "origin" : {
+    "id" : "2A67A303-1234-4CB8-1234-79498265368E:cgmSettings",
+    "name" : "com.apple.dt.xctest.tool",
+    "type" : "application",
+    "version" : "13.1.0+19455"
+  },
+  "payload" : {
+    "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
+  },
+  "serialNumber" : "CGM Local Identifier",
+  "softwareVersion" : "CGM Software Version",
+  "time" : "2020-05-14T22:48:15.000Z",
+  "type" : "cgmSettings",
+  "units" : "mg/dL"
+}
+"""
+        )
+    }
+
     func testDatumPumpSettings() {
         let data = try! Self.encoder.encode(StoredSettings.test.datumPumpSettings(for: "1234567890"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """

@@ -297,16 +297,16 @@ extension TidepoolService: RemoteDataService {
 
             // Calculate the data
 
-            var controllerSettingsDatum = $0.datumControllerSettings(for: userId)
+            let controllerSettingsDatum = $0.datumControllerSettings(for: userId)
             let controllerSettingsDatumIsEffectivelyEquivalent = TControllerSettingsDatum.areEffectivelyEquivalent(old: lastControllerSettingsDatum, new: controllerSettingsDatum)
 
-            var cgmSettingsDatum = $0.datumCGMSettings(for: userId)
+            let cgmSettingsDatum = $0.datumCGMSettings(for: userId)
             let cgmSettingsDatumIsEffectivelyEquivalent = TCGMSettingsDatum.areEffectivelyEquivalent(old: lastCGMSettingsDatum, new: cgmSettingsDatum)
 
-            var pumpSettingsDatum = $0.datumPumpSettings(for: userId)
+            let pumpSettingsDatum = $0.datumPumpSettings(for: userId)
             let pumpSettingsDatumIsEffectivelyEquivalent = TPumpSettingsDatum.areEffectivelyEquivalent(old: lastPumpSettingsDatum, new: pumpSettingsDatum)
 
-            var pumpSettingsOverrideDeviceEventDatum = $0.datumPumpSettingsOverrideDeviceEvent(for: userId)
+            let pumpSettingsOverrideDeviceEventDatum = $0.datumPumpSettingsOverrideDeviceEvent(for: userId)
             let pumpSettingsOverrideDeviceEventDatumIsEffectivelyEquivalent = TPumpSettingsOverrideDeviceEventDatum.areEffectivelyEquivalent(old: lastPumpSettingsOverrideDeviceEventDatum, new: pumpSettingsOverrideDeviceEventDatum)
 
             // Associate the data
@@ -333,10 +333,10 @@ extension TidepoolService: RemoteDataService {
                 pumpSettingsOverrideDeviceEventAssociations.append(association)
             }
 
-            controllerSettingsDatum = controllerSettingsDatum.adornWith(associations: controllerSettingsAssociations)
-            cgmSettingsDatum = cgmSettingsDatum.adornWith(associations: cgmSettingsAssociations)
-            pumpSettingsDatum = pumpSettingsDatum.adornWith(associations: pumpSettingsAssociations)
-            pumpSettingsOverrideDeviceEventDatum = pumpSettingsOverrideDeviceEventDatum?.adornWith(associations: pumpSettingsOverrideDeviceEventAssociations)
+            controllerSettingsDatum.append(associations: controllerSettingsAssociations)
+            cgmSettingsDatum.append(associations: cgmSettingsAssociations)
+            pumpSettingsDatum.append(associations: pumpSettingsAssociations)
+            pumpSettingsOverrideDeviceEventDatum?.append(associations: pumpSettingsOverrideDeviceEventAssociations)
 
             // Upload and update the data, if necessary
 
