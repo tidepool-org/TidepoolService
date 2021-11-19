@@ -35,6 +35,16 @@ extension TDatum {
         }
         return self
     }
+
+    func append(associations: [TAssociation]) {
+        guard !associations.isEmpty else {
+            return
+        }
+        if self.associations == nil {
+            self.associations = []
+        }
+        self.associations?.append(contentsOf: associations)
+    }
 }
 
 extension TDatum: CustomDebugStringConvertible {
