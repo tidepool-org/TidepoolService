@@ -47,7 +47,7 @@ class StoredSettingsTests: XCTestCase {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
   },
   "time" : "2020-05-14T22:48:15.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "controllerSettings"
 }
@@ -79,7 +79,7 @@ class StoredSettingsTests: XCTestCase {
   "serialNumber" : "CGM Local Identifier",
   "softwareVersion" : "CGM Software Version",
   "time" : "2020-05-14T22:48:15.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "cgmSettings",
   "units" : "mg/dL"
@@ -232,7 +232,7 @@ class StoredSettingsTests: XCTestCase {
   "serialNumber" : "Pump Local Identifier",
   "softwareVersion" : "Pump Software Version",
   "time" : "2020-05-14T22:48:15.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "pumpSettings",
   "units" : {
@@ -270,7 +270,7 @@ class StoredSettingsTests: XCTestCase {
   },
   "subType" : "pumpSettingsOverride",
   "time" : "2020-05-14T14:38:39.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "deviceEvent",
   "units" : {
@@ -290,8 +290,8 @@ class StoredSettingsTests: XCTestCase {
 
 fileprivate extension StoredSettings {
     static var test: StoredSettings {
-        let timeZone = TimeZone(identifier: "America/Phoenix")!
-        let scheduleTimeZone = TimeZone(secondsFromGMT: timeZone.secondsFromGMT())!
+        let controllerTimeZone = TimeZone(identifier: "America/Los_Angeles")!
+        let scheduleTimeZone = TimeZone(secondsFromGMT: TimeZone(identifier: "America/Phoenix")!.secondsFromGMT())!
         let dosingEnabled = true
         let glucoseTargetRangeSchedule = GlucoseRangeSchedule(rangeSchedule: DailyQuantitySchedule(unit: .milligramsPerDeciliter,
                                                                                                    dailyItems: [RepeatingScheduleValue(startTime: .hours(0), value: DoubleRange(minValue: 100.0, maxValue: 110.0)),
@@ -381,7 +381,7 @@ fileprivate extension StoredSettings {
         let bloodGlucoseUnit = HKUnit.milligramsPerDeciliter
         
         return StoredSettings(date: dateFormatter.date(from: "2020-05-14T22:48:15Z")!,
-                              timeZone: timeZone,
+                              controllerTimeZone: controllerTimeZone,
                               dosingEnabled: dosingEnabled,
                               glucoseTargetRangeSchedule: glucoseTargetRangeSchedule,
                               preMealTargetRange: preMealTargetRange,

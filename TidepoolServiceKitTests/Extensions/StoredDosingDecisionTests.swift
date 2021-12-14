@@ -145,7 +145,7 @@ class StoredDosingDecisionTests: XCTestCase {
     "value" : 400
   },
   "time" : "2020-05-14T22:38:14.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "dosingDecision",
   "units" : {
@@ -189,7 +189,7 @@ class StoredDosingDecisionTests: XCTestCase {
     "syncIdentifier" : "2A67A303-5203-4CB8-8263-79498265368E"
   },
   "time" : "2020-05-14T22:38:14.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "controllerStatus"
 }
@@ -227,7 +227,7 @@ class StoredDosingDecisionTests: XCTestCase {
     "units" : "Units"
   },
   "time" : "2020-05-14T22:38:14.000Z",
-  "timezone" : "America/Phoenix",
+  "timezone" : "America/Los_Angeles",
   "timezoneOffset" : -420,
   "type" : "pumpStatus"
 }
@@ -244,8 +244,8 @@ class StoredDosingDecisionTests: XCTestCase {
 
 fileprivate extension StoredDosingDecision {
     static var test: StoredDosingDecision {
-        let timeZone = TimeZone(identifier: "America/Phoenix")!
-        let scheduleTimeZone = TimeZone(secondsFromGMT: timeZone.secondsFromGMT())!
+        let controllerTimeZone = TimeZone(identifier: "America/Los_Angeles")!
+        let scheduleTimeZone = TimeZone(secondsFromGMT: TimeZone(identifier: "America/Phoenix")!.secondsFromGMT())!
         let reason = "test"
         let settings = StoredDosingDecision.Settings(syncIdentifier: UUID(uuidString: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")!)
         let scheduleOverride = TemporaryScheduleOverride(context: .preMeal,
@@ -365,7 +365,7 @@ fileprivate extension StoredDosingDecision {
                                Issue(id: "bravo", details: ["size": "tiny"])]
         
         return StoredDosingDecision(date: dateFormatter.date(from: "2020-05-14T22:38:14Z")!,
-                                    timeZone: timeZone,
+                                    controllerTimeZone: controllerTimeZone,
                                     reason: reason,
                                     settings: settings,
                                     scheduleOverride: scheduleOverride,

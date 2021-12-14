@@ -15,7 +15,7 @@ import TidepoolKit
 
  Properties:
  - date                            Date                                 .time
- - timeZone                        TimeInterval                         .timeZone, .timeZoneOffset
+ - controllerTimeZone              TimeInterval                         .timeZone, .timeZoneOffset
  - reason                          String                               TDosingDecisionDatum.reason
  - settings                        Settings?                            TDosingDecisionDatum.associations
  - scheduleOffset                  TemporaryScheduleOverride?           (unused, included in glucoseTargetRangeSchedule)
@@ -111,9 +111,9 @@ extension StoredDosingDecision: IdentifiableDatum {
 
     private var datumTime: Date { date }
 
-    private var datumTimeZone: TimeZone { timeZone }
+    private var datumTimeZone: TimeZone { controllerTimeZone }
 
-    private var datumTimeZoneOffset: TimeInterval { TimeInterval(timeZone.secondsFromGMT(for: date)) }
+    private var datumTimeZoneOffset: TimeInterval { TimeInterval(controllerTimeZone.secondsFromGMT(for: date)) }
 
     private var datumReason: String { reason }
 
@@ -217,7 +217,7 @@ extension StoredDosingDecision: IdentifiableDatum {
 
     private var datumScheduleTimeZoneOffset: TimeInterval? {
         guard let scheduleTimeZone = glucoseTargetRangeSchedule?.timeZone,
-              scheduleTimeZone.secondsFromGMT(for: date) != timeZone.secondsFromGMT(for: date)
+              scheduleTimeZone.secondsFromGMT(for: date) != controllerTimeZone.secondsFromGMT(for: date)
         else {
             return nil
         }

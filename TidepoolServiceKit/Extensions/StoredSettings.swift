@@ -15,7 +15,7 @@ import TidepoolKit
  
  Properties:
  - date                             Date                                    .time
- - timeZone                         TimeInterval                            .timeZone, .timeZoneOffset
+ - controllerTimeZone               TimeInterval                            .timeZone, .timeZoneOffset
  - dosingEnabled                    Bool                                    TPumpSettingsDatum.automatedDelivery
  - glucoseTargetRangeSchedule       GlucoseRangeSchedule?                   TPumpSettingsDatum.bloodGlucoseTargetSchedules["Default"]
  - preMealTargetRange               ClosedRange<HKQuantity>?                TPumpSettingsDatum.bloodGlucoseTargetPreprandial
@@ -137,9 +137,9 @@ extension StoredSettings: IdentifiableDatum {
 
     private var datumTime: Date { date }
     
-    private var datumTimeZone: TimeZone { timeZone }
+    private var datumTimeZone: TimeZone { controllerTimeZone }
 
-    private var datumTimeZoneOffset: TimeInterval { TimeInterval(timeZone.secondsFromGMT(for: date)) }
+    private var datumTimeZoneOffset: TimeInterval { TimeInterval(controllerTimeZone.secondsFromGMT(for: date)) }
 
     private var datumControllerDevice: TControllerSettingsDatum.Device? {
         guard let controllerDevice = controllerDevice else {
@@ -310,7 +310,7 @@ extension StoredSettings: IdentifiableDatum {
     
     private var datumPumpScheduleTimeZoneOffset: TimeInterval? {
         guard let scheduleTimeZone = basalRateSchedule?.timeZone ?? glucoseTargetRangeSchedule?.timeZone ?? carbRatioSchedule?.timeZone ?? insulinSensitivitySchedule?.timeZone,
-              scheduleTimeZone.secondsFromGMT(for: date) != timeZone.secondsFromGMT(for: date)
+              scheduleTimeZone.secondsFromGMT(for: date) != controllerTimeZone.secondsFromGMT(for: date)
         else {
             return nil
         }
