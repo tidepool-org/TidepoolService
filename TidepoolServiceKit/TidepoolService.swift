@@ -235,6 +235,60 @@ extension TidepoolService: RemoteDataService {
 
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
+    public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(calculateDosingDecisionData(stored, for: userId), completion: completion)
+    }
+
+    func calculateDosingDecisionData(_ stored: [StoredDosingDecision], for userId: String) -> [TDatum] {
+        var created: [TDatum] = []
+
+        stored.forEach {
+            let dosingDecisionDatum = $0.datumDosingDecision(for: userId)
+            let controllerStatusDatum = $0.datumControllerStatus(for: userId)
+            let pumpStatusDatum = $0.datumPumpStatus(for:userId)
+
+            var dosingDecisionAssociations: [TAssociation] = []
+            var controllerStatusAssociations: [TAssociation] = []
+            var pumpStatusAssociations: [TAssociation] = []
+
+            if !dosingDecisionDatum.isEffectivelyEmpty {
+                let association = TAssociation(type: .datum, id: dosingDecisionDatum.id!, reason: "dosingDecision")
+                controllerStatusAssociations.append(association)
+                pumpStatusAssociations.append(association)
+            }
+            if !controllerStatusDatum.isEffectivelyEmpty {
+                let association = TAssociation(type: .datum, id: controllerStatusDatum.id!, reason: "controllerStatus")
+                dosingDecisionAssociations.append(association)
+                pumpStatusAssociations.append(association)
+            }
+            if !pumpStatusDatum.isEffectivelyEmpty {
+                let association = TAssociation(type: .datum, id: pumpStatusDatum.id!, reason: "pumpStatus")
+                dosingDecisionAssociations.append(association)
+                controllerStatusAssociations.append(association)
+            }
+
+            dosingDecisionDatum.append(associations: dosingDecisionAssociations)
+            controllerStatusDatum.append(associations: controllerStatusAssociations)
+            pumpStatusDatum.append(associations: pumpStatusAssociations)
+
+            if !dosingDecisionDatum.isEffectivelyEmpty {
+                created.append(dosingDecisionDatum)
+            }
+            if !controllerStatusDatum.isEffectivelyEmpty {
+                created.append(controllerStatusDatum)
+            }
+            if !pumpStatusDatum.isEffectivelyEmpty {
+                created.append(pumpStatusDatum)
+            }
+        }
+
+        return created
+    }
+
     public var glucoseDataLimit: Int? { return 1000 }
 
     public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -645,5 +699,43 @@ extension TPumpSettingsOverrideDeviceEventDatum: EffectivelyEquivalent {
         self.expectedDuration = duration
         self.duration = updatedDuration
         return true
+    }
+}
+
+fileprivate extension TDosingDecisionDatum {
+
+    // Ignore reason and units as they are always specified
+    var isEffectivelyEmpty: Bool {
+        return originalFood == nil &&
+            food == nil &&
+            selfMonitoredBloodGlucose == nil &&
+            carbohydratesOnBoard == nil &&
+            insulinOnBoard == nil &&
+            bloodGlucoseTargetSchedule == nil &&
+            historicalBloodGlucose == nil &&
+            forecastBloodGlucose == nil &&
+            recommendedBasal == nil &&
+            recommendedBolus == nil &&
+            requestedBolus == nil &&
+            warnings?.isEmpty != false &&
+            errors?.isEmpty != false &&
+            scheduleTimeZoneOffset == nil &&
+            units == nil
+    }
+}
+
+fileprivate extension TControllerStatusDatum {
+    var isEffectivelyEmpty: Bool {
+        return battery == nil
+    }
+}
+
+fileprivate extension TPumpStatusDatum {
+    var isEffectivelyEmpty: Bool {
+        return basalDelivery == nil &&
+            battery == nil &&
+            bolusDelivery == nil &&
+            deliveryIndeterminant == nil &&
+            reservoir == nil
     }
 }

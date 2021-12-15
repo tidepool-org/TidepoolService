@@ -22,6 +22,31 @@ class TidepoolServiceTests: XCTestCase {
         tidepoolService = TidepoolService(automaticallyFetchEnvironments: false)
         userID = "1234567890"
     }
+
+    func testCalculateDosingDecisionData() {
+        let dosingDecisions = [StoredDosingDecision(reason: "Test",
+                                                    controllerStatus: StoredDosingDecision.ControllerStatus(batteryLevel: 0.5),
+                                                    pumpManagerStatus: PumpManagerStatus(timeZone: TimeZone(secondsFromGMT: TimeZone(identifier: "America/Phoenix")!.secondsFromGMT())!,
+                                                                                         device: HKDevice(name: "Pump #1"),
+                                                                                         pumpBatteryChargeRemaining: 0.75,
+                                                                                         basalDeliveryState: nil,
+                                                                                         bolusState: .noBolus,
+                                                                                         insulinType: nil))]
+        let created = tidepoolService.calculateDosingDecisionData(dosingDecisions, for: userID)
+        XCTAssertEqual(created.count, 3)
+        XCTAssertEqual((created[0] as! TDosingDecisionDatum).reason, "Test")
+        XCTAssertEqual((created[0] as! TDosingDecisionDatum).associations!.count, 2)
+        XCTAssertEqual((created[0] as! TDosingDecisionDatum).associations![0].id, created[1].id)
+        XCTAssertEqual((created[0] as! TDosingDecisionDatum).associations![1].id, created[2].id)
+        XCTAssertEqual((created[1] as! TControllerStatusDatum).battery!.remaining, 0.5)
+        XCTAssertEqual((created[1] as! TControllerStatusDatum).associations!.count, 2)
+        XCTAssertEqual((created[1] as! TControllerStatusDatum).associations![0].id, created[0].id)
+        XCTAssertEqual((created[1] as! TControllerStatusDatum).associations![1].id, created[2].id)
+        XCTAssertEqual((created[2] as! TPumpStatusDatum).battery!.remaining, 0.75)
+        XCTAssertEqual((created[2] as! TPumpStatusDatum).associations!.count, 2)
+        XCTAssertEqual((created[2] as! TPumpStatusDatum).associations![0].id, created[0].id)
+        XCTAssertEqual((created[2] as! TPumpStatusDatum).associations![1].id, created[1].id)
+    }
     
     func testCalculateSettingsDataIndividual() {
         let settings = [StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #1"),
