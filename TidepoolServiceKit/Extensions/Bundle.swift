@@ -10,6 +10,9 @@ import Foundation
 
 extension Bundle {
     var semanticVersion: String? {
+        guard Bundle.main.bundleIdentifier != "com.apple.dt.xctest.tool" else {     // Ignore version for XCTest
+            return nil
+        }
         guard var semanticVersion = bundleShortVersionString else {
             return nil
         }

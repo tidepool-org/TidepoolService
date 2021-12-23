@@ -40,8 +40,7 @@ class StoredSettingsTests: XCTestCase {
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:controllerSettings",
     "name" : "com.apple.dt.xctest.tool",
-    "type" : "application",
-    "version" : "13.1.0+19455"
+    "type" : "application"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
@@ -70,8 +69,7 @@ class StoredSettingsTests: XCTestCase {
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:cgmSettings",
     "name" : "com.apple.dt.xctest.tool",
-    "type" : "application",
-    "version" : "13.1.0+19455"
+    "type" : "application"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
@@ -210,8 +208,7 @@ class StoredSettingsTests: XCTestCase {
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:pumpSettings",
     "name" : "com.apple.dt.xctest.tool",
-    "type" : "application",
-    "version" : "13.1.0+19455"
+    "type" : "application"
   },
   "overridePresets" : {
     "Apple" : {
@@ -261,8 +258,7 @@ class StoredSettingsTests: XCTestCase {
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:deviceEvent/pumpSettingsOverride",
     "name" : "com.apple.dt.xctest.tool",
-    "type" : "application",
-    "version" : "13.1.0+19455"
+    "type" : "application"
   },
   "overrideType" : "preprandial",
   "payload" : {
