@@ -13,7 +13,7 @@ protocol TypedDatum {
 }
 
 protocol IdentifiableDatum {
-    var syncIdentifier: UUID { get }
+    var syncIdentifierAsString: String { get }
 }
 
 extension IdentifiableDatum {
@@ -45,7 +45,7 @@ extension IdentifiableDatum {
     }
 
     var resolvedIdentifier: String {
-        return syncIdentifier.uuidString
+        return syncIdentifierAsString
     }
 
     func resolvedIdentifier<T: TypedDatum>(for type: T.Type) -> String {

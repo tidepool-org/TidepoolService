@@ -23,10 +23,6 @@
 /* Begin PBXBuildFile section */
 		1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C41326F28CC900C62570 /* URLProtocolMock.swift */; };
 		A9057687271F770F0030C3B1 /* IdentifiableDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9057686271F770F0030C3B1 /* IdentifiableDatum.swift */; };
-		A9057689271F9CA60030C3B1 /* TPumpSettingsDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9057688271F9CA60030C3B1 /* TPumpSettingsDatum.swift */; };
-		A905768B271F9D4E0030C3B1 /* TPumpSettingsOverrideDeviceEventDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A905768A271F9D4E0030C3B1 /* TPumpSettingsOverrideDeviceEventDatum.swift */; };
-		A905768D271F9EA50030C3B1 /* TDosingDecisionDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A905768C271F9EA50030C3B1 /* TDosingDecisionDatum.swift */; };
-		A905768F271F9EC50030C3B1 /* TPumpStatusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A905768E271F9EC50030C3B1 /* TPumpStatusDatum.swift */; };
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
 		A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
@@ -36,7 +32,6 @@
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA62435987000E02268 /* SyncCarbObject.swift */; };
 		A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */; };
-		A94477B22734390B00CCD4B3 /* TCGMSettingsDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94477B12734390B00CCD4B3 /* TCGMSettingsDatum.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
@@ -49,13 +44,14 @@
 		A9752A9D270B972D00E50750 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9752A9C270B972D00E50750 /* TimeInterval.swift */; };
 		A97651752421AA10002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
 		A97651762421AA11002EB5D4 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
+		A979F5E5278F5A70004B2547 /* SyncPumpEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A979F5E4278F5A70004B2547 /* SyncPumpEventTests.swift */; };
 		A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97A60FA243818C900AD69A5 /* TDatum.swift */; };
+		A98737CB2788DAE400A6A23D /* SyncPumpEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98737CA2788DAE400A6A23D /* SyncPumpEvent.swift */; };
+		A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98737CC2788E61400A6A23D /* InsulinType.swift */; };
 		A9A53E2F271508D80050C0B1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A53E2E271508D80050C0B1 /* String.swift */; };
-		A9B0D97C2733133800D96D93 /* TControllerSettingsDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B0D97B2733133800D96D93 /* TControllerSettingsDatum.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
-		A9D58153272B0A5300AA5C18 /* TControllerStatusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D58152272B0A5300AA5C18 /* TControllerStatusDatum.swift */; };
 		A9D58155272B266700AA5C18 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D58154272B266700AA5C18 /* Date.swift */; };
 		A9D891302742DC0F008E800A /* TidepoolServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D8912F2742DC0E008E800A /* TidepoolServiceTests.swift */; };
 		A9DAAD0822E7987800E76C9F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
@@ -128,15 +124,10 @@
 /* Begin PBXFileReference section */
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		A9057686271F770F0030C3B1 /* IdentifiableDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableDatum.swift; sourceTree = "<group>"; };
-		A9057688271F9CA60030C3B1 /* TPumpSettingsDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPumpSettingsDatum.swift; sourceTree = "<group>"; };
-		A905768A271F9D4E0030C3B1 /* TPumpSettingsOverrideDeviceEventDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPumpSettingsOverrideDeviceEventDatum.swift; sourceTree = "<group>"; };
-		A905768C271F9EA50030C3B1 /* TDosingDecisionDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDosingDecisionDatum.swift; sourceTree = "<group>"; };
-		A905768E271F9EC50030C3B1 /* TPumpStatusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPumpStatusDatum.swift; sourceTree = "<group>"; };
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
 		A9309CA62435987000E02268 /* SyncCarbObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCarbObject.swift; sourceTree = "<group>"; };
 		A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSample.swift; sourceTree = "<group>"; };
-		A94477B12734390B00CCD4B3 /* TCGMSettingsDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCGMSettingsDatum.swift; sourceTree = "<group>"; };
 		A94AE4E4235A89B5005CA320 /* TidepoolServiceKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolServiceKitPlugin.h; sourceTree = "<group>"; };
 		A94AE4E7235A89B5005CA320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -149,15 +140,16 @@
 		A9752A98270B93A700E50750 /* GlucoseRangeSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseRangeSchedule.swift; sourceTree = "<group>"; };
 		A9752A9A270B941C00E50750 /* SingleQuantitySchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleQuantitySchedule.swift; sourceTree = "<group>"; };
 		A9752A9C270B972D00E50750 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		A979F5E4278F5A70004B2547 /* SyncPumpEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPumpEventTests.swift; sourceTree = "<group>"; };
 		A97A60FA243818C900AD69A5 /* TDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDatum.swift; sourceTree = "<group>"; };
+		A98737CA2788DAE400A6A23D /* SyncPumpEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPumpEvent.swift; sourceTree = "<group>"; };
+		A98737CC2788E61400A6A23D /* InsulinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinType.swift; sourceTree = "<group>"; };
 		A99222FA235A879600C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A99222FB235A87B100C11C04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A9A53E2E271508D80050C0B1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		A9B0D97B2733133800D96D93 /* TControllerSettingsDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TControllerSettingsDatum.swift; sourceTree = "<group>"; };
 		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
-		A9D58152272B0A5300AA5C18 /* TControllerStatusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TControllerStatusDatum.swift; sourceTree = "<group>"; };
 		A9D58154272B266700AA5C18 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		A9D8912F2742DC0E008E800A /* TidepoolServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceTests.swift; sourceTree = "<group>"; };
 		A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +264,7 @@
 				A9752A96270B91E000E50750 /* Double.swift */,
 				A9752A98270B93A700E50750 /* GlucoseRangeSchedule.swift */,
 				A9D1107B242289720091C620 /* HKUnit.swift */,
+				A98737CC2788E61400A6A23D /* InsulinType.swift */,
 				A9752A9A270B941C00E50750 /* SingleQuantitySchedule.swift */,
 				A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */,
 				A9752A92270B766A00E50750 /* StoredDosingDecision.swift */,
@@ -279,15 +272,9 @@
 				A9752A8E270B763C00E50750 /* StoredSettings.swift */,
 				A9A53E2E271508D80050C0B1 /* String.swift */,
 				A9309CA62435987000E02268 /* SyncCarbObject.swift */,
-				A94477B12734390B00CCD4B3 /* TCGMSettingsDatum.swift */,
-				A9B0D97B2733133800D96D93 /* TControllerSettingsDatum.swift */,
-				A9D58152272B0A5300AA5C18 /* TControllerStatusDatum.swift */,
+				A98737CA2788DAE400A6A23D /* SyncPumpEvent.swift */,
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
-				A905768C271F9EA50030C3B1 /* TDosingDecisionDatum.swift */,
 				A9752A9C270B972D00E50750 /* TimeInterval.swift */,
-				A9057688271F9CA60030C3B1 /* TPumpSettingsDatum.swift */,
-				A905768A271F9D4E0030C3B1 /* TPumpSettingsOverrideDeviceEventDatum.swift */,
-				A905768E271F9EC50030C3B1 /* TPumpStatusDatum.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -317,6 +304,7 @@
 				A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */,
 				A9E8C60A272C721F00016E2E /* StoredSettingsTests.swift */,
 				A9E8C60C272C723400016E2E /* SyncCarbObjectTests.swift */,
+				A979F5E4278F5A70004B2547 /* SyncPumpEventTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -773,26 +761,21 @@
 				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
 				A9752A9D270B972D00E50750 /* TimeInterval.swift in Sources */,
 				A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */,
-				A9057689271F9CA60030C3B1 /* TPumpSettingsDatum.swift in Sources */,
 				A9A53E2F271508D80050C0B1 /* String.swift in Sources */,
+				A98737CB2788DAE400A6A23D /* SyncPumpEvent.swift in Sources */,
 				A9752A8F270B763C00E50750 /* StoredSettings.swift in Sources */,
-				A905768B271F9D4E0030C3B1 /* TPumpSettingsOverrideDeviceEventDatum.swift in Sources */,
 				A9F9F317271A046E00D19374 /* StoredCarbEntry.swift in Sources */,
 				A9752A9B270B941C00E50750 /* SingleQuantitySchedule.swift in Sources */,
 				A9752A93270B766A00E50750 /* StoredDosingDecision.swift in Sources */,
-				A94477B22734390B00CCD4B3 /* TCGMSettingsDatum.swift in Sources */,
 				A9752A97270B91E000E50750 /* Double.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
-				A9B0D97C2733133800D96D93 /* TControllerSettingsDatum.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
-				A9D58153272B0A5300AA5C18 /* TControllerStatusDatum.swift in Sources */,
-				A905768F271F9EC50030C3B1 /* TPumpStatusDatum.swift in Sources */,
+				A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */,
 				A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */,
 				A9057687271F770F0030C3B1 /* IdentifiableDatum.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
-				A905768D271F9EA50030C3B1 /* TDosingDecisionDatum.swift in Sources */,
 				A9D58155272B266700AA5C18 /* Date.swift in Sources */,
 				A9752A99270B93A700E50750 /* GlucoseRangeSchedule.swift in Sources */,
 			);
@@ -809,6 +792,7 @@
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 				A9E8C60B272C721F00016E2E /* StoredSettingsTests.swift in Sources */,
 				A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */,
+				A979F5E5278F5A70004B2547 /* SyncPumpEventTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

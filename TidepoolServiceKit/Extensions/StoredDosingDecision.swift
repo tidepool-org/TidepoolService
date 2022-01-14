@@ -109,6 +109,8 @@ extension StoredDosingDecision: IdentifiableDatum {
                                origin: datumOrigin(for: TPumpStatusDatum.self))
     }
 
+    var syncIdentifierAsString: String { syncIdentifier.uuidString }
+
     private var datumTime: Date { date }
 
     private var datumTimeZone: TimeZone { controllerTimeZone }
@@ -273,7 +275,9 @@ extension StoredDosingDecision: IdentifiableDatum {
     }
 }
 
-extension StoredDosingDecision.Settings: IdentifiableDatum {}
+extension StoredDosingDecision.Settings: IdentifiableDatum {
+    var syncIdentifierAsString: String { syncIdentifier.uuidString }
+}
 
 fileprivate extension StoredDosingDecision.ControllerStatus.BatteryState {
     var datum: TControllerStatusDatum.Battery.State? {
@@ -355,4 +359,16 @@ fileprivate extension Double {
         let factor = pow(10, Double(decimalPlaces))
         return (self * factor).rounded() / factor
     }
+}
+
+extension TDosingDecisionDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.dosingDecision.rawValue }
+}
+
+extension TControllerStatusDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.controllerStatus.rawValue }
+}
+
+extension TPumpStatusDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.pumpStatus.rawValue }
 }
