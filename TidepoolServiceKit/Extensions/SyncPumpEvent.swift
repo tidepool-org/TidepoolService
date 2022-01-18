@@ -167,7 +167,7 @@ extension SyncPumpEvent: IdentifiableDatum {
     }
 
     private func datumForPrime(for userId: String) -> TPrimeDeviceEventDatum? {
-        var datum = TPrimeDeviceEventDatum(time: datumTime)
+        var datum = TPrimeDeviceEventDatum(time: datumTime, target: .tubing)        // Default to tubing until we have further information
         datum = datum.adornWith(id: datumId(for: userId, type: TPrimeDeviceEventDatum.self),
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TPrimeDeviceEventDatum.self))
