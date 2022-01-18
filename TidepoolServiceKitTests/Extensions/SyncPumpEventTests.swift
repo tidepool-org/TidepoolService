@@ -213,6 +213,7 @@ class SyncPumpEventTests: XCTestCase {
   "payload" : {
     "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784"
   },
+  "primeTarget" : "tubing",
   "subType" : "prime",
   "time" : "2020-01-02T03:00:23.000Z",
   "type" : "deviceEvent"
