@@ -28,56 +28,73 @@ import TidepoolKit
  -   insulinType            InsulinType?        .insulinFormulation
  -   automatic              Bool?               .subType, .deliveryType
  -   manuallyEntered        Bool                .subType
- -   duringSuspend          Bool?               .deliveryType
  -   syncIdentifier         String?             (N/A - same as top-level syncIdentifier)
  -   scheduledBasalRate     HKQuantity?         .rate, .suppressed.rate
  - syncIdentifier          String               .id, .origin.id, .payload["syncIdentifier"]
  */
 
 extension SyncPumpEvent: IdentifiableDatum {
-    func datum(for userId: String) -> TDatum? {
+    func data(for userId: String) -> [TDatum] {
         switch type {
         case .alarm:
-            return datumForAlarm(for: userId)
+            return dataForAlarm(for: userId)
         case .alarmClear:
-            return datumForAlarmClear(for: userId)
+            return dataForAlarmClear(for: userId)
         case .basal:
-            return datumForBasal(for: userId)
+            return dataForBasal(for: userId)
         case .bolus:
-            return datumForBolus(for: userId)
+            return dataForBolus(for: userId)
         case .prime:
-            return datumForPrime(for: userId)
+            return dataForPrime(for: userId)
         case .resume:
-            return datumForResume(for: userId)
+            return dataForResume(for: userId)
         case .rewind:
-            return datumForRewind(for: userId)
+            return dataForRewind(for: userId)
         case .suspend:
-            return datumForSuspend(for: userId)
+            return dataForSuspend(for: userId)
         case .tempBasal:
-            return datumForTempBasal(for: userId)
+            return dataForTempBasal(for: userId)
         }
     }
 
     var syncIdentifierAsString: String { syncIdentifier.md5hash! }  // Actual sync identifier may be human readable and of variable length
 
-    private func datumForAlarm(for userId: String) -> TAlarmDeviceEventDatum {
+    private func dataForAlarm(for userId: String) -> [TDatum] {
+        var data: [TDatum] = []
+        if dose?.type == .suspend {
+            data.append(contentsOf: dataForSuspend(for: userId))
+        }
+
         var payload = datumPayload
         if let alarmType = alarmType, case .other(let details) = alarmType {
             payload["otherAlarmType"] = details
         }
 
-        var datum = TAlarmDeviceEventDatum(time: datumTime, alarmType: datumAlarmType ?? .other)
+        var datum = TAlarmDeviceEventDatum(time: date, alarmType: datumAlarmType ?? .other)
         datum = datum.adornWith(id: datumId(for: userId, type: TAlarmDeviceEventDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TAlarmDeviceEventDatum.self))
-        return datum
+        data.append(datum)
+
+        if dose?.type == .resume {
+            data.append(contentsOf: dataForResume(for: userId))
+        }
+        return data
     }
 
-    private func datumForAlarmClear(for userId: String) -> TDatum? { nil }  // Not supported by Tidepool backend data model
+    private func dataForAlarmClear(for userId: String) -> [TDatum] {
+        if dose?.type == .suspend {
+            return dataForSuspend(for: userId)
+        } else if dose?.type == .resume {
+            return dataForResume(for: userId)
+        } else {
+            return []
+        }
+    }
 
-    private func datumForBasal(for userId: String) -> TScheduledBasalDatum? {
+    private func dataForBasal(for userId: String) -> [TDatum] {
         guard let dose = dose, let datumDuration = datumDuration, let datumScheduledBasalRate = datumScheduledBasalRate else {
-            return nil
+            return []
         }
 
         var payload = datumPayload
@@ -91,25 +108,26 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TScheduledBasalDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TScheduledBasalDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForBolus(for userId: String) -> TDatum? {
+    private func dataForBolus(for userId: String) -> [TDatum] {
         guard let dose = dose else {
-            return nil
+            return []
         }
+
         if dose.manuallyEntered {
-            return datumForBolusManuallyEntered(for: userId)
+            return dataForBolusManuallyEntered(for: userId)
         } else if dose.automatic != true {
-            return datumForBolusManual(for: userId)
+            return dataForBolusManual(for: userId)
         } else {
-            return datumForBolusAutomatic(for: userId)
+            return dataForBolusAutomatic(for: userId)
         }
     }
 
-    private func datumForBolusManuallyEntered(for userId: String) -> TInsulinDatum? {
+    private func dataForBolusManuallyEntered(for userId: String) ->[TDatum] {
         guard let dose = dose else {
-            return nil
+            return []
         }
 
         var payload = datumPayload
@@ -121,12 +139,12 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TInsulinDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TInsulinDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForBolusManual(for userId: String) -> TNormalBolusDatum? {
+    private func dataForBolusManual(for userId: String) -> [TDatum] {
         guard let dose = dose else {
-            return nil
+            return []
         }
 
         var payload = datumPayload
@@ -142,12 +160,12 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TNormalBolusDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TNormalBolusDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForBolusAutomatic(for userId: String) -> TAutomatedBolusDatum? {
+    private func dataForBolusAutomatic(for userId: String) -> [TDatum] {
         guard let dose = dose else {
-            return nil
+            return []
         }
 
         var payload = datumPayload
@@ -163,20 +181,30 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBolusDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TAutomatedBolusDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForPrime(for userId: String) -> TPrimeDeviceEventDatum? {
-        var datum = TPrimeDeviceEventDatum(time: datumTime, target: .tubing)        // Default to tubing until we have further information
+    private func dataForPrime(for userId: String) -> [TDatum] {
+        var data: [TDatum] = []
+        if dose?.type == .suspend {
+            data.append(contentsOf: dataForSuspend(for: userId))
+        }
+
+        var datum = TPrimeDeviceEventDatum(time: date, target: .tubing)        // Default to tubing until we have further information
         datum = datum.adornWith(id: datumId(for: userId, type: TPrimeDeviceEventDatum.self),
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TPrimeDeviceEventDatum.self))
-        return datum
+        data.append(datum)
+
+        if dose?.type == .resume {
+            data.append(contentsOf: dataForResume(for: userId))
+        }
+        return data
     }
 
-    private func datumForResume(for userId: String) -> TStatusDeviceEventDatum? {
+    private func dataForResume(for userId: String) -> [TDatum] {
         guard let dose = dose else {
-            return nil
+            return []
         }
 
         var reason = TDictionary()
@@ -188,20 +216,42 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TStatusDeviceEventDatum.self),
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TStatusDeviceEventDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForRewind(for userId: String) -> TReservoirChangeDeviceEventDatum? {
-        var datum = TReservoirChangeDeviceEventDatum(time: datumTime)
+    private func dataForRewind(for userId: String) -> [TDatum] {
+        var data: [TDatum] = []
+        if dose?.type == .suspend {
+            data.append(contentsOf: dataForSuspend(for: userId))
+        }
+
+        var datum = TReservoirChangeDeviceEventDatum(time: date)
         datum = datum.adornWith(id: datumId(for: userId, type: TReservoirChangeDeviceEventDatum.self),
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TReservoirChangeDeviceEventDatum.self))
-        return datum
+        data.append(datum)
+
+        if dose?.type == .resume {
+            data.append(contentsOf: dataForResume(for: userId))
+        }
+        return data
     }
 
-    private func datumForSuspend(for userId: String) -> TStatusDeviceEventDatum? {
+    private func dataForSuspend(for userId: String) -> [TDatum] {
         guard let dose = dose else {
-            return nil
+            return []
+        }
+        
+        if dose.startDate == dose.endDate {
+            return dataForSuspendEvent(for: userId)
+        } else {
+            return dataForSuspendBasal(for: userId)
+        }
+    }
+
+    private func dataForSuspendEvent(for userId: String) -> [TDatum] {
+        guard let dose = dose else {
+            return []
         }
 
         var reason = TDictionary()
@@ -213,25 +263,12 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TStatusDeviceEventDatum.self),
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TStatusDeviceEventDatum.self))
-        return datum
+        return [datum]
     }
-
-    private func datumForTempBasal(for userId: String) -> TBasalDatum? {
-        guard let dose = dose else {
-            return nil
-        }
-        if dose.duringSuspend == true {
-            return datumForTempBasalDuringSuspend(for: userId)
-        } else if dose.automatic == false {
-            return datumForTempBasalManual(for: userId)
-        } else {
-            return datumForTempBasalAutomatic(for: userId)
-        }
-    }
-
-    private func datumForTempBasalDuringSuspend(for userId: String) -> TSuspendedBasalDatum? {
+    
+    private func dataForSuspendBasal(for userId: String) -> [TDatum] {
         guard let datumDuration = datumDuration else {
-            return nil
+            return []
         }
 
         var datum = TSuspendedBasalDatum(time: datumTime,
@@ -240,12 +277,24 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TSuspendedBasalDatum.self),
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TSuspendedBasalDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForTempBasalManual(for userId: String) -> TTemporaryBasalDatum? {
+    private func dataForTempBasal(for userId: String) -> [TDatum] {
+        guard let dose = dose else {
+            return []
+        }
+
+        if dose.automatic == false {
+            return dataForTempBasalManual(for: userId)
+        } else {
+            return dataForTempBasalAutomatic(for: userId)
+        }
+    }
+
+    private func dataForTempBasalManual(for userId: String) -> [TDatum] {
         guard let dose = dose, let datumDuration = datumDuration, let datumRate = datumRate else {
-            return nil
+            return []
         }
 
         var payload = datumPayload
@@ -260,12 +309,12 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TTemporaryBasalDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TTemporaryBasalDatum.self))
-        return datum
+        return [datum]
     }
 
-    private func datumForTempBasalAutomatic(for userId: String) -> TAutomatedBasalDatum? {
+    private func dataForTempBasalAutomatic(for userId: String) -> [TDatum] {
         guard let dose = dose, let datumDuration = datumDuration, let datumRate = datumRate else {
-            return nil
+            return []
         }
 
         var payload = datumPayload
@@ -281,7 +330,7 @@ extension SyncPumpEvent: IdentifiableDatum {
         datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBasalDatum.self),
                                 payload: payload,
                                 origin: datumOrigin(for: TAutomatedBasalDatum.self))
-        return datum
+        return [datum]
     }
 
     private var datumTime: Date { dose?.startDate ?? date }
@@ -332,8 +381,6 @@ fileprivate extension PumpAlarmType {
             return .occlusion
         case .other:
             return .other
-        case .overLimit:
-            return .overLimit
         }
     }
 }

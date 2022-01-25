@@ -304,7 +304,7 @@ extension TidepoolService: RemoteDataService {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
-        createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
+        createData(stored.flatMap { $0.data(for: userId) }, completion: completion)
     }
 
     public var settingsDataLimit: Int? { return 400 }  // Each can be up to 2.5K bytes of serialized JSON, target ~1M or less

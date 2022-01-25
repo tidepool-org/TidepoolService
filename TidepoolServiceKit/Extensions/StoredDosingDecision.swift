@@ -18,7 +18,7 @@ import TidepoolKit
  - controllerTimeZone              TimeInterval                         .timeZone, .timeZoneOffset
  - reason                          String                               TDosingDecisionDatum.reason
  - settings                        Settings?                            TDosingDecisionDatum.associations
- - scheduleOffset                  TemporaryScheduleOverride?           (unused, included in glucoseTargetRangeSchedule)
+ - scheduleOverride                TemporaryScheduleOverride?           (unused, included in glucoseTargetRangeSchedule)
  - controllerStatus                ControllerStatus?                    TControllerStatusDatum.battery
  - pumpManagerStatus               PumpManagerStatus?                   TPumpStatusDatum[.basalDelivery, .battery, .bolusDelivery, deliveryIndeterminant]
  - cgmManagerStatus                CGMManagerStatus?                    TODO: https://tidepool.atlassian.net/browse/LOOP-3929
@@ -40,7 +40,7 @@ import TidepoolKit
  Notes:
  - StoredDosingDecision.carbsOnBoard.endDate is not included as Tidepool backend assumes carbsOnBoard to be point-in-time.
  - StoredDosingDecision.pumpManagerStatus.timeZone is not included as it is irrelevant to TPumpStatusDatum.
- - StoredDosingDecision.manualBolusRecommendation.date is not included as it is assumed to be synonmous with StoredDosingDecision.date.
+ - StoredDosingDecision.manualBolusRecommendation.date is not included as it is assumed to be synonymous with StoredDosingDecision.date.
  - StoredDosingDecision.manualBolusRecommendation.pendingInsulin is not included as it is always zero.
  - StoredDosingDecision.manualBolusRecommendation.notice is not included as it is unneeded by backend.
  */
