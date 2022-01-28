@@ -55,6 +55,12 @@ public final class TidepoolService: Service, TAPIObserver {
     public init(automaticallyFetchEnvironments: Bool = true) {
         self.id = UUID().uuidString
         self.tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
+
+        // TODO: REMOVE BEFORE SHIPPING
+        if tapi.defaultEnvironment == nil {
+            tapi.defaultEnvironment = TEnvironment(host: "external.integration.tidepool.org", port: 443)
+        }
+
         tapi.logging = self
         tapi.addObserver(self)
     }
