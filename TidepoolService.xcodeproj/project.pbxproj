@@ -40,6 +40,7 @@
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
+		A95FF4A627AC865D0099BF68 /* SyncAlertObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FF4A527AC865D0099BF68 /* SyncAlertObjectTests.swift */; };
 		A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */; };
 		A9752A8F270B763C00E50750 /* StoredSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9752A8E270B763C00E50750 /* StoredSettings.swift */; };
 		A9752A93270B766A00E50750 /* StoredDosingDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9752A92270B766A00E50750 /* StoredDosingDecision.swift */; };
@@ -54,6 +55,7 @@
 		A9B0D97C2733133800D96D93 /* TControllerSettingsDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B0D97B2733133800D96D93 /* TControllerSettingsDatum.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
+		A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9D58153272B0A5300AA5C18 /* TControllerStatusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D58152272B0A5300AA5C18 /* TControllerStatusDatum.swift */; };
 		A9D58155272B266700AA5C18 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D58154272B266700AA5C18 /* Date.swift */; };
@@ -142,6 +144,7 @@
 		A94AE4E7235A89B5005CA320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceKitPlugin.swift; sourceTree = "<group>"; };
 		A94AE4F4235A8BAC005CA320 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		A95FF4A527AC865D0099BF68 /* SyncAlertObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertObjectTests.swift; sourceTree = "<group>"; };
 		A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSampleTests.swift; sourceTree = "<group>"; };
 		A9752A8E270B763C00E50750 /* StoredSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredSettings.swift; sourceTree = "<group>"; };
 		A9752A92270B766A00E50750 /* StoredDosingDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredDosingDecision.swift; sourceTree = "<group>"; };
@@ -156,6 +159,7 @@
 		A9B0D97B2733133800D96D93 /* TControllerSettingsDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TControllerSettingsDatum.swift; sourceTree = "<group>"; };
 		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertObject.swift; sourceTree = "<group>"; };
 		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9D58152272B0A5300AA5C18 /* TControllerStatusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TControllerStatusDatum.swift; sourceTree = "<group>"; };
 		A9D58154272B266700AA5C18 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 				A9057688271F9CA60030C3B1 /* TPumpSettingsDatum.swift */,
 				A905768A271F9D4E0030C3B1 /* TPumpSettingsOverrideDeviceEventDatum.swift */,
 				A905768E271F9EC50030C3B1 /* TPumpStatusDatum.swift */,
+				A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 				A9E8C608272C71F800016E2E /* StoredDosingDecisionTests.swift */,
 				A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */,
 				A9E8C60A272C721F00016E2E /* StoredSettingsTests.swift */,
+				A95FF4A527AC865D0099BF68 /* SyncAlertObjectTests.swift */,
 				A9E8C60C272C723400016E2E /* SyncCarbObjectTests.swift */,
 			);
 			path = Extensions;
@@ -784,6 +790,7 @@
 				A9752A97270B91E000E50750 /* Double.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
 				A9B0D97C2733133800D96D93 /* TControllerSettingsDatum.swift in Sources */,
+				A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
 				A9D58153272B0A5300AA5C18 /* TControllerStatusDatum.swift in Sources */,
@@ -808,6 +815,7 @@
 				A9E8C60D272C723400016E2E /* SyncCarbObjectTests.swift in Sources */,
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 				A9E8C60B272C721F00016E2E /* StoredSettingsTests.swift in Sources */,
+				A95FF4A627AC865D0099BF68 /* SyncAlertObjectTests.swift in Sources */,
 				A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
