@@ -231,6 +231,16 @@ extension TidepoolService: RemoteDataService {
         }
     }
 
+    public var doseDataLimit: Int? { return 1000 }
+
+    public func uploadDoseData(_ stored: [DoseEntry], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(stored.flatMap { $0.data(for: userId) }, completion: completion)
+    }
+
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
     public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
@@ -297,9 +307,9 @@ extension TidepoolService: RemoteDataService {
         createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
     }
 
-    public var pumpDataLimit: Int? { return 1000 }
+    public var pumpDataEventLimit: Int? { return 1000 }
 
-    public func uploadPumpData(_ stored: [SyncPumpEvent], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+    public func uploadPumpEventData(_ stored: [PersistedPumpEvent], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
         guard let userId = userId else {
             completion(.failure(TidepoolServiceError.configuration))
             return
