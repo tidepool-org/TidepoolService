@@ -25,7 +25,7 @@ class SyncAlertObjectTests: XCTestCase {
                                                                       body: "Background Body",
                                                                       acknowledgeActionButtonLabel: "Background Button"),
                                      sound: .sound(name: "Sound Name"),
-                                     parameters: "{\"one\": 1}",
+                                     metadata: ["one": Alert.MetadataValue(1)],
                                      issuedDate: Self.dateFormatter.date(from: "2020-01-02T03:01:23Z")!,
                                      acknowledgedDate: Self.dateFormatter.date(from: "2020-01-02T03:05:34Z")!,
                                      retractedDate: Self.dateFormatter.date(from: "2020-01-02T03:06:45Z")!,
@@ -42,10 +42,10 @@ class SyncAlertObjectTests: XCTestCase {
     "name" : "com.apple.dt.xctest.tool",
     "type" : "application"
   },
-  "parameters" : {
-    "one" : 1
-  },
   "payload" : {
+    "metadata" : {
+      "one" : 1
+    },
     "syncIdentifier" : "2A67A303-1234-4CB8-8263-79498265368E"
   },
   "priority" : "timeSensitive",

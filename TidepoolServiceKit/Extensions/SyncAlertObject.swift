@@ -37,7 +37,6 @@ extension SyncAlertObject: IdentifiableDatum {
                                 triggerDelay: datumTriggerDelay,
                                 sound: datumSound,
                                 soundName: datumSoundName,
-                                parameters: datumParameters,
                                 issuedTime: datumIssuedTime,
                                 acknowledgedTime: datumAcknowledgedTime,
                                 retractedTime: datumRetractedTime)
@@ -62,13 +61,6 @@ extension SyncAlertObject: IdentifiableDatum {
 
     private var datumSoundName: String? { sound?.datumName }
 
-    private var datumParameters: TDictionary? {
-        guard let data = parameters?.data(using: .utf8) else {
-            return nil
-        }
-        return try? JSONDecoder().decode(TDictionary.self, from: data)
-    }
-
     private var datumIssuedTime: Date { issuedDate }
 
     private var datumAcknowledgedTime: Date? { acknowledgedDate }
@@ -78,6 +70,7 @@ extension SyncAlertObject: IdentifiableDatum {
     private var datumPayload: TDictionary {
         var dictionary = TDictionary()
         dictionary["syncIdentifier"] = syncIdentifier.uuidString
+        dictionary["metadata"] = metadata?.datum
         return dictionary
     }
 }
@@ -149,5 +142,15 @@ fileprivate extension Alert.Sound {
         case .sound(let name):
             return name
         }
+    }
+}
+
+fileprivate extension Alert.Metadata {
+    var datum: [String: Any] {
+        var dictionary = [String: Any]()
+        for (key, value) in self {
+            dictionary[key] = value.any
+        }
+        return dictionary
     }
 }
