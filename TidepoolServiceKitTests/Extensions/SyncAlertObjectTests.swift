@@ -25,7 +25,7 @@ class SyncAlertObjectTests: XCTestCase {
                                                                       body: "Background Body",
                                                                       acknowledgeActionButtonLabel: "Background Button"),
                                      sound: .sound(name: "Sound Name"),
-                                     metadata: ["one": Alert.MetadataValue(1)],
+                                     metadata: Alert.Metadata(dict: ["one": 1]),
                                      issuedDate: Self.dateFormatter.date(from: "2020-01-02T03:01:23Z")!,
                                      acknowledgedDate: Self.dateFormatter.date(from: "2020-01-02T03:05:34Z")!,
                                      retractedDate: Self.dateFormatter.date(from: "2020-01-02T03:06:45Z")!,

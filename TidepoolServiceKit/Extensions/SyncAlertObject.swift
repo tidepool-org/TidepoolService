@@ -149,7 +149,7 @@ fileprivate extension Alert.Metadata {
     var datum: [String: Any] {
         var dictionary = [String: Any]()
         for (key, value) in self {
-            dictionary[key] = value.any
+            dictionary[key] = value.wrapped
         }
         return dictionary
     }
