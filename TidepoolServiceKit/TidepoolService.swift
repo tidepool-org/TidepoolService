@@ -205,6 +205,16 @@ extension TidepoolService: TLogging {
 
 extension TidepoolService: RemoteDataService {
 
+    public var alertDataLimit: Int? { return 1000 }
+
+    public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
+    }
+
     public var carbDataLimit: Int? { return 1000 }
 
     public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject], completion: @escaping (Result<Bool, Error>) -> Void) {
