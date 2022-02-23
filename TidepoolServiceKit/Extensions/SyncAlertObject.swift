@@ -14,7 +14,7 @@ import TidepoolKit
 
  Properties:
  - identifier               Alert.Identifier            .name
- - trigger                  Alert.Trigger               .trigger, .triggerDelay
+ - trigger                  Alert.Trigger               .trigger, .triggerDelay, .triggerDateMatching
  - interruptionLevel        Alert.InterruptionLevel     .priority
  - foregroundContent        Alert.Content?              (N/A - localized strings ignored)
  - backgroundContent        Alert.Content?              (N/A - localized strings ignored)
@@ -35,6 +35,7 @@ extension SyncAlertObject: IdentifiableDatum {
                                 priority: datumPriority,
                                 trigger: datumTrigger,
                                 triggerDelay: datumTriggerDelay,
+                                triggerDateMatching: datumTriggerDateMatching,
                                 sound: datumSound,
                                 soundName: datumSoundName,
                                 issuedTime: datumIssuedTime,
@@ -56,6 +57,8 @@ extension SyncAlertObject: IdentifiableDatum {
     private var datumTrigger: TAlertDatum.Trigger { trigger.datum }
 
     private var datumTriggerDelay: TimeInterval? { trigger.datumDelay }
+
+    private var datumTriggerDateMatching: DateComponents? { trigger.datumTriggerDateMatching }
 
     private var datumSound: TAlertDatum.Sound? { sound?.datum }
 
@@ -106,17 +109,32 @@ fileprivate extension Alert.Trigger {
             return .delayed
         case .repeating:
             return .repeating
+        case .nextDate:
+            return .nextDate
+        case .nextDateRepeating:
+            return .nextDateRepeating
         }
     }
 
     var datumDelay: TimeInterval? {
         switch self {
-        case .immediate:
+        case .immediate, .nextDate, .nextDateRepeating:
             return nil
         case .delayed(let interval):
             return interval
         case .repeating(let interval):
             return interval
+        }
+    }
+    
+    var datumTriggerDateMatching: DateComponents? {
+        switch self {
+        case .immediate, .delayed, .repeating:
+            return nil
+        case .nextDate(let matching):
+            return matching
+        case .nextDateRepeating(let matching):
+            return matching
         }
     }
 }
