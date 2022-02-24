@@ -64,7 +64,7 @@ class SyncAlertObjectTests: XCTestCase {
     func testDatumDateMatching() {
         let object = SyncAlertObject(identifier: Alert.Identifier(managerIdentifier: "ManagerId",
                                                                   alertIdentifier: "AlertId"),
-                                     trigger: .nextDate(matching: DateComponents(hour: 12, minute: 0)),
+                                     trigger: .nextDate(matching: Alert.Trigger.TimeSpec(dayOfMonth: 1, hourOfDay: 12, minuteOfHour: 0)),
                                      interruptionLevel: .timeSensitive,
                                      foregroundContent: Alert.Content(title: "Foreground Title",
                                                                       body: "Foreground Body",
@@ -103,8 +103,9 @@ class SyncAlertObjectTests: XCTestCase {
   "time" : "2020-01-02T03:01:23.000Z",
   "trigger" : "nextDate",
   "triggerDateMatching" : {
-    "hour" : 12,
-    "minute" : 0
+    "dayOfMonth" : 1,
+    "hourOfDay" : 12,
+    "minuteOfHour" : 0
   },
   "type" : "alert"
 }

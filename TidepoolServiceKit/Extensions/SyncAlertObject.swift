@@ -58,7 +58,7 @@ extension SyncAlertObject: IdentifiableDatum {
 
     private var datumTriggerDelay: TimeInterval? { trigger.datumDelay }
 
-    private var datumTriggerDateMatching: DateComponents? { trigger.datumTriggerDateMatching }
+    private var datumTriggerDateMatching: TAlertDatum.TriggerNextDateTimeSpec? { trigger.datumTriggerDateMatching }
 
     private var datumSound: TAlertDatum.Sound? { sound?.datum }
 
@@ -127,14 +127,12 @@ fileprivate extension Alert.Trigger {
         }
     }
     
-    var datumTriggerDateMatching: DateComponents? {
+    var datumTriggerDateMatching: TAlertDatum.TriggerNextDateTimeSpec? {
         switch self {
         case .immediate, .delayed, .repeating:
             return nil
-        case .nextDate(let matching):
-            return matching
-        case .nextDateRepeating(let matching):
-            return matching
+        case .nextDate(let matching), .nextDateRepeating(let matching):
+            return TAlertDatum.TriggerNextDateTimeSpec(dayOfMonth: matching.dayOfMonth, hourOfDay: matching.hourOfDay, minuteOfHour: matching.minuteOfHour)
         }
     }
 }
