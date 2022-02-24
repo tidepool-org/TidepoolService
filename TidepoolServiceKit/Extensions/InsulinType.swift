@@ -13,7 +13,7 @@ extension InsulinType {
     var datum: TInsulinDatum.Formulation {
         switch self {
         case .novolog:
-            return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "NovaLog"))
+            return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "NovoLog"))
         case .humalog:
             return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "Humalog"))
         case .apidra:

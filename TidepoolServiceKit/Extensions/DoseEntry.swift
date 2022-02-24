@@ -25,6 +25,7 @@ import TidepoolKit
  - manuallyEntered              Bool                        .type, .subType
  - syncIdentifier               String?                     .id, .origin.id, .payload["syncIdentifier"]
  - scheduledBasalRate           HKQuantity?                 .rate, .supressed.rate
+ - isMutable                    Bool                        .normal, .expectedNormal, .duration, .expectedDuration, .annotations
 */
 
 extension DoseEntry: IdentifiableDatum {
@@ -38,12 +39,12 @@ extension DoseEntry: IdentifiableDatum {
             return dataForBasal(for: userId)
         case .bolus:
             return dataForBolus(for: userId)
+        case .resume:
+            return []
         case .suspend:
             return dataForSuspend(for: userId)
         case .tempBasal:
             return dataForTempBasal(for: userId)
-        default:
-            return []
         }
     }
 
@@ -63,6 +64,7 @@ extension DoseEntry: IdentifiableDatum {
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
         datum = datum.adornWith(id: datumId(for: userId, type: TScheduledBasalDatum.self),
+                                annotations: datumAnnotations,
                                 payload: payload,
                                 origin: datumOrigin(for: TScheduledBasalDatum.self))
         return [datum]
@@ -86,6 +88,7 @@ extension DoseEntry: IdentifiableDatum {
                                   dose: TInsulinDatum.Dose(total: deliveredUnits ?? programmedUnits),
                                   formulation: datumInsulinFormulation)
         datum = datum.adornWith(id: datumId(for: userId, type: TInsulinDatum.self),
+                                annotations: datumAnnotations,
                                 payload: payload,
                                 origin: datumOrigin(for: TInsulinDatum.self))
         return [datum]
@@ -99,10 +102,11 @@ extension DoseEntry: IdentifiableDatum {
         let deliveredUnits = deliveredUnits ?? programmedUnits
 
         var datum = TNormalBolusDatum(time: datumTime,
-                                      normal: deliveredUnits,
-                                      expectedNormal: programmedUnits != deliveredUnits ? programmedUnits : nil,
+                                      normal: !isMutable ? deliveredUnits : programmedUnits,
+                                      expectedNormal: !isMutable && programmedUnits != deliveredUnits ? programmedUnits : nil,
                                       insulinFormulation: datumInsulinFormulation)
         datum = datum.adornWith(id: datumId(for: userId, type: TNormalBolusDatum.self),
+                                annotations: datumAnnotations,
                                 payload: payload,
                                 origin: datumOrigin(for: TNormalBolusDatum.self))
         return [datum]
@@ -116,10 +120,11 @@ extension DoseEntry: IdentifiableDatum {
         let deliveredUnits = deliveredUnits ?? programmedUnits
 
         var datum = TAutomatedBolusDatum(time: datumTime,
-                                         normal: deliveredUnits,
-                                         expectedNormal: programmedUnits != deliveredUnits ? programmedUnits : nil,
+                                         normal: !isMutable ? deliveredUnits : programmedUnits,
+                                         expectedNormal: !isMutable && programmedUnits != deliveredUnits ? programmedUnits : nil,
                                          insulinFormulation: datumInsulinFormulation)
         datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBolusDatum.self),
+                                annotations: datumAnnotations,
                                 payload: payload,
                                 origin: datumOrigin(for: TAutomatedBolusDatum.self))
         return [datum]
@@ -130,6 +135,7 @@ extension DoseEntry: IdentifiableDatum {
                                          duration: datumDuration)
         datum.suppressed = datumSuppressed
         datum = datum.adornWith(id: datumId(for: userId, type: TSuspendedBasalDatum.self),
+                                annotations: datumAnnotations,
                                 payload: datumPayload,
                                 origin: datumOrigin(for: TSuspendedBasalDatum.self))
         return [datum]
@@ -148,12 +154,13 @@ extension DoseEntry: IdentifiableDatum {
         payload["deliveredUnits"] = deliveredUnits
 
         var datum = TTemporaryBasalDatum(time: datumTime,
-                                         duration: datumDuration,
-                                         expectedDuration: datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
+                                         duration: !isMutable ? datumDuration : 0,
+                                         expectedDuration: !isMutable && datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
                                          rate: datumRate,
                                          insulinFormulation: datumInsulinFormulation)
         datum.suppressed = datumSuppressed
         datum = datum.adornWith(id: datumId(for: userId, type: TTemporaryBasalDatum.self),
+                                annotations: datumAnnotations,
                                 payload: payload,
                                 origin: datumOrigin(for: TTemporaryBasalDatum.self))
         return [datum]
@@ -164,13 +171,14 @@ extension DoseEntry: IdentifiableDatum {
         payload["deliveredUnits"] = deliveredUnits
 
         var datum = TAutomatedBasalDatum(time: datumTime,
-                                         duration: datumDuration,
-                                         expectedDuration: datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
+                                         duration: !isMutable ? datumDuration : 0,
+                                         expectedDuration: !isMutable && datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
                                          rate: datumRate,
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
         datum.suppressed = datumSuppressed
         datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBasalDatum.self),
+                                annotations: datumAnnotations,
                                 payload: payload,
                                 origin: datumOrigin(for: TAutomatedBasalDatum.self))
         return [datum]
@@ -194,6 +202,21 @@ extension DoseEntry: IdentifiableDatum {
 
     private var datumInsulinFormulation: TInsulinDatum.Formulation? { insulinType?.datum }
 
+    private var datumAnnotations: [TDictionary]? {
+        guard isMutable else {
+            return nil
+        }
+
+        switch type {
+        case .basal, .suspend, .tempBasal:
+            return [TDictionary(["code": "basal/unknown-duration"])]
+        case .bolus:
+            return [TDictionary(["code": "bolus/mutable"])]
+        case .resume:
+            return nil
+        }
+    }
+
     private var datumPayload: TDictionary {
         var dictionary = TDictionary()
         dictionary["syncIdentifier"] = syncIdentifier
@@ -201,6 +224,37 @@ extension DoseEntry: IdentifiableDatum {
     }
 
     private var basalDatumExpectedDuration: TimeInterval { .minutes(30) }
+}
+
+extension DoseEntry {
+    var selectors: [TDatum.Selector] {
+        guard syncIdentifier != nil else {
+            return []
+        }
+
+        switch type {
+        case .basal:
+            return [datumSelector(for: TScheduledBasalDatum.self)]
+        case .bolus:
+            if manuallyEntered {
+                return [datumSelector(for: TInsulinDatum.self)]
+            } else if automatic != true {
+                return [datumSelector(for: TNormalBolusDatum.self)]
+            } else {
+                return [datumSelector(for: TAutomatedBolusDatum.self)]
+            }
+        case .resume:
+            return []
+        case .suspend:
+            return [datumSelector(for: TSuspendedBasalDatum.self)]
+        case .tempBasal:
+            if automatic == false {
+                return [datumSelector(for: TTemporaryBasalDatum.self)]
+            } else {
+                return [datumSelector(for: TAutomatedBasalDatum.self)]
+            }
+        }
+    }
 }
 
 extension TAutomatedBasalDatum: TypedDatum {

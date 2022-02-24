@@ -28,12 +28,12 @@ import TidepoolKit
  -   manuallyEntered        Bool                (N/A - unused by pump event data)
  -   syncIdentifier         String?             (N/A - unused by pump event data)
  -   scheduledBasalRate     HKQuantity?         (N/A - unused by pump event data)
+ -   isMutable              Bool                (N/A - unused by pump event data)
  - isUploaded               Bool                (N/A - unused)
  - objectIDURL              URL                 (N/A - unused)
  - raw                      Data?               .id, .origin.id, .payload["syncIdentifier"]
  - title                    String?             (N/A - unused)
  - type                     PumpEventType?      .type, .subType
- - isMutable                Bool                (N/A - unused)
  - automatic                Bool?               (N/A - unused)
  - alarmType                PumpAlarmType?      .alarmType, .payload["otherAlarmType"]
  */

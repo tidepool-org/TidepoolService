@@ -22,7 +22,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .alarm,
-                                           isMutable: false,
                                            automatic: true,
                                            alarmType: .other("Test Alarm"))
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
@@ -59,7 +58,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .alarm,
-                                           isMutable: false,
                                            automatic: true,
                                            alarmType: .other("Test Alarm"))
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
@@ -114,7 +112,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .alarm,
-                                           isMutable: false,
                                            automatic: true,
                                            alarmType: .other("Test Alarm"))
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
@@ -167,8 +164,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .alarmClear,
-                                           isMutable: false)
+                                           type: .alarmClear)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertTrue(data.isEmpty)
     }
@@ -182,8 +178,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .alarmClear,
-                                           isMutable: false)
+                                           type: .alarmClear)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -219,8 +214,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .alarmClear,
-                                           isMutable: false)
+                                           type: .alarmClear)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -267,7 +261,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .basal,
-                                           isMutable: false,
                                            automatic: true)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
@@ -298,7 +291,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .basal,
-                                           isMutable: false,
                                            automatic: false)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
@@ -317,8 +309,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .prime,
-                                           isMutable: false)
+                                           type: .prime)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -351,8 +342,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .prime,
-                                           isMutable: false)
+                                           type: .prime)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -403,8 +393,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .prime,
-                                           isMutable: false)
+                                           type: .prime)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -454,8 +443,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .resume,
-                                           isMutable: false)
+                                           type: .resume)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -490,8 +478,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .rewind,
-                                           isMutable: false)
+                                           type: .rewind)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -523,8 +510,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .rewind,
-                                           isMutable: false)
+                                           type: .rewind)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -574,8 +560,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            objectIDURL: URL(string: "x-coredata:///PumpEvent/18CF3948-0B3D-4B12-8BFE-14986B0E6784")!,
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
-                                           type: .rewind,
-                                           isMutable: false)
+                                           type: .rewind)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
@@ -626,7 +611,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .suspend,
-                                           isMutable: false,
                                            automatic: true)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
@@ -674,7 +658,6 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .tempBasal,
-                                           isMutable: false,
                                            automatic: true)
         let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
