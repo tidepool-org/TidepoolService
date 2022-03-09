@@ -55,6 +55,12 @@ public final class TidepoolService: Service, TAPIObserver {
     public init(automaticallyFetchEnvironments: Bool = true) {
         self.id = UUID().uuidString
         self.tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
+
+        // TODO: REMOVE BEFORE SHIPPING - https://tidepool.atlassian.net/browse/LOOP-4060
+        if tapi.defaultEnvironment == nil {
+            tapi.defaultEnvironment = TEnvironment(host: "external.integration.tidepool.org", port: 443)
+        }
+
         tapi.logging = self
         tapi.addObserver(self)
     }
@@ -198,6 +204,16 @@ extension TidepoolService: TLogging {
 }
 
 extension TidepoolService: RemoteDataService {
+
+    public var alertDataLimit: Int? { return 1000 }
+
+    public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
+    }
 
     public var carbDataLimit: Int? { return 1000 }
 

@@ -35,6 +35,7 @@
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A94AE4F2235A8B75005CA320 /* TidepoolServiceKitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */; };
 		A94AE4F5235A8BAC005CA320 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE4F4235A8BAC005CA320 /* OSLog.swift */; };
+		A95FF4A627AC865D0099BF68 /* SyncAlertObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FF4A527AC865D0099BF68 /* SyncAlertObjectTests.swift */; };
 		A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */; };
 		A9752A8F270B763C00E50750 /* StoredSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9752A8E270B763C00E50750 /* StoredSettings.swift */; };
 		A9752A93270B766A00E50750 /* StoredDosingDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9752A92270B766A00E50750 /* StoredDosingDecision.swift */; };
@@ -51,6 +52,7 @@
 		A9A53E2F271508D80050C0B1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A53E2E271508D80050C0B1 /* String.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
+		A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9D1AC9B27B1E046008C5A12 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9A27B1E046008C5A12 /* Data.swift */; };
 		A9D1AC9D27B1E3C6008C5A12 /* DoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9C27B1E3C6008C5A12 /* DoseEntry.swift */; };
@@ -136,6 +138,7 @@
 		A94AE4E7235A89B5005CA320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A94AE4F1235A8B75005CA320 /* TidepoolServiceKitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceKitPlugin.swift; sourceTree = "<group>"; };
 		A94AE4F4235A8BAC005CA320 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		A95FF4A527AC865D0099BF68 /* SyncAlertObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertObjectTests.swift; sourceTree = "<group>"; };
 		A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSampleTests.swift; sourceTree = "<group>"; };
 		A9752A8E270B763C00E50750 /* StoredSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredSettings.swift; sourceTree = "<group>"; };
 		A9752A92270B766A00E50750 /* StoredDosingDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredDosingDecision.swift; sourceTree = "<group>"; };
@@ -152,6 +155,7 @@
 		A9A53E2E271508D80050C0B1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertObject.swift; sourceTree = "<group>"; };
 		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9D1AC9A27B1E046008C5A12 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		A9D1AC9C27B1E3C6008C5A12 /* DoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseEntry.swift; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 				A9309CA62435987000E02268 /* SyncCarbObject.swift */,
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
 				A9752A9C270B972D00E50750 /* TimeInterval.swift */,
+				A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				A9E8C608272C71F800016E2E /* StoredDosingDecisionTests.swift */,
 				A9672B5826E82EBA0025B0CD /* StoredGlucoseSampleTests.swift */,
 				A9E8C60A272C721F00016E2E /* StoredSettingsTests.swift */,
+				A95FF4A527AC865D0099BF68 /* SyncAlertObjectTests.swift */,
 				A9E8C60C272C723400016E2E /* SyncCarbObjectTests.swift */,
 			);
 			path = Extensions;
@@ -779,6 +785,7 @@
 				A9752A93270B766A00E50750 /* StoredDosingDecision.swift in Sources */,
 				A9752A97270B91E000E50750 /* Double.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
+				A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A913B37D24200C97000805C4 /* Bundle.swift in Sources */,
 				A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */,
@@ -803,6 +810,7 @@
 				A9E8C60D272C723400016E2E /* SyncCarbObjectTests.swift in Sources */,
 				1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */,
 				A9E8C60B272C721F00016E2E /* StoredSettingsTests.swift in Sources */,
+				A95FF4A627AC865D0099BF68 /* SyncAlertObjectTests.swift in Sources */,
 				A9672B5926E82EBA0025B0CD /* StoredGlucoseSampleTests.swift in Sources */,
 				A979F5E5278F5A70004B2547 /* PersistedPumpEventTests.swift in Sources */,
 			);
