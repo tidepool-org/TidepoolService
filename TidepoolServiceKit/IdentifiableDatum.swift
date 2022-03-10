@@ -13,7 +13,7 @@ protocol TypedDatum {
 }
 
 protocol IdentifiableDatum {
-    var syncIdentifier: UUID { get }
+    var syncIdentifierAsString: String { get }
 }
 
 extension IdentifiableDatum {
@@ -44,8 +44,20 @@ extension IdentifiableDatum {
                        type: .application)
     }
 
+    var datumSelector: TDatum.Selector {
+        return datumSelector(for: resolvedIdentifier)
+    }
+
+    func datumSelector<T: TypedDatum>(for type: T.Type) -> TDatum.Selector {
+        return datumSelector(for: resolvedIdentifier(for: type))
+    }
+
+    private func datumSelector(for resolvedIdentifier: String) -> TDatum.Selector {
+        return TDatum.Selector(origin: TDatum.Selector.Origin(id: resolvedIdentifier))
+    }
+
     var resolvedIdentifier: String {
-        return syncIdentifier.uuidString
+        return syncIdentifierAsString
     }
 
     func resolvedIdentifier<T: TypedDatum>(for type: T.Type) -> String {

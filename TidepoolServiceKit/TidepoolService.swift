@@ -249,6 +249,28 @@ extension TidepoolService: RemoteDataService {
 
     public var doseDataLimit: Int? { return 1000 }
 
+    public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(created.flatMap { $0.data(for: userId) }) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let createdUploaded):
+                self.deleteData(withSelectors: deleted.flatMap { $0.selectors }) { result in
+                    switch result {
+                    case .failure(let error):
+                        completion(.failure(error))
+                    case .success(let deletedUploaded):
+                        completion(.success(createdUploaded || deletedUploaded))
+                    }
+                }
+            }
+        }
+    }
+
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
     public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
@@ -315,7 +337,15 @@ extension TidepoolService: RemoteDataService {
         createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
     }
 
-    public var pumpEventDataLimit: Int? { return 1000 }
+    public var pumpDataEventLimit: Int? { return 1000 }
+
+    public func uploadPumpEventData(_ stored: [PersistedPumpEvent], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+        guard let userId = userId else {
+            completion(.failure(TidepoolServiceError.configuration))
+            return
+        }
+        createData(stored.flatMap { $0.data(for: userId) }, completion: completion)
+    }
 
     public var settingsDataLimit: Int? { return 400 }  // Each can be up to 2.5K bytes of serialized JSON, target ~1M or less
 

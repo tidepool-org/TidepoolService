@@ -54,6 +54,21 @@ extension IdentifiableHKDatum {
         }
     }
 
+    var datumSelector: TDatum.Selector? {
+        return datumSelector(for: resolvedIdentifier)
+    }
+
+    func datumSelector<T: TypedDatum>(for type: T.Type) -> TDatum.Selector? {
+        return datumSelector(for: resolvedIdentifier(for: type))
+    }
+
+    private func datumSelector(for resolvedIdentifier: String?) -> TDatum.Selector? {
+        guard let resolvedIdentifier = resolvedIdentifier else {
+            return nil
+        }
+        return TDatum.Selector(origin: TDatum.Selector.Origin(id: resolvedIdentifier))
+    }
+
     var resolvedIdentifier: String? {
         var resolvedIdentifier: String?
 

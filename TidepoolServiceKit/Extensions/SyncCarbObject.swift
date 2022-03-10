@@ -67,10 +67,5 @@ extension SyncCarbObject: IdentifiableHKDatum {
 }
 
 extension SyncCarbObject {
-    var selector: TDatum.Selector? {
-        guard let resolvedIdentifier = resolvedIdentifier else {
-            return nil
-        }
-        return TDatum.Selector(origin: TDatum.Selector.Origin(id: resolvedIdentifier))
-    }
+    var selector: TDatum.Selector? { datumSelector }
 }

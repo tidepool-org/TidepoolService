@@ -135,6 +135,8 @@ extension StoredSettings: IdentifiableDatum {
                                origin: datumOrigin(for: TPumpSettingsOverrideDeviceEventDatum.self))
     }
 
+    var syncIdentifierAsString: String { syncIdentifier.uuidString }
+
     private var datumTime: Date { date }
     
     private var datumTimeZone: TimeZone { controllerTimeZone }
@@ -178,7 +180,7 @@ extension StoredSettings: IdentifiableDatum {
                 insulinSensitivitySchedule != nil else {
             return nil
         }
-        return activeScheduleNameDefault
+        return Self.activeScheduleNameDefault
     }
     
     private var datumPumpAutomatedDelivery: Bool { dosingEnabled }
@@ -194,7 +196,7 @@ extension StoredSettings: IdentifiableDatum {
         guard let basalRateSchedule = basalRateSchedule else {
             return nil
         }
-        return [activeScheduleNameDefault: basalRateSchedule.items.map { TPumpSettingsDatum.BasalRateStart(start: $0.startTime, rate: $0.value) }]
+        return [Self.activeScheduleNameDefault: basalRateSchedule.items.map { TPumpSettingsDatum.BasalRateStart(start: $0.startTime, rate: $0.value) }]
     }
     
     private var datumPumpBloodGlucoseSafetyLimit: Double? {
@@ -224,7 +226,7 @@ extension StoredSettings: IdentifiableDatum {
         guard let glucoseTargetRangeSchedule = glucoseTargetRangeSchedule else {
             return nil
         }
-        return [activeScheduleNameDefault: glucoseTargetRangeSchedule.items(for: .milligramsPerDeciliter).map { TPumpSettingsDatum.BloodGlucoseStartTarget(start: $0.startTime, low: $0.value.minValue, high: $0.value.maxValue) }]
+        return [Self.activeScheduleNameDefault: glucoseTargetRangeSchedule.items(for: .milligramsPerDeciliter).map { TPumpSettingsDatum.BloodGlucoseStartTarget(start: $0.startTime, low: $0.value.minValue, high: $0.value.maxValue) }]
     }
     
     private var datumPumpBolus: TPumpSettingsDatum.Bolus? {
@@ -238,7 +240,7 @@ extension StoredSettings: IdentifiableDatum {
         guard let carbRatioSchedule = carbRatioSchedule else {
             return nil
         }
-        return [activeScheduleNameDefault: carbRatioSchedule.items(for: .gram()).map { TPumpSettingsDatum.CarbohydrateRatioStart(start: $0.startTime, amount: $0.value) }]
+        return [Self.activeScheduleNameDefault: carbRatioSchedule.items(for: .gram()).map { TPumpSettingsDatum.CarbohydrateRatioStart(start: $0.startTime, amount: $0.value) }]
     }
     
     private var datumPumpDisplay: TPumpSettingsDatum.Display? {
@@ -292,7 +294,7 @@ extension StoredSettings: IdentifiableDatum {
         guard let insulinSensitivitySchedule = insulinSensitivitySchedule else {
             return nil
         }
-        return [activeScheduleNameDefault: insulinSensitivitySchedule.items(for: .milligramsPerDeciliter).map { return TPumpSettingsDatum.InsulinSensitivityStart(start: $0.startTime, amount: $0.value) }]
+        return [Self.activeScheduleNameDefault: insulinSensitivitySchedule.items(for: .milligramsPerDeciliter).map { return TPumpSettingsDatum.InsulinSensitivityStart(start: $0.startTime, amount: $0.value) }]
     }
 
     private var datumPumpManufacturers: [String]? { pumpDevice?.manufacturer.map { [$0] } }
@@ -344,7 +346,7 @@ extension StoredSettings: IdentifiableDatum {
         }
     }
 
-    private var activeScheduleNameDefault: String { "Default" }
+    public static var activeScheduleNameDefault: String { "Default" }
 }
 
 fileprivate extension NotificationSettings {
@@ -499,17 +501,18 @@ fileprivate extension TemporaryScheduleOverrideSettings {
     }
 }
 
-fileprivate extension InsulinType {
-    var datum: TPumpSettingsDatum.InsulinFormulation {
-        switch self {
-        case .novolog:
-            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "NovaLog"))
-        case .humalog:
-            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "Humalog"))
-        case .apidra:
-            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "Apidra"))
-        case .fiasp:
-            return TPumpSettingsDatum.InsulinFormulation(simple: TPumpSettingsDatum.InsulinFormulation.Simple(actingType: .rapid, brand: "Fiasp"))
-        }
-    }
+extension TCGMSettingsDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.cgmSettings.rawValue }
+}
+
+extension TControllerSettingsDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.controllerSettings.rawValue }
+}
+
+extension TPumpSettingsDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.pumpSettings.rawValue }
+}
+
+extension TPumpSettingsOverrideDeviceEventDatum: TypedDatum {
+    static var resolvedType: String { "\(TDatum.DatumType.deviceEvent.rawValue)/\(TDeviceEventDatum.SubType.pumpSettingsOverride.rawValue)" }
 }

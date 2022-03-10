@@ -18,7 +18,7 @@ import TidepoolKit
  - controllerTimeZone              TimeInterval                         .timeZone, .timeZoneOffset
  - reason                          String                               TDosingDecisionDatum.reason
  - settings                        Settings?                            TDosingDecisionDatum.associations
- - scheduleOffset                  TemporaryScheduleOverride?           (unused, included in glucoseTargetRangeSchedule)
+ - scheduleOverride                TemporaryScheduleOverride?           (unused, included in glucoseTargetRangeSchedule)
  - controllerStatus                ControllerStatus?                    TControllerStatusDatum.battery
  - pumpManagerStatus               PumpManagerStatus?                   TPumpStatusDatum[.basalDelivery, .battery, .bolusDelivery, deliveryIndeterminant]
  - cgmManagerStatus                CGMManagerStatus?                    TODO: https://tidepool.atlassian.net/browse/LOOP-3929
@@ -40,7 +40,7 @@ import TidepoolKit
  Notes:
  - StoredDosingDecision.carbsOnBoard.endDate is not included as Tidepool backend assumes carbsOnBoard to be point-in-time.
  - StoredDosingDecision.pumpManagerStatus.timeZone is not included as it is irrelevant to TPumpStatusDatum.
- - StoredDosingDecision.manualBolusRecommendation.date is not included as it is assumed to be synonmous with StoredDosingDecision.date.
+ - StoredDosingDecision.manualBolusRecommendation.date is not included as it is assumed to be synonymous with StoredDosingDecision.date.
  - StoredDosingDecision.manualBolusRecommendation.pendingInsulin is not included as it is always zero.
  - StoredDosingDecision.manualBolusRecommendation.notice is not included as it is unneeded by backend.
  */
@@ -108,6 +108,8 @@ extension StoredDosingDecision: IdentifiableDatum {
                                payload: datumPayload,
                                origin: datumOrigin(for: TPumpStatusDatum.self))
     }
+
+    var syncIdentifierAsString: String { syncIdentifier.uuidString }
 
     private var datumTime: Date { date }
 
@@ -273,7 +275,9 @@ extension StoredDosingDecision: IdentifiableDatum {
     }
 }
 
-extension StoredDosingDecision.Settings: IdentifiableDatum {}
+extension StoredDosingDecision.Settings: IdentifiableDatum {
+    var syncIdentifierAsString: String { syncIdentifier.uuidString }
+}
 
 fileprivate extension StoredDosingDecision.ControllerStatus.BatteryState {
     var datum: TControllerStatusDatum.Battery.State? {
@@ -355,4 +359,16 @@ fileprivate extension Double {
         let factor = pow(10, Double(decimalPlaces))
         return (self * factor).rounded() / factor
     }
+}
+
+extension TDosingDecisionDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.dosingDecision.rawValue }
+}
+
+extension TControllerStatusDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.controllerStatus.rawValue }
+}
+
+extension TPumpStatusDatum: TypedDatum {
+    static var resolvedType: String { TDatum.DatumType.pumpStatus.rawValue }
 }
