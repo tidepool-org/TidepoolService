@@ -282,6 +282,8 @@ extension StoredSettings: IdentifiableDatum {
             modelType = .rapidAdult
         case .rapidChild:
             modelType = .rapidChild
+        default:
+            modelType = .other
         }
         
         return TPumpSettingsDatum.InsulinModel(modelType: modelType,
