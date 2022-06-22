@@ -205,6 +205,11 @@ extension TidepoolService: TLogging {
 
 extension TidepoolService: RemoteDataService {
 
+    public func uploadTemporaryOverrideData(updated: [TemporaryScheduleOverride], deleted: [TemporaryScheduleOverride], completion: @escaping (Result<Bool, Error>) -> Void) {
+        // TODO: Implement
+        completion(.success(true))
+    }
+
     public var alertDataLimit: Int? { return 1000 }
 
     public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {

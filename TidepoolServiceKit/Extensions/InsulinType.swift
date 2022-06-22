@@ -20,6 +20,10 @@ extension InsulinType {
             return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "Apidra"))
         case .fiasp:
             return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "Fiasp"))
+        case .lyumjev:
+            return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "Lyumjev"))
+        case .afrezza:
+            return TInsulinDatum.Formulation(simple: TInsulinDatum.Formulation.Simple(actingType: .rapid, brand: "Afrezza"))
         }
     }
 }
