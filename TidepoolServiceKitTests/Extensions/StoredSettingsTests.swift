@@ -352,7 +352,9 @@ fileprivate extension StoredSettings {
                                                         showPreviewsSetting: .whenAuthenticated,
                                                         criticalAlertSetting: .enabled,
                                                         providesAppNotificationSettings: true,
-                                                        announcementSetting: .enabled)
+                                                        announcementSetting: .enabled,
+                                                        timeSensitiveSetting: .enabled,
+                                                        scheduledDeliverySetting: .disabled)
         let controllerDevice = StoredSettings.ControllerDevice(name: "Controller Name",
                                                                systemName: "Controller System Name",
                                                                systemVersion: "Controller System Version",
