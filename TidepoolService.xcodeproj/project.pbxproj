@@ -3,22 +3,8 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
-
-/* Begin PBXAggregateTarget section */
-		A9BF371524180BE6008D7F34 /* Cartfile */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = A9BF371824180BE6008D7F34 /* Build configuration list for PBXAggregateTarget "Cartfile" */;
-			buildPhases = (
-				A9BF371924180C02008D7F34 /* Carthage Bootstrap */,
-			);
-			dependencies = (
-			);
-			name = Cartfile;
-			productName = Cartfile;
-		};
-/* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
 		1D70C41426F28CC900C62570 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D70C41326F28CC900C62570 /* URLProtocolMock.swift */; };
@@ -85,6 +71,10 @@
 		A9E8C611272C76A500016E2E /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8C610272C76A500016E2E /* TimeInterval.swift */; };
 		A9F9F317271A046E00D19374 /* StoredCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */; };
 		A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */; };
+		C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; platformFilter = ios; };
+		C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; platformFilter = ios; };
+		C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -124,7 +114,36 @@
 			remoteGlobalIDString = A9DAACFE22E7987800E76C9F;
 			remoteInfo = TidepoolServiceKit;
 		};
+		C12E4BBC288F2215009C98A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9DAACD622E7978800E76C9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9DAACFE22E7987800E76C9F;
+			remoteInfo = TidepoolServiceKit;
+		};
+		C12E4BC0288F2215009C98A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9DAACD622E7978800E76C9F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9DAAD1A22E7988900E76C9F;
+			remoteInfo = TidepoolServiceKitUI;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C12E4BC2288F2215009C98A2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */,
+				C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
@@ -216,6 +235,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */,
+				C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,13 +499,15 @@
 				A94AE4E0235A89B5005CA320 /* Sources */,
 				A94AE4E1235A89B5005CA320 /* Frameworks */,
 				A94AE4E2235A89B5005CA320 /* Resources */,
-				A94AE4F0235A8B2E005CA320 /* Copy Frameworks with Carthage */,
+				C12E4BC2288F2215009C98A2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				A94AE4ED235A8B19005CA320 /* PBXTargetDependency */,
 				A94AE4EF235A8B19005CA320 /* PBXTargetDependency */,
+				C12E4BBD288F2215009C98A2 /* PBXTargetDependency */,
+				C12E4BC1288F2215009C98A2 /* PBXTargetDependency */,
 			);
 			name = TidepoolServiceKitPlugin;
 			productName = TidepoolServiceKitPlugin;
@@ -516,7 +539,6 @@
 				A9DAAD0322E7987800E76C9F /* Sources */,
 				A9DAAD0422E7987800E76C9F /* Frameworks */,
 				A9DAAD0522E7987800E76C9F /* Resources */,
-				A9DAAD5F22E7E75C00E76C9F /* Copy Frameworks with Carthage */,
 			);
 			buildRules = (
 			);
@@ -554,7 +576,6 @@
 				A9DAAD1F22E7988900E76C9F /* Sources */,
 				A9DAAD2022E7988900E76C9F /* Frameworks */,
 				A9DAAD2122E7988900E76C9F /* Resources */,
-				A9DAAD6B22E7E82B00E76C9F /* Copy Frameworks with Carthage */,
 			);
 			buildRules = (
 			);
@@ -579,9 +600,6 @@
 					A94AE4E3235A89B5005CA320 = {
 						CreatedOnToolsVersion = 11.1;
 						LastSwiftMigration = 1110;
-					};
-					A9BF371524180BE6008D7F34 = {
-						CreatedOnToolsVersion = 11.3.1;
 					};
 					A9DAACFE22E7987800E76C9F = {
 						CreatedOnToolsVersion = 10.3;
@@ -627,7 +645,6 @@
 				A9DAAD1A22E7988900E76C9F /* TidepoolServiceKitUI */,
 				A9DAAD2222E7988900E76C9F /* TidepoolServiceKitUITests */,
 				A94AE4E3235A89B5005CA320 /* TidepoolServiceKitPlugin */,
-				A9BF371524180BE6008D7F34 /* Cartfile */,
 			);
 		};
 /* End PBXProject section */
@@ -672,91 +689,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A94AE4F0235A8B2E005CA320 /* Copy Frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKitUI.framework",
-			);
-			name = "Copy Frameworks with Carthage";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/Scripts/copy-frameworks.sh\n";
-		};
-		A9BF371924180C02008D7F34 /* Carthage Bootstrap */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Carthage Bootstrap";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Bootstrapping Carthage dependencies...\"\nunset LLVM_TARGET_TRIPLE_SUFFIX\n\nif ! cmp -s Cartfile.Resolved Carthage/Cartfile.resolved; then\n    time ./Scripts/carthage.sh bootstrap --project-directory \"$SRCROOT\" --platform ios --cache-builds --verbose\n    cp Cartfile.resolved Carthage\nelse\n    echo \"Carthage: not bootstrapping\"\nfi\n";
-		};
-		A9DAAD5F22E7E75C00E76C9F /* Copy Frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/LoopKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
-			);
-			name = "Copy Frameworks with Carthage";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "CARTHAGE_BUILD_DIR=\"${SRCROOT}/Carthage/Build\"\nif [ -n \"${IPHONEOS_DEPLOYMENT_TARGET}\" ]; then\n    CARTHAGE_BUILD_DIR=\"${CARTHAGE_BUILD_DIR}/iOS\"\nelif [ -n \"${WATCHOS_DEPLOYMENT_TARGET}\" ]; then\n    CARTHAGE_BUILD_DIR=\"${CARTHAGE_BUILD_DIR}/watchOS\"\nelse\n    echo \"ERROR: Unexpected deployment target type\"\n    exit 1\nfi\n\nfor SCRIPT_INPUT_FILE in ${!SCRIPT_INPUT_FILE_*}; do\n    CARTHAGE_BUILD_FILE=\"${!SCRIPT_INPUT_FILE/${BUILT_PRODUCTS_DIR}/${CARTHAGE_BUILD_DIR}}\"\n    if [ -e \"${CARTHAGE_BUILD_FILE}\" ]; then\n        if [ -e \"${SCRIPT_INPUT_FILE}\" ]; then\n            echo \"ERROR: Duplicate frameworks found at:\"\n            echo \"  ${SCRIPT_INPUT_FILE}\"\n            echo \"  ${CARTHAGE_BUILD_FILE}\"\n            exit 1\n        fi\n        echo \"Substituting \\\"${CARTHAGE_BUILD_FILE}\\\" for \\\"${!SCRIPT_INPUT_FILE}\\\"\"\n        export ${SCRIPT_INPUT_FILE}=\"${CARTHAGE_BUILD_FILE}\"\n    fi\ndone\n\necho \"Copy Frameworks with Carthage\"\ncarthage copy-frameworks\n";
-		};
-		A9DAAD6B22E7E82B00E76C9F /* Copy Frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/LoopKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/LoopKitUI.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
-			);
-			name = "Copy Frameworks with Carthage";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "CARTHAGE_BUILD_DIR=\"${SRCROOT}/Carthage/Build\"\nif [ -n \"${IPHONEOS_DEPLOYMENT_TARGET}\" ]; then\n    CARTHAGE_BUILD_DIR=\"${CARTHAGE_BUILD_DIR}/iOS\"\nelif [ -n \"${WATCHOS_DEPLOYMENT_TARGET}\" ]; then\n    CARTHAGE_BUILD_DIR=\"${CARTHAGE_BUILD_DIR}/watchOS\"\nelse\n    echo \"ERROR: Unexpected deployment target type\"\n    exit 1\nfi\n\nfor SCRIPT_INPUT_FILE in ${!SCRIPT_INPUT_FILE_*}; do\n    CARTHAGE_BUILD_FILE=\"${!SCRIPT_INPUT_FILE/${BUILT_PRODUCTS_DIR}/${CARTHAGE_BUILD_DIR}}\"\n    if [ -e \"${CARTHAGE_BUILD_FILE}\" ]; then\n        if [ -e \"${SCRIPT_INPUT_FILE}\" ]; then\n            echo \"ERROR: Duplicate frameworks found at:\"\n            echo \"  ${SCRIPT_INPUT_FILE}\"\n            echo \"  ${CARTHAGE_BUILD_FILE}\"\n            exit 1\n        fi\n        echo \"Substituting \\\"${CARTHAGE_BUILD_FILE}\\\" for \\\"${!SCRIPT_INPUT_FILE}\\\"\"\n        export ${SCRIPT_INPUT_FILE}=\"${CARTHAGE_BUILD_FILE}\"\n    fi\ndone\n\necho \"Copy Frameworks with Carthage\"\ncarthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A94AE4E0235A89B5005CA320 /* Sources */ = {
@@ -865,6 +797,18 @@
 			target = A9DAACFE22E7987800E76C9F /* TidepoolServiceKit */;
 			targetProxy = A9DAAD6522E7E7D900E76C9F /* PBXContainerItemProxy */;
 		};
+		C12E4BBD288F2215009C98A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = A9DAACFE22E7987800E76C9F /* TidepoolServiceKit */;
+			targetProxy = C12E4BBC288F2215009C98A2 /* PBXContainerItemProxy */;
+		};
+		C12E4BC1288F2215009C98A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = A9DAAD1A22E7988900E76C9F /* TidepoolServiceKitUI */;
+			targetProxy = C12E4BC0288F2215009C98A2 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -959,20 +903,6 @@
 			};
 			name = Release;
 		};
-		A9BF371624180BE6008D7F34 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		A9BF371724180BE6008D7F34 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		A9DAACF122E7978800E76C9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1034,10 +964,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1146,10 +1073,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -1204,6 +1128,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = TidepoolServiceKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1231,6 +1156,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = TidepoolServiceKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1379,15 +1305,6 @@
 			buildConfigurations = (
 				A94AE4EA235A89B5005CA320 /* Debug */,
 				A94AE4EB235A89B5005CA320 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A9BF371824180BE6008D7F34 /* Build configuration list for PBXAggregateTarget "Cartfile" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A9BF371624180BE6008D7F34 /* Debug */,
-				A9BF371724180BE6008D7F34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
