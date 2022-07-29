@@ -35,7 +35,9 @@ class StoredSettingsTests: XCTestCase {
     "criticalAlert" : true,
     "lockScreen" : false,
     "notificationCenter" : false,
-    "sound" : true
+    "scheduledDelivery" : false,
+    "sound" : true,
+    "timeSensitive" : true
   },
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:controllerSettings",
