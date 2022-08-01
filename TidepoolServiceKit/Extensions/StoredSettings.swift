@@ -359,6 +359,8 @@ fileprivate extension NotificationSettings {
                                                       badge: badgeSetting.datum,
                                                       sound: soundSetting.datum,
                                                       announcement: announcementSetting.datum,
+                                                      timeSensitive: timeSensitiveSetting.datum,
+                                                      scheduledDelivery: scheduledDeliverySetting.datum,
                                                       notificationCenter: notificationCenterSetting.datum,
                                                       lockScreen: lockScreenSetting.datum,
                                                       alertStyle: alertStyle.datum)
