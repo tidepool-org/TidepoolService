@@ -738,7 +738,7 @@ extension TPumpSettingsOverrideDeviceEventDatum: EffectivelyEquivalent {
     }
 
     func updateDuration(basedUpon endTime: Date?) -> Bool {
-        guard let endTime = endTime, let time = time else {
+        guard let endTime = endTime, let time = time, endTime > time else {
             return false
         }
 
