@@ -247,7 +247,7 @@ extension StoredDosingDecision: IdentifiableDatum {
         guard let pumpBatteryChargeRemaining = pumpManagerStatus?.pumpBatteryChargeRemaining else {
             return nil
         }
-        return TPumpStatusDatum.Battery(remaining: pumpBatteryChargeRemaining, units: .percent)
+        return TPumpStatusDatum.Battery(remaining: min(max(pumpBatteryChargeRemaining, 0), 1), units: .percent)
     }
 
     private var datumBolusDelivery: TPumpStatusDatum.BolusDelivery? {
