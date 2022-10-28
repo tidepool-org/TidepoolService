@@ -126,8 +126,6 @@ fileprivate extension Alert.Sound {
         switch self {
         case .vibrate:
             return .vibrate
-        case .silence:
-            return .silence
         case .sound:
             return .name
         }
@@ -136,8 +134,6 @@ fileprivate extension Alert.Sound {
     var datumName: String? {
         switch self {
         case .vibrate:
-            return nil
-        case .silence:
             return nil
         case .sound(let name):
             return name
