@@ -75,6 +75,10 @@
 		C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; platformFilter = ios; };
 		C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
+		C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C1861B85297B44E1008F69AE /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
+		C1861B86297B44E1008F69AE /* TidepoolKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -138,7 +142,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */,
+				C1861B86297B44E1008F69AE /* TidepoolKitUI.framework in Embed Frameworks */,
 				C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */,
+				C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,7 +242,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */,
+				C1861B85297B44E1008F69AE /* TidepoolKitUI.framework in Frameworks */,
 				C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */,
+				C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,7 +1002,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LOCALIZED_STRING_MACRO_NAMES = (
 					NSLocalizedString,
 					CFLocalizedString,
@@ -1098,7 +1106,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LOCALIZED_STRING_MACRO_NAMES = (
 					NSLocalizedString,
 					CFLocalizedString,
