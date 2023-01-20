@@ -135,7 +135,7 @@ public final class TidepoolService: Service, TAPIObserver {
             completion(TidepoolServiceError.configuration)
             return
         }
-        tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName)) { result in
+        tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName, deleted: false)) { result in
             switch result {
             case .failure(let error):
                 completion(error)
@@ -158,9 +158,10 @@ public final class TidepoolService: Service, TAPIObserver {
             completion(TidepoolServiceError.configuration)
             return
         }
-        let dataSet = TDataSet(dataSetType: .continuous,
-                               client: TDataSet.Client(name: clientName, version: clientVersion),
-                               deduplicator: TDataSet.Deduplicator(name: .dataSetDeleteOrigin))
+        let dataSet = TDataSet(client: TDataSet.Client(name: clientName, version: clientVersion),
+                               dataSetType: .continuous,
+                               deduplicator: TDataSet.Deduplicator(name: .dataSetDeleteOrigin),
+                               deviceTags: [.bgm, .cgm, .insulinPump])
         tapi.createDataSet(dataSet) { result in
             switch result {
             case .failure(let error):
