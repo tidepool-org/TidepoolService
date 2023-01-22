@@ -25,7 +25,12 @@ public final class TidepoolService: Service, TAPIObserver {
 
     public static let localizedTitle = LocalizedString("Tidepool", comment: "The title of the Tidepool service")
 
-    public weak var serviceDelegate: ServiceDelegate?
+    public weak var serviceDelegate: ServiceDelegate? {
+        didSet {
+            self.hostIdentifier = serviceDelegate?.hostIdentifier
+            self.hostVersion = serviceDelegate?.hostVersion
+        }
+    }
 
     public lazy var sessionStorage: SessionStorage? = KeychainManager()
 
@@ -49,12 +54,17 @@ public final class TidepoolService: Service, TAPIObserver {
 
     private var lastPumpSettingsOverrideDeviceEventDatum: TPumpSettingsOverrideDeviceEventDatum?
 
+    private var hostIdentifier: String?
+    private var hostVersion: String?
+
     private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
-    public init(automaticallyFetchEnvironments: Bool = true) {
+    public init(hostIdentifier: String, hostVersion: String, automaticallyFetchEnvironments: Bool = true) {
         self.id = UUID().uuidString
         self.tapi = TAPI(automaticallyFetchEnvironments: automaticallyFetchEnvironments)
+        self.hostIdentifier = hostIdentifier
+        self.hostVersion = hostVersion
 
         // TODO: REMOVE BEFORE SHIPPING - https://tidepool.atlassian.net/browse/LOOP-4060
         if tapi.defaultEnvironment == nil {
@@ -131,7 +141,7 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private func getDataSet(completion: @escaping (Error?) -> Void) {
-        guard let clientName = serviceDelegate?.hostIdentifier else {
+        guard let clientName = hostIdentifier else {
             completion(TidepoolServiceError.configuration)
             return
         }
@@ -154,7 +164,7 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private func createDataSet(completion: @escaping (Error?) -> Void) {
-        guard let clientName = serviceDelegate?.hostIdentifier, let clientVersion = serviceDelegate?.hostVersion else {
+        guard let clientName = hostIdentifier, let clientVersion = hostVersion else {
             completion(TidepoolServiceError.configuration)
             return
         }
@@ -214,7 +224,7 @@ extension TidepoolService: RemoteDataService {
     public var alertDataLimit: Int? { return 1000 }
 
     public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -224,7 +234,7 @@ extension TidepoolService: RemoteDataService {
     public var carbDataLimit: Int? { return 1000 }
 
     public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject], completion: @escaping (Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -256,7 +266,7 @@ extension TidepoolService: RemoteDataService {
     public var doseDataLimit: Int? { return 1000 }
 
     public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -280,7 +290,7 @@ extension TidepoolService: RemoteDataService {
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
     public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -336,7 +346,7 @@ extension TidepoolService: RemoteDataService {
     public var glucoseDataLimit: Int? { return 1000 }
 
     public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -346,7 +356,7 @@ extension TidepoolService: RemoteDataService {
     public var pumpDataEventLimit: Int? { return 1000 }
 
     public func uploadPumpEventData(_ stored: [PersistedPumpEvent], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -356,7 +366,7 @@ extension TidepoolService: RemoteDataService {
     public var settingsDataLimit: Int? { return 400 }  // Each can be up to 2.5K bytes of serialized JSON, target ~1M or less
 
     public func uploadSettingsData(_ stored: [StoredSettings], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
@@ -456,7 +466,7 @@ extension TidepoolService: RemoteDataService {
                 lastCGMSettingsDatum = cgmSettingsDatum
             }
 
-            if !pumpSettingsDatumIsEffectivelyEquivalent {
+            if !pumpSettingsDatumIsEffectivelyEquivalent && pumpSettingsDatum.isValid {
                 created.append(pumpSettingsDatum)
                 lastPumpSettingsDatum = pumpSettingsDatum
             }
@@ -704,6 +714,11 @@ extension TPumpSettingsDatum: EffectivelyEquivalent {
             scheduleTimeZoneOffset == nil &&
             serialNumber == nil &&
             softwareVersion == nil
+    }
+
+    // Tidepool Service will reject if activeScheduleName is not set
+    var isValid: Bool {
+        return activeScheduleName != nil
     }
 }
 

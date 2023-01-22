@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import LoopKit
 import LoopKitUI
 import TidepoolServiceKit
 
@@ -15,8 +16,9 @@ extension TidepoolService: ServiceUI {
         UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSettingsViewController.self), compatibleWith: nil)!
     }
 
-    public static func setupViewController(colorPalette: LoopUIColorPalette) -> SetupUIResult<ServiceViewController, ServiceUI> {
-        return .userInteractionRequired(ServiceNavigationController(rootViewController: TidepoolServiceSetupViewController(service: TidepoolService())))
+    public static func setupViewController(colorPalette: LoopUIColorPalette, pluginHost: PluginHost) -> SetupUIResult<ServiceViewController, ServiceUI> {
+        let service = TidepoolService(hostIdentifier: pluginHost.hostIdentifier, hostVersion: pluginHost.hostVersion)
+        return .userInteractionRequired(ServiceNavigationController(rootViewController: TidepoolServiceSetupViewController(service: service)))
     }
 
     public func settingsViewController(colorPalette: LoopUIColorPalette) -> ServiceViewController {

@@ -16,6 +16,9 @@ import TidepoolKit
 @testable import TidepoolServiceKit
 
 class DoseEntryDataTests: XCTestCase {
+    let hostIdentifier = "com.loopkit.Loop"
+    let hostVersion = "1.0.0"
+
     func testDataBasal() {
         let doseEntry = DoseEntry(type: .basal,
                                   startDate: Self.dateFormatter.date(from: "2020-01-02T03:00:23Z")!,
@@ -29,7 +32,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .novolog,
                                   automatic: true,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -74,7 +77,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .apidra,
                                   automatic: false,
                                   manuallyEntered: true)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -119,7 +122,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .apidra,
                                   automatic: false,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -164,7 +167,7 @@ class DoseEntryDataTests: XCTestCase {
                                   automatic: false,
                                   manuallyEntered: false,
                                   isMutable: true)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -212,7 +215,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .apidra,
                                   automatic: true,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -257,7 +260,7 @@ class DoseEntryDataTests: XCTestCase {
                                   automatic: true,
                                   manuallyEntered: false,
                                   isMutable: true)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -305,7 +308,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: nil,
                                   automatic: true,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
 
@@ -326,7 +329,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .fiasp,
                                   automatic: true,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -368,7 +371,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .fiasp,
                                   automatic: false,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -420,7 +423,7 @@ class DoseEntryDataTests: XCTestCase {
                                   automatic: false,
                                   manuallyEntered: false,
                                   isMutable: true)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -474,7 +477,7 @@ class DoseEntryDataTests: XCTestCase {
                                   scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   manuallyEntered: false)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -526,7 +529,7 @@ class DoseEntryDataTests: XCTestCase {
                                   insulinType: .fiasp,
                                   manuallyEntered: false,
                                   isMutable: true)
-        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
