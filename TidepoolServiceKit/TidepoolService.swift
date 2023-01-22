@@ -131,7 +131,7 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private func getDataSet(completion: @escaping (Error?) -> Void) {
-        guard let clientName = Bundle.main.bundleIdentifier else {
+        guard let clientName = serviceDelegate?.hostIdentifier else {
             completion(TidepoolServiceError.configuration)
             return
         }
@@ -154,7 +154,7 @@ public final class TidepoolService: Service, TAPIObserver {
     }
 
     private func createDataSet(completion: @escaping (Error?) -> Void) {
-        guard let clientName = Bundle.main.bundleIdentifier, let clientVersion = Bundle.main.semanticVersion else {
+        guard let clientName = serviceDelegate?.hostIdentifier, let clientVersion = serviceDelegate?.hostVersion else {
             completion(TidepoolServiceError.configuration)
             return
         }
@@ -214,27 +214,27 @@ extension TidepoolService: RemoteDataService {
     public var alertDataLimit: Int? { return 1000 }
 
     public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
-        createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
+        createData(stored.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) }, completion: completion)
     }
 
     public var carbDataLimit: Int? { return 1000 }
 
     public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject], completion: @escaping (Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
 
-        createData(created.compactMap { $0.datum(for: userId) }) { result in
+        createData(created.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) }) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let createdUploaded):
-                self.updateData(updated.compactMap { $0.datum(for: userId) }) { result in
+                self.updateData(updated.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) }) { result in
                     switch result {
                     case .failure(let error):
                         completion(.failure(error))
@@ -256,11 +256,11 @@ extension TidepoolService: RemoteDataService {
     public var doseDataLimit: Int? { return 1000 }
 
     public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
-        createData(created.flatMap { $0.data(for: userId) }) { result in
+        createData(created.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) }) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -280,20 +280,20 @@ extension TidepoolService: RemoteDataService {
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
     public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
-        createData(calculateDosingDecisionData(stored, for: userId), completion: completion)
+        createData(calculateDosingDecisionData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion), completion: completion)
     }
 
-    func calculateDosingDecisionData(_ stored: [StoredDosingDecision], for userId: String) -> [TDatum] {
+    func calculateDosingDecisionData(_ stored: [StoredDosingDecision], for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var created: [TDatum] = []
 
         stored.forEach {
-            let dosingDecisionDatum = $0.datumDosingDecision(for: userId)
-            let controllerStatusDatum = $0.datumControllerStatus(for: userId)
-            let pumpStatusDatum = $0.datumPumpStatus(for:userId)
+            let dosingDecisionDatum = $0.datumDosingDecision(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+            let controllerStatusDatum = $0.datumControllerStatus(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+            let pumpStatusDatum = $0.datumPumpStatus(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
 
             var dosingDecisionAssociations: [TAssociation] = []
             var controllerStatusAssociations: [TAssociation] = []
@@ -336,32 +336,32 @@ extension TidepoolService: RemoteDataService {
     public var glucoseDataLimit: Int? { return 1000 }
 
     public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
-        createData(stored.compactMap { $0.datum(for: userId) }, completion: completion)
+        createData(stored.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) }, completion: completion)
     }
 
     public var pumpDataEventLimit: Int? { return 1000 }
 
     public func uploadPumpEventData(_ stored: [PersistedPumpEvent], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
-        createData(stored.flatMap { $0.data(for: userId) }, completion: completion)
+        createData(stored.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) }, completion: completion)
     }
 
     public var settingsDataLimit: Int? { return 400 }  // Each can be up to 2.5K bytes of serialized JSON, target ~1M or less
 
     public func uploadSettingsData(_ stored: [StoredSettings], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
-        guard let userId = userId else {
+        guard let userId = userId, let hostIdentifier = serviceDelegate?.hostIdentifier, let hostVersion = serviceDelegate?.hostVersion else {
             completion(.failure(TidepoolServiceError.configuration))
             return
         }
 
-        let (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum, lastPumpSettingsOverrideDeviceEventDatum) = calculateSettingsData(stored, for: userId)
+        let (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum, lastPumpSettingsOverrideDeviceEventDatum) = calculateSettingsData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
 
         createData(created) { result in
             switch result {
@@ -385,7 +385,7 @@ extension TidepoolService: RemoteDataService {
         }
     }
 
-    func calculateSettingsData(_ stored: [StoredSettings], for userId: String) -> ([TDatum], [TDatum], TControllerSettingsDatum?, TCGMSettingsDatum?, TPumpSettingsDatum?, TPumpSettingsOverrideDeviceEventDatum?) {
+    func calculateSettingsData(_ stored: [StoredSettings], for userId: String, hostIdentifier: String, hostVersion: String) -> ([TDatum], [TDatum], TControllerSettingsDatum?, TCGMSettingsDatum?, TPumpSettingsDatum?, TPumpSettingsOverrideDeviceEventDatum?) {
         var created: [TDatum] = []
         var updated: [TDatum] = []
         var lastControllerSettingsDatum = lastControllerSettingsDatum
@@ -403,16 +403,16 @@ extension TidepoolService: RemoteDataService {
 
             // Calculate the data
 
-            let controllerSettingsDatum = $0.datumControllerSettings(for: userId)
+            let controllerSettingsDatum = $0.datumControllerSettings(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
             let controllerSettingsDatumIsEffectivelyEquivalent = TControllerSettingsDatum.areEffectivelyEquivalent(old: lastControllerSettingsDatum, new: controllerSettingsDatum)
 
-            let cgmSettingsDatum = $0.datumCGMSettings(for: userId)
+            let cgmSettingsDatum = $0.datumCGMSettings(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
             let cgmSettingsDatumIsEffectivelyEquivalent = TCGMSettingsDatum.areEffectivelyEquivalent(old: lastCGMSettingsDatum, new: cgmSettingsDatum)
 
-            let pumpSettingsDatum = $0.datumPumpSettings(for: userId)
+            let pumpSettingsDatum = $0.datumPumpSettings(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
             let pumpSettingsDatumIsEffectivelyEquivalent = TPumpSettingsDatum.areEffectivelyEquivalent(old: lastPumpSettingsDatum, new: pumpSettingsDatum)
 
-            let pumpSettingsOverrideDeviceEventDatum = $0.datumPumpSettingsOverrideDeviceEvent(for: userId)
+            let pumpSettingsOverrideDeviceEventDatum = $0.datumPumpSettingsOverrideDeviceEvent(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
             let pumpSettingsOverrideDeviceEventDatumIsEffectivelyEquivalent = TPumpSettingsOverrideDeviceEventDatum.areEffectivelyEquivalent(old: lastPumpSettingsOverrideDeviceEventDatum, new: pumpSettingsOverrideDeviceEventDatum)
 
             // Associate the data

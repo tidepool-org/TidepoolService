@@ -46,7 +46,7 @@ import TidepoolKit
  */
 
 extension StoredDosingDecision: IdentifiableDatum {
-    func datumDosingDecision(for userId: String) -> TDosingDecisionDatum {
+    func datumDosingDecision(for userId: String, hostIdentifier: String, hostVersion: String) -> TDosingDecisionDatum {
         var associations: [TAssociation] = []
         if let id = settings?.datumId(for: userId, type: TPumpSettingsDatum.self) {
             associations.append(TAssociation(type: .datum, id: id, reason: "pumpSettings"))
@@ -77,36 +77,39 @@ extension StoredDosingDecision: IdentifiableDatum {
                                          errors: datumErrors,
                                          scheduleTimeZoneOffset: datumScheduleTimeZoneOffset,
                                          units: datumUnits)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TDosingDecisionDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TDosingDecisionDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                associations: associations,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TDosingDecisionDatum.self))
+                               origin: origin)
     }
 
-    func datumControllerStatus(for userId: String) -> TControllerStatusDatum {
+    func datumControllerStatus(for userId: String, hostIdentifier: String, hostVersion: String) -> TControllerStatusDatum {
         let datum = TControllerStatusDatum(time: datumTime,
                                            battery: datumControllerBattery)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TControllerStatusDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TControllerStatusDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TControllerStatusDatum.self))
+                               origin: origin)
     }
 
-    func datumPumpStatus(for userId: String) -> TPumpStatusDatum {
+    func datumPumpStatus(for userId: String, hostIdentifier: String, hostVersion: String) -> TPumpStatusDatum {
         let datum = TPumpStatusDatum(time: datumTime,
                                      basalDelivery: datumBasalDelivery,
                                      battery: datumPumpBattery,
                                      bolusDelivery: datumBolusDelivery,
                                      deliveryIndeterminant: datumDeliveryIndeterminant,
                                      reservoir: datumReservoir)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TPumpStatusDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TPumpStatusDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TPumpStatusDatum.self))
+                               origin: origin)
     }
 
     var syncIdentifierAsString: String { syncIdentifier.uuidString }

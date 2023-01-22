@@ -29,28 +29,28 @@ import TidepoolKit
 */
 
 extension DoseEntry: IdentifiableDatum {
-    func data(for userId: String) -> [TDatum] {
+    func data(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         guard syncIdentifier != nil else {
             return []
         }
 
         switch type {
         case .basal:
-            return dataForBasal(for: userId)
+            return dataForBasal(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .bolus:
-            return dataForBolus(for: userId)
+            return dataForBolus(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .resume:
             return []
         case .suspend:
-            return dataForSuspend(for: userId)
+            return dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .tempBasal:
-            return dataForTempBasal(for: userId)
+            return dataForTempBasal(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         }
     }
 
     var syncIdentifierAsString: String { syncIdentifier!.md5hash! }  // Actual sync identifier may be human readable and of variable length
 
-    private func dataForBasal(for userId: String) -> [TDatum] {
+    private func dataForBasal(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         guard let datumScheduledBasalRate = datumScheduledBasalRate else {
             return []
         }
@@ -63,38 +63,42 @@ extension DoseEntry: IdentifiableDatum {
                                          rate: datumScheduledBasalRate,
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
+
+        let origin = datumOrigin(for: resolvedIdentifier(for: TScheduledBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TScheduledBasalDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
-                                origin: datumOrigin(for: TScheduledBasalDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForBolus(for userId: String) -> [TDatum] {
+    private func dataForBolus(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         if manuallyEntered {
-            return dataForBolusManuallyEntered(for: userId)
+            return dataForBolusManuallyEntered(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         } else if automatic != true {
-            return dataForBolusManual(for: userId)
+            return dataForBolusManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         } else {
-            return dataForBolusAutomatic(for: userId)
+            return dataForBolusAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         }
     }
 
-    private func dataForBolusManuallyEntered(for userId: String) ->[TDatum] {
+    private func dataForBolusManuallyEntered(for userId: String, hostIdentifier: String, hostVersion: String) ->[TDatum] {
         var payload = datumPayload
         payload["duration"] = datumDuration.milliseconds
 
         var datum = TInsulinDatum(time: datumTime,
                                   dose: TInsulinDatum.Dose(total: deliveredUnits ?? programmedUnits),
                                   formulation: datumInsulinFormulation)
+
+        let origin = datumOrigin(for: resolvedIdentifier(for: TInsulinDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TInsulinDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
-                                origin: datumOrigin(for: TInsulinDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForBolusManual(for userId: String) -> [TDatum] {
+    private func dataForBolusManual(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var payload = datumPayload
         payload["duration"] = datumDuration.milliseconds
 
@@ -105,14 +109,15 @@ extension DoseEntry: IdentifiableDatum {
                                       normal: !isMutable ? deliveredUnits : programmedUnits,
                                       expectedNormal: !isMutable && programmedUnits != deliveredUnits ? programmedUnits : nil,
                                       insulinFormulation: datumInsulinFormulation)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TNormalBolusDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TNormalBolusDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
-                                origin: datumOrigin(for: TNormalBolusDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForBolusAutomatic(for userId: String) -> [TDatum] {
+    private func dataForBolusAutomatic(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var payload = datumPayload
         payload["duration"] = datumDuration.milliseconds
 
@@ -123,33 +128,35 @@ extension DoseEntry: IdentifiableDatum {
                                          normal: !isMutable ? deliveredUnits : programmedUnits,
                                          expectedNormal: !isMutable && programmedUnits != deliveredUnits ? programmedUnits : nil,
                                          insulinFormulation: datumInsulinFormulation)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TAutomatedBolusDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBolusDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
-                                origin: datumOrigin(for: TAutomatedBolusDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForSuspend(for userId: String) -> [TDatum] {
+    private func dataForSuspend(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var datum = TSuspendedBasalDatum(time: datumTime,
                                          duration: datumDuration)
         datum.suppressed = datumSuppressed
+        let origin = datumOrigin(for: resolvedIdentifier(for: TSuspendedBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TSuspendedBasalDatum.self),
                                 annotations: datumAnnotations,
                                 payload: datumPayload,
-                                origin: datumOrigin(for: TSuspendedBasalDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForTempBasal(for userId: String) -> [TDatum] {
+    private func dataForTempBasal(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         if automatic == false {
-            return dataForTempBasalManual(for: userId)
+            return dataForTempBasalManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         } else {
-            return dataForTempBasalAutomatic(for: userId)
+            return dataForTempBasalAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         }
     }
 
-    private func dataForTempBasalManual(for userId: String) -> [TDatum] {
+    private func dataForTempBasalManual(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var payload = datumPayload
         payload["deliveredUnits"] = deliveredUnits
 
@@ -159,14 +166,15 @@ extension DoseEntry: IdentifiableDatum {
                                          rate: datumRate,
                                          insulinFormulation: datumInsulinFormulation)
         datum.suppressed = datumSuppressed
+        let origin = datumOrigin(for: resolvedIdentifier(for: TTemporaryBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TTemporaryBasalDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
-                                origin: datumOrigin(for: TTemporaryBasalDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForTempBasalAutomatic(for userId: String) -> [TDatum] {
+    private func dataForTempBasalAutomatic(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var payload = datumPayload
         payload["deliveredUnits"] = deliveredUnits
 
@@ -177,10 +185,11 @@ extension DoseEntry: IdentifiableDatum {
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
         datum.suppressed = datumSuppressed
+        let origin = datumOrigin(for: resolvedIdentifier(for: TAutomatedBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBasalDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
-                                origin: datumOrigin(for: TAutomatedBasalDatum.self))
+                                origin: origin)
         return [datum]
     }
 
