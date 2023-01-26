@@ -7,3 +7,6 @@
 /* Button title to delete a service */
 "Delete Service" = "Eliminar servicio";
 
+/* The title of the Tidepool Service settings screen */
+"Tidepool Service" = "Servicio Tidepool";
+
