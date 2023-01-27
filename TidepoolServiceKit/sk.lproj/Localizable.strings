@@ -1,5 +1,5 @@
 /* Error string for configuration error */
-"Configuration Error" = "Configuratiefout";
+"Configuration Error" = "Chyba konfigurácie";
 
 /* The title of the Tidepool service */
 "Tidepool" = "Tidepool";
