@@ -13,7 +13,7 @@ import TidepoolServiceKit
 
 extension TidepoolService: ServiceUI {
     public static var image: UIImage? {
-        UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSettingsViewController.self), compatibleWith: nil)!
+        UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSetupViewController.self), compatibleWith: nil)!
     }
 
     public static func setupViewController(colorPalette: LoopUIColorPalette, pluginHost: PluginHost) -> SetupUIResult<ServiceViewController, ServiceUI> {
@@ -22,6 +22,13 @@ extension TidepoolService: ServiceUI {
     }
 
     public func settingsViewController(colorPalette: LoopUIColorPalette) -> ServiceViewController {
-        return ServiceNavigationController(rootViewController: TidepoolServiceSettingsViewController(service: self))
+
+        let view = SettingsView(accountLogin: tapi.session?.email ?? "Unknown", didRequestDelete: {
+            self.completeDelete()
+        })
+        let hostedView = DismissibleHostingController(rootView: view, colorPalette: colorPalette)
+        let navVC = ServiceNavigationController(rootViewController: hostedView)
+
+        return navVC
     }
 }
