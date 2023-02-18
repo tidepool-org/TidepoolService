@@ -149,11 +149,12 @@ extension DoseEntry: IdentifiableDatum {
     }
 
     private func dataForTempBasal(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
-        if automatic == false {
+        // Commenting out automatic for now, until rendering on the tidepool frontend is less messy, or the model changes
+//        if automatic == false {
             return dataForTempBasalManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        } else {
-            return dataForTempBasalAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        }
+//        } else {
+//            return dataForTempBasalAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+//        }
     }
 
     private func dataForTempBasalManual(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
