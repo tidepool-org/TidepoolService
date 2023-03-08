@@ -37,7 +37,6 @@
 		A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98737CC2788E61400A6A23D /* InsulinType.swift */; };
 		A9A53E2F271508D80050C0B1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A53E2E271508D80050C0B1 /* String.swift */; };
 		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
-		A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9D1AC9B27B1E046008C5A12 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9A27B1E046008C5A12 /* Data.swift */; };
@@ -266,7 +265,6 @@
 				A9DAAD6122E7E7B200E76C9F /* LoopKit.framework in Frameworks */,
 				A9DAAD6322E7E7B200E76C9F /* LoopKitUI.framework in Frameworks */,
 				A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */,
-				A9BF371F24181978008D7F34 /* TidepoolKitUI.framework in Frameworks */,
 				A9DAAD6422E7E7B700E76C9F /* TidepoolServiceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
