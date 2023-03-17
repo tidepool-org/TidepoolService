@@ -51,6 +51,14 @@ extension DoseEntry: IdentifiableDatum {
     var syncIdentifierAsString: String { syncIdentifier!.md5hash! }  // Actual sync identifier may be human readable and of variable length
 
     private func dataForBasal(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
+        if automatic != true {
+            return dataForBasalManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        } else {
+            return dataForBasalAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        }
+    }
+
+    private func dataForBasalManual(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         guard let datumScheduledBasalRate = datumScheduledBasalRate else {
             return []
         }
@@ -66,6 +74,24 @@ extension DoseEntry: IdentifiableDatum {
 
         let origin = datumOrigin(for: resolvedIdentifier(for: TScheduledBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TScheduledBasalDatum.self),
+                                annotations: datumAnnotations,
+                                payload: payload,
+                                origin: origin)
+        return [datum]
+    }
+
+    private func dataForBasalAutomatic(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
+        var payload = datumPayload
+        payload["deliveredUnits"] = deliveredUnits
+
+        var datum = TAutomatedBasalDatum(time: datumTime,
+                                         duration: !isMutable ? datumDuration : 0,
+                                         expectedDuration: !isMutable && datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
+                                         rate: datumRate,
+                                         scheduleName: StoredSettings.activeScheduleNameDefault,
+                                         insulinFormulation: datumInsulinFormulation)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TAutomatedBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        datum = datum.adornWith(id: datumId(for: userId, type: TAutomatedBasalDatum.self),
                                 annotations: datumAnnotations,
                                 payload: payload,
                                 origin: origin)
@@ -149,12 +175,11 @@ extension DoseEntry: IdentifiableDatum {
     }
 
     private func dataForTempBasal(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
-        // Commenting out automatic for now, until rendering on the tidepool frontend is less messy, or the model changes
-//        if automatic == false {
+        if automatic == false {
             return dataForTempBasalManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-//        } else {
-//            return dataForTempBasalAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-//        }
+        } else {
+            return dataForTempBasalAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        }
     }
 
     private func dataForTempBasalManual(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
