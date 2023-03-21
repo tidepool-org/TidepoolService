@@ -8,7 +8,6 @@
 
 import LoopKitUI
 import TidepoolKit
-import TidepoolKitUI
 import TidepoolServiceKit
 
 final class TidepoolServiceSetupViewController: UIViewController {
