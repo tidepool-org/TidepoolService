@@ -13,7 +13,6 @@
 		A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151366244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
-		A9151367244E2A9E00116932 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
 		A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA62435987000E02268 /* SyncCarbObject.swift */; };
@@ -276,7 +275,6 @@
 				A9DAAD6822E7E81E00E76C9F /* LoopKit.framework in Frameworks */,
 				A9DAAD6A22E7E81E00E76C9F /* LoopKitUI.framework in Frameworks */,
 				A9151366244E2A9E00116932 /* TidepoolKit.framework in Frameworks */,
-				A9151367244E2A9E00116932 /* TidepoolKitUI.framework in Frameworks */,
 				A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */,
 				A9DAAD2422E7988900E76C9F /* TidepoolServiceKitUI.framework in Frameworks */,
 			);
