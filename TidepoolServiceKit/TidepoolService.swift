@@ -466,7 +466,7 @@ extension TidepoolService: RemoteDataService {
                 lastCGMSettingsDatum = cgmSettingsDatum
             }
 
-            if !pumpSettingsDatumIsEffectivelyEquivalent && pumpSettingsDatum.isValid {
+            if !pumpSettingsDatumIsEffectivelyEquivalent {
                 created.append(pumpSettingsDatum)
                 lastPumpSettingsDatum = pumpSettingsDatum
             }
@@ -714,11 +714,6 @@ extension TPumpSettingsDatum: EffectivelyEquivalent {
             scheduleTimeZoneOffset == nil &&
             serialNumber == nil &&
             softwareVersion == nil
-    }
-
-    // Tidepool Service will reject if activeScheduleName is not set
-    var isValid: Bool {
-        return activeScheduleName != nil
     }
 }
 

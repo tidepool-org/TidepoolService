@@ -178,12 +178,6 @@ extension StoredSettings: IdentifiableDatum {
     private var datumCGMUnits: TCGMSettingsDatum.Units { .milligramsPerDeciliter }
 
     private var datumPumpActiveScheduleName: String? {
-        guard basalRateSchedule != nil ||
-                glucoseTargetRangeSchedule != nil ||
-                carbRatioSchedule != nil ||
-                insulinSensitivitySchedule != nil else {
-            return nil
-        }
         return Self.activeScheduleNameDefault
     }
     

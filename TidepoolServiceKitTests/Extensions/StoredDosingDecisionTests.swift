@@ -14,7 +14,7 @@ import TidepoolKit
 
 class StoredDosingDecisionTests: XCTestCase {
     func testDatumDosingDecision() {
-        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumDosingDecision(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumDosingDecision(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "associations" : [
@@ -169,7 +169,7 @@ class StoredDosingDecisionTests: XCTestCase {
     }
 
     func testDatumControllerStatus() {
-        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumControllerStatus(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumControllerStatus(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "battery" : {
@@ -196,7 +196,7 @@ class StoredDosingDecisionTests: XCTestCase {
     }
 
     func testDatumPumpStatus() {
-        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumPumpStatus(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumPumpStatus(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "basalDelivery" : {
