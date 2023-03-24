@@ -43,7 +43,7 @@ extension SyncCarbObject: IdentifiableHKDatum {
 
     private var datumTime: Date { startDate }
 
-    private var datumName: String? { foodType }
+    private var datumName: String { foodType ?? "unknown" }
 
     private var datumNutrition: TFoodDatum.Nutrition {
         return TFoodDatum.Nutrition(carbohydrate: datumCarbohydrate, estimatedAbsorptionDuration: absorptionTime)
