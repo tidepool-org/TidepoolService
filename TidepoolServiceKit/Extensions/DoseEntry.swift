@@ -59,12 +59,9 @@ extension DoseEntry: IdentifiableDatum {
     }
 
     private func dataForBasalManual(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
-        guard let datumScheduledBasalRate = datumScheduledBasalRate else {
-            return []
-        }
 
         var payload = datumPayload
-        payload["deliveredUnits"] = programmedUnits
+        payload["deliveredUnits"] = datumBasalDeliveredUnits
 
         var datum = TScheduledBasalDatum(time: datumTime,
                                          duration: datumDuration,
@@ -82,12 +79,12 @@ extension DoseEntry: IdentifiableDatum {
 
     private func dataForBasalAutomatic(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var payload = datumPayload
-        payload["deliveredUnits"] = deliveredUnits
+        payload["deliveredUnits"] = datumBasalDeliveredUnits
 
         var datum = TAutomatedBasalDatum(time: datumTime,
                                          duration: !isMutable ? datumDuration : 0,
                                          expectedDuration: !isMutable && datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
-                                         rate: datumRate,
+                                         rate: datumScheduledBasalRate,
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
         let origin = datumOrigin(for: resolvedIdentifier(for: TAutomatedBasalDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
@@ -101,11 +98,15 @@ extension DoseEntry: IdentifiableDatum {
     private func dataForBolus(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         if manuallyEntered {
             return dataForBolusManuallyEntered(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        } else if automatic != true {
+
+            
+        } else /* if automatic != true */ {
             return dataForBolusManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        } else {
+        } /* else {
+           // PS: Tidepool platform currently errors when automated is used as a subtype.
+           // See https://tidepool.atlassian.net/browse/BACK-2442
             return dataForBolusAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        }
+        } */
     }
 
     private func dataForBolusManuallyEntered(for userId: String, hostIdentifier: String, hostVersion: String) ->[TDatum] {
@@ -225,10 +226,34 @@ extension DoseEntry: IdentifiableDatum {
 
     private var datumRate: Double { unitsPerHour }
 
-    private var datumScheduledBasalRate: Double? { scheduledBasalRate?.doubleValue(for: .internationalUnitsPerHour) }
+
+    private var datumBasalDeliveredUnits: Double? {
+        guard type == .basal || type == .tempBasal else {
+            return nil
+        }
+
+        if let deliveredUnits = deliveredUnits {
+            return deliveredUnits
+        }
+
+        if unit == .units {
+            return programmedUnits
+        }
+
+        return nil
+    }
+
+    private var datumScheduledBasalRate: Double {
+
+        if let rate = scheduledBasalRate?.doubleValue(for: .internationalUnitsPerHour) {
+            return rate
+        }
+
+        return unitsPerHour
+    }
 
     private var datumSuppressed: TScheduledBasalDatum.Suppressed? {
-        guard let datumScheduledBasalRate = datumScheduledBasalRate else {
+        guard type == .tempBasal || type == .suspend else {
             return nil
         }
         return TScheduledBasalDatum.Suppressed(rate: datumScheduledBasalRate,
@@ -276,7 +301,7 @@ extension DoseEntry {
             } else if automatic != true {
                 return [datumSelector(for: TNormalBolusDatum.self)]
             } else {
-                return [datumSelector(for: TAutomatedBasalDatum.self)]
+                return [datumSelector(for: TAutomatedBolusDatum.self)]
             }
         case .resume:
             return []

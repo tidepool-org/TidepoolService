@@ -14,7 +14,7 @@ import TidepoolKit
 
 class StoredSettingsTests: XCTestCase {
     func testDatumControllerSettings() {
-        let data = try! Self.encoder.encode(StoredSettings.test.datumControllerSettings(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredSettings.test.datumControllerSettings(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "device" : {
@@ -41,8 +41,9 @@ class StoredSettingsTests: XCTestCase {
   },
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:controllerSettings",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
@@ -57,7 +58,7 @@ class StoredSettingsTests: XCTestCase {
     }
 
     func testDatumCGMSettings() {
-        let data = try! Self.encoder.encode(StoredSettings.test.datumCGMSettings(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredSettings.test.datumCGMSettings(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "firmwareVersion" : "CGM Firmware Version",
@@ -70,8 +71,9 @@ class StoredSettingsTests: XCTestCase {
   "name" : "CGM Name",
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:cgmSettings",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
@@ -89,7 +91,7 @@ class StoredSettingsTests: XCTestCase {
     }
 
     func testDatumPumpSettings() {
-        let data = try! Self.encoder.encode(StoredSettings.test.datumPumpSettings(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredSettings.test.datumPumpSettings(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "activeSchedule" : "Default",
@@ -209,8 +211,9 @@ class StoredSettingsTests: XCTestCase {
   "name" : "Pump Name",
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:pumpSettings",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "overridePresets" : {
     "Apple" : {
@@ -245,7 +248,7 @@ class StoredSettingsTests: XCTestCase {
     }
     
     func testDatumPumpSettingsOverrideDeviceEvent() {
-        let data = try! Self.encoder.encode(StoredSettings.test.datumPumpSettingsOverrideDeviceEvent(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredSettings.test.datumPumpSettingsOverrideDeviceEvent(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "basalRateScaleFactor" : 0.5,
@@ -259,8 +262,9 @@ class StoredSettingsTests: XCTestCase {
   "method" : "manual",
   "origin" : {
     "id" : "2A67A303-1234-4CB8-1234-79498265368E:deviceEvent/pumpSettingsOverride",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "overrideType" : "preprandial",
   "payload" : {

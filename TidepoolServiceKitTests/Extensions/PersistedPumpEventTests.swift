@@ -24,7 +24,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            type: .alarm,
                                            automatic: true,
                                            alarmType: .other("Test Alarm"))
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -32,8 +32,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "a07718a631a79cbe9dfafdc7aa3bc227",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/alarm",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "otherAlarmType" : "Test Alarm",
@@ -60,15 +61,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            type: .alarm,
                                            automatic: true,
                                            alarmType: .other("Test Alarm"))
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -86,8 +88,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "a07718a631a79cbe9dfafdc7aa3bc227",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/alarm",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "otherAlarmType" : "Test Alarm",
@@ -114,7 +117,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            type: .alarm,
                                            automatic: true,
                                            alarmType: .other("Test Alarm"))
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
@@ -122,8 +125,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "a07718a631a79cbe9dfafdc7aa3bc227",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/alarm",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "otherAlarmType" : "Test Alarm",
@@ -137,8 +141,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -165,7 +170,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .alarmClear)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertTrue(data.isEmpty)
     }
 
@@ -179,15 +184,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .alarmClear)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -215,15 +221,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .alarmClear)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -262,7 +269,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            title: nil,
                                            type: .basal,
                                            automatic: true)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
 
@@ -292,7 +299,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            title: nil,
                                            type: .basal,
                                            automatic: false)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
 
@@ -310,15 +317,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .prime)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "00e23a994ef6b0393a8c31db6bc5b264",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/prime",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -343,15 +351,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .prime)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -368,8 +377,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "00e23a994ef6b0393a8c31db6bc5b264",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/prime",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -394,15 +404,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .prime)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "00e23a994ef6b0393a8c31db6bc5b264",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/prime",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -416,8 +427,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -444,15 +456,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .resume)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -479,15 +492,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .rewind)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "16d248ca92e6a625d0fc0b344916bee7",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/reservoirChange",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -511,15 +525,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .rewind)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -536,8 +551,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "16d248ca92e6a625d0fc0b344916bee7",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/reservoirChange",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -561,15 +577,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            raw: "18CF3948-0B3D-4B12-8BFE-14986B0E6784".data(using: .utf8),
                                            title: nil,
                                            type: .rewind)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "16d248ca92e6a625d0fc0b344916bee7",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/reservoirChange",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -582,8 +599,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -612,15 +630,16 @@ class PersistedPumpEventTests: XCTestCase {
                                            title: nil,
                                            type: .suspend,
                                            automatic: true)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -659,7 +678,7 @@ class PersistedPumpEventTests: XCTestCase {
                                            title: nil,
                                            type: .tempBasal,
                                            automatic: true)
-        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let data = pumpEvent.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
 

@@ -16,7 +16,7 @@ import TidepoolKit
 @testable import TidepoolServiceKit
 
 class DoseEntryDataTests: XCTestCase {
-    let hostIdentifier = "com.loopkit.Loop"
+    let hostIdentifier = "com.apple.dt.xctest.tool"
     let hostVersion = "1.0.0"
 
     func testDataBasal() {
@@ -36,9 +36,10 @@ class DoseEntryDataTests: XCTestCase {
         XCTAssertEqual(String(data: try! Self.encoder.encode(data), encoding: .utf8), """
 [
   {
-    "deliveryType" : "scheduled",
+    "deliveryType" : "automated",
     "duration" : 1500000,
-    "id" : "ecabf24a123e1d8028a6e41beb00dd13",
+    "expectedDuration" : 1800000,
+    "id" : "f839af02f6832d7c81d636dbbbadbc01",
     "insulinFormulation" : {
       "simple" : {
         "actingType" : "rapid",
@@ -46,9 +47,10 @@ class DoseEntryDataTests: XCTestCase {
       }
     },
     "origin" : {
-      "id" : "ab0a722d639669875017a899a5214677:basal/scheduled",
+      "id" : "ab0a722d639669875017a899a5214677:basal/automated",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "deliveredUnits" : 0.75,
@@ -95,7 +97,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:insulin",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "duration" : 30000,
@@ -138,7 +141,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:bolus/normal",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "duration" : 30000,
@@ -187,7 +191,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:bolus/normal",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "duration" : 30000,
@@ -220,7 +225,7 @@ class DoseEntryDataTests: XCTestCase {
 [
   {
     "expectedNormal" : 4.25,
-    "id" : "1ee0e82b79f29ca633f5b369f4ff8e1c",
+    "id" : "8a53d0b7449ffefe549acf2b664365f3",
     "insulinFormulation" : {
       "simple" : {
         "actingType" : "rapid",
@@ -229,15 +234,16 @@ class DoseEntryDataTests: XCTestCase {
     },
     "normal" : 3.5,
     "origin" : {
-      "id" : "ab0a722d639669875017a899a5214677:bolus/automated",
+      "id" : "ab0a722d639669875017a899a5214677:bolus/normal",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "duration" : 30000,
       "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784"
     },
-    "subType" : "automated",
+    "subType" : "normal",
     "time" : "2020-01-02T03:00:23.000Z",
     "type" : "bolus"
   }
@@ -269,7 +275,7 @@ class DoseEntryDataTests: XCTestCase {
         "code" : "bolus/mutable"
       }
     ],
-    "id" : "1ee0e82b79f29ca633f5b369f4ff8e1c",
+    "id" : "8a53d0b7449ffefe549acf2b664365f3",
     "insulinFormulation" : {
       "simple" : {
         "actingType" : "rapid",
@@ -278,15 +284,16 @@ class DoseEntryDataTests: XCTestCase {
     },
     "normal" : 4.25,
     "origin" : {
-      "id" : "ab0a722d639669875017a899a5214677:bolus/automated",
+      "id" : "ab0a722d639669875017a899a5214677:bolus/normal",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "duration" : 30000,
       "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784"
     },
-    "subType" : "automated",
+    "subType" : "normal",
     "time" : "2020-01-02T03:00:23.000Z",
     "type" : "bolus"
   }
@@ -339,7 +346,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:basal/suspend",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784"
@@ -388,7 +396,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:basal/temp",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "deliveredUnits" : 0.5,
@@ -444,7 +453,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:basal/temp",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "deliveredUnits" : 0.5,
@@ -494,7 +504,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:basal/automated",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "deliveredUnits" : 0.5,
@@ -550,7 +561,8 @@ class DoseEntryDataTests: XCTestCase {
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:basal/automated",
       "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "type" : "application",
+      "version" : "1.0.0"
     },
     "payload" : {
       "deliveredUnits" : 0.5,
