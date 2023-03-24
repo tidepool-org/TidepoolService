@@ -39,8 +39,9 @@ class SyncAlertObjectTests: XCTestCase {
   "name" : "ManagerId.AlertId",
   "origin" : {
     "id" : "2A67A303-1234-4CB8-8263-79498265368E",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "metadata" : {

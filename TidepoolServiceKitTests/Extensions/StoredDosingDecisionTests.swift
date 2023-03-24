@@ -112,8 +112,9 @@ class StoredDosingDecisionTests: XCTestCase {
   },
   "origin" : {
     "id" : "2A67A303-5203-4CB8-8263-79498265368E:dosingDecision",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "originalFood" : {
     "nutrition" : {
@@ -180,8 +181,9 @@ class StoredDosingDecisionTests: XCTestCase {
   "id" : "ac3b6bdb9665f62eac07bf476f53795d",
   "origin" : {
     "id" : "2A67A303-5203-4CB8-8263-79498265368E:controllerStatus",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-5203-4CB8-8263-79498265368E"
@@ -212,8 +214,9 @@ class StoredDosingDecisionTests: XCTestCase {
   "id" : "4df2e9d703df3217bd3b834845acfe4d",
   "origin" : {
     "id" : "2A67A303-5203-4CB8-8263-79498265368E:pumpStatus",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-5203-4CB8-8263-79498265368E"

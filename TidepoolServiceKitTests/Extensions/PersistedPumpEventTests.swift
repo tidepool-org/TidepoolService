@@ -125,8 +125,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "a07718a631a79cbe9dfafdc7aa3bc227",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/alarm",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "otherAlarmType" : "Test Alarm",
@@ -140,8 +141,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -189,8 +191,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -225,8 +228,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -320,8 +324,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "00e23a994ef6b0393a8c31db6bc5b264",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/prime",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -353,8 +358,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -371,8 +377,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "00e23a994ef6b0393a8c31db6bc5b264",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/prime",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -404,8 +411,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "00e23a994ef6b0393a8c31db6bc5b264",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/prime",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -419,8 +427,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -454,8 +463,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -489,8 +499,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "16d248ca92e6a625d0fc0b344916bee7",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/reservoirChange",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -521,8 +532,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -539,8 +551,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "16d248ca92e6a625d0fc0b344916bee7",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/reservoirChange",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -571,8 +584,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "16d248ca92e6a625d0fc0b344916bee7",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/reservoirChange",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -585,8 +599,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
@@ -622,8 +637,9 @@ class PersistedPumpEventTests: XCTestCase {
     "id" : "383e8a915ae51534a2907f9d9a527e5b",
     "origin" : {
       "id" : "ab0a722d639669875017a899a5214677:deviceEvent/status",
-      "name" : "com.apple.dt.xctest.tool",
-      "type" : "application"
+      "name" : "Loop",
+      "type" : "application",
+      "version" : "1.2.3"
     },
     "payload" : {
       "syncIdentifier" : "ab0a722d639669875017a899a5214677"
