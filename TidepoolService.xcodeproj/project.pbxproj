@@ -74,8 +74,6 @@
 		C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C1861B85297B44E1008F69AE /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; };
-		C1861B86297B44E1008F69AE /* TidepoolKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1D0B62929848A460098D215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62829848A460098D215 /* SettingsView.swift */; };
 		C1D0B62C29848BEB0098D215 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62B29848BEB0098D215 /* Image.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
@@ -141,7 +139,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */,
-				C1861B86297B44E1008F69AE /* TidepoolKitUI.framework in Embed Frameworks */,
 				C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */,
 				C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */,
 			);
@@ -259,7 +256,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */,
-				C1861B85297B44E1008F69AE /* TidepoolKitUI.framework in Frameworks */,
 				C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */,
 				C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */,
 			);
