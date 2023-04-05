@@ -32,7 +32,7 @@ public final class TidepoolService: Service, TAPIObserver {
         }
     }
 
-    public lazy var sessionStorage: SessionStorage? = KeychainManager()
+    public lazy var sessionStorage: SessionStorage = KeychainManager()
 
     public let tapi: TAPI
     
@@ -91,8 +91,9 @@ public final class TidepoolService: Service, TAPIObserver {
             self.lastCGMSettingsDatum = (rawState["lastCGMSettingsDatum"] as? Data).flatMap { try? Self.decoder.decode(TCGMSettingsDatum.self, from: $0) }
             self.lastPumpSettingsDatum = (rawState["lastPumpSettingsDatum"] as? Data).flatMap { try? Self.decoder.decode(TPumpSettingsDatum.self, from: $0) }
             self.lastPumpSettingsOverrideDeviceEventDatum = (rawState["lastPumpSettingsOverrideDeviceEventDatum"] as? Data).flatMap { try? Self.decoder.decode(TPumpSettingsOverrideDeviceEventDatum.self, from: $0) }
-            tapi.session = try sessionStorage?.getSession(for: sessionService)
+            tapi.session = try sessionStorage.getSession(for: sessionService)
         } catch let error {
+            tidepoolKitLog.error("Error initializing TidepoolService %{public}@", error.localizedDescription)
             self.error = error
         }
         tapi.logging = self
@@ -117,7 +118,7 @@ public final class TidepoolService: Service, TAPIObserver {
             self.dataSetId = nil
         }
         do {
-            try sessionStorage?.setSession(session, for: sessionService)
+            try sessionStorage.setSession(session, for: sessionService)
         } catch let error {
             self.error = error
         }
