@@ -12,6 +12,7 @@ struct SettingsView: View {
     @Environment(\.dismissAction) private var dismiss
 
     var accountLogin: String
+    var environment: String?
     var didRequestDelete: () -> Void
 
     @State private var showingAlert = false
@@ -25,23 +26,28 @@ struct SettingsView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 150, height: 150)
+                .padding(.bottom)
 
+            Text("Account")
+                .font(.headline)
+            Text(accountLogin)
+                .padding(.bottom)
 
-            VStack(spacing: 0) {
-                HStack {
-                    Text("Account")
-                    Spacer()
-                    Text(accountLogin)
-                }
-                .padding()
+            if let environment {
+                Text("Environment")
+                    .font(.headline)
+                Text(environment)
+                    .padding(.bottom)
             }
+
+            Spacer()
 
             Button(action: {
                 showingAlert = true
             } ) {
-                Text("Delete Service").padding(.top, 20)
+                Text("Delete Service")
+                    .foregroundColor(.red)
             }
-            Spacer()
         }
         .padding([.leading, .trailing])
         .navigationBarTitle("")

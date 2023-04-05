@@ -100,13 +100,11 @@ extension DoseEntry: IdentifiableDatum {
             return dataForBolusManuallyEntered(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
 
             
-        } else /* if automatic != true */ {
+        } else if automatic != true {
             return dataForBolusManual(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        } /* else {
-           // PS: Tidepool platform currently errors when automated is used as a subtype.
-           // See https://tidepool.atlassian.net/browse/BACK-2442
+        }  else {
             return dataForBolusAutomatic(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        } */
+        }
     }
 
     private func dataForBolusManuallyEntered(for userId: String, hostIdentifier: String, hostVersion: String) ->[TDatum] {

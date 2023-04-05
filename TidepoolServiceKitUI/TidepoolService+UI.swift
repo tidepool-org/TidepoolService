@@ -23,7 +23,12 @@ extension TidepoolService: ServiceUI {
 
     public func settingsViewController(colorPalette: LoopUIColorPalette) -> ServiceViewController {
 
-        let view = SettingsView(accountLogin: tapi.session?.email ?? "Unknown", didRequestDelete: {
+        var environment = tapi.session?.environment.host
+        if environment == "app.tidepool.org" {
+            environment = nil
+        }
+
+        let view = SettingsView(accountLogin: tapi.session?.email ?? "Unknown", environment: environment, didRequestDelete: {
             self.completeDelete()
         })
         let hostedView = DismissibleHostingController(rootView: view, colorPalette: colorPalette)
