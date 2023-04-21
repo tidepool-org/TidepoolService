@@ -9,31 +9,60 @@
 import SwiftUI
 import LoopKit
 import LoopKitUI
+import TidepoolKit
 import TidepoolServiceKit
 
 extension TidepoolService: ServiceUI {
     public static var image: UIImage? {
-        UIImage(named: "Tidepool Logo", in: Bundle(for: TidepoolServiceSetupViewController.self), compatibleWith: nil)!
+        UIImage(frameworkImage: "Tidepool Logo")
     }
 
     public static func setupViewController(colorPalette: LoopUIColorPalette, pluginHost: PluginHost) -> SetupUIResult<ServiceViewController, ServiceUI> {
-        let service = TidepoolService(hostIdentifier: pluginHost.hostIdentifier, hostVersion: pluginHost.hostVersion)
-        return .userInteractionRequired(ServiceNavigationController(rootViewController: TidepoolServiceSetupViewController(service: service)))
+
+        let navController = ServiceNavigationController()
+        navController.isNavigationBarHidden = true
+
+        Task {
+            let service = TidepoolService(hostIdentifier: pluginHost.hostIdentifier, hostVersion: pluginHost.hostVersion)
+
+            let settingsView = await SettingsView(service: service, login: { environment in
+                try await service.tapi.login(environment: environment, presenting: navController)
+                try await service.completeCreate()
+                await navController.notifyServiceCreatedAndOnboarded(service)
+                //await navController.notifyComplete()
+            }, dismiss: {
+                Task {
+                    await navController.notifyComplete()
+                }
+            })
+
+            let hostingController = await UIHostingController(rootView: settingsView)
+            await navController.pushViewController(hostingController, animated: false)
+        }
+        
+        return .userInteractionRequired(navController)
     }
 
     public func settingsViewController(colorPalette: LoopUIColorPalette) -> ServiceViewController {
 
-        var environment = tapi.session?.environment.host
-        if environment == "app.tidepool.org" {
-            environment = nil
+        let navController = ServiceNavigationController()
+        navController.isNavigationBarHidden = true
+
+        Task {
+            let settingsView = await SettingsView(service: self, login: { [weak self] environment in
+                if let self {
+                    try await self.tapi.login(environment: environment, presenting: navController)
+                }
+            }, dismiss: {
+                Task {
+                    await navController.notifyComplete()
+                }
+            })
+
+            let hostingController = await UIHostingController(rootView: settingsView)
+            await navController.pushViewController(hostingController, animated: false)
         }
 
-        let view = SettingsView(accountLogin: tapi.session?.email ?? "Unknown", environment: environment, didRequestDelete: {
-            self.completeDelete()
-        })
-        let hostedView = DismissibleHostingController(rootView: view, colorPalette: colorPalette)
-        let navVC = ServiceNavigationController(rootViewController: hostedView)
-
-        return navVC
+        return navController
     }
 }
