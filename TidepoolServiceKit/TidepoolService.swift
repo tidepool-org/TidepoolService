@@ -619,6 +619,15 @@ extension TidepoolService: RemoteDataService {
             throw error
         }
     }
+
+    public func commandFromPushNotification(_ notification: [String: AnyObject]) async throws -> RemoteCommand {
+
+        enum TidepoolPushNotificationError: LocalizedError {
+            case remoteCommandsNotSupported
+        }
+
+        throw TidepoolPushNotificationError.remoteCommandsNotSupported
+    }
 }
 
 extension KeychainManager: SessionStorage {
