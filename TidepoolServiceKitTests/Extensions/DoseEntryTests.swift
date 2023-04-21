@@ -225,7 +225,7 @@ class DoseEntryDataTests: XCTestCase {
 [
   {
     "expectedNormal" : 4.25,
-    "id" : "8a53d0b7449ffefe549acf2b664365f3",
+    "id" : "1ee0e82b79f29ca633f5b369f4ff8e1c",
     "insulinFormulation" : {
       "simple" : {
         "actingType" : "rapid",
@@ -234,7 +234,7 @@ class DoseEntryDataTests: XCTestCase {
     },
     "normal" : 3.5,
     "origin" : {
-      "id" : "ab0a722d639669875017a899a5214677:bolus/normal",
+      "id" : "ab0a722d639669875017a899a5214677:bolus/automated",
       "name" : "com.apple.dt.xctest.tool",
       "type" : "application",
       "version" : "1.0.0"
@@ -243,7 +243,7 @@ class DoseEntryDataTests: XCTestCase {
       "duration" : 30000,
       "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784"
     },
-    "subType" : "normal",
+    "subType" : "automated",
     "time" : "2020-01-02T03:00:23.000Z",
     "type" : "bolus"
   }
@@ -275,7 +275,7 @@ class DoseEntryDataTests: XCTestCase {
         "code" : "bolus/mutable"
       }
     ],
-    "id" : "8a53d0b7449ffefe549acf2b664365f3",
+    "id" : "1ee0e82b79f29ca633f5b369f4ff8e1c",
     "insulinFormulation" : {
       "simple" : {
         "actingType" : "rapid",
@@ -284,7 +284,7 @@ class DoseEntryDataTests: XCTestCase {
     },
     "normal" : 4.25,
     "origin" : {
-      "id" : "ab0a722d639669875017a899a5214677:bolus/normal",
+      "id" : "ab0a722d639669875017a899a5214677:bolus/automated",
       "name" : "com.apple.dt.xctest.tool",
       "type" : "application",
       "version" : "1.0.0"
@@ -293,7 +293,7 @@ class DoseEntryDataTests: XCTestCase {
       "duration" : 30000,
       "syncIdentifier" : "18CF3948-0B3D-4B12-8BFE-14986B0E6784"
     },
-    "subType" : "normal",
+    "subType" : "automated",
     "time" : "2020-01-02T03:00:23.000Z",
     "type" : "bolus"
   }
