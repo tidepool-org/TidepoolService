@@ -33,16 +33,22 @@ import TidepoolKit
 // TODO: Consider adding syncVersion to new update backend API (or just keep in payload)
 
 extension SyncCarbObject: IdentifiableHKDatum {
-    func datum(for userId: String) -> TFoodDatum? {
+    func datum(for userId: String, hostIdentifier: String, hostVersion: String) -> TFoodDatum? {
         guard let id = datumId(for: userId) else {
             return nil
         }
-        return TFoodDatum(time: datumTime, name: datumName, nutrition: datumNutrition).adornWith(id: id, payload: datumPayload, origin: datumOrigin)
+        let origin = datumOrigin(for: resolvedIdentifier, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        return TFoodDatum(time: datumTime, name: datumName, nutrition: datumNutrition).adornWith(id: id, payload: datumPayload, origin: origin)
     }
 
     private var datumTime: Date { startDate }
 
-    private var datumName: String? { foodType }
+    private var datumName: String? {
+        guard let foodType else {
+            return nil
+        }
+        return foodType.isEmpty ? nil : foodType
+    }
 
     private var datumNutrition: TFoodDatum.Nutrition {
         return TFoodDatum.Nutrition(carbohydrate: datumCarbohydrate, estimatedAbsorptionDuration: absorptionTime)

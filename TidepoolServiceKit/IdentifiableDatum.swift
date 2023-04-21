@@ -29,18 +29,18 @@ extension IdentifiableDatum {
         return "\(userId):\(resolvedIdentifier)".md5hash!
     }
 
-    var datumOrigin: TOrigin {
-        return datumOrigin(for: resolvedIdentifier)
-    }
+//    var datumOrigin: TOrigin {
+//        return datumOrigin(for: resolvedIdentifier)
+//    }
+//
+//    func datumOrigin<T: TypedDatum>(for type: T.Type) -> TOrigin {
+//        return datumOrigin(for: resolvedIdentifier(for: type))
+//    }
 
-    func datumOrigin<T: TypedDatum>(for type: T.Type) -> TOrigin {
-        return datumOrigin(for: resolvedIdentifier(for: type))
-    }
-
-    private func datumOrigin(for resolvedIdentifier: String) -> TOrigin {
+    func datumOrigin(for resolvedIdentifier: String, hostIdentifier: String, hostVersion: String) -> TOrigin {
         return TOrigin(id: resolvedIdentifier,
-                       name: Bundle.main.bundleIdentifier,
-                       version: Bundle.main.semanticVersion,
+                       name: hostIdentifier,
+                       version: hostVersion,
                        type: .application)
     }
 

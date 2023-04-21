@@ -49,18 +49,19 @@ import TidepoolKit
  */
 
 extension StoredSettings: IdentifiableDatum {
-    func datumControllerSettings(for userId: String) -> TControllerSettingsDatum {
+    func datumControllerSettings(for userId: String, hostIdentifier: String, hostVersion: String) -> TControllerSettingsDatum {
         let datum = TControllerSettingsDatum(time: datumTime,
                                              device: datumControllerDevice,
                                              notifications: datumControllerNotifications)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TControllerSettingsDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TControllerSettingsDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TControllerSettingsDatum.self))
+                               origin: origin)
     }
 
-    func datumCGMSettings(for userId: String) -> TCGMSettingsDatum {
+    func datumCGMSettings(for userId: String, hostIdentifier: String, hostVersion: String) -> TCGMSettingsDatum {
         let datum = TCGMSettingsDatum(time: datumTime,
                                       firmwareVersion: datumCGMFirmwareVersion,
                                       hardwareVersion: datumCGMHardwareVersion,
@@ -73,14 +74,15 @@ extension StoredSettings: IdentifiableDatum {
                                       units: datumCGMUnits,
                                       defaultAlerts: nil,       // TODO: https://tidepool.atlassian.net/browse/LOOP-3929
                                       scheduledAlerts: nil)     // TODO: https://tidepool.atlassian.net/browse/LOOP-3929
+        let origin = datumOrigin(for: resolvedIdentifier(for: TCGMSettingsDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TCGMSettingsDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TCGMSettingsDatum.self))
+                               origin: origin)
     }
 
-    func datumPumpSettings(for userId: String) -> TPumpSettingsDatum {
+    func datumPumpSettings(for userId: String, hostIdentifier: String, hostVersion: String) -> TPumpSettingsDatum {
         let datum = TPumpSettingsDatum(time: datumTime,
                                        activeScheduleName: datumPumpActiveScheduleName,
                                        automatedDelivery: datumPumpAutomatedDelivery,
@@ -106,14 +108,15 @@ extension StoredSettings: IdentifiableDatum {
                                        serialNumber: datumPumpSerialNumber,
                                        softwareVersion: datumPumpSoftwareVersion,
                                        units: datumPumpUnits)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TPumpSettingsDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TPumpSettingsDatum.self))
+                               origin: origin)
     }
     
-    func datumPumpSettingsOverrideDeviceEvent(for userId: String) -> TPumpSettingsOverrideDeviceEventDatum? {
+    func datumPumpSettingsOverrideDeviceEvent(for userId: String, hostIdentifier: String, hostVersion: String) -> TPumpSettingsOverrideDeviceEventDatum? {
         guard let activeOverride = activeOverride else {
             return nil
         }
@@ -128,11 +131,12 @@ extension StoredSettings: IdentifiableDatum {
                                                           carbohydrateRatioScaleFactor: activeOverride.datumCarbohydrateRatioScaleFactor,
                                                           insulinSensitivityScaleFactor: activeOverride.datumInsulinSensitivityScaleFactor,
                                                           units: activeOverride.datumUnits)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TPumpSettingsOverrideDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsOverrideDeviceEventDatum.self),
                                timeZone: datumTimeZone,
                                timeZoneOffset: datumTimeZoneOffset,
                                payload: datumPayload,
-                               origin: datumOrigin(for: TPumpSettingsOverrideDeviceEventDatum.self))
+                               origin: origin)
     }
 
     var syncIdentifierAsString: String { syncIdentifier.uuidString }
@@ -174,12 +178,6 @@ extension StoredSettings: IdentifiableDatum {
     private var datumCGMUnits: TCGMSettingsDatum.Units { .milligramsPerDeciliter }
 
     private var datumPumpActiveScheduleName: String? {
-        guard basalRateSchedule != nil ||
-                glucoseTargetRangeSchedule != nil ||
-                carbRatioSchedule != nil ||
-                insulinSensitivitySchedule != nil else {
-            return nil
-        }
         return Self.activeScheduleNameDefault
     }
     

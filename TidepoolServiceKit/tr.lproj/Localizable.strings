@@ -1,0 +1,6 @@
+/* Error string for configuration error */
+"Configuration Error" = "Yapılandırma hatası";
+
+/* The title of the Tidepool service */
+"Tidepool" = "Tidepool";
+
