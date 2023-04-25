@@ -30,14 +30,6 @@ extension IdentifiableHKDatum {
         return "\(userId):\(resolvedIdentifier)".md5hash
     }
 
-//    var datumOrigin: TOrigin? {
-//        return datumOrigin(for: resolvedIdentifier)
-//    }
-//
-//    func datumOrigin<T: TypedDatum>(for type: T.Type) -> TOrigin? {
-//        return datumOrigin(for: resolvedIdentifier(for: type))
-//    }
-
     func datumOrigin(for resolvedIdentifier: String?, hostIdentifier: String, hostVersion: String) -> TOrigin? {
         guard let resolvedIdentifier = resolvedIdentifier else {
             return nil

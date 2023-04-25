@@ -72,10 +72,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
         self.hostIdentifier = hostIdentifier
         self.hostVersion = hostVersion
 
-        if tapi.defaultEnvironment == nil {
-            tapi.defaultEnvironment = TEnvironment(host: "app.tidepool.org", port: 443)
-        }
-
         Task {
             await tapi.setLogging(self)
             await tapi.addObserver(self)
