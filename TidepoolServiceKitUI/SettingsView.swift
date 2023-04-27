@@ -10,7 +10,6 @@ import SwiftUI
 import TidepoolKit
 import TidepoolServiceKit
 
-@MainActor
 public struct SettingsView: View {
 
     @State private var isEnvironmentActionSheetPresented = false
@@ -190,7 +189,6 @@ public struct SettingsView: View {
             do {
                 try await login?(selectedEnvironment)
                 isLoggingIn = false
-                //dismiss?()
             } catch {
                 self.error = error
                 isLoggingIn = false
