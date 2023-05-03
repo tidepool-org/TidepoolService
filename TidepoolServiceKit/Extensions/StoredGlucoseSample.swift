@@ -30,7 +30,7 @@ import TidepoolKit
  */
 
 extension StoredGlucoseSample: IdentifiableHKDatum {
-    func datum(for userId: String) -> TDatum? {
+    func datum(for userId: String, hostIdentifier: String, hostVersion: String) -> TDatum? {
         guard let id = datumId(for: userId) else {
             return nil
         }
@@ -44,7 +44,8 @@ extension StoredGlucoseSample: IdentifiableHKDatum {
             datum = TCBGDatum(time: datumTime, value: datumValue, units: datumUnits, trend: datumTrend, trendRate: datumTrendRate)
         }
 
-        return datum.adornWith(id: id, deviceId: datumDeviceId, annotations: datumAnnotations, payload: datumPayload, origin: datumOrigin)
+        let origin = datumOrigin(for: resolvedIdentifier, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        return datum.adornWith(id: id, deviceId: datumDeviceId, annotations: datumAnnotations, payload: datumPayload, origin: origin)
     }
 
     private var datumTime: Date { startDate }

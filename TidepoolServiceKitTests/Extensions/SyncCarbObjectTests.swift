@@ -30,7 +30,7 @@ class SyncCarbObjectDatumTests: XCTestCase {
                                     operation: .update,
                                     addedDate: Self.dateFormatter.date(from: "2020-01-02T03:05:23Z")!,
                                     supercededDate: nil)
-        let datum = object.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = object.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "id" : "6bcc86152b10e405e126714fb583b783",

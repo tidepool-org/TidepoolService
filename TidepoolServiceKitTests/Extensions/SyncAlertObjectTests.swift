@@ -30,7 +30,7 @@ class SyncAlertObjectTests: XCTestCase {
                                      acknowledgedDate: Self.dateFormatter.date(from: "2020-01-02T03:05:34Z")!,
                                      retractedDate: Self.dateFormatter.date(from: "2020-01-02T03:06:45Z")!,
                                      syncIdentifier: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!)
-        let datum = object.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = object.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "acknowledgedTime" : "2020-01-02T03:05:34.000Z",
@@ -39,8 +39,9 @@ class SyncAlertObjectTests: XCTestCase {
   "name" : "ManagerId.AlertId",
   "origin" : {
     "id" : "2A67A303-1234-4CB8-8263-79498265368E",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "metadata" : {

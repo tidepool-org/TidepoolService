@@ -14,7 +14,7 @@ import TidepoolKit
 
 class StoredDosingDecisionTests: XCTestCase {
     func testDatumDosingDecision() {
-        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumDosingDecision(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumDosingDecision(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "associations" : [
@@ -112,8 +112,9 @@ class StoredDosingDecisionTests: XCTestCase {
   },
   "origin" : {
     "id" : "2A67A303-5203-4CB8-8263-79498265368E:dosingDecision",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "originalFood" : {
     "nutrition" : {
@@ -169,7 +170,7 @@ class StoredDosingDecisionTests: XCTestCase {
     }
 
     func testDatumControllerStatus() {
-        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumControllerStatus(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumControllerStatus(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "battery" : {
@@ -180,8 +181,9 @@ class StoredDosingDecisionTests: XCTestCase {
   "id" : "ac3b6bdb9665f62eac07bf476f53795d",
   "origin" : {
     "id" : "2A67A303-5203-4CB8-8263-79498265368E:controllerStatus",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-5203-4CB8-8263-79498265368E"
@@ -196,7 +198,7 @@ class StoredDosingDecisionTests: XCTestCase {
     }
 
     func testDatumPumpStatus() {
-        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumPumpStatus(for: "1234567890"))
+        let data = try! Self.encoder.encode(StoredDosingDecision.test.datumPumpStatus(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "basalDelivery" : {
@@ -212,8 +214,9 @@ class StoredDosingDecisionTests: XCTestCase {
   "id" : "4df2e9d703df3217bd3b834845acfe4d",
   "origin" : {
     "id" : "2A67A303-5203-4CB8-8263-79498265368E:pumpStatus",
-    "name" : "com.apple.dt.xctest.tool",
-    "type" : "application"
+    "name" : "Loop",
+    "type" : "application",
+    "version" : "1.2.3"
   },
   "payload" : {
     "syncIdentifier" : "2A67A303-5203-4CB8-8263-79498265368E"

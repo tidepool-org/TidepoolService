@@ -14,7 +14,6 @@
 		A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151366244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
-		A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */; };
 		A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA62435987000E02268 /* SyncCarbObject.swift */; };
 		A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */; };
 		A94AE4E8235A89B5005CA320 /* TidepoolServiceKitPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A94AE4E6235A89B5005CA320 /* TidepoolServiceKitPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -51,7 +50,6 @@
 		A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD3222E7CA1A00E76C9F /* LocalizedString.swift */; };
 		A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */; };
 		A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD3822E7DEE000E76C9F /* TidepoolService+UI.swift */; };
-		A9DAAD3B22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAAD3A22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift */; };
 		A9DAAD3F22E7DF9B00E76C9F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9DAAD4122E7DF9B00E76C9F /* Localizable.strings */; };
 		A9DAAD4D22E7DFD400E76C9F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9DAAD4F22E7DFD400E76C9F /* Localizable.strings */; };
 		A9DAAD5B22E7E6BE00E76C9F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD5A22E7E6BE00E76C9F /* LoopKit.framework */; };
@@ -73,6 +71,11 @@
 		C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; platformFilter = ios; };
 		C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
+		C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C1C9414629F0CB21008D3E05 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9414529F0CB21008D3E05 /* UIImage.swift */; };
+		C1D0B62929848A460098D215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62829848A460098D215 /* SettingsView.swift */; };
+		C1D0B62C29848BEB0098D215 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62B29848BEB0098D215 /* Image.swift */; };
 		E93BA06224A29C9C00C5D7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +140,7 @@
 			files = (
 				C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */,
 				C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */,
+				C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,7 +151,6 @@
 		1D70C41326F28CC900C62570 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		A9057686271F770F0030C3B1 /* IdentifiableDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableDatum.swift; sourceTree = "<group>"; };
 		A913B37C24200C97000805C4 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
-		A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSetupViewController.swift; sourceTree = "<group>"; };
 		A9309CA62435987000E02268 /* SyncCarbObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCarbObject.swift; sourceTree = "<group>"; };
 		A9309CAE2436C52900E02268 /* StoredGlucoseSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredGlucoseSample.swift; sourceTree = "<group>"; };
 		A94AE4E4235A89B5005CA320 /* TidepoolServiceKitPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolServiceKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,7 +195,6 @@
 		A9DAAD3222E7CA1A00E76C9F /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolService.swift; sourceTree = "<group>"; };
 		A9DAAD3822E7DEE000E76C9F /* TidepoolService+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidepoolService+UI.swift"; sourceTree = "<group>"; };
-		A9DAAD3A22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceSettingsViewController.swift; sourceTree = "<group>"; };
 		A9DAAD4222E7DFA500E76C9F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A9DAAD4322E7DFA600E76C9F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A9DAAD4422E7DFA700E76C9F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -225,6 +227,26 @@
 		A9E8C610272C76A500016E2E /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredCarbEntry.swift; sourceTree = "<group>"; };
 		A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableHKDatum.swift; sourceTree = "<group>"; };
+		C12522E1298309B5006EA1CD /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1317D4129830A0800625B94 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C18B726B299581C600F138D3 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C192C60B29C78711001EFEA6 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C199E4D929C64072003D32F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C199E4DA29C64072003D32F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1A3529629C640A5002322A5 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1A3529729C640A5002322A5 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1B0CFE129C786BF0045B04D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1B267AA2995824000BCB7C1 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1C9414529F0CB21008D3E05 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		C1D0B62829848A460098D215 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C1D0B62B29848BEB0098D215 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		C1DEE89E298309EA0008194D /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1DEE89F298309EA0008194D /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1E5A6E529C7870100703C90 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1E693D729C786E200410918 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C1E8ADD92995822300AB9EEB /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1E8ADDA2995822300AB9EEB /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1F4FD6029C7869800D7ACBC /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,6 +257,7 @@
 			files = (
 				C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */,
 				C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */,
+				C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,13 +428,13 @@
 		A9DAAD1C22E7988900E76C9F /* TidepoolServiceKitUI */ = {
 			isa = PBXGroup;
 			children = (
+				C1D0B62A29848BD90098D215 /* Extensions */,
 				A9DAAD1D22E7988900E76C9F /* TidepoolServiceKitUI.h */,
 				A9DAAD1E22E7988900E76C9F /* Info.plist */,
 				A9DAAD6C22E7EA8F00E76C9F /* IdentifiableClass.swift */,
 				A9DAAD6E22E7EA9700E76C9F /* NibLoadable.swift */,
 				A9DAAD3822E7DEE000E76C9F /* TidepoolService+UI.swift */,
-				A9DAAD3A22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift */,
-				A92E770022E9181500591027 /* TidepoolServiceSetupViewController.swift */,
+				C1D0B62829848A460098D215 /* SettingsView.swift */,
 				E93BA06124A29C9C00C5D7E6 /* Assets.xcassets */,
 				A9DAAD4F22E7DFD400E76C9F /* Localizable.strings */,
 			);
@@ -453,6 +476,15 @@
 			isa = PBXGroup;
 			children = (
 				A9E8C610272C76A500016E2E /* TimeInterval.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C1D0B62A29848BD90098D215 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C1D0B62B29848BEB0098D215 /* Image.swift */,
+				C1C9414529F0CB21008D3E05 /* UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -630,6 +662,17 @@
 				ru,
 				es,
 				Base,
+				da,
+				sk,
+				tr,
+				ro,
+				cs,
+				he,
+				fi,
+				ja,
+				"pt-BR",
+				sv,
+				vi,
 			);
 			mainGroup = A9DAACD522E7978800E76C9F;
 			productRefGroup = A9DAACE022E7978800E76C9F /* Products */;
@@ -749,12 +792,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9DAAD6D22E7EA8F00E76C9F /* IdentifiableClass.swift in Sources */,
+				C1C9414629F0CB21008D3E05 /* UIImage.swift in Sources */,
+				C1D0B62C29848BEB0098D215 /* Image.swift in Sources */,
+				C1D0B62929848A460098D215 /* SettingsView.swift in Sources */,
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
-				A92E770122E9181500591027 /* TidepoolServiceSetupViewController.swift in Sources */,
-				A9DAAD3B22E7DEF100E76C9F /* TidepoolServiceSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +865,12 @@
 				A9DAAD4922E7DFAA00E76C9F /* ru */,
 				A9DAAD4A22E7DFAB00E76C9F /* es */,
 				A99222FA235A879600C11C04 /* Base */,
+				C1DEE89E298309EA0008194D /* sk */,
+				C18B726B299581C600F138D3 /* da */,
+				C1E8ADD92995822300AB9EEB /* ro */,
+				C1B267AA2995824000BCB7C1 /* tr */,
+				C199E4D929C64072003D32F7 /* cs */,
+				C1A3529629C640A5002322A5 /* he */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -838,6 +888,17 @@
 				A9DAAD5722E7DFE100E76C9F /* ru */,
 				A9DAAD5822E7DFE200E76C9F /* es */,
 				A99222FB235A87B100C11C04 /* Base */,
+				C12522E1298309B5006EA1CD /* da */,
+				C1DEE89F298309EA0008194D /* sk */,
+				C1317D4129830A0800625B94 /* tr */,
+				C1E8ADDA2995822300AB9EEB /* ro */,
+				C199E4DA29C64072003D32F7 /* cs */,
+				C1A3529729C640A5002322A5 /* he */,
+				C1F4FD6029C7869800D7ACBC /* fi */,
+				C1B0CFE129C786BF0045B04D /* ja */,
+				C1E693D729C786E200410918 /* pt-BR */,
+				C1E5A6E529C7870100703C90 /* sv */,
+				C192C60B29C78711001EFEA6 /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -990,7 +1051,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LOCALIZED_STRING_MACRO_NAMES = (
 					NSLocalizedString,
 					CFLocalizedString,
@@ -1094,7 +1155,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LOCALIZED_STRING_MACRO_NAMES = (
 					NSLocalizedString,
 					CFLocalizedString,

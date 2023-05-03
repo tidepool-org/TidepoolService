@@ -39,24 +39,24 @@ import TidepoolKit
  */
 
 extension PersistedPumpEvent: IdentifiableDatum {
-    func data(for userId: String) -> [TDatum] {
+    func data(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         guard let type = type, syncIdentifier != nil else {
             return []
         }
 
         switch type {
         case .alarm:
-            return dataForAlarm(for: userId)
+            return dataForAlarm(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .alarmClear:
-            return dataForAlarmClear(for: userId)
+            return dataForAlarmClear(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .prime:
-            return dataForPrime(for: userId)
+            return dataForPrime(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .resume:
-            return dataForResume(for: userId)
+            return dataForResume(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .rewind:
-            return dataForRewind(for: userId)
+            return dataForRewind(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .suspend:
-            return dataForSuspend(for: userId)
+            return dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         default:
             return []
         }
@@ -66,10 +66,10 @@ extension PersistedPumpEvent: IdentifiableDatum {
 
     var syncIdentifierAsString: String { syncIdentifier! }
 
-    private func dataForAlarm(for userId: String) -> [TDatum] {
+    private func dataForAlarm(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var data: [TDatum] = []
         if dose?.type == .suspend {
-            data.append(contentsOf: dataForSuspend(for: userId))
+            data.append(contentsOf: dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
         }
 
         var payload = datumPayload
@@ -78,46 +78,48 @@ extension PersistedPumpEvent: IdentifiableDatum {
         }
 
         var datum = TAlarmDeviceEventDatum(time: date, alarmType: datumAlarmType ?? .other)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TAlarmDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TAlarmDeviceEventDatum.self),
                                 payload: payload,
-                                origin: datumOrigin(for: TAlarmDeviceEventDatum.self))
+                                origin: origin)
         data.append(datum)
 
         if dose?.type == .resume {
-            data.append(contentsOf: dataForResume(for: userId))
+            data.append(contentsOf: dataForResume(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
         }
         return data
     }
 
-    private func dataForAlarmClear(for userId: String) -> [TDatum] {
+    private func dataForAlarmClear(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         if dose?.type == .suspend {
-            return dataForSuspend(for: userId)
+            return dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         } else if dose?.type == .resume {
-            return dataForResume(for: userId)
+            return dataForResume(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         } else {
             return []
         }
     }
 
-    private func dataForPrime(for userId: String) -> [TDatum] {
+    private func dataForPrime(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var data: [TDatum] = []
         if dose?.type == .suspend {
-            data.append(contentsOf: dataForSuspend(for: userId))
+            data.append(contentsOf: dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
         }
 
         var datum = TPrimeDeviceEventDatum(time: date, target: .tubing)        // Default to tubing until we have further information
+        let origin = datumOrigin(for: resolvedIdentifier(for: TPrimeDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TPrimeDeviceEventDatum.self),
                                 payload: datumPayload,
-                                origin: datumOrigin(for: TPrimeDeviceEventDatum.self))
+                                origin: origin)
         data.append(datum)
 
         if dose?.type == .resume {
-            data.append(contentsOf: dataForResume(for: userId))
+            data.append(contentsOf: dataForResume(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
         }
         return data
     }
 
-    private func dataForResume(for userId: String) -> [TDatum] {
+    private func dataForResume(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         guard let dose = dose else {
             return []
         }
@@ -128,31 +130,33 @@ extension PersistedPumpEvent: IdentifiableDatum {
         var datum = TStatusDeviceEventDatum(time: datumTime,
                                             name: .resumed,
                                             reason: reason)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TStatusDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TStatusDeviceEventDatum.self),
                                 payload: datumPayload,
-                                origin: datumOrigin(for: TStatusDeviceEventDatum.self))
+                                origin: origin)
         return [datum]
     }
 
-    private func dataForRewind(for userId: String) -> [TDatum] {
+    private func dataForRewind(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var data: [TDatum] = []
         if dose?.type == .suspend {
-            data.append(contentsOf: dataForSuspend(for: userId))
+            data.append(contentsOf: dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
         }
 
         var datum = TReservoirChangeDeviceEventDatum(time: date)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TReservoirChangeDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TReservoirChangeDeviceEventDatum.self),
                                 payload: datumPayload,
-                                origin: datumOrigin(for: TReservoirChangeDeviceEventDatum.self))
+                                origin: origin)
         data.append(datum)
 
         if dose?.type == .resume {
-            data.append(contentsOf: dataForResume(for: userId))
+            data.append(contentsOf: dataForResume(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
         }
         return data
     }
 
-    private func dataForSuspend(for userId: String) -> [TDatum] {
+    private func dataForSuspend(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         guard let dose = dose else {
             return []
         }
@@ -163,9 +167,10 @@ extension PersistedPumpEvent: IdentifiableDatum {
         var datum = TStatusDeviceEventDatum(time: datumTime,
                                             name: .suspended,
                                             reason: reason)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TStatusDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         datum = datum.adornWith(id: datumId(for: userId, type: TStatusDeviceEventDatum.self),
                                 payload: datumPayload,
-                                origin: datumOrigin(for: TStatusDeviceEventDatum.self))
+                                origin: origin)
         return [datum]
     }
 

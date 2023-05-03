@@ -26,7 +26,7 @@ import TidepoolKit
  */
 
 extension SyncAlertObject: IdentifiableDatum {
-    func datum(for userId: String) -> TAlertDatum? {
+    func datum(for userId: String, hostIdentifier: String, hostVersion: String) -> TAlertDatum? {
         guard triggered else {      // If alert not yet triggered due to delay, then ignore
             return nil
         }
@@ -42,7 +42,7 @@ extension SyncAlertObject: IdentifiableDatum {
                                 retractedTime: datumRetractedTime)
         return datum.adornWith(id: datumId(for: userId),
                                payload: datumPayload,
-                               origin: datumOrigin)
+                               origin: datumOrigin(for: resolvedIdentifier, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
     }
 
     var syncIdentifierAsString: String { syncIdentifier.uuidString }

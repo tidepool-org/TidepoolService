@@ -1,2 +1,6 @@
+/* Error string for configuration error */
+"Configuration Error" = "Ошибка конфигурации";
+
 /* The title of the Tidepool service */
 "Tidepool" = "Tidepool";
+

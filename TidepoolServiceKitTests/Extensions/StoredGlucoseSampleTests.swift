@@ -27,7 +27,7 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "id" : "4cf2a0566365e60b3f9618f39de149b8",
@@ -65,7 +65,7 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: true,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "id" : "4cf2a0566365e60b3f9618f39de149b8",
@@ -103,7 +103,7 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "id" : "4cf2a0566365e60b3f9618f39de149b8",
@@ -142,7 +142,7 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "annotations" : [
@@ -188,7 +188,7 @@ class StoredGlucoseSampleTests: XCTestCase {
                                          wasUserEntered: false,
                                          device: nil,
                                          healthKitEligibleDate: nil)
-        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011")
+        let datum = sample.datum(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(String(data: try! Self.encoder.encode(datum), encoding: .utf8), """
 {
   "annotations" : [
