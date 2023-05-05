@@ -29,7 +29,6 @@ extension TidepoolService: ServiceUI {
                 try await service.tapi.login(environment: environment, presenting: navController)
                 try await service.completeCreate()
                 await navController.notifyServiceCreatedAndOnboarded(service)
-                //await navController.notifyComplete()
             }, dismiss: {
                 Task {
                     await navController.notifyComplete()
