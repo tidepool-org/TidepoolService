@@ -46,7 +46,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     public lazy var sessionStorage: SessionStorage = KeychainManager()
 
-    public let tapi: TAPI
+    public let tapi: TAPI = TAPI(clientId: Bundle.main.tidepoolServiceClientId, redirectURL: Bundle.main.tidepoolServiceRedirectURL)
     
     public private (set) var error: Error?
 
@@ -67,16 +67,10 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
-    public init(hostIdentifier: String, hostVersion: String, automaticallyFetchEnvironments: Bool = true) {
+    public init(hostIdentifier: String, hostVersion: String) {
         self.id = UUID().uuidString
-        self.tapi = TAPI(clientId: "diy-loop", redirectURL: URL(string: "org.loopkit.Loop://tidepool_service_redirect")!)
         self.hostIdentifier = hostIdentifier
         self.hostVersion = hostVersion
-
-        // TODO: REMOVE BEFORE SHIPPING - https://tidepool.atlassian.net/browse/LOOP-4060
-        if tapi.defaultEnvironment == nil {
-            tapi.defaultEnvironment = TEnvironment(host: "app.tidepool.org", port: 443)
-        }
 
         Task {
             await tapi.setLogging(self)
@@ -86,7 +80,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     public init?(rawState: RawStateValue) {
         self.isOnboarded = true // Assume when restoring from state, that we're onboarded
-        self.tapi = TAPI(clientId: "diy-loop", redirectURL: URL(string: "org.loopkit.Loop://tidepool_service_redirect")!)
         guard let id = rawState["id"] as? String else {
             return nil
         }

@@ -19,7 +19,7 @@ class TidepoolServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        tidepoolService = TidepoolService(hostIdentifier: "Loop", hostVersion: "1.2.3", automaticallyFetchEnvironments: false)
+        tidepoolService = TidepoolService(hostIdentifier: "Loop", hostVersion: "1.2.3")
         userID = "1234567890"
     }
 
