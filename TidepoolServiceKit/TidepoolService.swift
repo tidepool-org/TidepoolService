@@ -222,14 +222,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
         let dataSets = try await tapi.listDataSets(filter: TDataSet.Filter(clientName: clientName, deleted: false))
 
-        if !dataSets.isEmpty {
-            if dataSets.count > 1 {
-                self.log.error("Found multiple matching data sets; expected zero or one")
-            }
-
-            guard let dataSetId = dataSets.first?.uploadId else {
-                throw TidepoolServiceError.missingDataSetId
-            }
+        // Earlier versions of Loop created datasets without `time` set, which causes issues, so ignore those.
+        if let dataset = dataSets.filter({ $0.time != nil && $0.deviceManufacturers != nil }).first, let dataSetId = dataset.id {
             return dataSetId
         } else {
             let dataSet = try await self.createDataSet()
@@ -248,11 +242,12 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
         let dataSet = TDataSet(client: TDataSet.Client(name: clientName, version: clientVersion),
                                dataSetType: .continuous,
                                deduplicator: TDataSet.Deduplicator(name: .dataSetDeleteOrigin),
-                               deviceTags: [.bgm, .cgm, .insulinPump])
+                               deviceManufacturers: ["medtronic"],
+                               deviceTags: [.bgm, .cgm, .insulinPump],
+                               time: Date())
 
         return try await tapi.createDataSet(dataSet)
     }
-
 }
 
 extension TidepoolService: TLogging {

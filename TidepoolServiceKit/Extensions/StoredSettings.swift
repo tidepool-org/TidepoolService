@@ -91,15 +91,15 @@ extension StoredSettings: IdentifiableDatum {
                                        bloodGlucoseSafetyLimit: datumPumpBloodGlucoseSafetyLimit,
                                        bloodGlucoseTargetPhysicalActivity: datumPumpBloodGlucoseTargetPhysicalActivity,
                                        bloodGlucoseTargetPreprandial: datumPumpBloodGlucoseTargetPreprandial,
-                                       bloodGlucoseTargetSchedules: datumPumpBloodGlucoseTargetSchedules,
+                                       bloodGlucoseTargetSchedule: datumPumpBloodGlucoseTargetSchedule,
                                        bolus: datumPumpBolus,
-                                       carbohydrateRatioSchedules: datumPumpCarbohydrateRatioSchedules,
+                                       carbohydrateRatioSchedule: datumPumpCarbohydrateRatioSchedule,
                                        display: datumPumpDisplay,
                                        firmwareVersion: datumPumpFirmwareVersion,
                                        hardwareVersion: datumPumpHardwareVersion,
                                        insulinFormulation: datumPumpInsulinFormulation,
                                        insulinModel: datumPumpInsulinModel,
-                                       insulinSensitivitySchedules: datumPumpInsulinSensitivitySchedules,
+                                       insulinSensitivitySchedule: datumPumpInsulinSensitivitySchedule,
                                        manufacturers: datumPumpManufacturers,
                                        model: datumPumpModel,
                                        name: datumPumpName,
@@ -220,11 +220,11 @@ extension StoredSettings: IdentifiableDatum {
                                                      high: preMealTargetRange.upperBound.doubleValue(for: .milligramsPerDeciliter))
     }
     
-    private var datumPumpBloodGlucoseTargetSchedules: [String: [TPumpSettingsDatum.BloodGlucoseStartTarget]]? {
+    private var datumPumpBloodGlucoseTargetSchedule: [TPumpSettingsDatum.BloodGlucoseStartTarget]? {
         guard let glucoseTargetRangeSchedule = glucoseTargetRangeSchedule else {
             return nil
         }
-        return [Self.activeScheduleNameDefault: glucoseTargetRangeSchedule.items(for: .milligramsPerDeciliter).map { TPumpSettingsDatum.BloodGlucoseStartTarget(start: $0.startTime, low: $0.value.minValue, high: $0.value.maxValue) }]
+        return glucoseTargetRangeSchedule.items(for: .milligramsPerDeciliter).map { TPumpSettingsDatum.BloodGlucoseStartTarget(start: $0.startTime, low: $0.value.minValue, high: $0.value.maxValue) }
     }
     
     private var datumPumpBolus: TPumpSettingsDatum.Bolus? {
@@ -234,11 +234,11 @@ extension StoredSettings: IdentifiableDatum {
         return TPumpSettingsDatum.Bolus(amountMaximum: TPumpSettingsDatum.Bolus.AmountMaximum(maximumBolus, .units))
     }
     
-    private var datumPumpCarbohydrateRatioSchedules: [String: [TPumpSettingsDatum.CarbohydrateRatioStart]]? {
+    private var datumPumpCarbohydrateRatioSchedule: [TPumpSettingsDatum.CarbohydrateRatioStart]? {
         guard let carbRatioSchedule = carbRatioSchedule else {
             return nil
         }
-        return [Self.activeScheduleNameDefault: carbRatioSchedule.items(for: .gram()).map { TPumpSettingsDatum.CarbohydrateRatioStart(start: $0.startTime, amount: $0.value) }]
+        return carbRatioSchedule.items(for: .gram()).map { TPumpSettingsDatum.CarbohydrateRatioStart(start: $0.startTime, amount: $0.value) }
     }
     
     private var datumPumpDisplay: TPumpSettingsDatum.Display? {
@@ -290,11 +290,11 @@ extension StoredSettings: IdentifiableDatum {
                                                actionPeakOffset: defaultRapidActingModel.peakActivity)
     }
     
-    private var datumPumpInsulinSensitivitySchedules: [String: [TPumpSettingsDatum.InsulinSensitivityStart]]? {
+    private var datumPumpInsulinSensitivitySchedule: [TPumpSettingsDatum.InsulinSensitivityStart]? {
         guard let insulinSensitivitySchedule = insulinSensitivitySchedule else {
             return nil
         }
-        return [Self.activeScheduleNameDefault: insulinSensitivitySchedule.items(for: .milligramsPerDeciliter).map { return TPumpSettingsDatum.InsulinSensitivityStart(start: $0.startTime, amount: $0.value) }]
+        return insulinSensitivitySchedule.items(for: .milligramsPerDeciliter).map { return TPumpSettingsDatum.InsulinSensitivityStart(start: $0.startTime, amount: $0.value) }
     }
 
     private var datumPumpManufacturers: [String]? { pumpDevice?.manufacturer.map { [$0] } }
