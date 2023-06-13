@@ -46,8 +46,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     public lazy var sessionStorage: SessionStorage = KeychainManager()
 
-    public let tapi: TAPI = TAPI(clientId: Bundle.main.tidepoolServiceClientId, redirectURL: Bundle.main.tidepoolServiceRedirectURL)
-    
+    public let tapi: TAPI = TAPI(clientId: BuildDetails.default.tidepoolServiceClientId, redirectURL: BuildDetails.default.tidepoolServiceRedirectURL)
+
     public private (set) var error: Error?
 
     private let id: String
