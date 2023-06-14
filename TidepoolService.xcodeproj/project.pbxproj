@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -67,6 +67,7 @@
 		A9E8C611272C76A500016E2E /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8C610272C76A500016E2E /* TimeInterval.swift */; };
 		A9F9F317271A046E00D19374 /* StoredCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */; };
 		A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */; };
+		C110888F2A39149100BA4898 /* BuildDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110888E2A39149100BA4898 /* BuildDetails.swift */; };
 		C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; platformFilter = ios; };
 		C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; platformFilter = ios; };
@@ -227,6 +228,7 @@
 		A9E8C610272C76A500016E2E /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredCarbEntry.swift; sourceTree = "<group>"; };
 		A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableHKDatum.swift; sourceTree = "<group>"; };
+		C110888E2A39149100BA4898 /* BuildDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDetails.swift; sourceTree = "<group>"; };
 		C12522E1298309B5006EA1CD /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1317D4129830A0800625B94 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C18B726B299581C600F138D3 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			children = (
 				A9DAAD0122E7987800E76C9F /* TidepoolServiceKit.h */,
 				A9DAAD0222E7987800E76C9F /* Info.plist */,
+				C110888E2A39149100BA4898 /* BuildDetails.swift */,
 				A9057686271F770F0030C3B1 /* IdentifiableDatum.swift */,
 				A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */,
 				A9DAAD3522E7CAC100E76C9F /* TidepoolService.swift */,
@@ -755,6 +758,7 @@
 				A9752A9B270B941C00E50750 /* SingleQuantitySchedule.swift in Sources */,
 				A9752A93270B766A00E50750 /* StoredDosingDecision.swift in Sources */,
 				A9752A97270B91E000E50750 /* Double.swift in Sources */,
+				C110888F2A39149100BA4898 /* BuildDetails.swift in Sources */,
 				A97A60FB243818C900AD69A5 /* TDatum.swift in Sources */,
 				A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */,
 				A9DAAD3322E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
