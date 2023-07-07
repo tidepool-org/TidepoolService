@@ -11,7 +11,6 @@
 		A9057687271F770F0030C3B1 /* IdentifiableDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9057686271F770F0030C3B1 /* IdentifiableDatum.swift */; };
 		A913B37D24200C97000805C4 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A913B37C24200C97000805C4 /* Bundle.swift */; };
 		A9151364244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
-		A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151366244E2A9E00116932 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9151368244E2A9E00116932 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; };
 		A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9309CA62435987000E02268 /* SyncCarbObject.swift */; };
@@ -34,7 +33,6 @@
 		A98737CB2788DAE400A6A23D /* PersistedPumpEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98737CA2788DAE400A6A23D /* PersistedPumpEvent.swift */; };
 		A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98737CC2788E61400A6A23D /* InsulinType.swift */; };
 		A9A53E2F271508D80050C0B1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A53E2E271508D80050C0B1 /* String.swift */; };
-		A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
 		A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */; };
 		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9D1AC9B27B1E046008C5A12 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9A27B1E046008C5A12 /* Data.swift */; };
@@ -68,12 +66,11 @@
 		A9F9F317271A046E00D19374 /* StoredCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */; };
 		A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */; };
 		C110888F2A39149100BA4898 /* BuildDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110888E2A39149100BA4898 /* BuildDetails.swift */; };
+		C124239D2A58771A00EAC89E /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C124239C2A58771A00EAC89E /* TidepoolKit */; };
 		C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; platformFilter = ios; };
 		C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; platformFilter = ios; };
 		C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; };
-		C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9BF371C2418195C008D7F34 /* TidepoolKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1C9414629F0CB21008D3E05 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9414529F0CB21008D3E05 /* UIImage.swift */; };
 		C1D0B62929848A460098D215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62829848A460098D215 /* SettingsView.swift */; };
 		C1D0B62C29848BEB0098D215 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62B29848BEB0098D215 /* Image.swift */; };
@@ -141,7 +138,6 @@
 			files = (
 				C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */,
 				C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */,
-				C1861B84297B4496008F69AE /* TidepoolKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,7 +255,6 @@
 			files = (
 				C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */,
 				C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */,
-				C1861B83297B4496008F69AE /* TidepoolKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,8 +262,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C124239D2A58771A00EAC89E /* TidepoolKit in Frameworks */,
 				A9DAAD5B22E7E6BE00E76C9F /* LoopKit.framework in Frameworks */,
-				A9BF371D2418195C008D7F34 /* TidepoolKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +283,6 @@
 			files = (
 				A9DAAD6122E7E7B200E76C9F /* LoopKit.framework in Frameworks */,
 				A9DAAD6322E7E7B200E76C9F /* LoopKitUI.framework in Frameworks */,
-				A9151365244E2A9E00116932 /* TidepoolKit.framework in Frameworks */,
 				A9DAAD6422E7E7B700E76C9F /* TidepoolServiceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -559,6 +553,9 @@
 			dependencies = (
 			);
 			name = TidepoolServiceKit;
+			packageProductDependencies = (
+				C124239C2A58771A00EAC89E /* TidepoolKit */,
+			);
 			productName = TidepoolServiceKit;
 			productReference = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -678,6 +675,9 @@
 				vi,
 			);
 			mainGroup = A9DAACD522E7978800E76C9F;
+			packageReferences = (
+				C124239B2A58771A00EAC89E /* XCRemoteSwiftPackageReference "TidepoolKit" */,
+			);
 			productRefGroup = A9DAACE022E7978800E76C9F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1416,6 +1416,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C124239B2A58771A00EAC89E /* XCRemoteSwiftPackageReference "TidepoolKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tidepool-org/TidepoolKit";
+			requirement = {
+				branch = dev;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C124239C2A58771A00EAC89E /* TidepoolKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C124239B2A58771A00EAC89E /* XCRemoteSwiftPackageReference "TidepoolKit" */;
+			productName = TidepoolKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A9DAACD622E7978800E76C9F /* Project object */;
 }
