@@ -11,6 +11,23 @@ import LoopKit
 import LoopKitUI
 import TidepoolKit
 import TidepoolServiceKit
+import AuthenticationServices
+
+class WindowContextProvider: NSObject, ASWebAuthenticationPresentationContextProviding {
+    let window: UIWindow
+
+    init(window: UIWindow) {
+        self.window = window
+    }
+
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return window
+    }
+}
+
+enum TidepoolServiceError: Error {
+    case missingWindow
+}
 
 extension TidepoolService: ServiceUI {
     public static var image: UIImage? {
@@ -26,7 +43,15 @@ extension TidepoolService: ServiceUI {
             let service = TidepoolService(hostIdentifier: pluginHost.hostIdentifier, hostVersion: pluginHost.hostVersion)
 
             let settingsView = await SettingsView(service: service, login: { environment in
-                try await service.tapi.login(environment: environment, presenting: navController)
+
+                guard let window = await navController.view.window else {
+                    throw TidepoolServiceError.missingWindow
+                }
+
+                let windowContextProvider = WindowContextProvider(window: window)
+                let sessionProvider = await ASWebAuthenticationSessionProvider(contextProviding: windowContextProvider)
+                let auth = OAuth2Authenticator(api: service.tapi, environment: environment, sessionProvider: sessionProvider)
+                try await auth.login()
                 try await service.completeCreate()
                 await navController.notifyServiceCreatedAndOnboarded(service)
             }, dismiss: {
@@ -50,7 +75,14 @@ extension TidepoolService: ServiceUI {
         Task {
             let settingsView = await SettingsView(service: self, login: { [weak self] environment in
                 if let self {
-                    try await self.tapi.login(environment: environment, presenting: navController)
+                    guard let window = await navController.view.window else {
+                        throw TidepoolServiceError.missingWindow
+                    }
+
+                    let windowContextProvider = WindowContextProvider(window: window)
+                    let sessionProvider = await ASWebAuthenticationSessionProvider(contextProviding: windowContextProvider)
+                    let auth = OAuth2Authenticator(api: self.tapi, environment: environment, sessionProvider: sessionProvider)
+                    try await auth.login()
                 }
             }, dismiss: {
                 Task {
