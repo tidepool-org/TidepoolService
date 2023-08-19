@@ -1,4 +1,4 @@
-/* Error string for configuration error */
+/* Error string for TidepoolServiceError.configuration */
 "Configuration Error" = "Erreur de configuration";
 
 /* The title of the Tidepool service */

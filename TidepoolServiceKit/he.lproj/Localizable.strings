@@ -1,3 +1,6 @@
+/* Error string for TidepoolServiceError.configuration */
+"Configuration Error" = "שגיאה בהגדרות";
+
 /* The title of the Tidepool service */
-"Tidepool" = "טיידפול";
+"Tidepool" = "Tidepool";
 
