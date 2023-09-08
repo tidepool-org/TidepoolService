@@ -33,7 +33,7 @@ public protocol SessionStorage {
 
 public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
-    public static let serviceIdentifier = "TidepoolService"
+    public static let pluginIdentifier = "TidepoolService"
 
     public static let localizedTitle = LocalizedString("Tidepool", comment: "The title of the Tidepool service")
 
@@ -64,7 +64,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private var hostIdentifier: String?
     private var hostVersion: String?
 
-    private let log = OSLog(category: "TidepoolService")
+    private let log = OSLog(category: pluginIdentifier)
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
     public init(hostIdentifier: String, hostVersion: String) {
@@ -145,8 +145,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
             let content = Alert.Content(title: LocalizedString("Tidepool Service Authorization", comment: "The title for an alert generated when TidepoolService is no longer authorized."),
                                         body: LocalizedString("Tidepool service is no longer authorized. Please navigate to Tidepool Service settings and reauthenticate.", comment: "The body text for an alert generated when TidepoolService is no longer authorized."),
                                         acknowledgeActionButtonLabel: LocalizedString("OK", comment: "Alert acknowledgment OK button"))
-            serviceDelegate?.issueAlert(Alert(identifier: Alert.Identifier(managerIdentifier: "TidepoolService",
-                                                                    alertIdentifier: "authentication-needed"),
+            serviceDelegate?.issueAlert(Alert(identifier: Alert.Identifier(managerIdentifier: pluginIdentifier,
+                                                                           alertIdentifier: "authentication-needed"),
                                        foregroundContent: content, backgroundContent: content,
                                        trigger: .immediate))
         }
