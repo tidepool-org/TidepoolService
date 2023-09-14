@@ -43,6 +43,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
             self.hostVersion = serviceDelegate?.hostVersion
         }
     }
+    
+    public weak var stateDelegate: StatefulPluggableDelegate?
 
     public lazy var sessionStorage: SessionStorage = KeychainManager()
 
@@ -157,14 +159,14 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     }
 
     public func completeUpdate() {
-        serviceDelegate?.serviceDidUpdateState(self)
+        stateDelegate?.pluginDidUpdateState(self)
     }
 
     public func deleteService() {
         Task {
             await self.tapi.logout()
         }
-        serviceDelegate?.serviceWantsDeletion(self)
+        stateDelegate?.pluginWantsDeletion(self)
     }
 
     private var sessionService: String { "org.tidepool.TidepoolService.\(id)" }
