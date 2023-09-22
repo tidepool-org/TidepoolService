@@ -612,7 +612,12 @@ extension TidepoolService: RemoteDataService {
             throw error
         }
     }
-    
+
+    public func uploadCgmEventData(_ stored: [LoopKit.PersistedCgmEvent], completion: @escaping (Result<Bool, Error>) -> Void) {
+        // TODO: Upload sensor/transmitter changes
+        completion(.success(false))
+    }
+
     public func remoteNotificationWasReceived(_ notification: [String: AnyObject]) async throws {
         throw RemoteNotificationError.remoteCommandsNotSupported
     }
