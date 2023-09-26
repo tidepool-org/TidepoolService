@@ -33,7 +33,9 @@ public protocol SessionStorage {
 
 public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
-    public static let pluginIdentifier = "TidepoolService"
+    public static let serviceIdentifier: String = "TidepoolService"
+
+    public var pluginIdentifier: String { Self.serviceIdentifier }
 
     public static let localizedTitle = LocalizedString("Tidepool", comment: "The title of the Tidepool service")
 
@@ -66,7 +68,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private var hostIdentifier: String?
     private var hostVersion: String?
 
-    private let log = OSLog(category: pluginIdentifier)
+    private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
     public init(hostIdentifier: String, hostVersion: String) {
