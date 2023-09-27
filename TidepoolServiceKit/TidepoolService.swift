@@ -32,9 +32,9 @@ public protocol SessionStorage {
 }
 
 public final class TidepoolService: Service, TAPIObserver, ObservableObject {
-
+    
     public static let serviceIdentifier: String = "TidepoolService"
-
+    
     public var pluginIdentifier: String { Self.serviceIdentifier }
 
     public static let localizedTitle = LocalizedString("Tidepool", comment: "The title of the Tidepool service")
