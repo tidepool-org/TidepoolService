@@ -1,6 +1,18 @@
 /* Error string for TidepoolServiceError.configuration */
 "Configuration Error" = "Configuratiefout";
 
+/* Error string for TidepoolServiceError.missingDataSetId */
+"Missing DataSet Id" = "Ontbrekende Gegevensset Id";
+
+/* Alert acknowledgment OK button */
+"OK" = "Ok";
+
 /* The title of the Tidepool service */
 "Tidepool" = "Tidepool";
+
+/* The title for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool Service Authorization" = "Tidepool Service Autorisatie";
+
+/* The body text for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool service is no longer authorized. Please navigate to Tidepool Service settings and reauthenticate." = "De Tidepool-service is niet langer geautoriseerd. Navigeer naar de instellingen van de Tidepool-service en voer opnieuw authenticatie uit.";
 

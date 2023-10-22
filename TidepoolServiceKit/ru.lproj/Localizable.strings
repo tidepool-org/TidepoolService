@@ -1,6 +1,18 @@
 /* Error string for TidepoolServiceError.configuration */
 "Configuration Error" = "Ошибка конфигурации";
 
+/* Error string for TidepoolServiceError.missingDataSetId */
+"Missing DataSet Id" = "Отсутствует идентификатор набора данных";
+
+/* Alert acknowledgment OK button */
+"OK" = "OK";
+
 /* The title of the Tidepool service */
 "Tidepool" = "Tidepool";
+
+/* The title for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool Service Authorization" = "Авторизация сервиса Tidepool";
+
+/* The body text for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool service is no longer authorized. Please navigate to Tidepool Service settings and reauthenticate." = "Служба Tidepool больше не авторизована. Пожалуйста, перейдите к настройкам службы Tidepool и повторно авторизуйтесь.";
 
