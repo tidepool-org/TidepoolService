@@ -1,6 +1,18 @@
 /* Error string for TidepoolServiceError.configuration */
 "Configuration Error" = "Konfigurasjonsfeil";
 
+/* Error string for TidepoolServiceError.missingDataSetId */
+"Missing DataSet Id" = "Mangler DataSet-ID";
+
+/* Alert acknowledgment OK button */
+"OK" = "Ok";
+
 /* The title of the Tidepool service */
 "Tidepool" = "Tidepool";
+
+/* The title for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool Service Authorization" = "Autorisasjon av Tidepool-tjenesten";
+
+/* The body text for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool service is no longer authorized. Please navigate to Tidepool Service settings and reauthenticate." = "Tidepool-tjenesten er ikke lenger autorisert. Gå til innstillingene for Tidepool-tjenesten og godkjenn på nytt.";
 

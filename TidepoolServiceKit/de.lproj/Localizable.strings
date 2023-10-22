@@ -1,6 +1,15 @@
 /* Error string for TidepoolServiceError.configuration */
 "Configuration Error" = "Konfigurationsfehler";
 
+/* Error string for TidepoolServiceError.missingDataSetId */
+"Missing DataSet Id" = "DataSet Id fehlt";
+
+/* Alert acknowledgment OK button */
+"OK" = "OK";
+
 /* The title of the Tidepool service */
 "Tidepool" = "Tidepool";
+
+/* The title for an alert generated when TidepoolService is no longer authorized. */
+"Tidepool Service Authorization" = "Tidepool Service-Autorisierung";
 

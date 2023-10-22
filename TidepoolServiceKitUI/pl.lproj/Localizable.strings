@@ -1,6 +1,25 @@
 /* Confirmation message for deleting a service */
 "Are you sure you want to delete this service?" = "Czy na pewno chcesz usunąć tę usługę?";
 
+/* Close navigation button title of an onboarding section page view */
+"Close" = "Zamknij";
+
 /* Button title to delete a service */
 "Delete Service" = "Usuń usługę";
+
+/* Label title for displaying selected Tidepool server environment.
+   Tidepool login environment action sheet title */
+"Environment" = "Środowisko";
+
+/* LoginViewModel description text when logged in */
+"Logged in as" = "Zalogowany jako";
+
+/* Tidepool login button title */
+"Login" = "Login";
+
+/* Button title to revoke oauth tokens */
+"Revoke token" = "Unieważnij token";
+
+/* LoginViewModel description text when not logged in */
+"You are not logged in." = "Nie jesteś zalogowany.";
 
