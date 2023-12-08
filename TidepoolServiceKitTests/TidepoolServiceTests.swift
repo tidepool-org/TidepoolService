@@ -52,7 +52,7 @@ class TidepoolServiceTests: XCTestCase {
         let settings = [StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #1"),
                                        cgmDevice: HKDevice(name: "CGM #1"),
                                        pumpDevice: HKDevice(name: "Pump #1"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
+        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(created.count, 3)
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).device!.name, "Controller #1")
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).associations!.count, 2)
@@ -70,7 +70,6 @@ class TidepoolServiceTests: XCTestCase {
         XCTAssertEqual(lastControllerSettings!.id, created[0].id)
         XCTAssertEqual(lastCGMSettings!.id, created[1].id)
         XCTAssertEqual(lastPumpSettings!.id, created[2].id)
-        XCTAssertNil(lastPumpSettingsOverride)
     }
     
     func testCalculateSettingsDataUpdateControllerSettings() {
@@ -80,7 +79,7 @@ class TidepoolServiceTests: XCTestCase {
                         StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #2"),
                                        cgmDevice: HKDevice(name: "CGM #1"),
                                        pumpDevice: HKDevice(name: "Pump #1"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
+        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(created.count, 4)
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).device!.name, "Controller #1")
         XCTAssertEqual((created[1] as! TCGMSettingsDatum).name, "CGM #1")
@@ -93,7 +92,6 @@ class TidepoolServiceTests: XCTestCase {
         XCTAssertEqual(lastControllerSettings!.id, created[3].id)
         XCTAssertEqual(lastCGMSettings!.id, created[1].id)
         XCTAssertEqual(lastPumpSettings!.id, created[2].id)
-        XCTAssertNil(lastPumpSettingsOverride)
     }
     
     func testCalculateSettingsDataUpdateCGMSettings() {
@@ -103,7 +101,7 @@ class TidepoolServiceTests: XCTestCase {
                         StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #1"),
                                        cgmDevice: HKDevice(name: "CGM #2"),
                                        pumpDevice: HKDevice(name: "Pump #1"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
+        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(created.count, 4)
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).device!.name, "Controller #1")
         XCTAssertEqual((created[1] as! TCGMSettingsDatum).name, "CGM #1")
@@ -116,7 +114,6 @@ class TidepoolServiceTests: XCTestCase {
         XCTAssertEqual(lastControllerSettings!.id, created[0].id)
         XCTAssertEqual(lastCGMSettings!.id, created[3].id)
         XCTAssertEqual(lastPumpSettings!.id, created[2].id)
-        XCTAssertNil(lastPumpSettingsOverride)
     }
     
     func testCalculateSettingsDataUpdatePumpSettings() {
@@ -126,7 +123,7 @@ class TidepoolServiceTests: XCTestCase {
                         StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #1"),
                                        cgmDevice: HKDevice(name: "CGM #1"),
                                        pumpDevice: HKDevice(name: "Pump #2"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
+        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(created.count, 4)
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).device!.name, "Controller #1")
         XCTAssertEqual((created[1] as! TCGMSettingsDatum).name, "CGM #1")
@@ -139,7 +136,6 @@ class TidepoolServiceTests: XCTestCase {
         XCTAssertEqual(lastControllerSettings!.id, created[0].id)
         XCTAssertEqual(lastCGMSettings!.id, created[1].id)
         XCTAssertEqual(lastPumpSettings!.id, created[3].id)
-        XCTAssertNil(lastPumpSettingsOverride)
     }
     
     func testCalculateSettingsDataUpdateMultipleOne() {
@@ -149,7 +145,7 @@ class TidepoolServiceTests: XCTestCase {
                         StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #2"),
                                        cgmDevice: HKDevice(name: "CGM #2"),
                                        pumpDevice: HKDevice(name: "Pump #2"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
+        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(created.count, 6)
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).device!.name, "Controller #1")
         XCTAssertEqual((created[1] as! TCGMSettingsDatum).name, "CGM #1")
@@ -170,7 +166,6 @@ class TidepoolServiceTests: XCTestCase {
         XCTAssertEqual(lastControllerSettings!.id, created[3].id)
         XCTAssertEqual(lastCGMSettings!.id, created[4].id)
         XCTAssertEqual(lastPumpSettings!.id, created[5].id)
-        XCTAssertNil(lastPumpSettingsOverride)
     }
     
     func testCalculateSettingsDataUpdateMultipleMultiple() {
@@ -186,7 +181,7 @@ class TidepoolServiceTests: XCTestCase {
                         StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #2"),
                                        cgmDevice: HKDevice(name: "CGM #2"),
                                        pumpDevice: HKDevice(name: "Pump #2"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
+        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
         XCTAssertEqual(created.count, 6)
         XCTAssertEqual((created[0] as! TControllerSettingsDatum).device!.name, "Controller #1")
         XCTAssertEqual((created[1] as! TCGMSettingsDatum).name, "CGM #1")
@@ -207,69 +202,8 @@ class TidepoolServiceTests: XCTestCase {
         XCTAssertEqual(lastControllerSettings!.id, created[3].id)
         XCTAssertEqual(lastCGMSettings!.id, created[4].id)
         XCTAssertEqual(lastPumpSettings!.id, created[5].id)
-        XCTAssertNil(lastPumpSettingsOverride)
     }
     
-    func testCalculateSettingsDataPumpOverrideSingle() {
-        let scheduleOverride = TemporaryScheduleOverride()
-        let settings = [StoredSettings(pumpDevice: HKDevice(name: "Pump #1")),
-                        StoredSettings(scheduleOverride: scheduleOverride,
-                                       pumpDevice: HKDevice(name: "Pump #1")),
-                        StoredSettings(scheduleOverride: scheduleOverride,
-                                       controllerDevice: StoredSettings.ControllerDevice(name: "Controller #1"),
-                                       pumpDevice: HKDevice(name: "Pump #1"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
-        XCTAssertEqual(created.count, 3)
-        XCTAssertEqual((created[0] as! TPumpSettingsDatum).name, "Pump #1")
-        XCTAssertNil((created[0] as! TPumpSettingsDatum).associations)
-        XCTAssertNil((created[1] as! TPumpSettingsOverrideDeviceEventDatum).duration)
-        XCTAssertEqual((created[1] as! TPumpSettingsOverrideDeviceEventDatum).associations!.count, 1)
-        XCTAssertEqual((created[1] as! TPumpSettingsOverrideDeviceEventDatum).associations![0].id, created[0].id)
-        XCTAssertEqual((created[2] as! TControllerSettingsDatum).device!.name, "Controller #1")
-        XCTAssertTrue(updated.isEmpty)
-        XCTAssertEqual(lastControllerSettings!.id, created[2].id)
-        XCTAssertNil(lastCGMSettings)
-        XCTAssertEqual(lastPumpSettings!.id, created[0].id)
-        XCTAssertEqual(lastPumpSettingsOverride!.id, created[1].id)
-    }
-    
-    func testCalculateSettingsDataPumpOverrideMultipleAllCreated() {
-        let settings = [StoredSettings(pumpDevice: HKDevice(name: "Pump #1")),
-                        StoredSettings(scheduleOverride: TemporaryScheduleOverride(duration: .minutes(30)),
-                                       pumpDevice: HKDevice(name: "Pump #1")),
-                        StoredSettings(preMealOverride: TemporaryScheduleOverride(),
-                                       pumpDevice: HKDevice(name: "Pump #1")),
-                        StoredSettings(pumpDevice: HKDevice(name: "Pump #1")),
-                        StoredSettings(controllerDevice: StoredSettings.ControllerDevice(name: "Controller #1"),
-                                       pumpDevice: HKDevice(name: "Pump #1"))]
-        let (created, updated, lastControllerSettings, lastCGMSettings, lastPumpSettings, lastPumpSettingsOverride) = tidepoolService.calculateSettingsData(settings, for: userID, hostIdentifier: "Loop", hostVersion: "1.2.3")
-        XCTAssertEqual(created.count, 4)
-        XCTAssertEqual((created[0] as! TPumpSettingsDatum).name, "Pump #1")
-        XCTAssertNil((created[0] as! TPumpSettingsDatum).associations)
-        XCTAssertNotNil((created[1] as! TPumpSettingsOverrideDeviceEventDatum).duration)
-        XCTAssertEqual((created[1] as! TPumpSettingsOverrideDeviceEventDatum).associations!.count, 1)
-        XCTAssertEqual((created[1] as! TPumpSettingsOverrideDeviceEventDatum).associations![0].id, created[0].id)
-        XCTAssertNotNil((created[2] as! TPumpSettingsOverrideDeviceEventDatum).duration)
-        XCTAssertEqual((created[2] as! TPumpSettingsOverrideDeviceEventDatum).associations!.count, 1)
-        XCTAssertEqual((created[2] as! TPumpSettingsOverrideDeviceEventDatum).associations![0].id, created[0].id)
-        XCTAssertEqual((created[3] as! TControllerSettingsDatum).device!.name, "Controller #1")
-        XCTAssertTrue(updated.isEmpty)
-        XCTAssertEqual(lastControllerSettings!.id, created[3].id)
-        XCTAssertNil(lastCGMSettings)
-        XCTAssertEqual(lastPumpSettings!.id, created[0].id)
-        XCTAssertNil(lastPumpSettingsOverride)
-    }
-}
-
-fileprivate extension TemporaryScheduleOverride {
-    init(duration: TimeInterval? = nil) {
-        self.init(context: .custom,
-                  settings: TemporaryScheduleOverrideSettings(targetRange: nil, insulinNeedsScaleFactor: 1.2),
-                  startDate: Date(),
-                  duration: duration != nil ? .finite(duration!) : .indefinite,
-                  enactTrigger: .local,
-                  syncIdentifier: UUID())
-    }
 }
 
 fileprivate extension StoredSettings.ControllerDevice {

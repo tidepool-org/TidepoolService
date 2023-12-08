@@ -21,8 +21,6 @@ import TidepoolKit
  - preMealTargetRange               ClosedRange<HKQuantity>?                TPumpSettingsDatum.bloodGlucoseTargetPreprandial
  - workoutTargetRange               ClosedRange<HKQuantity>?                TPumpSettingsDatum.bloodGlucoseTargetPhysicalActivity
  - overridePresets                  [TemporaryScheduleOverridePreset]?      TPumpSettingsDatum.overridePresets
- - scheduleOverride                 TemporaryScheduleOverride?              TPumpSettingsOverrideDeviceEventDatum.*
- - preMealOverride                  TemporaryScheduleOverride?              TPumpSettingsOverrideDeviceEventDatum.*
  - maximumBasalRatePerHour          Double?                                 TPumpSettingsDatum.basal.rateMaximum.value
  - maximumBolus                     Double?                                 TPumpSettingsDatum.bolus.amountMaximum.value
  - suspendThreshold                 GlucoseThreshold?                       TPumpSettingsDatum.bloodGlucoseSafetyLimit
@@ -38,7 +36,6 @@ import TidepoolKit
  - syncIdentifier                   UUID                                    .id, .origin, .payload["syncIdentifier"]
  
  Notes:
- - The active override (scheduleOverride or preMealOverride) are stored in TPumpSettingsOverrideDeviceEventDatum.
  - Assumes same time zone for basalRateSchedule, glucoseTargetRangeSchedule, carbRatioSchedule, insulinSensitivitySchedule.
  - StoredSettings.notificationSettings.carPlaySetting is not included as it is unneeded by backend.
  - StoredSettings.notificationSettings.showPreviewsSetting is not included as it is unneeded by backend.
@@ -116,29 +113,6 @@ extension StoredSettings: IdentifiableDatum {
                                origin: origin)
     }
     
-    func datumPumpSettingsOverrideDeviceEvent(for userId: String, hostIdentifier: String, hostVersion: String) -> TPumpSettingsOverrideDeviceEventDatum? {
-        guard let activeOverride = activeOverride else {
-            return nil
-        }
-        let datum = TPumpSettingsOverrideDeviceEventDatum(time: activeOverride.datumTime,
-                                                          overrideType: activeOverride.datumOverrideType,
-                                                          overridePreset: activeOverride.datumOverridePreset,
-                                                          method: activeOverride.datumMethod,
-                                                          duration: activeOverride.datumDuration,
-                                                          expectedDuration: activeOverride.datumExpectedDuration,
-                                                          bloodGlucoseTarget: activeOverride.datumBloodGlucoseTarget,
-                                                          basalRateScaleFactor: activeOverride.datumBasalRateScaleFactor,
-                                                          carbohydrateRatioScaleFactor: activeOverride.datumCarbohydrateRatioScaleFactor,
-                                                          insulinSensitivityScaleFactor: activeOverride.datumInsulinSensitivityScaleFactor,
-                                                          units: activeOverride.datumUnits)
-        let origin = datumOrigin(for: resolvedIdentifier(for: TPumpSettingsOverrideDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsOverrideDeviceEventDatum.self),
-                               timeZone: datumTimeZone,
-                               timeZoneOffset: datumTimeZoneOffset,
-                               payload: datumPayload,
-                               origin: origin)
-    }
-
     var syncIdentifierAsString: String { syncIdentifier.uuidString }
 
     private var datumTime: Date { date }
@@ -304,7 +278,7 @@ extension StoredSettings: IdentifiableDatum {
     private var datumPumpName: String? { pumpDevice?.name }
 
     private var datumPumpOverridePresets: [String: TPumpSettingsDatum.OverridePreset]? {
-        guard let overridePresets = overridePresets, !overridePresets.isEmpty else {
+        guard !overridePresets.isEmpty else {
             return nil
         }
         return overridePresets.reduce(into: [:]) { $0[$1.name] = $1.datum }
@@ -333,19 +307,6 @@ extension StoredSettings: IdentifiableDatum {
         return dictionary
     }
     
-    private var activeOverride: TemporaryScheduleOverride? {
-        switch (preMealOverride, scheduleOverride) {
-        case (let preMealOverride?, nil):
-            return preMealOverride
-        case (nil, let scheduleOverride?):
-            return scheduleOverride
-        case (let preMealOverride?, let scheduleOverride?):
-            return preMealOverride.scheduledEndDate > date ? preMealOverride : scheduleOverride
-        case (nil, nil):
-            return nil
-        }
-    }
-
     public static var activeScheduleNameDefault: String { "Default" }
 }
 
