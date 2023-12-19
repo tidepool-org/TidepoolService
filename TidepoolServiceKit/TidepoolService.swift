@@ -63,8 +63,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     private var lastPumpSettingsDatum: TPumpSettingsDatum?
 
-    private var lastPumpSettingsOverrideDeviceEventDatum: TPumpSettingsOverrideDeviceEventDatum?
-
     private var hostIdentifier: String?
     private var hostVersion: String?
 
@@ -95,7 +93,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
             self.lastControllerSettingsDatum = (rawState["lastControllerSettingsDatum"] as? Data).flatMap { try? Self.decoder.decode(TControllerSettingsDatum.self, from: $0) }
             self.lastCGMSettingsDatum = (rawState["lastCGMSettingsDatum"] as? Data).flatMap { try? Self.decoder.decode(TCGMSettingsDatum.self, from: $0) }
             self.lastPumpSettingsDatum = (rawState["lastPumpSettingsDatum"] as? Data).flatMap { try? Self.decoder.decode(TPumpSettingsDatum.self, from: $0) }
-            self.lastPumpSettingsOverrideDeviceEventDatum = (rawState["lastPumpSettingsOverrideDeviceEventDatum"] as? Data).flatMap { try? Self.decoder.decode(TPumpSettingsOverrideDeviceEventDatum.self, from: $0) }
             self.session = try sessionStorage.getSession(for: sessionService)
             Task {
                 await tapi.setSession(session)
@@ -118,7 +115,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
         rawValue["lastControllerSettingsDatum"] = lastControllerSettingsDatum.flatMap { try? Self.encoder.encode($0) }
         rawValue["lastCGMSettingsDatum"] = lastCGMSettingsDatum.flatMap { try? Self.encoder.encode($0) }
         rawValue["lastPumpSettingsDatum"] = lastPumpSettingsDatum.flatMap { try? Self.encoder.encode($0) }
-        rawValue["lastPumpSettingsOverrideDeviceEventDatum"] = lastPumpSettingsOverrideDeviceEventDatum.flatMap { try? Self.encoder.encode($0) }
         return rawValue
     }
 
@@ -280,7 +276,32 @@ extension TidepoolService: TLogging {
 extension TidepoolService: RemoteDataService {
 
     public func uploadTemporaryOverrideData(updated: [TemporaryScheduleOverride], deleted: [TemporaryScheduleOverride], completion: @escaping (Result<Bool, Error>) -> Void) {
-        // TODO: Implement
+        // TODO: https://tidepool.atlassian.net/browse/LOOP-4769
+
+        // The following code is taken from previous upload code when override events where stored in settings
+        // To be implemented with
+
+        //        guard let activeOverride = activeOverride else {
+        //            return nil
+        //        }
+        //        let datum = TPumpSettingsOverrideDeviceEventDatum(time: activeOverride.datumTime,
+        //                                                          overrideType: activeOverride.datumOverrideType,
+        //                                                          overridePreset: activeOverride.datumOverridePreset,
+        //                                                          method: activeOverride.datumMethod,
+        //                                                          duration: activeOverride.datumDuration,
+        //                                                          expectedDuration: activeOverride.datumExpectedDuration,
+        //                                                          bloodGlucoseTarget: activeOverride.datumBloodGlucoseTarget,
+        //                                                          basalRateScaleFactor: activeOverride.datumBasalRateScaleFactor,
+        //                                                          carbohydrateRatioScaleFactor: activeOverride.datumCarbohydrateRatioScaleFactor,
+        //                                                          insulinSensitivityScaleFactor: activeOverride.datumInsulinSensitivityScaleFactor,
+        //                                                          units: activeOverride.datumUnits)
+        //        let origin = datumOrigin(for: resolvedIdentifier(for: TPumpSettingsOverrideDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        //        return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsOverrideDeviceEventDatum.self),
+        //                               timeZone: datumTimeZone,
+        //                               timeZoneOffset: datumTimeZoneOffset,
+        //                               payload: datumPayload,
+        //                               origin: origin)
+
         completion(.success(true))
     }
 
@@ -448,7 +469,7 @@ extension TidepoolService: RemoteDataService {
             return
         }
 
-        let (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum, lastPumpSettingsOverrideDeviceEventDatum) = calculateSettingsData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        let (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum) = calculateSettingsData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
 
         Task {
             do {
@@ -457,7 +478,6 @@ extension TidepoolService: RemoteDataService {
                 self.lastControllerSettingsDatum = lastControllerSettingsDatum
                 self.lastCGMSettingsDatum = lastCGMSettingsDatum
                 self.lastPumpSettingsDatum = lastPumpSettingsDatum
-                self.lastPumpSettingsOverrideDeviceEventDatum = lastPumpSettingsOverrideDeviceEventDatum
                 self.completeUpdate()
                 completion(.success(createdUploaded || updatedUploaded))
             } catch {
@@ -466,19 +486,12 @@ extension TidepoolService: RemoteDataService {
         }
     }
 
-    func calculateSettingsData(_ stored: [StoredSettings], for userId: String, hostIdentifier: String, hostVersion: String) -> ([TDatum], [TDatum], TControllerSettingsDatum?, TCGMSettingsDatum?, TPumpSettingsDatum?, TPumpSettingsOverrideDeviceEventDatum?) {
+    func calculateSettingsData(_ stored: [StoredSettings], for userId: String, hostIdentifier: String, hostVersion: String) -> ([TDatum], [TDatum], TControllerSettingsDatum?, TCGMSettingsDatum?, TPumpSettingsDatum?) {
         var created: [TDatum] = []
         var updated: [TDatum] = []
         var lastControllerSettingsDatum = lastControllerSettingsDatum
         var lastCGMSettingsDatum = lastCGMSettingsDatum
         var lastPumpSettingsDatum = lastPumpSettingsDatum
-        var lastPumpSettingsOverrideDeviceEventDatum = lastPumpSettingsOverrideDeviceEventDatum
-
-        // A StoredSettings can generate a TPumpSettingsDatum and an optional TPumpSettingsOverrideDeviceEventDatum if there is an
-        // enabled override. Only upload the TPumpSettingsDatum or TPumpSettingsOverrideDeviceEventDatum if they have CHANGED.
-        // If the TPumpSettingsOverrideDeviceEventDatum has changed, then also re-upload the previous uploaded
-        // TPumpSettingsOverrideDeviceEventDatum with an updated duration and potentially expected duration, but only if the
-        // duration is calculated to be ended early.
 
         stored.forEach {
 
@@ -493,15 +506,11 @@ extension TidepoolService: RemoteDataService {
             let pumpSettingsDatum = $0.datumPumpSettings(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
             let pumpSettingsDatumIsEffectivelyEquivalent = TPumpSettingsDatum.areEffectivelyEquivalent(old: lastPumpSettingsDatum, new: pumpSettingsDatum)
 
-            let pumpSettingsOverrideDeviceEventDatum = $0.datumPumpSettingsOverrideDeviceEvent(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-            let pumpSettingsOverrideDeviceEventDatumIsEffectivelyEquivalent = TPumpSettingsOverrideDeviceEventDatum.areEffectivelyEquivalent(old: lastPumpSettingsOverrideDeviceEventDatum, new: pumpSettingsOverrideDeviceEventDatum)
-
             // Associate the data
 
             var controllerSettingsAssociations: [TAssociation] = []
             var cgmSettingsAssociations: [TAssociation] = []
             var pumpSettingsAssociations: [TAssociation] = []
-            var pumpSettingsOverrideDeviceEventAssociations: [TAssociation] = []
 
             if let controllerSettingsDatum = controllerSettingsDatumIsEffectivelyEquivalent ? lastControllerSettingsDatum : controllerSettingsDatum {
                 let association = TAssociation(type: .datum, id: controllerSettingsDatum.id!, reason: "controllerSettings")
@@ -517,13 +526,11 @@ extension TidepoolService: RemoteDataService {
                 let association = TAssociation(type: .datum, id: pumpSettingsDatum.id!, reason: "pumpSettings")
                 controllerSettingsAssociations.append(association)
                 cgmSettingsAssociations.append(association)
-                pumpSettingsOverrideDeviceEventAssociations.append(association)
             }
 
             controllerSettingsDatum.append(associations: controllerSettingsAssociations)
             cgmSettingsDatum.append(associations: cgmSettingsAssociations)
             pumpSettingsDatum.append(associations: pumpSettingsAssociations)
-            pumpSettingsOverrideDeviceEventDatum?.append(associations: pumpSettingsOverrideDeviceEventAssociations)
 
             // Upload and update the data, if necessary
 
@@ -541,27 +548,9 @@ extension TidepoolService: RemoteDataService {
                 created.append(pumpSettingsDatum)
                 lastPumpSettingsDatum = pumpSettingsDatum
             }
-
-            if !pumpSettingsOverrideDeviceEventDatumIsEffectivelyEquivalent {
-
-                // If we need to update the duration of the last override, then do so
-                if let lastPumpSettingsOverrideDeviceEventDatum = lastPumpSettingsOverrideDeviceEventDatum,
-                   lastPumpSettingsOverrideDeviceEventDatum.updateDuration(basedUpon: pumpSettingsOverrideDeviceEventDatum?.time ?? pumpSettingsDatum.time) {
-
-                    // If it isn't already being created, then update it
-                    if !created.contains(where: { $0 === lastPumpSettingsOverrideDeviceEventDatum }) {
-                        updated.append(lastPumpSettingsOverrideDeviceEventDatum)
-                    }
-                }
-
-                if let pumpSettingsOverrideDeviceEventDatum = pumpSettingsOverrideDeviceEventDatum {
-                    created.append(pumpSettingsOverrideDeviceEventDatum)
-                }
-                lastPumpSettingsOverrideDeviceEventDatum = pumpSettingsOverrideDeviceEventDatum
-            }
         }
 
-        return (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum, lastPumpSettingsOverrideDeviceEventDatum)
+        return (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum)
     }
 
     private func createData(_ data: [TDatum]) async throws -> Bool {
@@ -779,53 +768,6 @@ extension TPumpSettingsDatum: EffectivelyEquivalent {
             scheduleTimeZoneOffset == nil &&
             serialNumber == nil &&
             softwareVersion == nil
-    }
-}
-
-extension TPumpSettingsOverrideDeviceEventDatum: EffectivelyEquivalent {
-
-    // All TDatum properties can be ignored EXCEPT time for this datum type
-    // Time is gather from the actual scheduled override and NOT the StoredSettings so it is valid and necessary for comparison
-    func isEffectivelyEquivalent(to other: TPumpSettingsOverrideDeviceEventDatum) -> Bool {
-        return self.time == other.time &&
-            self.overrideType == other.overrideType &&
-            self.overridePreset == other.overridePreset &&
-            self.method == other.method &&
-            self.duration == other.duration &&
-            self.expectedDuration == other.expectedDuration &&
-            self.bloodGlucoseTarget == other.bloodGlucoseTarget &&
-            self.basalRateScaleFactor == other.basalRateScaleFactor &&
-            self.carbohydrateRatioScaleFactor == other.carbohydrateRatioScaleFactor &&
-            self.insulinSensitivityScaleFactor == other.insulinSensitivityScaleFactor &&
-            self.units == other.units
-    }
-
-    var isEffectivelyEmpty: Bool {
-        return overrideType == nil &&
-            overridePreset == nil &&
-            method == nil &&
-            duration == nil &&
-            expectedDuration == nil &&
-            bloodGlucoseTarget == nil &&
-            basalRateScaleFactor == nil &&
-            carbohydrateRatioScaleFactor == nil &&
-            insulinSensitivityScaleFactor == nil &&
-            units == nil
-    }
-
-    func updateDuration(basedUpon endTime: Date?) -> Bool {
-        guard let endTime = endTime, let time = time, endTime > time else {
-            return false
-        }
-
-        let updatedDuration = time.distance(to: endTime)
-        guard duration == nil || updatedDuration < duration! else {
-            return false
-        }
-
-        self.expectedDuration = duration
-        self.duration = updatedDuration
-        return true
     }
 }
 

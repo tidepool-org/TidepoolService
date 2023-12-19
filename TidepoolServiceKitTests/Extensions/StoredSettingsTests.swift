@@ -247,42 +247,6 @@ class StoredSettingsTests: XCTestCase {
         )
     }
     
-    func testDatumPumpSettingsOverrideDeviceEvent() {
-        let data = try! Self.encoder.encode(StoredSettings.test.datumPumpSettingsOverrideDeviceEvent(for: "1234567890", hostIdentifier: "Loop", hostVersion: "1.2.3"))
-        XCTAssertEqual(String(data: data, encoding: .utf8), """
-{
-  "basalRateScaleFactor" : 0.5,
-  "bgTarget" : {
-    "high" : 90,
-    "low" : 80
-  },
-  "carbRatioScaleFactor" : 2,
-  "id" : "f89ad59a42430ab89dd2eab3a3e4df84",
-  "insulinSensitivityScaleFactor" : 2,
-  "method" : "manual",
-  "origin" : {
-    "id" : "2A67A303-1234-4CB8-1234-79498265368E:deviceEvent/pumpSettingsOverride",
-    "name" : "Loop",
-    "type" : "application",
-    "version" : "1.2.3"
-  },
-  "overrideType" : "preprandial",
-  "payload" : {
-    "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
-  },
-  "subType" : "pumpSettingsOverride",
-  "time" : "2020-05-14T14:38:39.000Z",
-  "timezone" : "America/Los_Angeles",
-  "timezoneOffset" : -420,
-  "type" : "deviceEvent",
-  "units" : {
-    "bg" : "mg/dL"
-  }
-}
-"""
-        )
-    }
-    
     private static let encoder: JSONEncoder = {
         let encoder = JSONEncoder.tidepool
         encoder.outputFormatting.insert(.prettyPrinted)
@@ -392,8 +356,6 @@ fileprivate extension StoredSettings {
                               preMealTargetRange: preMealTargetRange,
                               workoutTargetRange: workoutTargetRange,
                               overridePresets: overridePresets,
-                              scheduleOverride: scheduleOverride,
-                              preMealOverride: preMealOverride,
                               maximumBasalRatePerHour: maximumBasalRatePerHour,
                               maximumBolus: maximumBolus,
                               suspendThreshold: suspendThreshold,
