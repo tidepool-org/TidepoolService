@@ -119,7 +119,7 @@ class StoredGlucoseSampleTests: XCTestCase {
   },
   "time" : "2020-01-02T03:00:23.000Z",
   "trend" : "constant",
-  "trendRate" : 0.10000000000000001,
+  "trendRate" : 0.1,
   "type" : "cbg",
   "units" : "mg/dL",
   "value" : 123

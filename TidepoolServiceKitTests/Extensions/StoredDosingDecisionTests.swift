@@ -138,7 +138,7 @@ class StoredDosingDecisionTests: XCTestCase {
     "amount" : 1.25
   },
   "requestedBolus" : {
-    "amount" : 0.80000000000000004
+    "amount" : 0.8
   },
   "smbg" : {
     "time" : "2020-05-14T22:09:00.000Z",
