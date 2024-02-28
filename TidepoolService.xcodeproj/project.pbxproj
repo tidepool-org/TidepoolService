@@ -1651,7 +1651,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tidepool-org/TidepoolKit";
 			requirement = {
-				branch = dev;
+				branch = "cameron/LOOP-4776-api-updates";
 				kind = branch;
 			};
 		};
