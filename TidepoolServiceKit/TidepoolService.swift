@@ -48,6 +48,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     
     public weak var stateDelegate: StatefulPluggableDelegate?
 
+    public weak var remoteDataServiceDelegate: RemoteDataServiceDelegate?
+
     public lazy var sessionStorage: SessionStorage = KeychainManager()
 
     public let tapi: TAPI = TAPI(clientId: BuildDetails.default.tidepoolServiceClientId, redirectURL: BuildDetails.default.tidepoolServiceRedirectURL)
@@ -69,15 +71,23 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
+    private var deviceLogUploader: DeviceLogUploader?
+
     public init(hostIdentifier: String, hostVersion: String) {
         self.id = UUID().uuidString
         self.hostIdentifier = hostIdentifier
         self.hostVersion = hostVersion
 
         Task {
-            await tapi.setLogging(self)
-            await tapi.addObserver(self)
+           await finishSetup()
         }
+    }
+
+    public func finishSetup() async {
+        await tapi.setLogging(self)
+        await tapi.addObserver(self)
+        deviceLogUploader = DeviceLogUploader(api: tapi)
+        await deviceLogUploader?.setDelegate(remoteDataServiceDelegate)
     }
 
     public init?(rawState: RawStateValue) {
@@ -96,8 +106,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
             self.session = try sessionStorage.getSession(for: sessionService)
             Task {
                 await tapi.setSession(session)
-                await tapi.setLogging(self)
-                await tapi.addObserver(self)
+                await finishSetup()
             }
         } catch let error {
             tidepoolKitLog.error("Error initializing TidepoolService %{public}@", error.localizedDescription)
@@ -551,10 +560,6 @@ extension TidepoolService: RemoteDataService {
 
     public func uploadCgmEventData(_ stored: [PersistedCgmEvent]) async throws {
         // TODO: Upload sensor/transmitter changes
-    }
-
-    public func uploadDeviceLogs(_ stored: [StoredDeviceLogEntry], startTime: Date, endTime: Date) async throws {
-        // TODO: Upload device logs
     }
 
     public func remoteNotificationWasReceived(_ notification: [String: AnyObject]) async throws {
