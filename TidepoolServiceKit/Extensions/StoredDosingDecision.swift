@@ -298,7 +298,7 @@ fileprivate extension StoredDosingDecision.ControllerStatus.BatteryState {
 }
 
 fileprivate extension PumpManagerStatus.BasalDeliveryState {
-    var datum: TPumpStatusDatum.BasalDelivery {
+    var datum: TPumpStatusDatum.BasalDelivery? {
         switch self {
         case .active(let at):
             return TPumpStatusDatum.BasalDelivery(state: .scheduled, time: at)
@@ -314,6 +314,8 @@ fileprivate extension PumpManagerStatus.BasalDeliveryState {
             return TPumpStatusDatum.BasalDelivery(state: .suspended, time: at)
         case .resuming:
             return TPumpStatusDatum.BasalDelivery(state: .resuming)
+        case .pumpInoperable:
+            return nil
         }
     }
 }
