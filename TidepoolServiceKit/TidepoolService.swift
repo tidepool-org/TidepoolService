@@ -48,6 +48,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     
     public weak var stateDelegate: StatefulPluggableDelegate?
 
+    public weak var remoteDataServiceDelegate: RemoteDataServiceDelegate?
+
     public lazy var sessionStorage: SessionStorage = KeychainManager()
 
     public let tapi: TAPI = TAPI(clientId: BuildDetails.default.tidepoolServiceClientId, redirectURL: BuildDetails.default.tidepoolServiceRedirectURL)
@@ -69,15 +71,23 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private let log = OSLog(category: "TidepoolService")
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
+    private var deviceLogUploader: DeviceLogUploader?
+
     public init(hostIdentifier: String, hostVersion: String) {
         self.id = UUID().uuidString
         self.hostIdentifier = hostIdentifier
         self.hostVersion = hostVersion
 
         Task {
-            await tapi.setLogging(self)
-            await tapi.addObserver(self)
+           await finishSetup()
         }
+    }
+
+    public func finishSetup() async {
+        await tapi.setLogging(self)
+        await tapi.addObserver(self)
+        deviceLogUploader = DeviceLogUploader(api: tapi)
+        await deviceLogUploader?.setDelegate(remoteDataServiceDelegate)
     }
 
     public init?(rawState: RawStateValue) {
@@ -96,8 +106,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
             self.session = try sessionStorage.getSession(for: sessionService)
             Task {
                 await tapi.setSession(session)
-                await tapi.setLogging(self)
-                await tapi.addObserver(self)
+                await finishSetup()
             }
         } catch let error {
             tidepoolKitLog.error("Error initializing TidepoolService %{public}@", error.localizedDescription)
@@ -275,7 +284,7 @@ extension TidepoolService: TLogging {
 
 extension TidepoolService: RemoteDataService {
 
-    public func uploadTemporaryOverrideData(updated: [TemporaryScheduleOverride], deleted: [TemporaryScheduleOverride], completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadTemporaryOverrideData(updated: [TemporaryScheduleOverride], deleted: [TemporaryScheduleOverride]) async throws {
         // TODO: https://tidepool.atlassian.net/browse/LOOP-4769
 
         // The following code is taken from previous upload code when override events where stored in settings
@@ -301,82 +310,49 @@ extension TidepoolService: RemoteDataService {
         //                               timeZoneOffset: datumTimeZoneOffset,
         //                               payload: datumPayload,
         //                               origin: origin)
-
-        completion(.success(true))
     }
 
     public var alertDataLimit: Int? { return 1000 }
 
-    public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+    public func uploadAlertData(_ stored: [SyncAlertObject]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
-        Task {
-            do {
-                let result = try await createData(stored.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+
+        let _ = try await createData(stored.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
     }
 
     public var carbDataLimit: Int? { return 1000 }
 
-    public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject], completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
 
-        Task {
-            do {
-                let createdUploaded = try await createData(created.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-                let updatedUploaded = try await updateData(updated.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-                let deletedUploaded = try await deleteData(withSelectors: deleted.compactMap { $0.selector })
-                completion(.success(createdUploaded || updatedUploaded || deletedUploaded))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        let _ = try await createData(created.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
+        let _ = try await updateData(updated.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
+        let _ = try await deleteData(withSelectors: deleted.compactMap { $0.selector })
     }
 
     public var doseDataLimit: Int? { return 1000 }
 
-    public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+    public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
 
-        Task {
-            do {
-                let createdUploaded = try await createData(created.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-                let deletedUploaded = try await deleteData(withSelectors: deleted.flatMap { $0.selectors })
-                completion(.success(createdUploaded || deletedUploaded))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        let _ = try await createData(created.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
+        let _ = try await deleteData(withSelectors: deleted.flatMap { $0.selectors })
     }
 
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less
 
-    public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+    public func uploadDosingDecisionData(_ stored: [StoredDosingDecision]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
 
-        Task {
-            do {
-                let result = try await createData(calculateDosingDecisionData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        let _ = try await createData(calculateDosingDecisionData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
     }
 
     func calculateDosingDecisionData(_ stored: [StoredDosingDecision], for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
@@ -427,63 +403,39 @@ extension TidepoolService: RemoteDataService {
 
     public var glucoseDataLimit: Int? { return 1000 }
 
-    public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadGlucoseData(_ stored: [StoredGlucoseSample]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
 
-        Task {
-            do {
-                let result = try await createData(stored.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        let _ = try await createData(stored.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
     }
 
     public var pumpDataEventLimit: Int? { return 1000 }
 
-    public func uploadPumpEventData(_ stored: [PersistedPumpEvent], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+    public func uploadPumpEventData(_ stored: [PersistedPumpEvent]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
 
-        Task {
-            do {
-                let result = try await createData(stored.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        let _ = try await createData(stored.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
     }
 
     public var settingsDataLimit: Int? { return 400 }  // Each can be up to 2.5K bytes of serialized JSON, target ~1M or less
 
-    public func uploadSettingsData(_ stored: [StoredSettings], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
+    public func uploadSettingsData(_ stored: [StoredSettings]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            completion(.failure(TidepoolServiceError.configuration))
-            return
+            throw TidepoolServiceError.configuration
         }
 
         let (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum) = calculateSettingsData(stored, for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
 
-        Task {
-            do {
-                let createdUploaded = try await createData(created)
-                let updatedUploaded = try await updateData(updated)
-                self.lastControllerSettingsDatum = lastControllerSettingsDatum
-                self.lastCGMSettingsDatum = lastCGMSettingsDatum
-                self.lastPumpSettingsDatum = lastPumpSettingsDatum
-                self.completeUpdate()
-                completion(.success(createdUploaded || updatedUploaded))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        let _ = try await createData(created)
+        let _ = try await updateData(updated)
+        self.lastControllerSettingsDatum = lastControllerSettingsDatum
+        self.lastCGMSettingsDatum = lastCGMSettingsDatum
+        self.lastPumpSettingsDatum = lastPumpSettingsDatum
+        self.completeUpdate()
     }
 
     func calculateSettingsData(_ stored: [StoredSettings], for userId: String, hostIdentifier: String, hostVersion: String) -> ([TDatum], [TDatum], TControllerSettingsDatum?, TCGMSettingsDatum?, TPumpSettingsDatum?) {
@@ -606,9 +558,8 @@ extension TidepoolService: RemoteDataService {
         }
     }
 
-    public func uploadCgmEventData(_ stored: [LoopKit.PersistedCgmEvent], completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadCgmEventData(_ stored: [PersistedCgmEvent]) async throws {
         // TODO: Upload sensor/transmitter changes
-        completion(.success(false))
     }
 
     public func remoteNotificationWasReceived(_ notification: [String: AnyObject]) async throws {
