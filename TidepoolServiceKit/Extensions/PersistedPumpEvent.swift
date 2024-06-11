@@ -54,9 +54,11 @@ extension PersistedPumpEvent: IdentifiableDatum {
         case .resume:
             return dataForResume(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .rewind:
-            return dataForRewind(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+            return dataForReservoirChange(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .suspend:
             return dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        case .replaceComponent(componentType: .reservoir):
+            return dataForReservoirChange(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         default:
             return []
         }
@@ -137,7 +139,7 @@ extension PersistedPumpEvent: IdentifiableDatum {
         return [datum]
     }
 
-    private func dataForRewind(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
+    private func dataForReservoirChange(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
         var data: [TDatum] = []
         if dose?.type == .suspend {
             data.append(contentsOf: dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion))
