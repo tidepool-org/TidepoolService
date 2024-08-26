@@ -69,6 +69,7 @@
 		C12E4BBB288F2215009C98A2 /* TidepoolServiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C12E4BBE288F2215009C98A2 /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; platformFilter = ios; };
 		C12E4BBF288F2215009C98A2 /* TidepoolServiceKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAAD1B22E7988900E76C9F /* TidepoolServiceKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C14559A62C7CF49100541EF1 /* TemporaryScheduleOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14559A52C7CF49100541EF1 /* TemporaryScheduleOverride.swift */; };
 		C1A685432C067E410071C171 /* DeviceLogUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A685422C067E410071C171 /* DeviceLogUploader.swift */; };
 		C1C9414629F0CB21008D3E05 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9414529F0CB21008D3E05 /* UIImage.swift */; };
 		C1D0B62929848A460098D215 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D0B62829848A460098D215 /* SettingsView.swift */; };
@@ -226,6 +227,7 @@
 		C110888E2A39149100BA4898 /* BuildDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDetails.swift; sourceTree = "<group>"; };
 		C12522E1298309B5006EA1CD /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1317D4129830A0800625B94 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C14559A52C7CF49100541EF1 /* TemporaryScheduleOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryScheduleOverride.swift; sourceTree = "<group>"; };
 		C18B726B299581C600F138D3 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C192C60B29C78711001EFEA6 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C199E4D929C64072003D32F7 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				A97A60FA243818C900AD69A5 /* TDatum.swift */,
 				A9752A9C270B972D00E50750 /* TimeInterval.swift */,
 				A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */,
+				C14559A52C7CF49100541EF1 /* TemporaryScheduleOverride.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -766,6 +769,7 @@
 				A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */,
 				A9D1AC9B27B1E046008C5A12 /* Data.swift in Sources */,
 				A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */,
+				C14559A62C7CF49100541EF1 /* TemporaryScheduleOverride.swift in Sources */,
 				A9057687271F770F0030C3B1 /* IdentifiableDatum.swift in Sources */,
 				A97651752421AA10002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3622E7CAC100E76C9F /* TidepoolService.swift in Sources */,
