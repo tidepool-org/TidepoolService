@@ -285,31 +285,12 @@ extension TidepoolService: TLogging {
 extension TidepoolService: RemoteDataService {
 
     public func uploadTemporaryOverrideData(updated: [TemporaryScheduleOverride], deleted: [TemporaryScheduleOverride]) async throws {
-        // TODO: https://tidepool.atlassian.net/browse/LOOP-4769
+        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
+            throw TidepoolServiceError.configuration
+        }
 
-        // The following code is taken from previous upload code when override events where stored in settings
-        // To be implemented with
-
-        //        guard let activeOverride = activeOverride else {
-        //            return nil
-        //        }
-        //        let datum = TPumpSettingsOverrideDeviceEventDatum(time: activeOverride.datumTime,
-        //                                                          overrideType: activeOverride.datumOverrideType,
-        //                                                          overridePreset: activeOverride.datumOverridePreset,
-        //                                                          method: activeOverride.datumMethod,
-        //                                                          duration: activeOverride.datumDuration,
-        //                                                          expectedDuration: activeOverride.datumExpectedDuration,
-        //                                                          bloodGlucoseTarget: activeOverride.datumBloodGlucoseTarget,
-        //                                                          basalRateScaleFactor: activeOverride.datumBasalRateScaleFactor,
-        //                                                          carbohydrateRatioScaleFactor: activeOverride.datumCarbohydrateRatioScaleFactor,
-        //                                                          insulinSensitivityScaleFactor: activeOverride.datumInsulinSensitivityScaleFactor,
-        //                                                          units: activeOverride.datumUnits)
-        //        let origin = datumOrigin(for: resolvedIdentifier(for: TPumpSettingsOverrideDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        //        return datum.adornWith(id: datumId(for: userId, type: TPumpSettingsOverrideDeviceEventDatum.self),
-        //                               timeZone: datumTimeZone,
-        //                               timeZoneOffset: datumTimeZoneOffset,
-        //                               payload: datumPayload,
-        //                               origin: origin)
+        let _ = try await createData(updated.compactMap { $0.datum(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
+        let _ = try await deleteData(withSelectors: deleted.flatMap { $0.selectors })
     }
 
     public var alertDataLimit: Int? { return 1000 }
@@ -440,7 +421,7 @@ extension TidepoolService: RemoteDataService {
 
     func calculateSettingsData(_ stored: [StoredSettings], for userId: String, hostIdentifier: String, hostVersion: String) -> ([TDatum], [TDatum], TControllerSettingsDatum?, TCGMSettingsDatum?, TPumpSettingsDatum?) {
         var created: [TDatum] = []
-        var updated: [TDatum] = []
+        let updated: [TDatum] = []
         var lastControllerSettingsDatum = lastControllerSettingsDatum
         var lastCGMSettingsDatum = lastCGMSettingsDatum
         var lastPumpSettingsDatum = lastPumpSettingsDatum
