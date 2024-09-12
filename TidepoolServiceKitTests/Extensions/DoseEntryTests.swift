@@ -38,7 +38,6 @@ class DoseEntryDataTests: XCTestCase {
   {
     "deliveryType" : "automated",
     "duration" : 1500000,
-    "expectedDuration" : 1800000,
     "id" : "f839af02f6832d7c81d636dbbbadbc01",
     "insulinFormulation" : {
       "simple" : {
