@@ -82,8 +82,8 @@ extension DoseEntry: IdentifiableDatum {
         payload["deliveredUnits"] = datumBasalDeliveredUnits
 
         var datum = TAutomatedBasalDatum(time: datumTime,
-                                         duration: !isMutable ? datumDuration : 0,
-                                         expectedDuration: !isMutable && datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
+                                         duration: datumDuration,
+                                         expectedDuration: nil,
                                          rate: datumScheduledBasalRate,
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
