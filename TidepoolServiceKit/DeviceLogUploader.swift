@@ -21,6 +21,9 @@ actor DeviceLogUploader {
 
     private var logChunkDuration = TimeInterval(hours: 1)
 
+    private let backfillLimitInterval = TimeInterval(days: 2)
+
+
     func setDelegate(_ delegate: RemoteDataServiceDelegate?) {
         self.delegate = delegate
     }
@@ -34,70 +37,72 @@ actor DeviceLogUploader {
     }
 
     func main() async {
-        let backfillLimitInterval = TimeInterval(days: 2)
-        // Default start uploading logs from 2 days ago
-        var nextUploadStart = Date().addingTimeInterval(-backfillLimitInterval).dateFlooredToTimeInterval(logChunkDuration)
+        var nextLogStart: Date?
 
-        // Fetch device log metadata records
-        while true {
-            do {
-                // TODO: fetching logs is not implemented on the backend yet: awaiting https://tidepool.atlassian.net/browse/BACK-3011
-                // For now, we expect this to error, so the catch has been modified to break out of the loop. Once this is implemented,
-                // We will want to retry on error, so the break should eventually be removed.
-
-                var uploadMetadata = try await api.listDeviceLogs(start: Date().addingTimeInterval(-backfillLimitInterval), end: Date())
-                uploadMetadata.sort { a, b in
-                    return a.endAtTime > b.endAtTime
-                }
-                if let lastEnd = uploadMetadata.last?.endAtTime {
-                    nextUploadStart = lastEnd.dateFlooredToTimeInterval(logChunkDuration)
-                }
-                break
-            } catch {
-                log.error("Unable to fetch device log metadata: %@", String(describing: error))
-                try? await Task.sleep(nanoseconds: TimeInterval(minutes: 1).nanoseconds)
-                break // TODO: Remove when backend has implemented device log metadata fetching (see above)
-            }
-        }
         // Start upload loop
         while true {
-            let nextUploadEnd = nextUploadStart.addingTimeInterval(logChunkDuration)
-            let timeUntilNextUpload = nextUploadEnd.timeIntervalSinceNow
-            if timeUntilNextUpload > 0 {
-                log.debug("Waiting %@s until next upload", String(timeUntilNextUpload))
-                try? await Task.sleep(nanoseconds: timeUntilNextUpload.nanoseconds)
+            if nextLogStart == nil {
+                do {
+                    nextLogStart = try await getMostRecentUploadEndTime()
+                } catch {
+                    log.error("Unable to fetch device log metadata: %{public}@", String(describing: error))
+                }
             }
-            await upload(from: nextUploadStart, to: nextUploadEnd)
-            nextUploadStart = nextUploadEnd
+
+            if nextLogStart != nil {
+                let nextLogEnd = nextLogStart!.addingTimeInterval(logChunkDuration)
+                let timeUntilNextUpload = nextLogEnd.timeIntervalSinceNow
+                if timeUntilNextUpload > 0 {
+                    log.debug("Waiting %{public}@s until next upload", String(timeUntilNextUpload))
+                    try? await Task.sleep(nanoseconds: timeUntilNextUpload.nanoseconds)
+                }
+                do {
+                    try await upload(from: nextLogStart!, to: nextLogEnd)
+                    nextLogStart = nextLogEnd
+                } catch {
+                    log.error("Upload failed: %{public}@", String(describing: error))
+                    // Upload failed, retry in 5 minutes.
+                    try? await Task.sleep(nanoseconds: TimeInterval(minutes: 5).nanoseconds)
+                }
+            } else {
+                // Haven't been able to talk to backend to find any previous log uploads. Retry in 15 minutes.
+                try? await Task.sleep(nanoseconds: TimeInterval(minutes: 15).nanoseconds)
+            }
         }
     }
 
-    func upload(from start: Date, to end: Date) async {
-        log.default("Uploading from %@ to %@", String(describing: start), String(describing: end))
-        do {
-            if let logs = try await delegate?.fetchDeviceLogs(startDate: start, endDate: end) {
-                log.default("Fetched %d logs", logs.count)
-                if logs.count > 0 {
-                    let data = logs.map({
-                        entry in
-                        TDeviceLogEntry(
-                            type: entry.type.tidepoolType,
-                            managerIdentifier: entry.managerIdentifier,
-                            deviceIdentifier: entry.deviceIdentifier ?? "unknown",
-                            timestamp: entry.timestamp,
-                            message: entry.message
-                        )
-                    })
-                    do {
-                        let metatdata = try await api.uploadDeviceLogs(logs: data, start: start, end: end)
-                        log.default("metadata: %@", String(describing: metatdata))
-                    } catch {
-                        log.error("error uploading device logs:: %@", String(describing: error))
-                    }
-                }
+    func getMostRecentUploadEndTime() async throws -> Date {
+        var uploadMetadata = try await api.listDeviceLogs(start: Date().addingTimeInterval(-backfillLimitInterval), end: Date())
+        uploadMetadata.sort { a, b in
+            return a.endAtTime < b.endAtTime
+        }
+        if let lastEnd = uploadMetadata.last?.endAtTime {
+            return lastEnd
+        } else {
+            // No previous uploads found in last two days
+            return Date().addingTimeInterval(-backfillLimitInterval).dateFlooredToTimeInterval(logChunkDuration)
+        }
+    }
+
+    func upload(from start: Date, to end: Date) async throws {
+        if let logs = try await delegate?.fetchDeviceLogs(startDate: start, endDate: end) {
+            if logs.count > 0 {
+                let data = logs.map({
+                    entry in
+                    TDeviceLogEntry(
+                        type: entry.type.tidepoolType,
+                        managerIdentifier: entry.managerIdentifier,
+                        deviceIdentifier: entry.deviceIdentifier ?? "unknown",
+                        timestamp: entry.timestamp,
+                        message: entry.message
+                    )
+                })
+                let metatdata = try await api.uploadDeviceLogs(logs: data, start: start, end: end)
+                log.debug("Uploaded %d entries from %{public}@ to %{public}@", logs.count, String(describing: start), String(describing: end))
+                log.debug("metadata: %{public}@", String(describing: metatdata))
+            } else {
+                log.debug("No device log entries from %{public}@ to %{public}@", String(describing: start), String(describing: end))
             }
-        } catch {
-            log.error("Upload failed: %@", String(describing: error))
         }
     }
 }
