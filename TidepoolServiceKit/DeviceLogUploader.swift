@@ -61,7 +61,7 @@ actor DeviceLogUploader {
                     nextLogStart = nextLogEnd
                 } catch {
                     log.error("Upload failed: %{public}@", String(describing: error))
-                    // Upload failed, retry in 10 minutes.
+                    // Upload failed, retry in 5 minutes.
                     try? await Task.sleep(nanoseconds: TimeInterval(minutes: 5).nanoseconds)
                 }
             } else {
