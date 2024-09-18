@@ -48,8 +48,14 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     
     public weak var stateDelegate: StatefulPluggableDelegate?
 
-    public weak var remoteDataServiceDelegate: RemoteDataServiceDelegate?
-
+    public weak var remoteDataServiceDelegate: RemoteDataServiceDelegate? {
+        didSet {
+            Task {
+                await setDeviceLogUploaderDelegate()
+            }
+        }
+    }
+    
     public lazy var sessionStorage: SessionStorage = KeychainManager()
 
     public let tapi: TAPI = TAPI(clientId: BuildDetails.default.tidepoolServiceClientId, redirectURL: BuildDetails.default.tidepoolServiceRedirectURL)
@@ -72,6 +78,10 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
     private var deviceLogUploader: DeviceLogUploader?
+    
+    private func setDeviceLogUploaderDelegate() async {
+        await deviceLogUploader?.setDelegate(remoteDataServiceDelegate)
+    }
 
     public init(hostIdentifier: String, hostVersion: String) {
         self.id = UUID().uuidString
@@ -87,7 +97,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
         await tapi.setLogging(self)
         await tapi.addObserver(self)
         deviceLogUploader = DeviceLogUploader(api: tapi)
-        await deviceLogUploader?.setDelegate(remoteDataServiceDelegate)
+        await setDeviceLogUploaderDelegate()
         observeTimeZoneChanges()
     }
 

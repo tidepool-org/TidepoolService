@@ -19,7 +19,7 @@ actor DeviceLogUploader {
 
     private var delegate: RemoteDataServiceDelegate?
 
-    private var logChunkDuration = TimeInterval(minutes: 5)//TimeInterval(hours: 1)
+    private var logChunkDuration = TimeInterval(hours: 1)
 
     func setDelegate(_ delegate: RemoteDataServiceDelegate?) {
         self.delegate = delegate
