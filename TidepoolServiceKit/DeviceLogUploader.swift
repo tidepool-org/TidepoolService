@@ -19,7 +19,7 @@ actor DeviceLogUploader {
 
     private var delegate: RemoteDataServiceDelegate?
 
-    private var logChunkDuration = TimeInterval(hours: 1)
+    private var logChunkDuration = TimeInterval(minutes: 5)//TimeInterval(hours: 1)
 
     func setDelegate(_ delegate: RemoteDataServiceDelegate?) {
         self.delegate = delegate
@@ -91,10 +91,8 @@ actor DeviceLogUploader {
                     do {
                         let metatdata = try await api.uploadDeviceLogs(logs: data, start: start, end: end)
                         log.default("metadata: %@", String(describing: metatdata))
-                        print("hi")
                     } catch {
                         log.error("error uploading device logs:: %@", String(describing: error))
-                        print("hi")
                     }
                 }
             }
