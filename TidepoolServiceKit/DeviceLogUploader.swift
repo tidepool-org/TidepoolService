@@ -91,10 +91,8 @@ actor DeviceLogUploader {
                     do {
                         let metatdata = try await api.uploadDeviceLogs(logs: data, start: start, end: end)
                         log.default("metadata: %@", String(describing: metatdata))
-                        print("hi")
                     } catch {
                         log.error("error uploading device logs:: %@", String(describing: error))
-                        print("hi")
                     }
                 }
             }
