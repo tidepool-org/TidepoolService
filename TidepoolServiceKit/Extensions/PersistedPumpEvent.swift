@@ -189,8 +189,8 @@ extension PersistedPumpEvent: IdentifiableDatum {
                                                 from: TTimeChangeDeviceEventDatum.Info(time: fromTime),
                                                 to: TTimeChangeDeviceEventDatum.Info(time: toTime),
                                                 method: .manual)
-        let origin = datumOrigin(for: resolvedIdentifier(for: TStatusDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
-        datum = datum.adornWith(id: datumId(for: userId, type: TStatusDeviceEventDatum.self),
+        let origin = datumOrigin(for: resolvedIdentifier(for: TTimeChangeDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        datum = datum.adornWith(id: datumId(for: userId, type: TTimeChangeDeviceEventDatum.self),
                                 payload: datumPayload,
                                 origin: origin)
         return [datum]
