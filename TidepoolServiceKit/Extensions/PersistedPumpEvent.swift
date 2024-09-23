@@ -57,6 +57,8 @@ extension PersistedPumpEvent: IdentifiableDatum {
             return dataForRewind(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         case .suspend:
             return dataForSuspend(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        case .timeZoneSync:
+            return dataForTimeZoneSync(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion)
         default:
             return []
         }
@@ -173,6 +175,33 @@ extension PersistedPumpEvent: IdentifiableDatum {
                                 origin: origin)
         return [datum]
     }
+    
+    private func dataForTimeZoneSync(for userId: String, hostIdentifier: String, hostVersion: String) -> [TDatum] {
+        guard let type = type,
+              case let .timeZoneSync(fromSecondsFromGMT, toSecondsFromGMT) = type
+        else {
+            return []
+        }
+        
+        let fromTime = formattedDateWithoutTimeZoneOffset(date, for: TimeZone(secondsFromGMT: fromSecondsFromGMT))
+        let toTime = formattedDateWithoutTimeZoneOffset(date, for: TimeZone(secondsFromGMT: toSecondsFromGMT))
+        var datum = TTimeChangeDeviceEventDatum(time: date,
+                                                from: TTimeChangeDeviceEventDatum.Info(time: fromTime),
+                                                to: TTimeChangeDeviceEventDatum.Info(time: toTime),
+                                                method: .manual)
+        let origin = datumOrigin(for: resolvedIdentifier(for: TTimeChangeDeviceEventDatum.self), hostIdentifier: hostIdentifier, hostVersion: hostVersion)
+        datum = datum.adornWith(id: datumId(for: userId, type: TTimeChangeDeviceEventDatum.self),
+                                payload: datumPayload,
+                                origin: origin)
+        return [datum]
+    }
+    
+    private func formattedDateWithoutTimeZoneOffset(_ date: Date, for timeZone: TimeZone?) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = timeZone
+        return dateFormatter.string(from: date)
+    }
 
     private var datumTime: Date { dose?.startDate ?? date }
 
@@ -222,4 +251,8 @@ extension TReservoirChangeDeviceEventDatum: TypedDatum {
 
 extension TStatusDeviceEventDatum: TypedDatum {
     static var resolvedType: String { "\(TDatum.DatumType.deviceEvent.rawValue)/\(TDeviceEventDatum.SubType.status.rawValue)" }
+}
+
+extension TTimeChangeDeviceEventDatum: TypedDatum {
+    static var resolvedType: String { "\(TDatum.DatumType.deviceEvent.rawValue)/\(TDeviceEventDatum.SubType.timeChange.rawValue)" }
 }

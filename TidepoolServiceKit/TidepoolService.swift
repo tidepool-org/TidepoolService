@@ -64,7 +64,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     private let id: String
 
-
     private var lastControllerSettingsDatum: TControllerSettingsDatum?
 
     private var lastCGMSettingsDatum: TCGMSettingsDatum?
@@ -78,7 +77,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
     private var deviceLogUploader: DeviceLogUploader?
-    
+
     private func setDeviceLogUploaderDelegate() async {
         await deviceLogUploader?.setDelegate(remoteDataServiceDelegate)
     }
@@ -98,7 +97,6 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
         await tapi.addObserver(self)
         deviceLogUploader = DeviceLogUploader(api: tapi)
         await setDeviceLogUploaderDelegate()
-        observeTimeZoneChanges()
     }
 
     public init?(rawState: RawStateValue) {
@@ -495,33 +493,6 @@ extension TidepoolService: RemoteDataService {
         }
 
         return (created, updated, lastControllerSettingsDatum, lastCGMSettingsDatum, lastPumpSettingsDatum)
-    }
-    
-    private func uploadTimeZoneChangeData(from fromTimeZone: TimeZone, to toTimeZone: TimeZone, method: TTimeChangeDeviceEventDatum.Method = .automatic, at date: Date = Date()) async throws {
-        guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
-            throw TidepoolServiceError.configuration
-        }
-
-        let timeZoneChangeData = TTimeChangeDeviceEventDatum(time: date,
-                                                             from: TTimeChangeDeviceEventDatum.Info(timeZoneName: fromTimeZone.identifier),
-                                                             to: TTimeChangeDeviceEventDatum.Info(timeZoneName: toTimeZone.identifier),
-                                                             method: method)
-        let _ = try await createData([timeZoneChangeData])
-    }
-    
-    private func observeTimeZoneChanges() {
-        NotificationCenter.default.addObserver(forName: .NSSystemTimeZoneDidChange, object: nil, queue: .main) { notification in
-            if let previousTimeZone = notification.object as? TimeZone {
-                let currentTimeZone = TimeZone.current
-                Task {
-                    do {
-                        try await self.uploadTimeZoneChangeData(from: previousTimeZone, to: currentTimeZone)
-                    } catch {
-                        self.log.error("Failed to upload time zone change data - %{public}@", error.localizedDescription)
-                    }
-                }
-            }
-        }
     }
 
     private func createData(_ data: [TDatum]) async throws -> Bool {
