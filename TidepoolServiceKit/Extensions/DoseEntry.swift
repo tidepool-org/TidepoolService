@@ -356,12 +356,18 @@ extension DoseEntry {
     /// - Returns: An array of annotated doses
     fileprivate func annotated(with basalHistory: [AbsoluteScheduleValue<Double>]) -> [DoseEntry] {
 
-        guard type == .tempBasal, !basalHistory.isEmpty else {
+        guard type == .tempBasal || type == .suspend, !basalHistory.isEmpty else {
             return [self]
         }
 
-        guard unit != .units else {
-            preconditionFailure("temp basal without rate unsupported")
+        if type == .suspend {
+            guard value == 0 else {
+                preconditionFailure("suspend with non-zero delivery")
+            }
+        } else {
+            guard unit != .units else {
+                preconditionFailure("temp basal without rate unsupported")
+            }
         }
 
         if isMutable {
