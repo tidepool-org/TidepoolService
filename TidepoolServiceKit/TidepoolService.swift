@@ -328,13 +328,38 @@ extension TidepoolService: RemoteDataService {
 
     public var doseDataLimit: Int? { return 1000 }
 
+    private func annotateDoses(_ doses: [DoseEntry]) async throws -> [DoseEntry] {
+        guard !doses.isEmpty else {
+            return []
+        }
+
+        guard let remoteDataServiceDelegate else {
+            throw TidepoolServiceError.configuration
+        }
+
+        let start = doses.map { $0.startDate }.min()!
+        let end = doses.map { $0.endDate }.max()!
+
+        let basal = try await remoteDataServiceDelegate.getBasalHistory(startDate: start, endDate: end)
+        let dosesWithBasal = doses.annotated(with: basal)
+
+        let automationHistory = try await remoteDataServiceDelegate.automationHistory(from: start, to: end)
+        return dosesWithBasal.overlayAutomationHistory(automationHistory)
+
+    }
+
     public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry]) async throws {
         guard let userId = userId, let hostIdentifier = hostIdentifier, let hostVersion = hostVersion else {
             throw TidepoolServiceError.configuration
         }
 
-        let _ = try await createData(created.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
-        let _ = try await deleteData(withSelectors: deleted.flatMap { $0.selectors })
+        // Syncidentifiers may be changed
+        let annotatedCreated = try await annotateDoses(created)
+        let _ = try await createData(annotatedCreated.flatMap { $0.data(for: userId, hostIdentifier: hostIdentifier, hostVersion: hostVersion) })
+
+        // annotating these so we get the correct syncIdentifiers to delete
+        let annotatedDeleted = try await annotateDoses(deleted)
+        let _ = try await deleteData(withSelectors: annotatedDeleted.flatMap { $0.selectors })
     }
 
     public var dosingDecisionDataLimit: Int? { return 50 }  // Each can be up to 20K bytes of serialized JSON, target ~1M or less

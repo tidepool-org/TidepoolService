@@ -8,6 +8,8 @@
 
 import LoopKit
 import TidepoolKit
+import LoopAlgorithm
+import HealthKit
 
 /*
  DoseEntry
@@ -204,8 +206,8 @@ extension DoseEntry: IdentifiableDatum {
         payload["deliveredUnits"] = deliveredUnits
 
         var datum = TAutomatedBasalDatum(time: datumTime,
-                                         duration: !isMutable ? datumDuration : 0,
-                                         expectedDuration: !isMutable && datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
+                                         duration: datumDuration,
+                                         expectedDuration: datumDuration < basalDatumExpectedDuration ? basalDatumExpectedDuration : nil,
                                          rate: datumRate,
                                          scheduleName: StoredSettings.activeScheduleNameDefault,
                                          insulinFormulation: datumInsulinFormulation)
@@ -342,3 +344,184 @@ extension TNormalBolusDatum: TypedDatum {
 extension TInsulinDatum: TypedDatum {
     static var resolvedType: String { TDatum.DatumType.insulin.rawValue }
 }
+
+extension DoseEntry {
+
+    /// Annotates a dose with the context of a history of scheduled basal rates
+    ///
+    /// If the dose crosses a schedule boundary, it will be split into multiple doses so each dose has a
+    /// single scheduled basal rate.
+    ///
+    /// - Parameter basalHistory: The history of basal schedule values to apply. Only schedule values overlapping the dose should be included.
+    /// - Returns: An array of annotated doses
+    fileprivate func annotated(with basalHistory: [AbsoluteScheduleValue<Double>]) -> [DoseEntry] {
+
+        guard type == .tempBasal, !basalHistory.isEmpty else {
+            return [self]
+        }
+
+        guard unit != .units else {
+            preconditionFailure("temp basal without rate unsupported")
+        }
+
+        if isMutable {
+            var newDose = self
+            let basal = basalHistory.first!
+            newDose.scheduledBasalRate = HKQuantity(unit: .internationalUnitsPerHour, doubleValue: basal.value)
+            return [newDose]
+        }
+
+        var doses: [DoseEntry] = []
+
+        for (index, basalItem) in basalHistory.enumerated() {
+            let startDate: Date
+            let endDate: Date
+
+            if index == 0 {
+                startDate = self.startDate
+            } else {
+                startDate = basalItem.startDate
+            }
+
+            if index == basalHistory.count - 1 {
+                endDate = self.endDate
+            } else {
+                endDate = basalHistory[index + 1].startDate
+            }
+
+            let segmentStartDate = max(startDate, self.startDate)
+            let segmentEndDate = max(startDate, min(endDate, self.endDate))
+            let segmentDuration = segmentEndDate.timeIntervalSince(segmentStartDate)
+            let segmentPortion = (segmentDuration / duration)
+
+            var annotatedDose = self
+            annotatedDose.startDate = segmentStartDate
+            annotatedDose.endDate = segmentEndDate
+            annotatedDose.scheduledBasalRate = HKQuantity(unit: .internationalUnitsPerHour, doubleValue: basalItem.value)
+
+            if let deliveredUnits {
+                annotatedDose.deliveredUnits = deliveredUnits * segmentPortion
+            }
+
+            doses.append(annotatedDose)
+        }
+
+        if doses.count > 1 {
+            for (index, dose) in doses.enumerated() {
+                if let originalIdentifier = dose.syncIdentifier, index>0 {
+                    doses[index].syncIdentifier = originalIdentifier + "\(index+1)/\(doses.count)"
+                }
+            }
+        }
+
+        return doses
+    }
+    
+}
+
+
+extension Collection where Element == DoseEntry {
+
+    /// Annotates a sequence of dose entries with the configured basal history
+    ///
+    /// Doses which cross time boundaries in the basal rate schedule are split into multiple entries.
+    ///
+    /// - Parameter basalHistory: A history of basal rates covering the timespan of these doses.
+    /// - Returns: An array of annotated dose entries
+    public func annotated(with basalHistory: [AbsoluteScheduleValue<Double>]) -> [DoseEntry] {
+        var annotatedDoses: [DoseEntry] = []
+
+        for dose in self {
+            let basalItems = basalHistory.filterDateRange(dose.startDate, dose.endDate)
+            annotatedDoses += dose.annotated(with: basalItems)
+        }
+
+        return annotatedDoses
+    }
+
+
+    /// Assigns an automation status to any dose where automation is not already specified
+    ///
+    /// - Parameters:
+    ///   - automationHistory: A history of automation periods.
+    /// - Returns: An array of doses, with the automation flag set based on automation history. Doses will be split if the automation state changes mid-dose.
+
+    public func overlayAutomationHistory(
+        _ automationHistory: [AbsoluteScheduleValue<Bool>]
+    ) -> [DoseEntry] {
+
+        guard count > 0 else {
+            return []
+        }
+
+        var newEntries = [DoseEntry]()
+
+        var automation = automationHistory
+
+        // Assume automation if doses start before automationHistory
+        if let firstAutomation = automation.first, firstAutomation.startDate > first!.startDate {
+            automation.insert(AbsoluteScheduleValue(startDate: first!.startDate, endDate: firstAutomation.startDate, value: true), at: 0)
+        }
+
+        // Overlay automation periods
+        func annotateDoseWithAutomation(dose: DoseEntry) {
+
+            var addedCount = 0
+            for period in automation {
+                if period.endDate > dose.startDate && period.startDate < dose.endDate {
+                    var newDose = dose
+
+                    if dose.isMutable {
+                        newDose.automatic = period.value
+                        newEntries.append(newDose)
+                        return
+                    }
+
+                    newDose.startDate = Swift.max(period.startDate, dose.startDate)
+                    newDose.endDate = Swift.min(period.endDate, dose.endDate)
+                    if let delivered = dose.deliveredUnits {
+                        newDose.deliveredUnits = newDose.duration / dose.duration * delivered
+                    }
+                    newDose.automatic = period.value
+                    if addedCount > 0 {
+                        newDose.syncIdentifier = "\(dose.syncIdentifierAsString)\(addedCount+1)"
+                    }
+                    newEntries.append(newDose)
+                    addedCount += 1
+                }
+            }
+            if addedCount == 0 {
+                // automation history did not cover dose; mark automatic as default
+                var newDose = dose
+                newDose.automatic = true
+                newEntries.append(newDose)
+            }
+        }
+
+        for dose in self {
+            switch dose.type {
+            case .tempBasal, .basal, .suspend:
+                if dose.automatic == nil {
+                    annotateDoseWithAutomation(dose: dose)
+                } else {
+                    newEntries.append(dose)
+                }
+            default:
+                newEntries.append(dose)
+                break
+            }
+        }
+        return newEntries
+    }
+
+}
+
+extension DoseEntry {
+    var simpleDesc: String {
+        let seconds = Int(duration)
+        let automatic = automatic?.description ?? "na"
+        return "\(startDate) (\(seconds)s) - \(type) - isMutable:\(isMutable) automatic:\(automatic) value:\(value) delivered:\(String(describing: deliveredUnits)) scheduled:\(String(describing: scheduledBasalRate)) syncId:\(String(describing: syncIdentifier))"
+    }
+}
+
+
