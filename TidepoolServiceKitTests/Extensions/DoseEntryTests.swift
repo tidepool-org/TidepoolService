@@ -550,7 +550,8 @@ class DoseEntryDataTests: XCTestCase {
       }
     ],
     "deliveryType" : "automated",
-    "duration" : 0,
+    "duration" : 1200000,
+    "expectedDuration" : 1800000,
     "id" : "f839af02f6832d7c81d636dbbbadbc01",
     "insulinFormulation" : {
       "simple" : {
@@ -723,7 +724,7 @@ class DoseEntrySelectorTests: XCTestCase {
 
     func testOverlayAutomationHistory_NoAutomationHistory() {
         let doses: [DoseEntry] = [
-            DoseEntry(type: .basal, startDate: Date(), endDate: Date().addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, automatic: nil, manuallyEntered: false, isMutable: false)
+            DoseEntry(type: .basal, startDate: Date(), endDate: Date().addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, syncIdentifier: "test", automatic: nil, manuallyEntered: false, isMutable: false)
         ]
         let result = doses.overlayAutomationHistory([])
 
@@ -734,7 +735,7 @@ class DoseEntrySelectorTests: XCTestCase {
     func testOverlayAutomationHistory_SingleAutomationPeriod() {
         let now = Date()
         let doses: [DoseEntry] = [
-            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, automatic: nil, manuallyEntered: false, isMutable: false)
+            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, syncIdentifier: "test", automatic: nil, manuallyEntered: false, isMutable: false)
         ]
         let automationHistory: [AbsoluteScheduleValue<Bool>] = [
             AbsoluteScheduleValue(startDate: now, endDate: now.addingTimeInterval(3600), value: false)
@@ -749,7 +750,7 @@ class DoseEntrySelectorTests: XCTestCase {
     func testOverlayAutomationHistory_MultipleAutomationPeriods() {
         let now = Date()
         let doses: [DoseEntry] = [
-            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, automatic: nil, manuallyEntered: false, isMutable: false)
+            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, syncIdentifier: "test", automatic: nil, manuallyEntered: false, isMutable: false)
         ]
         let automationHistory: [AbsoluteScheduleValue<Bool>] = [
             AbsoluteScheduleValue(startDate: now, endDate: now.addingTimeInterval(1800), value: false),
@@ -766,7 +767,7 @@ class DoseEntrySelectorTests: XCTestCase {
     func testOverlayAutomationHistory_PartialOverlap() {
         let now = Date()
         let doses: [DoseEntry] = [
-            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, automatic: nil, manuallyEntered: false, isMutable: false)
+            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, syncIdentifier: "test", automatic: nil, manuallyEntered: false, isMutable: false)
         ]
         let automationHistory: [AbsoluteScheduleValue<Bool>] = [
             AbsoluteScheduleValue(startDate: now.addingTimeInterval(1800), endDate: now.addingTimeInterval(4800), value: false)
@@ -815,7 +816,7 @@ class DoseEntrySelectorTests: XCTestCase {
     func testOverlayAutomationHistory_DeliveredUnitsAdjustment() {
         let now = Date()
         let doses: [DoseEntry] = [
-            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, deliveredUnits: 1.0, automatic: nil, manuallyEntered: false, isMutable: false)
+            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, deliveredUnits: 1.0, syncIdentifier: "test", automatic: nil, manuallyEntered: false, isMutable: false)
         ]
         let automationHistory: [AbsoluteScheduleValue<Bool>] = [
             AbsoluteScheduleValue(startDate: now, endDate: now.addingTimeInterval(1800), value: false),
@@ -834,7 +835,7 @@ class DoseEntrySelectorTests: XCTestCase {
     func testOverlayAutomationHistory_MutableDose() {
         let now = Date()
         let doses: [DoseEntry] = [
-            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, deliveredUnits: 1.0, automatic: nil, manuallyEntered: false, isMutable: true)
+            DoseEntry(type: .basal, startDate: now, endDate: now.addingTimeInterval(3600), value: 1.0, unit: .unitsPerHour, deliveredUnits: 1.0, syncIdentifier: "test", automatic: nil, manuallyEntered: false, isMutable: true)
         ]
         let automationHistory: [AbsoluteScheduleValue<Bool>] = [
             AbsoluteScheduleValue(startDate: now, endDate: now.addingTimeInterval(1800), value: false),
