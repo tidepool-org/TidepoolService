@@ -72,16 +72,22 @@ actor DeviceLogUploader {
     }
 
     func getMostRecentUploadEndTime() async throws -> Date {
-        var uploadMetadata = try await api.listDeviceLogs(start: Date().addingTimeInterval(-backfillLimitInterval), end: Date())
+        let uploadMetadata = try await api.listDeviceLogs(start: Date().addingTimeInterval(-backfillLimitInterval), end: Date())
+        guard var uploadMetadata,
+              !uploadMetadata.isEmpty
+        else {
+            return deviceLogBackfillLimitDate
+        }
+        
         uploadMetadata.sort { a, b in
             return a.endAtTime < b.endAtTime
         }
-        if let lastEnd = uploadMetadata.last?.endAtTime {
-            return lastEnd
-        } else {
-            // No previous uploads found in last two days
-            return Date().addingTimeInterval(-backfillLimitInterval).dateFlooredToTimeInterval(logChunkDuration)
-        }
+        
+        return uploadMetadata.last!.endAtTime
+    }
+    
+    private var deviceLogBackfillLimitDate: Date {
+        Date().addingTimeInterval(-backfillLimitInterval).dateFlooredToTimeInterval(logChunkDuration)
     }
 
     func upload(from start: Date, to end: Date) async throws {
