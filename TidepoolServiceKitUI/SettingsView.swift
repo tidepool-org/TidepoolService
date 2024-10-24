@@ -25,12 +25,13 @@ public struct SettingsView: View {
 
     private let login: ((TEnvironment) async throws -> Void)?
     private let dismiss: (() -> Void)?
+    private let onboarding: Bool
 
     var isLoggedIn: Bool {
         return service.session != nil
     }
 
-    public init(service: TidepoolService, login: ((TEnvironment) async throws -> Void)?, dismiss: (() -> Void)?)
+    public init(service: TidepoolService, login: ((TEnvironment) async throws -> Void)?, dismiss: (() -> Void)?, onboarding: Bool)
     {
         let tapi = service.tapi
         self.service = service
@@ -38,6 +39,7 @@ public struct SettingsView: View {
         self._selectedEnvironment = State(initialValue: service.session?.environment ?? defaultEnvironment ?? TEnvironment.productionEnvironment)
         self.login = login
         self.dismiss = dismiss
+        self.onboarding = onboarding
     }
 
     public var body: some View {
@@ -95,8 +97,10 @@ public struct SettingsView: View {
                             .padding()
                         }
                         Spacer()
-                        if isLoggedIn {
+                        if isLoggedIn && !onboarding {
                             deleteServiceButton
+                        } else if isLoggedIn {
+                            continueButton
                         } else {
                             loginButton
                         }
@@ -177,6 +181,17 @@ public struct SettingsView: View {
         .disabled(isLoggingIn)
     }
 
+    private var continueButton: some View {
+        Button(action: {
+            dismiss?()
+        }) {
+            Text(LocalizedString("Continue", comment: "Delete Tidepool service button title"))
+        }
+        .buttonStyle(ActionButtonStyle(.primary))
+        .disabled(isLoggingIn)
+    }
+
+
     private func loginButtonTapped() {
         guard !isLoggingIn else {
             return
@@ -211,6 +226,6 @@ public struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     @MainActor
     static var previews: some View {
-        SettingsView(service: TidepoolService(hostIdentifier: "Previews", hostVersion: "1.0"), login: nil, dismiss: nil)
+        SettingsView(service: TidepoolService(hostIdentifier: "Previews", hostVersion: "1.0"), login: nil, dismiss: nil, onboarding: false)
     }
 }
