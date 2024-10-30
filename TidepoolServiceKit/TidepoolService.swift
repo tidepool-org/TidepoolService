@@ -60,7 +60,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     public let tapi: TAPI = TAPI(clientId: BuildDetails.default.tidepoolServiceClientId, redirectURL: BuildDetails.default.tidepoolServiceRedirectURL)
 
-    public private (set) var error: Error?
+    public private(set) var error: Error?
 
     private let id: String
 
@@ -77,6 +77,8 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     private let tidepoolKitLog = OSLog(category: "TidepoolKit")
 
     private var deviceLogUploader: DeviceLogUploader?
+    
+    public var isDependency: Bool = false
 
     private func setDeviceLogUploaderDelegate() async {
         await deviceLogUploader?.setDelegate(remoteDataServiceDelegate)
@@ -137,6 +139,10 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     }
 
     public var isOnboarded = false   // No distinction between created and onboarded
+    
+    public func isDependency(_ isDependency: Bool) {
+        self.isDependency = isDependency
+    }
 
     @Published public var session: TSession?
 
