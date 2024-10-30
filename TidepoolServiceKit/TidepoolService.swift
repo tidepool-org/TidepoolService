@@ -140,7 +140,7 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
 
     public var isOnboarded = false   // No distinction between created and onboarded
     
-    public func isDependency(_ isDependency: Bool) {
+    public func markAsDepedency(_ isDependency: Bool) {
         self.isDependency = isDependency
     }
 

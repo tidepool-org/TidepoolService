@@ -11,7 +11,7 @@ import TidepoolKit
 import TidepoolServiceKit
 
 public struct SettingsView: View {
-//    @Environment(\.allowDebugFeatures) var allowDebugFeatures
+    @Environment(\.allowDebugFeatures) var allowDebugFeatures
     
     @State private var isEnvironmentActionSheetPresented = false
     @State private var showingDeletionConfirmation = false
@@ -33,7 +33,7 @@ public struct SettingsView: View {
     }
     
     var canDeleteService: Bool {
-//        guard !allowDebugFeatures else { return true }
+        guard !allowDebugFeatures else { return true }
         return !service.isDependency
     }
 
