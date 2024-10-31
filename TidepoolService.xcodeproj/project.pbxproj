@@ -63,6 +63,7 @@
 		A9E8C611272C76A500016E2E /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E8C610272C76A500016E2E /* TimeInterval.swift */; };
 		A9F9F317271A046E00D19374 /* StoredCarbEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */; };
 		A9F9F319271A05B100D19374 /* IdentifiableHKDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */; };
+		B40B20CC2CD2AC600027BF35 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40B20CB2CD2AC600027BF35 /* EnvironmentValues.swift */; };
 		C110888F2A39149100BA4898 /* BuildDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110888E2A39149100BA4898 /* BuildDetails.swift */; };
 		C124239D2A58771A00EAC89E /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C124239C2A58771A00EAC89E /* TidepoolKit */; };
 		C12E4BBA288F2215009C98A2 /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9DAACFF22E7987800E76C9F /* TidepoolServiceKit.framework */; platformFilter = ios; };
@@ -224,6 +225,7 @@
 		A9E8C610272C76A500016E2E /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A9F9F316271A046E00D19374 /* StoredCarbEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredCarbEntry.swift; sourceTree = "<group>"; };
 		A9F9F318271A05B100D19374 /* IdentifiableHKDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableHKDatum.swift; sourceTree = "<group>"; };
+		B40B20CB2CD2AC600027BF35 /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		C110888E2A39149100BA4898 /* BuildDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDetails.swift; sourceTree = "<group>"; };
 		C12522E1298309B5006EA1CD /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1317D4129830A0800625B94 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 		C1D0B62A29848BD90098D215 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B40B20CB2CD2AC600027BF35 /* EnvironmentValues.swift */,
 				C1D0B62B29848BEB0098D215 /* Image.swift */,
 				C1C9414529F0CB21008D3E05 /* UIImage.swift */,
 			);
@@ -806,6 +809,7 @@
 				A97651762421AA11002EB5D4 /* OSLog.swift in Sources */,
 				A9DAAD3422E7CA1A00E76C9F /* LocalizedString.swift in Sources */,
 				A9DAAD3922E7DEE000E76C9F /* TidepoolService+UI.swift in Sources */,
+				B40B20CC2CD2AC600027BF35 /* EnvironmentValues.swift in Sources */,
 				A9DAAD6F22E7EA9700E76C9F /* NibLoadable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

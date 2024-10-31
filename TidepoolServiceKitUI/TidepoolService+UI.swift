@@ -34,7 +34,7 @@ extension TidepoolService: @retroactive ServiceUI {
         UIImage(frameworkImage: "Tidepool Logo")
     }
 
-    public static func setupViewController(pluginHost: PluginHost, onboarding: Bool) -> SetupUIResult<ServiceViewController, ServiceUI> {
+    public static func setupViewController(pluginHost: PluginHost, onboarding: Bool, allowDebugFeatures: Bool) -> SetupUIResult<ServiceViewController, ServiceUI> {
 
         let navController = ServiceNavigationController()
         navController.isNavigationBarHidden = true
@@ -58,7 +58,7 @@ extension TidepoolService: @retroactive ServiceUI {
                 Task {
                     await navController.notifyComplete()
                 }
-            }, onboarding: onboarding)
+            }, onboarding: onboarding).environment(\.allowDebugFeatures, allowDebugFeatures)
 
             let hostingController = await UIHostingController(rootView: settingsView)
             await navController.pushViewController(hostingController, animated: false)
@@ -67,11 +67,11 @@ extension TidepoolService: @retroactive ServiceUI {
         return .userInteractionRequired(navController)
     }
 
-    public static func setupViewController(colorPalette: LoopUIColorPalette, pluginHost: PluginHost) -> SetupUIResult<ServiceViewController, ServiceUI> {
-        return setupViewController(pluginHost: pluginHost, onboarding: false)
+    public static func setupViewController(colorPalette: LoopUIColorPalette, pluginHost: PluginHost, allowDebugFeatures: Bool) -> SetupUIResult<ServiceViewController, ServiceUI> {
+        return setupViewController(pluginHost: pluginHost, onboarding: false, allowDebugFeatures: allowDebugFeatures)
     }
 
-    public func settingsViewController(colorPalette: LoopUIColorPalette) -> ServiceViewController {
+    public func settingsViewController(colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> ServiceViewController {
 
         let navController = ServiceNavigationController()
         navController.isNavigationBarHidden = true
@@ -92,7 +92,7 @@ extension TidepoolService: @retroactive ServiceUI {
                 Task {
                     await navController.notifyComplete()
                 }
-            }, onboarding: false)
+            }, onboarding: false).environment(\.allowDebugFeatures, allowDebugFeatures)
 
             let hostingController = await UIHostingController(rootView: settingsView)
             await navController.pushViewController(hostingController, animated: false)

@@ -78,7 +78,6 @@ class StoredSettingsTests: XCTestCase {
   "payload" : {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
   },
-  "serialNumber" : "CGM Local Identifier",
   "softwareVersion" : "CGM Software Version",
   "time" : "2020-05-14T22:48:15.000Z",
   "timezone" : "America/Los_Angeles",
@@ -95,7 +94,6 @@ class StoredSettingsTests: XCTestCase {
         XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "activeSchedule" : "Default",
-  "automatedDelivery" : true,
   "basal" : {
     "rateMaximum" : {
       "units" : "Units/hour",
@@ -231,7 +229,6 @@ class StoredSettingsTests: XCTestCase {
   "payload" : {
     "syncIdentifier" : "2A67A303-1234-4CB8-1234-79498265368E"
   },
-  "serialNumber" : "Pump Local Identifier",
   "softwareVersion" : "Pump Software Version",
   "time" : "2020-05-14T22:48:15.000Z",
   "timezone" : "America/Los_Angeles",

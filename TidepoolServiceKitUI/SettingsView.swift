@@ -11,7 +11,8 @@ import TidepoolKit
 import TidepoolServiceKit
 
 public struct SettingsView: View {
-
+    @Environment(\.allowDebugFeatures) var allowDebugFeatures
+    
     @State private var isEnvironmentActionSheetPresented = false
     @State private var showingDeletionConfirmation = false
 
@@ -28,7 +29,12 @@ public struct SettingsView: View {
     private let onboarding: Bool
 
     var isLoggedIn: Bool {
-        return service.session != nil
+        service.session != nil
+    }
+    
+    var canDeleteService: Bool {
+        guard !allowDebugFeatures else { return true }
+        return !service.isDependency
     }
 
     public init(service: TidepoolService, login: ((TEnvironment) async throws -> Void)?, dismiss: (() -> Void)?, onboarding: Bool)
@@ -97,11 +103,11 @@ public struct SettingsView: View {
                             .padding()
                         }
                         Spacer()
-                        if isLoggedIn && !onboarding {
+                        if isLoggedIn && !onboarding && canDeleteService {
                             deleteServiceButton
-                        } else if isLoggedIn {
+                        } else if isLoggedIn && onboarding {
                             continueButton
-                        } else {
+                        } else if !isLoggedIn {
                             loginButton
                         }
                     }
