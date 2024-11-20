@@ -145,6 +145,10 @@ public final class TidepoolService: Service, TAPIObserver, ObservableObject {
     }
 
     @Published public var session: TSession?
+    
+    public var isDemoAccount: Bool {
+        session?.userRoles.contains("demo") ?? false
+    }
 
     public func apiDidUpdateSession(_ session: TSession?) {
         guard session != self.session else {
