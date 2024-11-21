@@ -205,7 +205,7 @@ extension StoredSettings: IdentifiableDatum {
         guard let carbRatioSchedule = carbRatioSchedule else {
             return nil
         }
-        return [Self.activeScheduleNameDefault: carbRatioSchedule.items(for: .gram()).map { TPumpSettingsDatum.CarbohydrateRatioStart(start: $0.startTime, amount: $0.value) }]
+        return [Self.activeScheduleNameDefault: carbRatioSchedule.items(for: .gram).map { TPumpSettingsDatum.CarbohydrateRatioStart(start: $0.startTime, amount: $0.value) }]
     }
     
     private var datumPumpDisplay: TPumpSettingsDatum.Display? {

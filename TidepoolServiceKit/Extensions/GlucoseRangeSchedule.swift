@@ -6,11 +6,11 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import HealthKit
+import LoopAlgorithm
 import LoopKit
 
 extension GlucoseRangeSchedule {
-    func items(for unit: HKUnit) -> [RepeatingScheduleValue<DoubleRange>] {
+    func items(for unit: LoopUnit) -> [RepeatingScheduleValue<DoubleRange>] {
         guard unit != self.unit else {
             return items
         }

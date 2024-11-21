@@ -29,7 +29,7 @@ class DoseEntryDataTests: XCTestCase {
                                   deliveredUnits: nil,
                                   description: "Test Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .novolog,
                                   automatic: true,
                                   manuallyEntered: false)
@@ -332,7 +332,7 @@ class DoseEntryDataTests: XCTestCase {
                                   deliveredUnits: nil,
                                   description: "Test Suspend Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   automatic: true,
                                   manuallyEntered: false)
@@ -375,7 +375,7 @@ class DoseEntryDataTests: XCTestCase {
                                   deliveredUnits: 0.5,
                                   description: "Test Temp Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   automatic: false,
                                   manuallyEntered: false)
@@ -427,7 +427,7 @@ class DoseEntryDataTests: XCTestCase {
                                   deliveredUnits: 0.5,
                                   description: "Test Temp Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   automatic: false,
                                   manuallyEntered: false,
@@ -484,7 +484,7 @@ class DoseEntryDataTests: XCTestCase {
                                   deliveredUnits: 0.5,
                                   description: "Test Temp Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   manuallyEntered: false)
         let data = doseEntry.data(for: "2B03D96C-6F5D-4140-99CD-80C3E64D6011", hostIdentifier: hostIdentifier, hostVersion: hostVersion)
@@ -536,7 +536,7 @@ class DoseEntryDataTests: XCTestCase {
                                   deliveredUnits: 0.5,
                                   description: "Test Temp Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   manuallyEntered: false,
                                   isMutable: true)
@@ -604,7 +604,7 @@ class DoseEntrySelectorTests: XCTestCase {
                                   deliveredUnits: nil,
                                   description: "Test Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .novolog,
                                   automatic: true,
                                   manuallyEntered: false)
@@ -684,7 +684,7 @@ class DoseEntrySelectorTests: XCTestCase {
                                   deliveredUnits: nil,
                                   description: "Test Suspend Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   automatic: true,
                                   manuallyEntered: false)
@@ -700,7 +700,7 @@ class DoseEntrySelectorTests: XCTestCase {
                                   deliveredUnits: 0.5,
                                   description: "Test Temp Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   automatic: false,
                                   manuallyEntered: false)
@@ -716,7 +716,7 @@ class DoseEntrySelectorTests: XCTestCase {
                                   deliveredUnits: 0.5,
                                   description: "Test Temp Basal Dose",
                                   syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                  scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                  scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                   insulinType: .fiasp,
                                   manuallyEntered: false)
         XCTAssertEqual(doseEntry.selectors, [TDatum.Selector(origin: TDatum.Selector.Origin(id: "ab0a722d639669875017a899a5214677:basal/automated"))])
