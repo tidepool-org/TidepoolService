@@ -10,7 +10,6 @@ import Foundation
 
 import XCTest
 import Foundation
-import HealthKit
 import LoopKit
 import TidepoolKit
 import LoopAlgorithm

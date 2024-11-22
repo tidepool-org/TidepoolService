@@ -32,7 +32,6 @@
 		A98737CD2788E61400A6A23D /* InsulinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98737CC2788E61400A6A23D /* InsulinType.swift */; };
 		A9A53E2F271508D80050C0B1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A53E2E271508D80050C0B1 /* String.swift */; };
 		A9D10DB827AB2CCF00814B7B /* SyncAlertObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */; };
-		A9D1107C242289720091C620 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1107B242289720091C620 /* HKUnit.swift */; };
 		A9D1AC9B27B1E046008C5A12 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9A27B1E046008C5A12 /* Data.swift */; };
 		A9D1AC9D27B1E3C6008C5A12 /* DoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9C27B1E3C6008C5A12 /* DoseEntry.swift */; };
 		A9D1AC9F27B1E3D4008C5A12 /* DoseEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D1AC9E27B1E3D4008C5A12 /* DoseEntryTests.swift */; };
@@ -174,7 +173,6 @@
 		A9BF371C2418195C008D7F34 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BF371E24181977008D7F34 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9D10DB727AB2CCF00814B7B /* SyncAlertObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncAlertObject.swift; sourceTree = "<group>"; };
-		A9D1107B242289720091C620 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9D1AC9A27B1E046008C5A12 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		A9D1AC9C27B1E3C6008C5A12 /* DoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseEntry.swift; sourceTree = "<group>"; };
 		A9D1AC9E27B1E3D4008C5A12 /* DoseEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseEntryTests.swift; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 				A9D1AC9C27B1E3C6008C5A12 /* DoseEntry.swift */,
 				A9752A96270B91E000E50750 /* Double.swift */,
 				A9752A98270B93A700E50750 /* GlucoseRangeSchedule.swift */,
-				A9D1107B242289720091C620 /* HKUnit.swift */,
 				A98737CC2788E61400A6A23D /* InsulinType.swift */,
 				A98737CA2788DAE400A6A23D /* PersistedPumpEvent.swift */,
 				A9752A9A270B941C00E50750 /* SingleQuantitySchedule.swift */,
@@ -752,7 +749,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9309CAF2436C52900E02268 /* StoredGlucoseSample.swift in Sources */,
-				A9D1107C242289720091C620 /* HKUnit.swift in Sources */,
 				A9752A9D270B972D00E50750 /* TimeInterval.swift in Sources */,
 				A9309CA72435987000E02268 /* SyncCarbObject.swift in Sources */,
 				A9A53E2F271508D80050C0B1 /* String.swift in Sources */,
