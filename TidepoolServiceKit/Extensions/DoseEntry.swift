@@ -9,7 +9,6 @@
 import LoopKit
 import TidepoolKit
 import LoopAlgorithm
-import HealthKit
 
 /*
  DoseEntry
@@ -371,7 +370,7 @@ extension DoseEntry {
         if isMutable {
             var newDose = self
             let basal = basalHistory.first!
-            newDose.scheduledBasalRate = HKQuantity(unit: .internationalUnitsPerHour, doubleValue: basal.value)
+            newDose.scheduledBasalRate = LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: basal.value)
             return [newDose]
         }
 
@@ -401,7 +400,7 @@ extension DoseEntry {
             var annotatedDose = self
             annotatedDose.startDate = segmentStartDate
             annotatedDose.endDate = segmentEndDate
-            annotatedDose.scheduledBasalRate = HKQuantity(unit: .internationalUnitsPerHour, doubleValue: basalItem.value)
+            annotatedDose.scheduledBasalRate = LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: basalItem.value)
 
             if let deliveredUnits {
                 annotatedDose.deliveredUnits = deliveredUnits * segmentPortion

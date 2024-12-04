@@ -8,7 +8,7 @@
 
 import XCTest
 import Foundation
-import HealthKit
+import LoopAlgorithm
 import LoopKit
 @testable import TidepoolServiceKit
 
@@ -259,7 +259,7 @@ class PersistedPumpEventTests: XCTestCase {
                                                            deliveredUnits: nil,
                                                            description: "Test Basal Dose",
                                                            syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                                           scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                                           scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                                            insulinType: .novolog,
                                                            automatic: true,
                                                            manuallyEntered: false),
@@ -668,7 +668,7 @@ class PersistedPumpEventTests: XCTestCase {
                                                            deliveredUnits: 0.5,
                                                            description: "Test Temp Basal Dose",
                                                            syncIdentifier: "18CF3948-0B3D-4B12-8BFE-14986B0E6784",
-                                                           scheduledBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
+                                                           scheduledBasalRate: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: 2.0),
                                                            insulinType: .fiasp,
                                                            automatic: true,
                                                            manuallyEntered: false),
