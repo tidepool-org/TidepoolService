@@ -6,11 +6,11 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import HealthKit
+import LoopAlgorithm
 import LoopKit
 
 extension DoubleRange {
-    func converted(from: HKUnit, to: HKUnit) -> DoubleRange {
+    func converted(from: LoopUnit, to: LoopUnit) -> DoubleRange {
         guard from != to else {
             return self
         }
@@ -19,10 +19,10 @@ extension DoubleRange {
 }
 
 extension Double {
-    func converted(from: HKUnit, to: HKUnit) -> Double {
+    func converted(from: LoopUnit, to: LoopUnit) -> Double {
         guard from != to else {
             return self
         }
-        return HKQuantity(unit: from, doubleValue: self).doubleValue(for: to)
+        return LoopQuantity(unit: from, doubleValue: self).doubleValue(for: to)
     }
 }

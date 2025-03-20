@@ -55,7 +55,7 @@ extension SyncCarbObject: IdentifiableHKDatum {
     }
 
     private var datumCarbohydrate: TFoodDatum.Nutrition.Carbohydrate {
-        return TFoodDatum.Nutrition.Carbohydrate(net: quantity.doubleValue(for: .gram()), units: .grams)
+        return TFoodDatum.Nutrition.Carbohydrate(net: quantity.doubleValue(for: .gram), units: .grams)
     }
 
     private var datumPayload: TDictionary? {

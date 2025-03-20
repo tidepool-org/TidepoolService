@@ -6,11 +6,11 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import HealthKit
+import LoopAlgorithm
 import LoopKit
 
 extension SingleQuantitySchedule {
-    func items(for unit: HKUnit) -> [RepeatingScheduleValue<Double>] {
+    func items(for unit: LoopUnit) -> [RepeatingScheduleValue<Double>] {
         guard unit != self.unit else {
             return items
         }
