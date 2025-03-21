@@ -483,7 +483,11 @@ extension Collection where Element == DoseEntry {
                     newDose.startDate = Swift.max(period.startDate, dose.startDate)
                     newDose.endDate = Swift.min(period.endDate, dose.endDate)
                     if let delivered = dose.deliveredUnits {
-                        newDose.deliveredUnits = newDose.duration / dose.duration * delivered
+                        if dose.duration == 0 || delivered == 0 {
+                            newDose.deliveredUnits = dose.deliveredUnits
+                        } else {
+                            newDose.deliveredUnits = newDose.duration / dose.duration * delivered
+                        }
                     }
                     newDose.automatic = period.value
                     if addedCount > 0 {
