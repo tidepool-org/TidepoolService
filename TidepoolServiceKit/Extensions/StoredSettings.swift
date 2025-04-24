@@ -365,7 +365,7 @@ fileprivate extension NotificationSettings.AlertStyle {
     }
 }
 
-fileprivate extension TemporaryScheduleOverridePreset {
+fileprivate extension TemporaryPreset {
     var datum: TPumpSettingsDatum.OverridePreset {
         return TPumpSettingsDatum.OverridePreset(abbreviation: datumAbbreviation,
                                                  duration: datumDuration,

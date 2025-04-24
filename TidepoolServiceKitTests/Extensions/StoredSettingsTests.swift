@@ -267,29 +267,13 @@ fileprivate extension StoredSettings {
                                                                                                       end: dateFormatter.date(from: "2020-05-14T14:48:15Z")!))
         let preMealTargetRange = DoubleRange(minValue: 80.0, maxValue: 90.0).quantityRange(for: .milligramsPerDeciliter)
         let workoutTargetRange = DoubleRange(minValue: 150.0, maxValue: 160.0).quantityRange(for: .milligramsPerDeciliter)
-        let overridePresets = [TemporaryScheduleOverridePreset(id: UUID(uuidString: "2A67A303-5203-4CB8-8263-79498265368E")!,
+        let overridePresets = [TemporaryPreset(id: UUID(uuidString: "2A67A303-5203-4CB8-8263-79498265368E")!,
                                                                symbol: "🍎",
                                                                name: "Apple",
-                                                               settings: TemporaryScheduleOverrideSettings(unit: .milligramsPerDeciliter,
+                                                               settings: TemporaryPresetSettings(unit: .milligramsPerDeciliter,
                                                                                                            targetRange: DoubleRange(minValue: 130.0, maxValue: 140.0),
                                                                                                            insulinNeedsScaleFactor: 2.0),
                                                                duration: .finite(.minutes(60)))]
-        let scheduleOverride = TemporaryScheduleOverride(context: .preMeal,
-                                                         settings: TemporaryScheduleOverrideSettings(unit: .milligramsPerDeciliter,
-                                                                                                     targetRange: DoubleRange(minValue: 110.0, maxValue: 120.0),
-                                                                                                     insulinNeedsScaleFactor: 1.5),
-                                                         startDate: dateFormatter.date(from: "2020-05-14T14:48:19Z")!,
-                                                         duration: .finite(.minutes(60)),
-                                                         enactTrigger: .remote("127.0.0.1"),
-                                                         syncIdentifier: UUID(uuidString: "2A67A303-1234-4CB8-8263-79498265368E")!)
-        let preMealOverride = TemporaryScheduleOverride(context: .preMeal,
-                                                        settings: TemporaryScheduleOverrideSettings(unit: .milligramsPerDeciliter,
-                                                                                                    targetRange: DoubleRange(minValue: 80.0, maxValue: 90.0),
-                                                                                                    insulinNeedsScaleFactor: 0.5),
-                                                        startDate: dateFormatter.date(from: "2020-05-14T14:38:39Z")!,
-                                                        duration: .indefinite,
-                                                        enactTrigger: .local,
-                                                        syncIdentifier: UUID(uuidString: "2A67A303-5203-1234-8263-79498265368E")!)
         let maximumBasalRatePerHour = 3.5
         let maximumBolus = 10.0
         let suspendThreshold = GlucoseThreshold(unit: .milligramsPerDeciliter, value: 75.0)
