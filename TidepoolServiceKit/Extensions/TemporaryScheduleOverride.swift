@@ -25,7 +25,7 @@ fileprivate extension TemporaryScheduleOverride.Context {
     }
 }
 
-extension TemporaryScheduleOverrideSettings {
+extension TemporaryPresetSettings {
     var datumBloodGlucoseTarget: TPumpSettingsDatum.BloodGlucoseTarget? {
         guard let targetRange = targetRange else {
             return nil
