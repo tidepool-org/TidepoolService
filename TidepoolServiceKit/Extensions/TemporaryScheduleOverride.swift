@@ -15,7 +15,7 @@ fileprivate extension TemporaryScheduleOverride.Context {
         switch self {
         case .preMeal:
             return .preprandial
-        case .legacyWorkout:
+        case .activity:
             return .physicalActivity
         case .preset(_):
             return .preset
