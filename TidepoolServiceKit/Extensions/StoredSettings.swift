@@ -18,7 +18,6 @@ import TidepoolKit
  - dosingEnabled                    Bool                                    TPumpSettingsDatum.automatedDelivery
  - glucoseTargetRangeSchedule       GlucoseRangeSchedule?                   TPumpSettingsDatum.bloodGlucoseTargetSchedules["Default"]
  - preMealTargetRange               ClosedRange<HKQuantity>?                TPumpSettingsDatum.bloodGlucoseTargetPreprandial
- - workoutTargetRange               ClosedRange<HKQuantity>?                TPumpSettingsDatum.bloodGlucoseTargetPhysicalActivity
  - overridePresets                  [TemporaryScheduleOverridePreset]?      TPumpSettingsDatum.overridePresets
  - maximumBasalRatePerHour          Double?                                 TPumpSettingsDatum.basal.rateMaximum.value
  - maximumBolus                     Double?                                 TPumpSettingsDatum.bolus.amountMaximum.value
@@ -83,7 +82,6 @@ extension StoredSettings: IdentifiableDatum {
                                        basal: datumPumpBasal,
                                        basalRateSchedules: datumPumpBasalRateSchedules,
                                        bloodGlucoseSafetyLimit: datumPumpBloodGlucoseSafetyLimit,
-                                       bloodGlucoseTargetPhysicalActivity: datumPumpBloodGlucoseTargetPhysicalActivity,
                                        bloodGlucoseTargetPreprandial: datumPumpBloodGlucoseTargetPreprandial,
                                        bloodGlucoseTargetSchedules: datumPumpBloodGlucoseTargetSchedules,
                                        bolus: datumPumpBolus,
@@ -168,14 +166,6 @@ extension StoredSettings: IdentifiableDatum {
             return nil
         }
         return suspendThreshold.convertTo(unit: .milligramsPerDeciliter).value
-    }
-    
-    private var datumPumpBloodGlucoseTargetPhysicalActivity: TPumpSettingsDatum.BloodGlucoseTarget? {
-        guard let workoutTargetRange = workoutTargetRange else {
-            return nil
-        }
-        return TPumpSettingsDatum.BloodGlucoseTarget(low: workoutTargetRange.lowerBound.doubleValue(for: .milligramsPerDeciliter),
-                                                     high: workoutTargetRange.upperBound.doubleValue(for: .milligramsPerDeciliter))
     }
     
     private var datumPumpBloodGlucoseTargetPreprandial: TPumpSettingsDatum.BloodGlucoseTarget? {
@@ -375,7 +365,7 @@ fileprivate extension TemporaryPreset {
                                                  insulinSensitivityScaleFactor: settings.datumInsulinSensitivityScaleFactor)
     }
     
-    var datumAbbreviation: String? { symbol.isEmpty == false ? symbol : nil }
+    var datumAbbreviation: String? { symbol?.textualRepresentation?.string }
 
     var datumDuration: TimeInterval? { duration.isFinite ? duration.timeInterval : nil }
 }
