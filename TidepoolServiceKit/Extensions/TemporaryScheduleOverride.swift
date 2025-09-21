@@ -84,6 +84,10 @@ extension TemporaryScheduleOverride: IdentifiableDatum {
         guard case .preset(let preset) = context else {
             return nil
         }
+        guard preset.name.isEmpty == false else {
+            // This shouldn't happen, but the backend will reject the data if not set
+            return "unnamed"
+        }
         return preset.name
     }
 
