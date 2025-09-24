@@ -365,7 +365,9 @@ fileprivate extension TemporaryPreset {
                                                  insulinSensitivityScaleFactor: settings.datumInsulinSensitivityScaleFactor)
     }
     
-    var datumAbbreviation: String? { symbol?.textualRepresentation }
+    var datumAbbreviation: String? {
+        symbol?.textualRepresentation?.isEmpty == true ? nil : symbol?.textualRepresentation
+    }
 
     var datumDuration: TimeInterval? { duration.isFinite ? duration.timeInterval : nil }
 }
